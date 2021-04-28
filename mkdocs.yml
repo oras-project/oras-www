@@ -9,3 +9,4 @@ extra_css:
 theme:
   name: material
   logo: assets/images/oras.png
+  favicon: assets/favicon.ico
