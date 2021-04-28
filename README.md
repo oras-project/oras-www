@@ -14,7 +14,7 @@ This site is deployed using [Netlify](https://www.netlify.com/)
 
 System requirements:
 
-- Python 3.9+
+- Python 3.7+
 - [Poetry](https://python-poetry.org/)
 
 The website is an [Mkdocs](https://www.mkdocs.org/)-based documentation site, using the [Material theme](https://squidfunk.github.io/mkdocs-material/).
