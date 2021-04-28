@@ -1,0 +1,14 @@
+# Adapted from the following post:
+# https://medium.com/swlh/publish-a-static-website-in-a-day-with-mkdocs-and-netlify-3cc076d0efaf
+
+[build]
+publish = "site"
+command = """
+restore_home_cache ".cache" "pip cache" &&
+restore_cwd_cache '.venv' 'python virtualenv' &&
+pip3 install -q poetry &&
+poetry config virtualenvs.in-project true &&
+poetry install -v &&
+mkdocs build -d site
+"""
+
