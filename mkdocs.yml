@@ -10,6 +10,10 @@ extra_css:
 plugins:
   - search
   - git-revision-date-localized
+extra:
+  social:
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/orasproject
 theme:
   name: material
   logo: assets/images/oras.png
