@@ -3,6 +3,7 @@ site_url: https://oras.land/
 site_description: Tools and libraries to enable leveraging OCI registries for arbitrary artifacts
 site_author: The ORAS Authors
 repo_url: https://github.com/deislabs/oras
+repo_name: deislabs/oras
 copyright: Copyright &copy; 2021 The ORAS Authors
 extra_css:
   - assets/stylesheets/extra.css
