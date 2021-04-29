@@ -1,1 +1,10 @@
+# Poetry
 poetry.lock
+
+# VS Code
+.vscode
+debug
+
+# Jetbrains
+.idea
+
