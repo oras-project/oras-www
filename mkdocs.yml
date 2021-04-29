@@ -4,6 +4,7 @@ site_description: Tools and libraries to enable leveraging OCI registries for ar
 site_author: The ORAS Authors
 repo_url: https://github.com/deislabs/oras
 repo_name: deislabs/oras
+edit_uri: ""
 copyright: Copyright &copy; 2021 The ORAS Authors
 extra_css:
   - assets/stylesheets/extra.css
