@@ -7,6 +7,9 @@ repo_name: deislabs/oras
 copyright: Copyright &copy; 2021 The ORAS Authors
 extra_css:
   - assets/stylesheets/extra.css
+plugins:
+  - search
+  - git-revision-date-localized
 theme:
   name: material
   logo: assets/images/oras.png
