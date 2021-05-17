@@ -131,3 +131,30 @@ Error response from daemon: Encountered remote "application/vnd.oras.config.v1+j
 Layers are not pulled in this case. Thus **it is encouraged to specify customized config media type**.
 
 Additionally, the latest version of `dockerd` recognizes OCI manifests and does not verify the OCI config media type.
+
+## Push / Pull Config via CLI
+
+As mentioned in the beginning of this doc, the manifest config is not used by `oras` and is not worth pulling in most scenarios. However, it is still possible to push pullable config with the `oras` CLI by leveraging [Manifest Annotations](annotations.md).
+
+```
+$ cat config.json
+{
+    "foo": "bar"
+}
+$ cat annotations.json
+{
+    "$config": {
+        "org.opencontainers.image.title": "config.json"
+    }
+}
+$ oras push --manifest-config config.json --manifest-annotations annotations.json localhost:5000/hello:latest hi.txt
+Uploading a948904f2f0f hi.txt
+Uploading 57f840b6073c config.json
+Pushed localhost:5000/hello:latest
+Digest: sha256:12e3de7e4a65ffc46a6158ac2df07ecc6fd1af8b0109b4c42a90067f7e907f43
+$ oras pull -a localhost:5000/hello:latest
+Downloaded a948904f2f0f hi.txt
+Downloaded 57f840b6073c config.json
+Pulled localhost:5000/hello:latest
+Digest: sha256:12e3de7e4a65ffc46a6158ac2df07ecc6fd1af8b0109b4c42a90067f7e907f43
+```
