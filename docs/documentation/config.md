@@ -26,7 +26,7 @@ Users can customize the configuration object by the `--manifest-config file[:typ
 oras push --manifest-config config.json localhost:5000/hello:latest hi.txt
 ```
 
-The media type of the config is set to the default value `application/vnd.oci.image.config.v1+json`. 
+The media type of the config is set to the default value `application/vnd.unknown.config.v1+json`. 
 
 Similar to the file reference, it is possible to change the media type of the manifest config. To push a file `hi.txt` with the custom manifest config file  `config.json` with the custom media type `application/vnd.oras.config.v1+json`, run
 
@@ -77,7 +77,7 @@ The config used by `oras` is not a real config. Therefore, the pushed image cann
 $ oras push --manifest-config /dev/null localhost:5000/hello:latest hi.txt
 Uploading a948904f2f0f hi.txt
 Pushed localhost:5000/hello:latest
-Digest: sha256:733074abcfb2bcaac28893bb05e7b6783ae25722407bd742d728dbb330e98683
+Digest: sha256:34897815cbf060e1d11b4c2938c7476d9326269e2179aef3559ce25af11a9ced
 $ docker pull localhost:5000/hello:latest
 latest: Pulling from hello
 a948904f2f0f: Extracting [==================================================>]      12B/12B
@@ -92,7 +92,7 @@ $ cat config.json
 $ oras push --manifest-config config.json localhost:5000/hello:latest hi.txt
 Uploading a948904f2f0f hi.txt
 Pushed localhost:5000/hello:latest
-Digest: sha256:f04b8a748bcecbf326503687cfd8ff6709669e73a120df9d4592c56ed193d128
+Digest: sha256:44d13da4d42a20ceed7ee3411b103a6f82ef02a2eac981d5e3d799c41e3015d7
 $ docker pull localhost:5000/hello:latest
 latest: Pulling from hello
 a948904f2f0f: Pulling fs layer
@@ -110,7 +110,7 @@ $ cat config.json
 $ oras push --manifest-config config.json localhost:5000/hello:latest hi.txt
 Uploading a948904f2f0f hi.txt
 Pushed localhost:5000/hello:latest
-Digest: sha256:4732e48d7c9ccbc096292070c143c92dd19a163c93abccea7f1fa7517ef70a22
+Digest: sha256:e6428c9cb88505a1859a01f4b7602bdb263d5f65399ef72d3397afd9bfb25b2c
 $ docker pull localhost:5000/hello:latest
 latest: Pulling from hello
 a948904f2f0f: Extracting [==================================================>]      12B/12B
@@ -128,4 +128,6 @@ $ docker pull localhost:5000/hello:latest
 Error response from daemon: Encountered remote "application/vnd.oras.config.v1+json"(unknown) when fetching
 ```
 
-Note: Layers are not pulled in this case. Thus **it is encouraged to specify customized config media type**.
+Layers are not pulled in this case. Thus **it is encouraged to specify customized config media type**.
+
+Additionally, the latest version of `dockerd` recognizes OCI manifests and does not verify the OCI config media type.
