@@ -23,8 +23,10 @@ theme:
   logo: assets/images/oras.png
   favicon: assets/favicon.ico
   custom_dir: docs/custom/
+  # there are for golang vanity imports
   static_templates:
-    - oras # this is for golang vanity import
+    - oras
+    - oras-go
   palette:
     - scheme: default
       toggle:
