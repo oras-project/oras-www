@@ -2,10 +2,6 @@
 
 # OCI Registry As Storage
 
-[![GitHub Actions status](https://github.com/deislabs/oras/workflows/build/badge.svg)](https://github.com/deislabs/oras/actions?query=workflow%3Abuild)
-[![Go Report Card](https://goreportcard.com/badge/github.com/deislabs/oras)](https://goreportcard.com/report/github.com/deislabs/oras)
-[![GoDoc](https://godoc.org/github.com/deislabs/oras?status.svg)](https://godoc.org/github.com/deislabs/oras)
-
 ![ORAS](/assets/images/oras.png)
 
 Registries are evolving as Cloud-Native Artifact Stores. To enable this goal, the ORAS project provides a means to enable various client libraries with a way to push [OCI Artifacts][artifacts] to [OCI-conformant](https://github.com/opencontainers/oci-conformance) registries.
