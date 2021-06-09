@@ -42,7 +42,7 @@ oras push --manifest-config /dev/null:application/vnd.oras.config.v1+json localh
 
 ### Go Package
 
-Customizing the configuration object in Go is as simple as passing [oras.WithConfig()](<https://godoc.org/github.com/deislabs/oras/pkg/oras#WithConfig>) option to [oras.Push()](https://godoc.org/github.com/deislabs/oras/pkg/oras#Push).
+Customizing the configuration object in Go is as simple as passing [oras.WithConfig()](<https://godoc.org/github.com/oras-project/oras/pkg/oras#WithConfig>) option to [oras.Push()](https://godoc.org/github.com/oras-project/oras/pkg/oras#Push).
 
 Suppose there is a descriptor `configDesc` referencing the config file in the content provider `store`.
 
@@ -60,7 +60,7 @@ To push with custom config, execute
 _, err := oras.Push(ctx, resolver, ref, store, contents, oras.WithConfig(configDesc))
 ```
 
-If the caller wants to customize the config media type only, pass the [oras.WithConfigMediaType()](<https://godoc.org/github.com/deislabs/oras/pkg/oras#WithConfigMediaType>) option to [oras.Push()](https://godoc.org/github.com/deislabs/oras/pkg/oras#Push).
+If the caller wants to customize the config media type only, pass the [oras.WithConfigMediaType()](<https://godoc.org/github.com/oras-project/oras/pkg/oras#WithConfigMediaType>) option to [oras.Push()](https://godoc.org/github.com/oras-project/oras/pkg/oras#Push).
 
 ```go
 _, err := oras.Push(ctx, resolver, ref, store, contents,

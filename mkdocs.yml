@@ -2,8 +2,8 @@ site_name: OCI Registry As Storage
 site_url: https://oras.land/
 site_description: Tools and libraries to enable leveraging OCI registries for arbitrary artifacts
 site_author: The ORAS Authors
-repo_url: https://github.com/deislabs/oras
-repo_name: deislabs/oras
+repo_url: https://github.com/oras-project/oras
+repo_name: oras-project/oras
 edit_uri: ""
 copyright: Copyright &copy; 2021 The ORAS Authors
 extra_css:

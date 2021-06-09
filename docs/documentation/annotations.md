@@ -82,13 +82,13 @@ results in
 
 ### Go Package
 
-Making annotations in Go is as simple as modifying the `Annotations` field of the [Descriptor](<https://godoc.org/github.com/opencontainers/image-spec/specs-go/v1#Descriptor>) struct objects before passing them to [oras.Push()](https://godoc.org/github.com/deislabs/oras/pkg/oras#Push) with or without the option [oras.WithConfig()](<https://godoc.org/github.com/deislabs/oras/pkg/oras#WithConfig>).
+Making annotations in Go is as simple as modifying the `Annotations` field of the [Descriptor](<https://godoc.org/github.com/opencontainers/image-spec/specs-go/v1#Descriptor>) struct objects before passing them to [oras.Push()](https://godoc.org/github.com/oras-project/oras/pkg/oras#Push) with or without the option [oras.WithConfig()](<https://godoc.org/github.com/oras-project/oras/pkg/oras#WithConfig>).
 
-The caller can pass the push option [oras.WithConfigAnnotations()](<https://godoc.org/github.com/deislabs/oras/pkg/oras#WithConfigAnnotations>) to make annotations to the default config. Similarly, the caller can pass the push option [oras.WithManifestAnnotations()](<https://godoc.org/github.com/deislabs/oras/pkg/oras#WithManifestAnnotations>) to make annotations to the manifest.
+The caller can pass the push option [oras.WithConfigAnnotations()](<https://godoc.org/github.com/oras-project/oras/pkg/oras#WithConfigAnnotations>) to make annotations to the default config. Similarly, the caller can pass the push option [oras.WithManifestAnnotations()](<https://godoc.org/github.com/oras-project/oras/pkg/oras#WithManifestAnnotations>) to make annotations to the manifest.
 
 #### Retrieve Annotations
 
-Retrieving the annotations of individual layers is as simple as reading the `Annotations` field of the [Descriptor](<https://godoc.org/github.com/opencontainers/image-spec/specs-go/v1#Descriptor>) slice returned by [oras.Pull()](https://godoc.org/github.com/deislabs/oras/pkg/oras#Pull).
+Retrieving the annotations of individual layers is as simple as reading the `Annotations` field of the [Descriptor](<https://godoc.org/github.com/opencontainers/image-spec/specs-go/v1#Descriptor>) slice returned by [oras.Pull()](https://godoc.org/github.com/oras-project/oras/pkg/oras#Pull).
 
 For example:
 
