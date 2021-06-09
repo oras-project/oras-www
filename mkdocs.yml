@@ -22,6 +22,9 @@ theme:
   name: material
   logo: assets/images/oras.png
   favicon: assets/favicon.ico
+  custom_dir: docs/custom/
+  static_templates:
+    - oras # this is for golang vanity import
   palette:
     - scheme: default
       toggle:
