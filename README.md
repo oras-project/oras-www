@@ -1,8 +1,10 @@
 # oras-www
 
-Source for ORAS website
+Source for ORAS website and documentation
 
 Link: [oras.land](https://oras.land/)
+
+**[The documentation can be found here](/docs/index.md).**
 
 ## Deployment
 
@@ -14,7 +16,7 @@ This site is deployed using [Netlify](https://www.netlify.com/)
 
 System requirements:
 
-- Python 3.7
+- Python 3.7+
 - [Poetry](https://python-poetry.org/)
 
 The website is an [Mkdocs](https://www.mkdocs.org/)-based documentation site, using the [Material theme](https://squidfunk.github.io/mkdocs-material/).

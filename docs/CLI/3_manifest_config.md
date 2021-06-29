@@ -1,6 +1,8 @@
 # Manifest Config
 
-According to [OCI Image Manifest Specification](<https://github.com/opencontainers/image-spec/blob/master/manifest.md#image-manifest-property-descriptions>), the property `config` is required by an image manifest. Since `oras` does not make use of the configuration object, an empty JSON object `{}` is used by default when pushing, and never being fetched when pulling.
+According to [OCI Image Manifest Specification](https://github.com/opencontainers/image-spec/blob/master/manifest.md#image-manifest-property-descriptions),
+the property `config` is required by an image manifest.
+Since `oras` does not make use of the configuration object, an empty JSON object `{}` is used by default when pushing, and never being fetched when pulling.
 
 The descriptor of the default configuration object is fixed as follows.
 
@@ -12,17 +14,11 @@ The descriptor of the default configuration object is fixed as follows.
 }
 ```
 
-## Customize Config
-
-Projects may leverage `oras` to push their own artifacts to a remote registry. In that case, users may compose their own configuration object with an alternative media type to identify their artifacts. The configuration object may follow the [OCI Image Configuration](<https://github.com/opencontainers/image-spec/blob/master/config.md#properties>) spec.
-
-Config customization is achievable via the command line tool `oras` or the Go package. 
-
-### Command Line Tool
+## Customize config
 
 Users can customize the configuration object by the `--manifest-config file[:type]` option. To push a file `hi.txt` with the custom manifest config file `config.json`, run
 
-```sh
+```
 oras push --manifest-config config.json localhost:5000/hello:latest hi.txt
 ```
 
@@ -30,48 +26,23 @@ The media type of the config is set to the default value `application/vnd.unknow
 
 Similar to the file reference, it is possible to change the media type of the manifest config. To push a file `hi.txt` with the custom manifest config file  `config.json` with the custom media type `application/vnd.oras.config.v1+json`, run
 
-```sh
+```
 oras push --manifest-config config.json:application/vnd.oras.config.v1+json localhost:5000/hello:latest hi.txt
 ```
 
 In addition, it is possible to pass a null device `/dev/null` (`NUL` on Windows) to `oras` for an empty config file.
 
-```sh
+```
 oras push --manifest-config /dev/null:application/vnd.oras.config.v1+json localhost:5000/hello:latest hi.txt
 ```
 
-### Go Package
+## Docker behaviors
 
-Customizing the configuration object in Go is as simple as passing [oras.WithConfig()](<https://godoc.org/github.com/oras-project/oras/pkg/oras#WithConfig>) option to [oras.Push()](https://godoc.org/github.com/oras-project/oras/pkg/oras#Push).
+The config used by `oras` is not a real config.
+Therefore, the pushed image cannot be recognized or pulled by `docker` as expected.
+In this section, docker behaviors are shown given various configs.
 
-Suppose there is a descriptor `configDesc` referencing the config file in the content provider `store`.
-
-```go
-configDesc := ocispec.Descriptor{
-    MediaType: mediaType, // config media type
-    Digest:    digest,    // sha256 digest of the config file
-    Size:      size,      // config file size
-}
-```
-
-To push with custom config, execute
-
-```go
-_, err := oras.Push(ctx, resolver, ref, store, contents, oras.WithConfig(configDesc))
-```
-
-If the caller wants to customize the config media type only, pass the [oras.WithConfigMediaType()](<https://godoc.org/github.com/oras-project/oras/pkg/oras#WithConfigMediaType>) option to [oras.Push()](https://godoc.org/github.com/oras-project/oras/pkg/oras#Push).
-
-```go
-_, err := oras.Push(ctx, resolver, ref, store, contents,
-                    oras.WithConfigMediaType("application/vnd.oras.config.v1+json"))
-```
-
-## Docker Behaviors
-
-The config used by `oras` is not a real config. Therefore, the pushed image cannot be recognized or pulled by `docker` as expected. In this section, docker behaviors are shown given various configs.
-
-### Empty Config File
+### Empty config file
 
 ```
 $ oras push --manifest-config /dev/null localhost:5000/hello:latest hi.txt
@@ -84,7 +55,7 @@ a948904f2f0f: Extracting [==================================================>]  
 unexpected end of JSON input
 ```
 
-### Empty JSON Object
+### Empty JSON object
 
 ```
 $ cat config.json
@@ -117,7 +88,7 @@ a948904f2f0f: Extracting [==================================================>]  
 operating system is not supported
 ```
 
-### Arbitrary Config Media Type
+### Arbitrary config media type
 
 ```
 $ oras push --manifest-config /dev/null:application/vnd.oras.config.v1+json localhost:5000/hello:latest hi.txt
@@ -132,9 +103,10 @@ Layers are not pulled in this case. Thus **it is encouraged to specify customize
 
 Additionally, the latest version of `dockerd` recognizes OCI manifests and does not verify the OCI config media type.
 
-## Push / Pull Config via CLI
+## Push / Pull config
 
-As mentioned in the beginning of this doc, the manifest config is not used by `oras` and is not worth pulling in most scenarios. However, it is still possible to push pullable config with the `oras` CLI by leveraging [Manifest Annotations](annotations.md).
+As mentioned in the beginning of this doc, the manifest config is not used by `oras` and is not worth pulling in most scenarios.
+However, it is still possible to push pullable config with the `oras` CLI by leveraging [Manifest Annotations](./4_manifest_annotations.md).
 
 ```
 $ cat config.json
