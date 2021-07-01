@@ -28,12 +28,12 @@ Registries that implement the distribution-spec are referred to herein as **OCI 
 
 ## What are OCI Artifacts?
 
-For a long time (pretty much since the beginning), people have been using/abusing OCI registries
+For a long time (pretty much since the beginning), people have been using/abusing OCI Registries
 to store non-container things. For example, you could upload a video to Docker Hub
 by just stuffing the video file into a layer in a Docker image (don't do this).
 
 The [OCI Artifacts](https://github.com/opencontainers/artifacts) project is an attempt to
-define an opinionated way to leverage OCI registries for arbitrary artifacts without masquerading
+define an opinionated way to leverage OCI Registries for arbitrary artifacts without masquerading
 them as container images.
 
 Specifically, [OCI Image Manifests](https://github.com/opencontainers/image-spec/blob/master/manifest.md)
