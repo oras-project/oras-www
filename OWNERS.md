@@ -1,4 +1,4 @@
-# Owners for oras-project
+# Owners
 
 Owners:
   - Avi Deitcher (@deitch)
