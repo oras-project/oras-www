@@ -6,7 +6,6 @@ Today the [OCI Registry As Storage (ORAS)](https://oras.land/) project maintaine
 
 <figure>
   <img src="/blog/oras-artifacts-draft-specification-release/net-monitor-graph.svg" width="300" />
-  <figcaption>Net Monitor Graph</figcaption>
 </figure>
 
 As cloud native development continues to grow, we have seen increased community interest in evolving registries to natively store, discover, and pull a graph of supply chain artifacts. Artifact references are important for many use cases such as adding Software Bill of Materials (SBoM), security scan results, and container image signing. With the release of the artifacts specification, end-user tooling can now implement discovery that makes it feasible to determine if there are any references attached to a container image, answering the key question: “What SBOMs or signatures are associated with this container image?” 
