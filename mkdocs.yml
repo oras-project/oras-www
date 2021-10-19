@@ -15,6 +15,8 @@ extra:
   social:
     - icon: cncf/cncf-icon-white
       link: https://www.cncf.io/
+    - icon: fontawesome/solid/trademark
+      link: https://www.linuxfoundation.org/trademark-usage/
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/orasproject
     - icon: fontawesome/brands/github
