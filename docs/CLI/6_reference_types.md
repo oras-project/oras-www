@@ -117,6 +117,9 @@ The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and 
 
 The following registries currently support the [ORAS Artifacts Specification][oras-artifacts].
 
+- Please [submit PRs](https://github.com/oras-project/oras-www/pulls) for additional registry support.
+- See [ORAS Artifacts Community](https://github.com/oras-project/artifacts-spec#community) for how to get engaged.
+
 ### CNCF Distribution with ORAS Artifacts Support
 
 A reference implementation of the ORAS Artifacts Spec is available at [github.com/oras-project/distribution](https://github.com/oras-project/distribution)
