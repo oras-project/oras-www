@@ -49,7 +49,7 @@ The following sample defines a new Artifact Type of **signature**, using `signat
   oras push $REGISTRY/$REPO \
       --artifact-type 'signature/example' \
       --subject $IMAGE \
-      -u $USERNAME -p $PASSWORD \
+      -u $USER_NAME -p $PASSWORD \
       ./signature.json:application/json
   ```
 
@@ -61,7 +61,7 @@ The ORAS Artifacts Specification defines a [referrers API][oras-artifacts-referr
 
   ```bash
   oras discover \
-    -u $USERNAME -p $PASSWORD \
+    -u $USER_NAME -p $PASSWORD \
     -o tree $IMAGE
   ```
 - The output shows the beginning of a graph of artifacts, where the signature is viewed as a child of the $IMAGE
@@ -82,7 +82,7 @@ The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and 
 
   oras push $REGISTRY/$REPO \
     --artifact-type 'sbom/example' \
-    -u $USERNAME -p $PASSWORD \
+    -u $USER_NAME -p $PASSWORD \
     --subject $IMAGE \
     ./sbom.json:application/json
   ```
@@ -90,7 +90,7 @@ The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and 
   ```bash
   SBOM_DIGEST=$(oras discover -o json \
                   --artifact-type sbom/example \
-                  -u $USERNAME -p $PASSWORD \
+                  -u $USER_NAME -p $PASSWORD \
                   $IMAGE | jq -r ".references[0].digest")
 
   echo '{"artifact": "'$REGISTRY/$REPO/$SBOM_DIGEST'", "signature": "pat hancock"}' > sbom-signature.json
@@ -98,13 +98,13 @@ The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and 
   oras push $REGISTRY/$REPO \
     --artifact-type 'signature/example' \
     --subject $REGISTRY/$REPO@$SBOM_DIGEST \
-    -u $USERNAME -p $PASSWORD \
+    -u $USER_NAME -p $PASSWORD \
     ./sbom-signature.json:application/json
   ```
 - View the graph
   ```bash
   oras discover \
-    -u $USERNAME -p $PASSWORD \
+    -u $USER_NAME -p $PASSWORD \
     -o tree $IMAGE
   ```
 - Generates the following output:
@@ -122,7 +122,7 @@ The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and 
   # Get the digest for the SBOM
   SBOM_DIGEST=$(oras discover -o json \
                   --artifact-type 'sbom/example' \
-                  -u $USERNAME -p $PASSWORD \
+                  -u $USER_NAME -p $PASSWORD \
                   $IMAGE | jq -r ".references[0].digest")
   
   # Create a clean directory for downloading
@@ -146,13 +146,13 @@ The following registries currently support the [ORAS Artifacts Specification][or
 
 A reference implementation of the ORAS Artifacts Spec is available at [github.com/oras-project/distribution](https://github.com/oras-project/distribution)
 
-> note: to keep the `oras` commands consistent across registries, `-u USERNAME -p PASSWORD` are used consistently. By setting the username and password = nothing, the commands will work consistently.
+> note: to keep the `oras` commands consistent across registries, `-u USER_NAME -p PASSWORD` are used consistently. By setting the USER_NAME and password = nothing, the commands will work consistently.
 
 To run distribution locally:
   ```bash
   docker run -d -p 5000:5000 ghcr.io/oras-project/registry:v0.0.3-alpha
   REGISTRY=localhost:5000
-  USERNAME=nothing
+  USER_NAME=nothing
   PASSWORD=nothing
   ```
 
@@ -160,10 +160,10 @@ Continue with [Pushing Reference Types](#pushing-reference-types)
 
 ### Azure Container Registry
 
-The Azure Container Registry supports [ORAS Artifacts][oras-artifacts]. To enable the `oras` cli to `push`, `discover`, `pull` with ACR, configure username and passwords using [ACR Repository Scoped Tokens][acr-tokens]. Other [authentication options](https://aka.ms/acr/authentication) are also available.
+The Azure Container Registry supports [ORAS Artifacts][oras-artifacts]. To enable the `oras` cli to `push`, `discover`, `pull` with ACR, configure USER_NAME and passwords using [ACR Repository Scoped Tokens][acr-tokens]. Other [authentication options](https://aka.ms/acr/authentication) are also available.
 
 ```bash
-ACR_NAME=wabbitnetworks3
+ACR_NAME=myregistry
 REGISTRY=$ACR_NAME.azurecr.io
 
 # Create a premium ACR instance in the South Central US region, with Zone Redundancy enabled
@@ -171,15 +171,15 @@ REGISTRY=$ACR_NAME.azurecr.io
 az group create -n $ACR_NAME -l southcentralus
 az acr create -n $ACR_NAME -g $ACR_NAME --zone-redundancy enabled --sku Premium
 
-USERNAME='oras-token'
-PASSWORD=$(az acr token create -n $USERNAME \
+USER_NAME='oras-token'
+PASSWORD=$(az acr token create -n $USER_NAME \
                     -r $ACR_NAME \
                     --scope-map _repositories_admin \
                     --only-show-errors \
                     -o json | jq -r ".credentials.passwords[0].value")
 
-docker login -u $USERNAME -p $PASSWORD $REGISTRY
-oras login -u $USERNAME -p $PASSWORD $REGISTRY
+docker login -u $USER_NAME -p $PASSWORD $REGISTRY
+oras login -u $USER_NAME -p $PASSWORD $REGISTRY
 ```
 
 Continue with [Pushing Reference Types](#pushing-reference-types)
