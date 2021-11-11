@@ -10,13 +10,13 @@ See the [ORAS Artifacts Spec scenarios][oras-artifacts-scenarios] for more detai
 
 Install the latest alpha build of the oras cli at: https://github.com/oras-project/oras/releases/tag/v0.2.1-alpha.1
 
-## Configure An Oras Artifact Enabled Registry
+## Configure An ORAS Artifact Enabled Registry
 
 See [Registry Support](#registry-support)
 
 ## Pushing Reference Types
 
-The following walkthrough will generate the following graph of artifacts:
+The following walkthrough will generate the graph of artifacts shown below.
 
 ![](../assets/images/net-monitor-graph.svg)
 
@@ -25,11 +25,13 @@ Pushing artifact references involves identifying the unique artifact type, at le
 The following sample defines a new Artifact Type of **signature**, using `signature/example` as the `manifest.artifactType`.
 
 - Set environment variables for the registry and artifacts
+
   ```bash
   REPO=net-monitor
   IMAGE=$REGISTRY/$REPO:v1
   ARTIFACT=$REGISTRY/${REPO}:regdoc-v1
   ```
+
 - Build and push an image
 
   ```bash
@@ -43,7 +45,7 @@ The following sample defines a new Artifact Type of **signature**, using `signat
   echo '{"artifact": "'${IMAGE}'", "signature": "pat hancock"}' > signature.json
   ```
 
-- Push the signature to the registry, as a reference to the $IMAGE:
+- Push the signature to the registry, as a reference to the container image
 
   ```bash
   oras push $REGISTRY/$REPO \
@@ -54,14 +56,15 @@ The following sample defines a new Artifact Type of **signature**, using `signat
 
 ## Discovering Artifact References
 
-The ORAS Artifacts Specification defines a [referrers API][oras-artifacts-referrers] for discovering references to a `subject` artifact. In the above case, oras discover can show the the list of references to the $IMAGE
+The ORAS Artifacts Specification defines a [referrers API][oras-artifacts-referrers] for discovering references to a `subject` artifact. In the above case, oras discover can show the the list of references to the container image.
 
 - Using `oras discover`, view the graph of artifacts now stored in the registry
 
   ```bash
   oras discover -o tree $IMAGE
   ```
-- The output shows the beginning of a graph of artifacts, where the signature is viewed as a child of the $IMAGE
+
+- The output shows the beginning of a graph of artifacts, where the signature is viewed as a child of the container image
 
   ```output
   localhost:5000/net-monitor:v1
@@ -73,7 +76,8 @@ The ORAS Artifacts Specification defines a [referrers API][oras-artifacts-referr
 
 The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and other artifact types.
 
-- Create and push a sample Software Bill of Materials to the registry:
+- Create and push a sample Software Bill of Materials to the registry
+
   ```bash
   echo '{"version": "0.0.0.0", "artifact": "'${IMAGE}'", "contents": "good"}' > sbom.json
 
@@ -82,7 +86,9 @@ The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and 
     --subject $IMAGE \
     ./sbom.json:application/json
   ```
+
 - Sign the SBoM
+
   ```bash
   SBOM_DIGEST=$(oras discover -o json \
                   --artifact-type sbom/example \
@@ -95,11 +101,15 @@ The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and 
     --subject $REGISTRY/$REPO@$SBOM_DIGEST \
     ./sbom-signature.json:application/json
   ```
+
 - View the graph
+
   ```bash
   oras discover -o tree $IMAGE
   ```
-- Generates the following output:
+
+  Generates the following output:
+
   ```bash
   localhost:5000/net-monitor:v1
   ├── signature/example
@@ -109,7 +119,9 @@ The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and 
           └── signature/example
               └── sha256:31eb6a50c54df208a09222127a06e9b7afe1dd042771631b175...
   ```
+
 - Pull the SBOM
+
   ```bash
   # Get the digest for the SBOM
   SBOM_DIGEST=$(oras discover -o json \
@@ -128,16 +140,17 @@ The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and 
 
 ## Registry Support
 
-The following registries currently support the [ORAS Artifacts Specification][oras-artifacts].
+The following registries currently support, or are planning to support the [ORAS Artifacts Specification][oras-artifacts].
 
-- Please [submit PRs](https://github.com/oras-project/oras-www/pulls) for additional registry support.
-- See [ORAS Artifacts Community](https://github.com/oras-project/artifacts-spec#community) for how to get engaged.
+- [CNCF Distribution](#cncf-distribution-with-oras-artifacts-support)
+- [Azure Container Registry](#azure-container-registry)
 
 ### CNCF Distribution with ORAS Artifacts Support
 
 A reference implementation of the ORAS Artifacts Spec is available at [github.com/oras-project/distribution](https://github.com/oras-project/distribution)
 
 To run distribution locally:
+
   ```bash
   docker run -d -p 5000:5000 ghcr.io/oras-project/registry:v0.0.3-alpha
   REGISTRY=localhost:5000
@@ -178,6 +191,12 @@ The [AWS Elastic Container Registry has committed to supporting ORAS Artifacts](
 ### Coming Soon: Docker Hub
 
 Docker Hub has committed to supporting ORAS Artifacts
+
+## Additional Registry Support
+
+Please [submit PRs](https://github.com/oras-project/oras-www/pulls) for additional registry support.
+
+See [ORAS Artifacts Community](https://github.com/oras-project/artifacts-spec#community) for how to get engaged.
 
 [acr-tokens]:                 https://aka.ms/acr/tokens
 [oras-artifacts]:             https://github.com/oras-project/artifacts-spec/
