@@ -1,4 +1,4 @@
-# ORAS Artifact Reference Types (Alpha)
+# ORAS Artifact Reference Types (Alpha 1)
 
 ## Pushing artifacts that reference other artifacts
 
@@ -8,7 +8,11 @@ See the [ORAS Artifacts Spec scenarios][oras-artifacts-scenarios] for more detai
 
 ## ORAS Artifact Spec Support
 
-The latest alpha build of the oras cli is available at: https://github.com/oras-project/oras/releases/tag/v0.2.0-alpha.1
+Install the latest alpha build of the oras cli at: https://github.com/oras-project/oras/releases/tag/v0.2.1-alpha.1
+
+## Configure An Oras Artifact Enabled Registry
+
+See [Registry Support](#registry-support)
 
 ## Pushing Reference Types
 
@@ -22,8 +26,9 @@ The following sample defines a new Artifact Type of **signature**, using `signat
 
 - Set environment variables for the registry and artifacts
   ```bash
-  REPO=${REGISTRY}/net-monitor
-  IMAGE=${REPO}:v1
+  REPO=net-monitor
+  IMAGE=$REGISTRY/$REPO:v1
+  ARTIFACT=$REGISTRY/${REPO}:regdoc-v1
   ```
 - Build and push an image
 
@@ -40,8 +45,8 @@ The following sample defines a new Artifact Type of **signature**, using `signat
 
 - Push the signature to the registry, as a reference to the $IMAGE:
 
-  ```
-  oras push $REPO \
+  ```bash
+  oras push $REGISTRY/$REPO \
       --artifact-type 'signature/example' \
       --subject $IMAGE \
       -u $USERNAME -p $PASSWORD \
@@ -75,10 +80,10 @@ The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and 
   ```bash
   echo '{"version": "0.0.0.0", "artifact": "'${IMAGE}'", "contents": "good"}' > sbom.json
 
-  oras push $REPO \
+  oras push $REGISTRY/$REPO \
     --artifact-type 'sbom/example' \
-    --subject $IMAGE \
     -u $USERNAME -p $PASSWORD \
+    --subject $IMAGE \
     ./sbom.json:application/json
   ```
 - Sign the SBoM
@@ -88,19 +93,19 @@ The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and 
                   -u $USERNAME -p $PASSWORD \
                   $IMAGE | jq -r ".references[0].digest")
 
-  echo '{"artifact": "'${REPO}${SBOM_DIGEST}'", "signature": "pat hancock"}' > sbom-signature.json
+  echo '{"artifact": "'$REGISTRY/$REPO/$SBOM_DIGEST'", "signature": "pat hancock"}' > sbom-signature.json
 
-  oras push $REPO \
+  oras push $REGISTRY/$REPO \
     --artifact-type 'signature/example' \
-    --subject $REPO@$SBOM_DIGEST \
+    --subject $REGISTRY/$REPO@$SBOM_DIGEST \
     -u $USERNAME -p $PASSWORD \
     ./sbom-signature.json:application/json
   ```
 - View the graph
   ```bash
   oras discover \
-      -u $USERNAME -p $PASSWORD \
-      -o tree $IMAGE
+    -u $USERNAME -p $PASSWORD \
+    -o tree $IMAGE
   ```
 - Generates the following output:
   ```bash
@@ -111,6 +116,23 @@ The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and 
       └── sha256:dc737e2b9bb2489aa61f3fc4a90e2ec166bd9685fd56c6f48d...
           └── signature/example
               └── sha256:31eb6a50c54df208a09222127a06e9b7afe1dd042771631b175...
+  ```
+- Pull the SBOM
+  ```bash
+  # Get the digest for the SBOM
+  SBOM_DIGEST=$(oras discover -o json \
+                  --artifact-type 'sbom/example' \
+                  -u $USERNAME -p $PASSWORD \
+                  $IMAGE | jq -r ".references[0].digest")
+  
+  # Create a clean directory for downloading
+  mkdir ./download
+
+  # Pull the SBOM into the download directory
+  oras pull -a -o ./download $REGISTRY/$REPO@$SBOM_DIGEST
+
+  # View the $IMAGE SBOM
+  cat ./download/sbom.json | jq
   ```
 
 ## Registry Support
@@ -134,13 +156,21 @@ To run distribution locally:
   PASSWORD=nothing
   ```
 
+Continue with [Pushing Reference Types](#pushing-reference-types)
+
 ### Azure Container Registry
 
 The Azure Container Registry supports [ORAS Artifacts][oras-artifacts]. To enable the `oras` cli to `push`, `discover`, `pull` with ACR, configure username and passwords using [ACR Repository Scoped Tokens][acr-tokens]. Other [authentication options](https://aka.ms/acr/authentication) are also available.
 
 ```bash
-ACR_NAME=<registryName>
+ACR_NAME=wabbitnetworks3
 REGISTRY=$ACR_NAME.azurecr.io
+
+# Create a premium ACR instance in the South Central US region, with Zone Redundancy enabled
+# As deployments proceed, all regions across all tiers will support ORAS Artifacts
+az group create -n $ACR_NAME -l southcentralus
+az acr create -n $ACR_NAME -g $ACR_NAME --zone-redundancy enabled --sku Premium
+
 USERNAME='oras-token'
 PASSWORD=$(az acr token create -n $USERNAME \
                     -r $ACR_NAME \
@@ -149,7 +179,10 @@ PASSWORD=$(az acr token create -n $USERNAME \
                     -o json | jq -r ".credentials.passwords[0].value")
 
 docker login -u $USERNAME -p $PASSWORD $REGISTRY
+oras login -u $USERNAME -p $PASSWORD $REGISTRY
 ```
+
+Continue with [Pushing Reference Types](#pushing-reference-types)
 
 ### Coming Soon: AWS ACR
 
