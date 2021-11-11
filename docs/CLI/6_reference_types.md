@@ -10,10 +10,6 @@ See the [ORAS Artifacts Spec scenarios][oras-artifacts-scenarios] for more detai
 
 Install the latest alpha build of the oras cli at: https://github.com/oras-project/oras/releases/tag/v0.2.1-alpha.1
 
-## Configure An ORAS Artifact Enabled Registry
-
-See [Registry Support](#registry-support)
-
 ## Pushing Reference Types
 
 The following walkthrough will generate the graph of artifacts shown below.
@@ -24,7 +20,8 @@ Pushing artifact references involves identifying the unique artifact type, at le
 
 The following sample defines a new Artifact Type of **signature**, using `signature/example` as the `manifest.artifactType`.
 
-- Set environment variables for the registry and artifacts
+- [Configure An ORAS Artifact Enabled Registry](#registry-support)
+- Set environment variables for the above configured registry
 
   ```bash
   REPO=net-monitor
