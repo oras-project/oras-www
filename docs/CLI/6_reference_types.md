@@ -49,7 +49,6 @@ The following sample defines a new Artifact Type of **signature**, using `signat
   oras push $REGISTRY/$REPO \
       --artifact-type 'signature/example' \
       --subject $IMAGE \
-      -u $USER_NAME -p $PASSWORD \
       ./signature.json:application/json
   ```
 
@@ -60,9 +59,7 @@ The ORAS Artifacts Specification defines a [referrers API][oras-artifacts-referr
 - Using `oras discover`, view the graph of artifacts now stored in the registry
 
   ```bash
-  oras discover \
-    -u $USER_NAME -p $PASSWORD \
-    -o tree $IMAGE
+  oras discover -o tree $IMAGE
   ```
 - The output shows the beginning of a graph of artifacts, where the signature is viewed as a child of the $IMAGE
 
@@ -82,7 +79,6 @@ The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and 
 
   oras push $REGISTRY/$REPO \
     --artifact-type 'sbom/example' \
-    -u $USER_NAME -p $PASSWORD \
     --subject $IMAGE \
     ./sbom.json:application/json
   ```
@@ -90,7 +86,6 @@ The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and 
   ```bash
   SBOM_DIGEST=$(oras discover -o json \
                   --artifact-type sbom/example \
-                  -u $USER_NAME -p $PASSWORD \
                   $IMAGE | jq -r ".references[0].digest")
 
   echo '{"artifact": "'$REGISTRY/$REPO/$SBOM_DIGEST'", "signature": "pat hancock"}' > sbom-signature.json
@@ -98,14 +93,11 @@ The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and 
   oras push $REGISTRY/$REPO \
     --artifact-type 'signature/example' \
     --subject $REGISTRY/$REPO@$SBOM_DIGEST \
-    -u $USER_NAME -p $PASSWORD \
     ./sbom-signature.json:application/json
   ```
 - View the graph
   ```bash
-  oras discover \
-    -u $USER_NAME -p $PASSWORD \
-    -o tree $IMAGE
+  oras discover -o tree $IMAGE
   ```
 - Generates the following output:
   ```bash
@@ -122,7 +114,6 @@ The ORAS Artifacts specification enables deep graphs, enabling signed SBoMs and 
   # Get the digest for the SBOM
   SBOM_DIGEST=$(oras discover -o json \
                   --artifact-type 'sbom/example' \
-                  -u $USER_NAME -p $PASSWORD \
                   $IMAGE | jq -r ".references[0].digest")
   
   # Create a clean directory for downloading
@@ -146,14 +137,10 @@ The following registries currently support the [ORAS Artifacts Specification][or
 
 A reference implementation of the ORAS Artifacts Spec is available at [github.com/oras-project/distribution](https://github.com/oras-project/distribution)
 
-> note: to keep the `oras` commands consistent across registries, `-u USER_NAME -p PASSWORD` are used consistently. By setting the USER_NAME and password = nothing, the commands will work consistently.
-
 To run distribution locally:
   ```bash
   docker run -d -p 5000:5000 ghcr.io/oras-project/registry:v0.0.3-alpha
   REGISTRY=localhost:5000
-  USER_NAME=nothing
-  PASSWORD=nothing
   ```
 
 Continue with [Pushing Reference Types](#pushing-reference-types)
