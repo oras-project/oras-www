@@ -181,7 +181,7 @@ oras login -u $USER_NAME -p $PASSWORD $REGISTRY
 
 Continue with [Pushing Reference Types](#pushing-reference-types)
 
-### Coming Soon: AWS ACR
+### Coming Soon: Amazon ECR
 
 The [AWS Elastic Container Registry has committed to supporting ORAS Artifacts](https://github.com/aws/containers-roadmap/issues/43#issuecomment-943740674).
 
