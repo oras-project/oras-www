@@ -11,6 +11,11 @@ extra_css:
 plugins:
   - search
   - git-revision-date-localized
+  - redirects:
+      redirect_maps:
+        'oras.md': 'https://github.com/oras-project/oras'
+        'oras-go.md': 'https://github.com/oras-project/oras-go'
+
 extra:
   social:
     - icon: cncf/cncf-icon-white
@@ -36,9 +41,6 @@ theme:
   favicon: assets/favicon.ico
   custom_dir: docs/custom/
   # there are for golang vanity imports
-  static_templates:
-    - oras
-    - oras-go
   palette:
     - scheme: default
       toggle:
