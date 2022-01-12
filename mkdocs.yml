@@ -11,6 +11,7 @@ extra_css:
 plugins:
   - search
   - git-revision-date-localized
+
 extra:
   social:
     - icon: cncf/cncf-icon-white
@@ -24,6 +25,7 @@ extra:
 markdown_extensions:
   - pymdownx.highlight
   - pymdownx.superfences
+  - meta
   - pymdownx.emoji:
        emoji_index: !!python/name:materialx.emoji.twemoji
        emoji_generator: !!python/name:materialx.emoji.to_svg
@@ -36,9 +38,6 @@ theme:
   favicon: assets/favicon.ico
   custom_dir: docs/custom/
   # there are for golang vanity imports
-  static_templates:
-    - oras
-    - oras-go
   palette:
     - scheme: default
       toggle:
