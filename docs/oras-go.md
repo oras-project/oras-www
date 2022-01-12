@@ -1,2 +1,5 @@
 
-This page will redirect to https://github.com/oras-project/oras-go
+<meta name=go-import content="oras.land/oras-go git https://github.com/oras-project/oras-go">
+<meta name=go-source content="oras.land/oras-go git https://github.com/oras-project/oras-go https://github.com/oras-project/oras-go/tree/main{/dir} https://github.com/oras-project/oras-go/blob/main{/dir}/{file}#L{line}">
+<meta http-equiv=refresh content="0; url=https://github.com/oras-project/oras-go">
+Nothing to see here; <a href=https://github.com/oras-project/oras-go>move along</a>.
