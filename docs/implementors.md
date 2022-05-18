@@ -51,7 +51,7 @@ This will start a distribution server at `localhost:5000`
   ```
   docker run -it --rm -p 5000:5000 \
       -v $(pwd)/auth.htpasswd:/etc/docker/registry/auth.htpasswd \
-      -e REGISTRY_AUTH="{htpasswd: {realm: localhost:5000, path: /etc/docker/registry/auth.htpasswd}}" \
+      -e REGISTRY_AUTH="{htpasswd: {realm: localhost, path: /etc/docker/registry/auth.htpasswd}}" \
       registry
   ```
 
@@ -62,6 +62,9 @@ This will start a distribution server at `localhost:5000`
   ```
 
 You will notice a new entry for `localhost:5000` appear in `~/.docker/config.json`.
+Note that this local registry will work for basic authentication (as shown above)
+but not [Token Authentication](https://docs.docker.com/registry/spec/auth/token/), 
+which requires an auth server setup with certificates.
 
 To remove the entry from the credentials file, use `oras logout`:
 
@@ -94,7 +97,7 @@ To login to the registry without a certificate, a self-signed certificate, or an
   docker run -it --rm -p 5000:5000 \
       -v `pwd`/certs:/certs \
       -v $(pwd)/auth.htpasswd:/etc/docker/registry/auth.htpasswd \
-      -e REGISTRY_AUTH="{htpasswd: {realm: localhost:5000, path: /etc/docker/registry/auth.htpasswd}}" \
+      -e REGISTRY_AUTH="{htpasswd: {realm: localhost, path: /etc/docker/registry/auth.htpasswd}}" \
       -e REGISTRY_HTTP_ADDR=0.0.0.0:5000 \
       -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt \
       -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
@@ -146,7 +149,7 @@ The `--plain-http` flag mean that you want to use http instead of https to conne
   ```
   docker run -it --rm -p 5000:5000 \
     -v $(pwd)/auth.htpasswd:/etc/docker/registry/auth.htpasswd \
-    -e REGISTRY_AUTH="{htpasswd: {realm: localhost:5000, path: /etc/docker/registry/auth.htpasswd}}" \
+    -e REGISTRY_AUTH="{htpasswd: {realm: localhost, path: /etc/docker/registry/auth.htpasswd}}" \
     -e REGISTRY_HTTP_ADDR=0.0.0.0:5000 \
     registry
   ```
