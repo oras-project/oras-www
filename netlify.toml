@@ -5,7 +5,7 @@
 publish = "site"
 command = """
 pip3 install --upgrade pip
-pip3 install -q poetry &&
+pip3 install -q poetry==1.1.12 &&
 poetry config virtualenvs.in-project true &&
 poetry install -v &&
 mkdocs build -d site
