@@ -1,3 +1,7 @@
+# Environments, etc
+env
+site
+
 # Poetry
 poetry.lock
 
