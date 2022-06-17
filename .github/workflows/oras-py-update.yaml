@@ -1,4 +1,8 @@
 on:
+  schedule:
+    # nightly at 5am
+    - cron: '0 5 * * *'
+
   repository_dispatch:
     types: [oras-py-update]
 
