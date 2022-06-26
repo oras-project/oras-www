@@ -1,5 +1,7 @@
 # Installation
 
+This guide demonstrates the installation steps of ORAS CLI on different platforms.
+
 ## Homebrew
 
 Install `oras` using [Homebrew](https://brew.sh/):
@@ -30,7 +32,7 @@ mv oras-install/oras /usr/local/bin/
 rm -rf oras_0.12.0_*.tar.gz oras-install/
 ```
 
-### macOS
+### MacOS
 
 ```
 curl -LO https://github.com/oras-project/oras/releases/download/v0.12.0/oras_0.12.0_darwin_amd64.tar.gz
@@ -61,3 +63,12 @@ docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v0.12.0 help
 ```
 
 > Note: the default WORKDIR  in the image is `/workspace`.
+
+## Verify 
+
+```
+oras version
+Version:        0.12.0
+Go version:     go1.16.3
+Git commit:     1e6a64e1789f5145bf669b75bebfe013100f6253
+```
