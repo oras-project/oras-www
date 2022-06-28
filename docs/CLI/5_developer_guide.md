@@ -70,7 +70,7 @@ To update or add new dependencies, run `go get <package name>`.
     ```sh
     shasum -c oras_0.13.0_checksums.txt
     ```
-8. Build ORAS from source and run verion command. Make sure the version and git commit is what you expect it to be (same as the commit used to create the tag). Example:
+8. Run version command and make sure that version number and git commit digest is what you expect it to be (same as the commit used to create the tag). Example:
     ```sh
     mkdir -p oras-bin/
     tar -zxf oras_0.13.0_linux_amd64.tar.gz -C oras-bin
