@@ -1,5 +1,18 @@
 # Developer Guide
 
+## Prerequisites
+
+- Go 1.18+
+- Git
+
+## Clone the repo
+
+You can clone the repo and get the main branch using the following command.
+
+```
+https://github.com/oras-project/oras.git
+```
+
 ## Building binary
 
 Use `make build` to build all platform binaries to the `bin/` directory.
