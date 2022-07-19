@@ -39,8 +39,8 @@ rm -rf oras_0.13.0_*.tar.gz oras-install/
 Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
 
 ```shell
-curl.exe -sLO  https://github.com/oras-project/oras/releases/download/v0.13.0/oras_0.13.0_windows_amd64.tar.gz
-tar.exe -xvzf oras_0.13.0_windows_amd64.tar.gz
+curl.exe -sLO  https://github.com/oras-project/oras/releases/download/v0.13.0/oras_0.13.0_windows_amd64.zip
+tar.exe -xvzf oras_0.13.0_windows_amd64.zip
 mkdir -p %USERPROFILE%\bin\
 copy oras.exe %USERPROFILE%\bin\
 set PATH=%USERPROFILE%\bin\;%PATH%
