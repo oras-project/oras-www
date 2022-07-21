@@ -18,7 +18,7 @@ We're happy to promote all usage, as well as provide feedback.*
 - [Azure Container Registry](#azure-container-registry-acr)
 - [Amazon Elastic Container Registry](#amazon-elastic-container-registry-ecr)
 - [Google Artifact Registry](#google-artifact-registry-gar)
-- [GitHub Packages container registry](#github-container-registry)
+- [GitHub Packages container registry](#github-packages-container-registry-ghcr)
 - [Bundle Bar](#bundle-bar)
 
 ### CNCF Distribution
