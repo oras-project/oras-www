@@ -268,7 +268,8 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
 - Pushing Artifacts to GHCR
 
   ```
-  oras push ghcr.io/${GITHUB_OWNER}/samples/artifact:1.0
+  oras push ghcr.io/${GITHUB_OWNER}/samples/artifact:1.0 \
+    ./artifact.txt:application/vnd.unknown.layer.v1+txt
   ```
 
 - Pulling Artifacts from GHCR
