@@ -202,8 +202,7 @@ ECR Artifact Blog Post: <https://aws.amazon.com/blogs/containers/oci-artifact-su
 - Pulling Artifacts from ECR
 
   ```
-  oras pull $REPO_URI:1.0 \
-    --media-type application/vnd.unknown.layer.v1+txt
+  oras pull $REPO_URI:1.0
   ```
 
 #### [Azure Container Registry (ACR)](https://aka.ms/acr)
@@ -234,8 +233,7 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
 - Pulling Artifacts from ACR
 
   ```
-  oras pull myregistry.azurecr.io/samples/artifact:1.0 \
-    --media-type application/vnd.unknown.layer.v1+txt
+  oras pull myregistry.azurecr.io/samples/artifact:1.0
   ```
 
 #### [Google Artifact Registry (GAR)](https://cloud.google.com/artifact-registry)
@@ -256,8 +254,7 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
 - Pulling Artifacts from GAR
 
   ```
-  oras pull ${REGION}-docker.pkg.dev/${GCP_PROJECT}/samples/artifact:1.0 \
-    --media-type application/vnd.unknown.layer.v1+txt
+  oras pull ${REGION}-docker.pkg.dev/${GCP_PROJECT}/samples/artifact:1.0
   ```
 
 #### [GitHub Packages container registry (GHCR)](https://docs.github.com/en/packages/guides/about-github-container-registry)
@@ -271,15 +268,13 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
 - Pushing Artifacts to GHCR
 
   ```
-  oras push ghcr.io/${GITHUB_OWNER}/samples/artifact:1.0 \
-    ./artifact.txt:application/vnd.unknown.layer.v1+txt
+  oras push ghcr.io/${GITHUB_OWNER}/samples/artifact:1.0
   ```
 
 - Pulling Artifacts from GHCR
 
   ```
-  oras pull ghcr.io/${GITHUB_OWNER}/samples/artifact:1.0 \
-    --media-type application/vnd.unknown.layer.v1+txt
+  oras pull ghcr.io/${GITHUB_OWNER}/samples/artifact:1.0
   ```
 
 #### [Bundle Bar](https://bundle.bar/docs/supported-clients/oras/)
@@ -300,8 +295,7 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
 - Pulling Artifacts from Bundle Bar
 
   ```
-  oras pull bundle.bar/u/${BB_USER}/samples/artifact:1.0 \
-    --media-type application/vnd.unknown.layer.v1+txt
+  oras pull bundle.bar/u/${BB_USER}/samples/artifact:1.0
   ```
 
 [artifacts]:            https://github.com/opencontainers/artifacts
