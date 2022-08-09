@@ -262,7 +262,7 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
 - [Authenticating with GHCR](https://docs.github.com/en/packages/guides/pushing-and-pulling-docker-images#authenticating-to-github-container-registry)
 
   ```
-  echo $GITHUB_PAT | oras login https://ghcr.io -u GITHUB_USERNAME --password-stdin
+  echo $GITHUB_PAT | oras login ghcr.io -u GITHUB_USERNAME --password-stdin
   ```
 
 - Pushing Artifacts to GHCR
