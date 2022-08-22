@@ -61,7 +61,7 @@ docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v0.14.0 help
 ```shell
 $ oras version
 Version:        0.14.0
-Go version:     go1.18.1
-Git commit:     bb75f50fb5c21a59beb09ce1b632291182046632
+Go version:     go1.19
+Git commit:     4f09007a66d8bf9f7501fc728e94f34c23d77210
 Git tree state: clean
 ```
