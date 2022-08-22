@@ -5,12 +5,16 @@
 - Go 1.18+
 - Git
 
-## Clone the repo
+## Clone the repository
 
 You can clone the repo and get the main branch using the following command:
 
 ```bash
-https://github.com/oras-project/oras.git
+git clone https://github.com/oras-project/oras.git
+```
+
+Enter the `oras` directory:
+
 ```
 
 ## Building binary
