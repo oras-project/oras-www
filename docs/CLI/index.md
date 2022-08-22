@@ -39,8 +39,13 @@ rm -rf oras_0.13.0_*.tar.gz oras-install/
 Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
 
 ```shell
+<<<<<<< HEAD
 curl.exe -sLO  https://github.com/oras-project/oras/releases/download/v0.13.0/oras_0.13.0_windows_amd64.tar.gz
 tar.exe -xvzf oras_0.13.0_windows_amd64.tar.gz
+=======
+curl.exe -sLO  https://github.com/oras-project/oras/releases/download/v0.13.0/oras_0.13.0_windows_amd64.zip
+tar.exe -xvzf oras_0.13.0_windows_amd64.zip
+>>>>>>> 08874952115f66cd92cc7368f401b621bec58fbd
 mkdir -p %USERPROFILE%\bin\
 copy oras.exe %USERPROFILE%\bin\
 set PATH=%USERPROFILE%\bin\;%PATH%
@@ -50,7 +55,11 @@ set PATH=%USERPROFILE%\bin\;%PATH%
 
 A public Docker image containing the CLI is available on [GitHub Container Registry](https://github.com/orgs/oras-project/packages/container/package/oras):
 
+<<<<<<< HEAD
 ```bash
+=======
+```
+>>>>>>> 08874952115f66cd92cc7368f401b621bec58fbd
 docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v0.13.0 help
 ```
 
