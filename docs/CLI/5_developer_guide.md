@@ -7,7 +7,7 @@
 
 ## Clone the repository
 
-You can clone the repo and get the main branch using the following command:
+You can clone the repository and get the main branch using the following command:
 
 ```bash
 git clone https://github.com/oras-project/oras.git
@@ -15,7 +15,7 @@ git clone https://github.com/oras-project/oras.git
 
 Enter the `oras` directory:
 
-```
+```bash
 cd oras
 ```
 
