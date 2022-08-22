@@ -50,7 +50,7 @@ set PATH=%USERPROFILE%\bin\;%PATH%
 
 A public Docker image containing the CLI is available on [GitHub Container Registry](https://github.com/orgs/oras-project/packages/container/package/oras):
 
-```
+```bash
 docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v0.13.0 help
 ```
 

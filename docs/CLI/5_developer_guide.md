@@ -7,9 +7,9 @@
 
 ## Clone the repo
 
-You can clone the repo and get the main branch using the following command.
+You can clone the repo and get the main branch using the following command:
 
-```
+```bash
 https://github.com/oras-project/oras.git
 ```
 
