@@ -16,6 +16,8 @@ git clone https://github.com/oras-project/oras.git
 Enter the `oras` directory:
 
 ```
+cd oras
+```
 
 ## Building binary
 
