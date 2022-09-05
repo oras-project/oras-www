@@ -83,16 +83,21 @@ To update or add new dependencies, run `go get <package name>`.
 3. Look for any references to the current stable version, and replace with upcoming version. Open a PR with these changes, such as "prepare for <version>". Examples:
     * https://github.com/oras-project/oras/blob/main/internal/version/version.go#L5
 4. Make fresh clone the repo after all above steps are completed and merged. Create a new tag for the version prefixed with "v", for example: `git tag v0.14.1`. Push the tag directly to the repo, for example `git push origin v0.14.1`.
+    ```sh
+    version=0.14.1
+    git tag v${version}
+    git push origin v${version}
+    ```
 5. Wait for GitHub Actions to complete successfully for both the `release-ghcr` and `release-github` pipelines
 6. Download all of the artifacts uploaded to the new GitHub release locally (`*checksums.txt`, `*darwin_amd64.tar.gz`, `*linux_armv7.tar.gz`, `*linux_arm64.tar.gz`, `*linux_amd64.tar.gz`, `*windows_amd64.zip`).
 7. Verify the checksum of the file, downloaded platform should pass the check:
     ```sh
-    shasum -c oras_0.14.1_checksums.txt
+    shasum -c oras_${version}_checksums.txt
     ```
 8. Run version command and make sure that version number and git commit digest is what you expect it to be (same as the commit used to create the tag). Example:
     ```sh
     mkdir -p oras-bin/
-    tar -zxf oras_0.14.1_linux_amd64.tar.gz -C oras-bin
+    tar -zxf oras_${version}_linux_amd64.tar.gz -C oras-bin
     ./oras-bin/oras version
     ```
 9. Create armored GPG signatures (`.asc`) using the key in the `KEYS` file.
