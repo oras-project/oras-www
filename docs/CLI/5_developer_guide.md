@@ -82,17 +82,22 @@ To update or add new dependencies, run `go get <package name>`.
 2. If you haven't already, open PR to add your GPG key to the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file (see file for instructions)
 3. Look for any references to the current stable version, and replace with upcoming version. Open a PR with these changes, such as "prepare for <version>". Examples:
     * https://github.com/oras-project/oras/blob/main/internal/version/version.go#L5
-4. Make fresh clone the repo after all above steps are completed and merged. Create a new tag for the version prefixed with "v", for example: `git tag v0.14.0`. Push the tag directly to the repo, for example `git push origin v0.14.0`.
+4. Make fresh clone the repo after all above steps are completed and merged. Create a new tag for the version prefixed with "v", for example: `git tag v0.14.1`. Push the tag directly to the repo, for example `git push origin v0.14.1`.
+    ```sh
+    version=0.14.1
+    git tag v${version}
+    git push origin v${version}
+    ```
 5. Wait for GitHub Actions to complete successfully for both the `release-ghcr` and `release-github` pipelines
 6. Download all of the artifacts uploaded to the new GitHub release locally (`*checksums.txt`, `*darwin_amd64.tar.gz`, `*linux_armv7.tar.gz`, `*linux_arm64.tar.gz`, `*linux_amd64.tar.gz`, `*windows_amd64.zip`).
 7. Verify the checksum of the file, downloaded platform should pass the check:
     ```sh
-    shasum -c oras_0.14.0_checksums.txt
+    shasum -c oras_${version}_checksums.txt
     ```
 8. Run version command and make sure that version number and git commit digest is what you expect it to be (same as the commit used to create the tag). Example:
     ```sh
     mkdir -p oras-bin/
-    tar -zxf oras_0.14.0_linux_amd64.tar.gz -C oras-bin
+    tar -zxf oras_${version}_linux_amd64.tar.gz -C oras-bin
     ./oras-bin/oras version
     ```
 9. Create armored GPG signatures (`.asc`) using the key in the `KEYS` file.
@@ -140,4 +145,4 @@ Once ready, this should be a doc in the project itself.
 
 oras actually serves 2 purposes: library and utility. All of the above steps, except for the tag, are entirely about the utility.
 
-For better or for worse, semver is tied up with both. As an example, the current issue with the go modules solely affects its inclusion as a library, but it is immediate. It can be fixed by cutting v0.14.0, and the downstream problems go away. yet cutting a release _also_ means all of the above, which are far more complicated.
+For better or for worse, semver is tied up with both. As an example, the current issue with the go modules solely affects its inclusion as a library, but it is immediate. It can be fixed by cutting v0.14.1, and the downstream problems go away. yet cutting a release _also_ means all of the above, which are far more complicated.
