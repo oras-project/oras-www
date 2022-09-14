@@ -1,13 +1,13 @@
 # ORAS 0.14 and Future: Empower Container Secure Supply Chain
 
-_Feynman Zhou, CNCF Ambassador, ACR Product Manager_
+_[Feynman Zhou](https://twitter.com/FeynmanZhou), CNCF Ambassador, ACR Product Manager_
 
 The [OCI Registry As Storage (ORAS)](https://oras.land/) project maintainers announced v0.14 release for the ORAS CLI recently. ORAS v0.14 introduces four new top-level commands and new options to manage supply chain artifacts across different container registries and multi-cloud environments. 
 
 ## What's new in ORAS 0.14
 
 <figure>
-  <img src="/blog/oras-0.14-and-future/carbon.svg" width="300" />
+  <img src="/blog/oras-0.14-and-future/carbon.svg" />
 </figure>
 
 
