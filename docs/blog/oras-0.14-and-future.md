@@ -21,7 +21,7 @@ This blog will demonstrate how to use ORAS CLI v0.14 to copy an image from a val
 
 ![ORAS workflow](oras-0.14-and-future/Screenshot_1.png)
 
-> Note: we will use MAR (Microsoft Artifact Registry) and ACR (Azure Container Registry) for demonstation purpose only. There will be another [blog posts](https://github.com/oras-project/oras-www/issues/54) to demonstrate how to use ORAS with Amazon ECR and Google GAR soon. 
+> Note: we will use MAR (Microsoft Artifact Registry) and ACR (Azure Container Registry) for demonstration purpose only. There will be another [blog posts](https://github.com/oras-project/oras-www/issues/54) to demonstrate how to use ORAS with Amazon ECR and Google GAR soon. 
 
 ## Install ORAS 0.14
 
@@ -49,9 +49,9 @@ oras copy mcr.microsoft.com/mmlspark/spark2.4:1.0.0 feynmanacr.azurecr.io/mmlspa
 
 An SBOM creates a machine-readable inventory of the software components that make up a given software product. Generating SBOM is a first step in Supply Chain Security. 
 
-You can use [DOcker SBOM](https://docs.docker.com/engine/sbom/) or [SBOM Tool](https://github.com/microsoft/sbom-tool) to generate a SBOM for the target image.
+You can use [Docker SBOM](https://docs.docker.com/engine/sbom/) or [SBOM Tool](https://github.com/microsoft/sbom-tool) to generate a SBOM for the target image.
 
-In this demo, we use SBOM Tool to create SPDX 2.2 compatible SBOMs for any variety of artifacts. 
+SBOM Tool can be used to create SPDX 2.2 compatible SBOMs for any variety of artifacts. In this demo, we use SBOM Tool to create SPDX 2.2 compatible SBOM for the sample Spark image.
 
 Install SBOM Tool on a Linux machine:
 
@@ -70,7 +70,7 @@ Then it will create a SBOM `manifest.spdx.json` in `foo/_manifest/spdx_2.2`.
 
 ## Attach the SBOM to this image
 
-Next, attach the generate SBOM to this Spark image stored in ACR:
+Next, let's attach the generate SBOM to this Spark image stored in ACR:
 
 ```
 $ oras attach feynmanacr.azurecr.io/mmlspark/spark2.4:1.0.0 foo/_manifest/spdx_2.2/manifest.spdx.json --artifact-type example/sbom
@@ -101,4 +101,7 @@ TBD: Introduce ORAS 0.15 and future milestones.
 
 ## Join the ORAS community
  
-The ORAS Project was accepted in June 2021 as a Cloud Native Computing Foundation (CNCF) Sandbox project. It is important that we hear from the community as we advance the artifact-spec capability; if you maintain or are implementing a container registry, we are particularly [interested in your feedback](https://github.com/oras-project/artifacts-spec#community). Working together, we can improve supply chain artifact security in the cloud native ecosystem. 
+The ORAS Project was accepted in June 2021 as a Cloud Native Computing Foundation (CNCF) Sandbox project. It is important that we hear from the community as we advance the artifact-spec capability; if you maintain or are implementing a container registry, we are particularly interested in your feedback. Working together, we can improve supply chain artifact security in the cloud native ecosystem. 
+
+- [Follow the ORAS Twitter](https://twitter.com/intent/follow?screen_name=orasproject)
+- [Join the Slack channel in CNCF](https://slack.cncf.io/) and find us at **oras** channel
