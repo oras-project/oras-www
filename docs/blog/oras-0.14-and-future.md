@@ -6,17 +6,10 @@ The [OCI Registry As Storage (ORAS)](https://oras.land/) project maintainers ann
 
 ## What's new in ORAS 0.14
 
-* New command sets
-  * `oras attach`: [Preview] Attach files to an existing artifact
-  * `oras discover`: [Preview] Discover referrers of a manifest in the remote registry
-  * `oras copy`: [Preview] Copy artifacts from one target to another
-  * `oras manifest fetch`: [Preview] Fetch manifest of the target artifact
-* New options for `oras push`
-  * Add ability to export manifest after pushing artifacts by `--export-manifest <path>`
-  * Add `--artifact-type` to set the media type of the manifest config for OCI manifests
-  * Add `--annotation <key>=<value>` option for easier specifying manifest annotations
-* New options for `oras pull`
-  * Support pulling arbitrary manifest config
+<figure>
+  <img src="/blog/oras-0.14-and-future/carbon.svg" width="300" />
+</figure>
+
 
 Please see the [Release Notes](https://github.com/oras-project/oras/releases/tag/v0.14.0) for details.
 
@@ -24,8 +17,11 @@ Prior to ORAS CLI v0.14 release, the ORAS Go library, also released v2.0.0-rc.2 
 
 As cloud native development continues to grow, we have seen increased community interest in evolving registries to natively store, pull, copy, and discover a graph of supply chain artifacts. Artifact references are important for many use cases such as adding Software Bill of Materials (SBoM), security scan results, and container image signing. 
 
-This blog will demonstrate how to use ORAS v0.14 to copy an image from a validated artifact registry to personal conintainer registry, then attach a SBOM to it and discover the graph.
+This blog will demonstrate how to use ORAS CLI v0.14 to copy an image from a validated artifact registry to a personal conintainer registry, then attach a SBOM to it and discover the reference in a tree graph. 
 
+![ORAS workflow](oras-0.14-and-future/Screenshot_1.png)
+
+> Note: we will use MAR (Microsoft Artifact Registry) and ACR (Azure Container Registry) for demonstation purpose only. There will be another [blog posts](https://github.com/oras-project/oras-www/issues/54) to demonstrate how to use ORAS with Amazon ECR and Google GAR soon. 
 
 ## Install ORAS 0.14
 
@@ -43,17 +39,19 @@ rm -rf oras_0.14.1_*.tar.gz oras-install/
 
 ## Copy an image from Registry A to Registry B
 
-In this demo, assume all images are validated in MAR, so I will use ORAS to copy the container image from Microsoft Artifact Registry (MAR) to my personal repository of Docker Hub. You can use your prefered container registry with ORAS.
+In this demo, assume all images are validated in MAR, so I will use ORAS to copy the container image from MAR to my personal repository of ACR. You can use your prefered container registry with ORAS.
 
 ```
-oras copy mcr.microsoft.com/mmlspark/spark2.4:1.0.0 registry-1.docker.io/pengfeizhou/spark2.4:1.0.0
+oras copy mcr.microsoft.com/mmlspark/spark2.4:1.0.0 feynmanacr.azurecr.io/mmlspark/spark2.4:1.0.0
 ```
-
-> Note: There is a [known issue](https://github.com/oras-project/oras/issues/542) of using the DockerHub host name. You will be able to use `docker.io` directly in ORAS 0.15. 
 
 ## Using SBOM Tool to generate a SBOM
 
-[SBOM Tool](https://github.com/microsoft/sbom-tool) is a general purpose, enterprise-proven, build-time SBOM generator open-sourced by Microsoft. You can use SBOM Tool to create SPDX 2.2 compatible SBOMs for any variety of artifacts. 
+An SBOM creates a machine-readable inventory of the software components that make up a given software product. Generating SBOM is a first step in Supply Chain Security. 
+
+You can use [DOcker SBOM](https://docs.docker.com/engine/sbom/) or [SBOM Tool](https://github.com/microsoft/sbom-tool) to generate a SBOM for the target image.
+
+In this demo, we use SBOM Tool to create SPDX 2.2 compatible SBOMs for any variety of artifacts. 
 
 Install SBOM Tool on a Linux machine:
 
@@ -62,18 +60,24 @@ curl -Lo sbom-tool https://github.com/microsoft/sbom-tool/releases/latest/downlo
 chmod +x sbom-tool
 ```
 
-Generate a SBOM for the Spark image stored in Docker Hub:
+Generate a SBOM for the Spark image stored in ACR:
 
 ```
-sbom-tool generate -di registry-1.docker.io/pengfeizhou/spark2.4:1.0.0 -b ./foo -pn bar -pv 0.1 -bc ./foo -ps MyCompany -nsb http://mycompany.com
+sbom-tool generate -di feynmanacr.azurecr.io/mmlspark/spark2.4:1.0.0 -b ./foo -pn bar -pv 0.1 -bc ./foo -ps MyCompany -nsb http://mycompany.com
 ```
+
+Then it will create a SBOM `manifest.spdx.json` in `foo/_manifest/spdx_2.2`.
 
 ## Attach the SBOM to this image
 
-Attach the generate SBOM to this Spark image stored in Docker Hub:
+Next, attach the generate SBOM to this Spark image stored in ACR:
 
 ```
-oras attach registry-1.docker.io/pengfeizhou/spark2.4:1.0.0 foo/_manifest/spdx_2.2/manifest.spdx.json --artifact-type example/sbom
+$ oras attach feynmanacr.azurecr.io/mmlspark/spark2.4:1.0.0 foo/_manifest/spdx_2.2/manifest.spdx.json --artifact-type example/sbom
+Uploading 97a5dc071dd1 manifest.spdx.json
+Uploaded  97a5dc071dd1 manifest.spdx.json
+Attached to feynmanacr.azurecr.io/mmlspark/spark2.4:1.0.0
+Digest: sha256:7592c8026675e463e7ced9b7ed369c2962b354a69b842423e8ctestdigest
 ```
 
 ## View the graph of artifacts
@@ -81,7 +85,12 @@ oras attach registry-1.docker.io/pengfeizhou/spark2.4:1.0.0 foo/_manifest/spdx_2
 A linked graph of supply chain artifacts can be viewed through the ORAS discovery command:
 
 ```
-oras discover registry-1.docker.io/pengfeizhou/spark2.4:1.0.0 -o tree
+$ oras discover feynmanacr.azurecr.io/mmlspark/spark2.4:1.0.0
+Discovered 1 artifacts referencing feynmanacr.azurecr.io/mmlspark/spark2.4:1.0.0
+Digest: sha256:28de427f1df8cdb99bc98536b489d75cc496a2d37c3b9266248etestdigest
+
+Artifact Type   Digest
+example/sbom    sha256:7592c8026675e463e7ced9b7ed369c2962b354a69b842423e8ctestdigest
 ```
 
 ## ORAS Present and Future
