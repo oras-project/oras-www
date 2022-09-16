@@ -6,26 +6,23 @@ The [OCI Registry As Storage (ORAS)](https://oras.land/) project maintainers ann
 
 ## What's new in ORAS 0.14
 
-<figure>
-  <img src="/blog/oras-0.14-and-future/carbon.svg" />
-</figure>
-
+![ What's new in ORAS 0.14](oras-0.14-and-future/what's-new-0.14.png)
 
 Please see the [Release Notes](https://github.com/oras-project/oras/releases/tag/v0.14.0) for details.
 
 Prior to ORAS CLI v0.14 release, the ORAS Go library, also released v2.0.0-rc.2 to support [artifacts-spec v1.0.0-rc.2](https://github.com/oras-project/artifacts-spec/releases/tag/v1.0.0-rc.2) and provides new functions to enable developers to build your own OCI client tool.
 
-As cloud native development continues to grow, we have seen increased community interest in evolving registries to natively store, pull, copy, and discover a graph of supply chain artifacts. Artifact references are important for many use cases such as adding Software Bill of Materials (SBoM), security scan results, and container image signing. 
+As cloud native development continues to grow, we have seen increased community interest in evolving registries to natively store, pull, copy, and discover a graph of supply chain artifacts. Artifact references are important for many use cases such as adding Software Bill of Materials (SBoM), security scan results, and container image signatures. 
 
-This blog will demonstrate how to use ORAS CLI v0.14 to copy an image from a validated artifact registry to a personal conintainer registry, then attach a SBOM to it and discover the reference in a tree graph. 
+This blog will demonstrate how to use ORAS CLI v0.14 to copy an image from a public registry validated by Microsoft to a private registry, then attach an SBoM to it and discover the reference in a tree graph.
 
-![ORAS workflow](oras-0.14-and-future/Screenshot_1.png)
+![ORAS workflow](oras-0.14-and-future/oras-workflow.png)
 
 > Note: we will use MAR (Microsoft Artifact Registry) and ACR (Azure Container Registry) for demonstration purpose only. There will be another [blog posts](https://github.com/oras-project/oras-www/issues/54) to demonstrate how to use ORAS with Amazon ECR and Google GAR soon. 
 
 ## Install ORAS 0.14
 
-Install the latest release of ORAS on a Linux machine:
+Install the latest release of ORAS on a Linux environment:
 
 ```
 curl -LO https://github.com/oras-project/oras/releases/download/v0.14.1/oras_0.14.1_linux_amd64.tar.gz
@@ -39,7 +36,7 @@ rm -rf oras_0.14.1_*.tar.gz oras-install/
 
 ## Copy an image from Registry A to Registry B
 
-In this demo, assume all images are validated in MAR, so I will use ORAS to copy the container image from MAR to my personal repository of ACR. You can use your prefered container registry with ORAS.
+In this demo, we'll use ORAS to copy the container image from the public MAR registry to my private ACR registry. You can use your preferred container registry with ORAS.
 
 ```
 oras copy mcr.microsoft.com/mmlspark/spark2.4:1.0.0 feynmanacr.azurecr.io/mmlspark/spark2.4:1.0.0
@@ -53,7 +50,7 @@ You can use [Docker SBOM](https://docs.docker.com/engine/sbom/) or [SBOM Tool](h
 
 SBOM Tool can be used to create SPDX 2.2 compatible SBOMs for any variety of artifacts. In this demo, we use SBOM Tool to create SPDX 2.2 compatible SBOM for the sample Spark image.
 
-Install SBOM Tool on a Linux machine:
+Install the SBOM Tool within a Linux environment:
 
 ```
 curl -Lo sbom-tool https://github.com/microsoft/sbom-tool/releases/latest/download/sbom-tool-linux-x64
@@ -63,7 +60,13 @@ chmod +x sbom-tool
 Generate a SBOM for the Spark image stored in ACR:
 
 ```
-sbom-tool generate -di feynmanacr.azurecr.io/mmlspark/spark2.4:1.0.0 -b ./foo -pn bar -pv 0.1 -bc ./foo -ps MyCompany -nsb http://mycompany.com
+sbom-tool generate -di feynmanacr.azurecr.io/mmlspark/spark2.4:1.0.0 \
+  -b ./foo \
+  -pn bar \
+  -pv 0.1 \
+  -bc ./foo \
+  -ps MyCompany \
+  -nsb http://mycompany.com
 ```
 
 Then it will create a SBOM `manifest.spdx.json` in `foo/_manifest/spdx_2.2`.
@@ -97,7 +100,14 @@ example/sbom    sha256:7592c8026675e463e7ced9b7ed369c2962b354a69b842423e8ctestdi
 
 ORAS has been integrated and adopted by some industry-leading ISVs and projects, such as [soci-snapshotter](https://github.com/awslabs/soci-snapshotter) by AWS, [KubeApps](https://github.com/vmware-tanzu/kubeapps) by VMware Tanzu, [UOR Framework](https://universalreference.io/) by Red Hat etc. 
 
-TBD: Introduce ORAS 0.15 and future milestones.
+ORAS 0.15 and future milestones will provide more capabilities to easily manage OCI content and interact with registries. It will empower the container secure supply chain and focus on the following areas:
+
+- Be able to manage repository, tag, manifest, and blob
+- Support and migrate to OCI reference types
+- Support push/pull artifacts from OCI Image Layout
+- E2E testing
+
+See the ORAS [Roadmap](https://github.com/oras-project/community/blob/main/Roadmap.md) for more details.
 
 ## Join the ORAS community
  
