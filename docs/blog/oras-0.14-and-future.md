@@ -107,7 +107,7 @@ ORAS 0.15 and future milestones will provide more capabilities to easily manage 
 - Support push/pull artifacts from OCI Image Layout
 - E2E testing
 
-See the ORAS [Roadmap](https://github.com/oras-project/oras/projects/1) for more details.
+See the ORAS [Roadmap](https://github.com/oras-project/community/blob/main/Roadmap.md) for more details.
 
 ## Join the ORAS community
  
