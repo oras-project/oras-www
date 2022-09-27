@@ -25,11 +25,11 @@ This blog will demonstrate how to use ORAS CLI v0.14 to copy an image from a pub
 Install the latest release of ORAS on a Linux environment:
 
 ```
-curl -LO https://github.com/oras-project/oras/releases/download/v0.14.1/oras_0.14.1_linux_amd64.tar.gz
+curl -LO https://github.com/oras-project/oras/releases/download/v0.15.0/oras_0.15.0_linux_amd64.tar.gz
 mkdir -p oras-install/
-tar -zxf oras_0.14.1_*.tar.gz -C oras-install/
+tar -zxf oras_0.15.0_*.tar.gz -C oras-install/
 mv oras-install/oras /usr/local/bin/
-rm -rf oras_0.14.1_*.tar.gz oras-install/
+rm -rf oras_0.15.0_*.tar.gz oras-install/
 ```
 
 > Note: You can also refer to the [installation guide](https://oras.land/cli/) for other different platforms.

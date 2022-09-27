@@ -82,9 +82,9 @@ To update or add new dependencies, run `go get <package name>`.
 2. If you haven't already, open PR to add your GPG key to the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file (see file for instructions)
 3. Look for any references to the current stable version, and replace with upcoming version. Open a PR with these changes, such as "prepare for <version>". Examples:
     * https://github.com/oras-project/oras/blob/main/internal/version/version.go#L5
-4. Make fresh clone the repo after all above steps are completed and merged. Create a new tag for the version prefixed with "v", for example: `git tag v0.14.1`. Push the tag directly to the repo, for example `git push origin v0.14.1`.
+4. Make fresh clone the repo after all above steps are completed and merged. Create a new tag for the version prefixed with "v", for example: `git tag v0.15.0`. Push the tag directly to the repo, for example `git push origin v0.15.0`.
     ```sh
-    version=0.14.1
+    version=0.15.0
     git tag v${version}
     git push origin v${version}
     ```
@@ -145,4 +145,4 @@ Once ready, this should be a doc in the project itself.
 
 oras actually serves 2 purposes: library and utility. All of the above steps, except for the tag, are entirely about the utility.
 
-For better or for worse, semver is tied up with both. As an example, the current issue with the go modules solely affects its inclusion as a library, but it is immediate. It can be fixed by cutting v0.14.1, and the downstream problems go away. yet cutting a release _also_ means all of the above, which are far more complicated.
+For better or for worse, semver is tied up with both. As an example, the current issue with the go modules solely affects its inclusion as a library, but it is immediate. It can be fixed by cutting v0.15.0, and the downstream problems go away. yet cutting a release _also_ means all of the above, which are far more complicated.
