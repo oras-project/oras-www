@@ -20,7 +20,7 @@ The following sample defines a new Artifact Type of **Acme Rocket**, using `appl
 
   ```
   oras push localhost:5000/hello-artifact:v1 \
-  --manifest-config /dev/null:application/vnd.acme.rocket.config \
+  --artifact-type application/vnd.acme.rocket.config \
   ./artifact.txt
   ```
 
@@ -36,7 +36,7 @@ The following sample defines a new Artifact Type of **Acme Rocket**, using `appl
 
   ```
   oras push localhost:5000/hello-artifact:v2 \
-  --manifest-config /dev/null:application/vnd.acme.rocket.config \
+  --artifact-type application/vnd.acme.rocket.config \
     artifact.txt:text/plain
   ```
 
@@ -54,7 +54,7 @@ The [OCI distribution-spec][distribution-spec] provides for storing optional con
 
   ```
   oras push localhost:5000/hello-artifact:v2 \
-  --manifest-config config.json:application/vnd.acme.rocket.config.v1+json \
+  --config config.json:application/vnd.acme.rocket.config.v1+json \
     artifact.txt:text/plain
   ```
 
@@ -86,7 +86,7 @@ See [OCI Artifacts][artifacts] for more details.
 
   ```
   oras push localhost:5000/hello-artifact:v2 \
-    --manifest-config config.json:application/vnd.acme.rocket.config.v1+json \
+    --config config.json:application/vnd.acme.rocket.config.v1+json \
     artifact.txt:text/plain \
     ./docs/:application/vnd.acme.rocket.docs.layer.v1+tar
   ```
