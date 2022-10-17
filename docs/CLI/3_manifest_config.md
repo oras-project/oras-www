@@ -119,7 +119,7 @@ $ cat annotations.json
         "org.opencontainers.image.title": "config.json"
     }
 }
-$ oras push --config config.json --manifest-annotations annotations.json localhost:5000/hello:latest hi.txt
+$ oras push --config config.json --annotation-file annotations.json localhost:5000/hello:latest hi.txt
 Uploading a948904f2f0f hi.txt
 Uploading 57f840b6073c config.json
 Pushed localhost:5000/hello:latest
