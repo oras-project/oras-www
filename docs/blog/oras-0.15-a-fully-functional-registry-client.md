@@ -1,6 +1,6 @@
 # ORAS 0.15: A fully Functional OCI Registry Client
 
-_[Feynman Zhou](https://twitter.com/FeynmanZhou), [Yi Zha](https://github.com/yizha1)_
+_Author: [Feynman Zhou](https://twitter.com/FeynmanZhou), [Yi Zha](https://github.com/yizha1)_
 
 The [OCI Registry As Storage (ORAS)](https://oras.land/) project maintainers announced two releases of v0.15 for the ORAS CLI recently. ORAS [v0.15.0](https://github.com/oras-project/oras/releases/tag/v0.15.0) introduces four new top-level commands and new options to manage tags and repos in registries and provides capabilities to alter the OCI content for advanced use cases. Three weeks later, [ORAS 0.15.1](https://github.com/oras-project/oras/releases/tag/v0.15.1) also released with a few known bug fixes. Since the release of v0.15, ORAS CLI has evolved into a fully functional OCI registry client.
 
