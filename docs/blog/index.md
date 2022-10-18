@@ -1,5 +1,15 @@
 # ORAS Blog Index
 
+<h2>ORAS 0.15: A fully functional OCI registry client</h2>
+
+_Feynman Zhou， Yi Zha_
+
+The [OCI Registry As Storage (ORAS)](https://oras.land/) project maintainers announced two releases for the ORAS CLI recently. ORAS v0.15.0 introduces four new top-level commands and new options to manage tags and repos in registries and provides capabilities to alter the OCI content for advanced use cases. Three weeks later, ORAS 0.15.1 also released with known bug fixes. Since the release of v0.15, ORAS CLI has evolved into a fully functional OCI registry client.
+
+[Read More...][2]
+
+  [2]: oras-0.15-a-fully-functional-registry-client.md
+
 <h2>ORAS 0.14 and Future: Empower Container Secure Supply Chain</h2>
 
 _Feynman Zhou_
