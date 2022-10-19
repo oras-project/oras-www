@@ -2,7 +2,7 @@
 
 _Author: [Feynman Zhou](https://twitter.com/FeynmanZhou), [Yi Zha](https://github.com/yizha1)_
 
-The [OCI Registry As Storage (ORAS)](https://oras.land/) project maintainers announced two releases of v0.15 for the ORAS CLI recently. ORAS [v0.15.0](https://github.com/oras-project/oras/releases/tag/v0.15.0) introduces four new top-level commands and new options to manage tags and repos in registries and provides capabilities to alter the OCI content for advanced use cases. Three weeks later, [ORAS 0.15.1](https://github.com/oras-project/oras/releases/tag/v0.15.1) also released with a few known bug fixes. Since the release of v0.15, ORAS CLI has evolved into a fully functional OCI registry client.
+The [OCI Registry As Storage (ORAS)](https://oras.land/) project maintainers announced two releases of v0.15 for the ORAS CLI recently. ORAS [v0.15.0](https://github.com/oras-project/oras/releases/tag/v0.15.0) introduces four new top-level commands and new options to manage tags and repositories in registries and provides capabilities to alter the OCI content for advanced use cases. Three weeks later, [ORAS 0.15.1](https://github.com/oras-project/oras/releases/tag/v0.15.1) also released with a few known bug fixes. Since the release of v0.15, ORAS CLI has evolved into a fully functional OCI registry client.
 
 ## What's new in ORAS 0.15
 
@@ -10,7 +10,7 @@ The [OCI Registry As Storage (ORAS)](https://oras.land/) project maintainers ann
 
 As ORAS has been adopted by more and more OCI implementors and registry vendors, we have seen increased community requirements in providing fine-grained capabilities to alter the content of OCI supply chain artifacts. ORAS 0.15 now supports operate the blob and manifest of an artifact in the registry. Please see the [Release Notes](https://github.com/oras-project/oras/releases/tag/v0.15.0) for details.
 
-This blog post will demonstrate how to use ORAS CLI v0.15 to convert a Docker image stored in Docker Hub into an OCI image， then push it to the Distribution registry.
+This blog post will demonstrate how to use ORAS CLI v0.15 to convert a Docker image stored in Docker Hub into an OCI image，then push it to the Distribution registry.
 
 ## Run a local Distribution registry
 
@@ -51,7 +51,7 @@ Fetch a config blob to a local file from a sample Docker image:
 oras blob fetch docker.io/library/hello-world@sha256:feb5d9fea6a5e9606aa995e879d862b825965ba48de054caab5ef356dc6b3412 --output config-blob.json
 ```
 
-Then push this blob file to a new repo in the Distribution registry:
+Then push this blob file to a new repository in the Distribution registry:
 
 ```
 oras blob push localhost:5000/oras-distribution/hello-world:latest@sha256:92c7f9c92844bbbb5d0a101b22f7c2a7949e40f8ea90c8b3bc396879d95e899a demo-blob.json
@@ -164,7 +164,7 @@ Tag the manifest with 'latest' to 'v1.0.0', 'v2.0.0':
 $ oras tag localhost:5000/oras-repo/hello-world:latest v1.0.0 v2.0.0
 ```
 
-View the newly created tags in the sample repo:
+View the newly created tags in the sample repository:
 
 ```
 $ oras repo show-tags localhost:5000/oras-repo/hello-world
@@ -177,9 +177,9 @@ Congratulations! You have experienced all new top-level commands in ORAS CLI 0.1
 
 ## What's next for ORAS
 
-Recently, the ORAS maintainers submitted the proposal via [pr-934](https://github.com/opencontainers/image-spec/pull/934) and [pr-335](https://github.com/opencontainers/distribution-spec/pull/335) to OCI which provides a solution that adds new capabilities to OCI registries while maintaining the ability to function on existing registries. This proposal originates from the [ORAS artifact spec](https://github.com/oras-project/artifacts-spec) and has been accepted by the OCI group. OCI group also cut new release in distribution-spec and image-spec to support Reference Types. 
+Recently the OCI and ORAS maintainers submitted a proposal to [unify the ORAS Artifact manifest with an OCI Artifact manifest (pr-934)](https://github.com/opencontainers/image-spec/pull/934) and [pr-335](https://github.com/opencontainers/distribution-spec/pull/335), to consolidate the specs. These changes provide adds new capabilities to OCI registries while maintaining the ability to function on registries that don't yet support the [new Artifact manifest](https://github.com/opencontainers/image-spec/blob/main/artifact.md). This proposal originates from the [ORAS artifact ](https://github.com/oras-project/artifacts-spec) and has been accepted by the OCI group. The OCI group also cut a new release in the distribution-spec and image-spec supporting Reference Types, enabling a breadth of supply chain evidence to benefit from existing registries.
 
-In ORAS CLI 0.16 and ORAS-go v2.0.0-rc.4, support OCI artifact spec will be the most significant plan and is targeted to be released at the end of October. You can find the migration proposal from this [doc](https://hackmd.io/zLnCh8WRQDG-3S_jXR626g?view). See also the [ORAS Roadmap](https://github.com/oras-project/community/blob/main/Roadmap.md) for more detailed future plans.
+In [ORAS CLI 0.16](https://github.com/oras-project/oras/milestone/9) and [ORAS-go v2.0.0-rc.4](https://github.com/oras-project/oras-go/milestone/10), we'll add support for the [OCI artifact spec](https://github.com/opencontainers/image-spec/blob/main/artifact.md) will be the mostwill be the most significant plan and is targeted to be released at the end of October. You can find the migration proposal from this [doc](https://hackmd.io/zLnCh8WRQDG-3S_jXR626g?view). See also the [ORAS Roadmap](https://github.com/oras-project/community/blob/main/Roadmap.md) for more detailed future plans.
 
 ## Join the ORAS community
  
