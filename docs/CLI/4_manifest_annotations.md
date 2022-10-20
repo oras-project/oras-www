@@ -7,7 +7,7 @@ are also supported by `oras`.
 
 ## Make annotations
 
-Users can make annotations to the manifest, the config, and individual files (i.e. layers) by the `--manifest-annotations file` option.
+Users can make annotations to the manifest, the config, and individual files (i.e. layers) by the `--annotation-file file` option.
 The annotations file is a JSON file with the following format:
 
 ```json
@@ -41,7 +41,7 @@ For instance, the following annotation file `annotations.json`:
 Running the following command
 
 ```
-oras push --manifest-annotations annotations.json localhost:5000/club:party cake.txt juice.txt
+oras push --annotation-file annotations.json localhost:5000/club:party cake.txt juice.txt
 ```
 
 results in

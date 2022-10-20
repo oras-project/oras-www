@@ -195,7 +195,7 @@ ECR Artifact Blog Post: <https://aws.amazon.com/blogs/containers/oci-artifact-su
 
   ```
   oras push $REPO_URI:1.0 \
-      --manifest-config /dev/null:application/vnd.unknown.config.v1+json \
+      --artifact-type application/vnd.unknown.config.v1+json \
       ./artifact.txt:application/vnd.unknown.layer.v1+txt
   ```
 
@@ -226,7 +226,7 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
 
   ```
   oras push myregistry.azurecr.io/samples/artifact:1.0 \
-      --manifest-config /dev/null:application/vnd.unknown.config.v1+json \
+      --artifact-type application/vnd.unknown.config.v1+json \
       ./artifact.txt:application/vnd.unknown.layer.v1+txt
   ```
 

@@ -121,7 +121,7 @@ Let's first push a container. Let's follow [the example here](https://oras.land/
 ```bash
 echo "hello dinosaur" > artifact.txt
 $ oras-py push localhost:5000/dinosaur/artifact:v1 \
---manifest-config /dev/null:application/vnd.acme.rocket.config \
+--artifact-type application/vnd.acme.rocket.config \
 ./artifact.txt
 Successfully pushed localhost:5000/dinosaur/artifact:v1
 ```
@@ -130,7 +130,7 @@ And if you aren't using https, add `--insecure`
 
 ```bash
 $ oras-py push localhost:5000/dinosaur/artifact:v1 --insecure \
---manifest-config /dev/null:application/vnd.acme.rocket.config \
+--artifact-type application/vnd.acme.rocket.config \
 ./artifact.txt
 Successfully pushed localhost:5000/dinosaur/artifact:v1
 ```
