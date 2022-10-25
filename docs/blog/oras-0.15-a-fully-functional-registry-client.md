@@ -2,82 +2,121 @@
 
 _Author: [Feynman Zhou](https://twitter.com/FeynmanZhou), [Yi Zha](https://github.com/yizha1)_
 
-The [OCI Registry As Storage (ORAS)](https://oras.land/) project maintainers announced two releases of v0.15 for the ORAS CLI recently. ORAS [v0.15.0](https://github.com/oras-project/oras/releases/tag/v0.15.0) introduces four new top-level commands and new options to manage tags and repositories in registries and provides capabilities to alter the OCI content for advanced use cases. Three weeks later, [ORAS 0.15.1](https://github.com/oras-project/oras/releases/tag/v0.15.1) also released with a few known bug fixes. Since the release of v0.15, ORAS CLI has evolved into a fully functional OCI registry client.
+The [OCI Registry As Storage (ORAS)](https://oras.land/) project maintainers announced two releases of v0.15 for the ORAS CLI recently. ORAS [v0.15.0](https://github.com/oras-project/oras/releases/tag/v0.15.0) introduces four new top-level commands and new options to manage tags and repositories for advanced use cases. Three weeks later, [ORAS 0.15.1](https://github.com/oras-project/oras/releases/tag/v0.15.1) also released with a few known bug fixes. Since the release of v0.15, ORAS CLI has evolved into a fully functional OCI registry client.
 
 ## What's new in ORAS 0.15
 
 ![ What's new in ORAS 0.15](oras-0.15/what's-new-in-oras-0.15.png)
 
-As ORAS has been adopted by more and more OCI implementors and registry vendors, we have seen increased community requirements in providing fine-grained capabilities to alter the content of OCI supply chain artifacts. ORAS 0.15 now supports operate the blob and manifest of an artifact in the registry. Please see the [Release Notes](https://github.com/oras-project/oras/releases/tag/v0.15.0) for details.
+As ORAS has been adopted by more and more OCI implementors and registry vendors, we have seen increased community requirements in providing fine-grained capabilities to alter the content of OCI supply chain artifacts. ORAS 0.15 now supports granular blob and manifest operations for artifacts within the registry. Please see the [Release Notes](https://github.com/oras-project/oras/releases/tag/v0.15.0) for details.
 
 This blog post will demonstrate how to use ORAS CLI v0.15 to convert a Docker image stored in Docker Hub into an OCI image，then push it to the Distribution registry.
 
-## Run a local Distribution registry
+![convert image workflow](oras-0.15/convert-image.png)
 
-Run a local instance of the CNCF Distribution Registry, with ORAS Artifacts support:
+## Prerequisites 
 
-```
+- Install [ORAS 0.15.1](https://github.com/oras-project/oras/releases/tag/v0.15.1)
+- Install [Docker](https://www.docker.com/)
+
+## Run a Distribution registry locally
+
+Run a local instance of the CNCF Distribution Registry, with ORAS Artifacts support (Note: OCI Artifact support is coming soon):
+
+```bash
 docker run -d -p 5000:5000 ghcr.io/oras-project/registry:v1.0.0-rc.2
 ```
 
 ## Fetch and view the manifest of a sample Docker image
 
-```
-$ oras manifest fetch docker.io/library/hello-world@sha256:f54a58bc1aac5ea1a25d796ae155dc228b3f0e11d046ae276b39c4bf2f13d8c4
+Set the environment variable as below.
 
+```bash
+docker_digest="sha256:f54a58bc1aac5ea1a25d796ae155dc228b3f0e11d046ae276b39c4bf2f13d8c4"
+```
+
+Fetch the manifest and export it to a JSON file.
+
+```bash
+oras manifest fetch docker.io/library/hello-world@$docker_digest > docker.manifest.json
+```
+
+View the generated manifest file.
+
+```bash
+cat docker.manifest.json
 {
-   "schemaVersion": 2,
-   "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
-   "config": {
-      "mediaType": "application/vnd.docker.container.image.v1+json",
-      "size": 1469,
-      "digest": "sha256:feb5d9fea6a5e9606aa995e879d862b825965ba48de054caab5ef356dc6b3412"
-   },
-   "layers": [
-      {
-         "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
-         "size": 2479,
-         "digest": "sha256:2db29710123e3e53a794f2694094b9b4338aa9ee5c40b930cb8063a1be392c54"
-      }
-   ]
+  "schemaVersion": 2,
+  "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+  "config": {
+    "mediaType": "application/vnd.docker.container.image.v1+json",
+    "size": 1469,
+    "digest": "sha256:feb5d9fea6a5e9606aa995e879d862b825965ba48de054caab5ef356dc6b3412"
+  },
+  "layers": [
+    {
+      "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "size": 2479,
+      "digest": "sha256:2db29710123e3e53a794f2694094b9b4338aa9ee5c40b930cb8063a1be392c54"
+    }
+  ]
 }
 ```
 
 ## Fetch and push a blob
 
+Per [distribution-spec](https://github.com/opencontainers/distribution-spec/blob/main/spec.md#push) ,the blobs making up the object are uploaded first, and the manifest last. So we should fetch a blob from Docker Hub and push it to local registry, then upload the manifest.
+
+Set the environment variable as below.
+
+
+```
+config_digest=$(cat docker.manifest.json | jq -r .config.digest)
+```
+
 Fetch a config blob to a local file from a sample Docker image:
 
-```
-oras blob fetch docker.io/library/hello-world@sha256:feb5d9fea6a5e9606aa995e879d862b825965ba48de054caab5ef356dc6b3412 --output config-blob.json
+```bash
+oras blob fetch docker.io/library/hello-world@$config_digest --output config-blob.json
 ```
 
-Then push this blob file to a new repository in the Distribution registry:
+Then push this blob file to a new repository in a CNCF Distribution registry:
 
-```
-oras blob push localhost:5000/oras-distribution/hello-world:latest@sha256:92c7f9c92844bbbb5d0a101b22f7c2a7949e40f8ea90c8b3bc396879d95e899a demo-blob.json
+```bash
+oras blob push localhost:5000/oras-distribution/hello-world config-blob.json
 ```
 
 Similarly, fetch the layer blob and push it to the Distribution registry:
 
-```
-oras blob fetch docker.io/library/hello-world@sha256:2db29710123e3e53a794f2694094b9b4338aa9ee5c40b930cb8063a1be392c54 --output layer-blob.json
+```bash
+layer_digest=$(cat docker.manifest.json | jq -r .layers[].digest)
 ```
 
+```bash
+oras blob fetch docker.io/library/hello-world@$layer_digest --output layer-blob.json
 ```
-oras blob push localhost:5000/oras-sample/hello-world layer-blob.json
+
+```bash
+oras blob push localhost:5000/oras-distribution/hello-world layer-blob.json
+```
+
+Push it to the sample repository with the blob file.
+
+```bash
+oras blob push localhost:5000/oras-distribution/hello-world layer-blob.json
 ```
 
 ## Fetch and push a manifest
 
 Similar to blob operations above, fetch a manifest from a Docker image stored in Docker Hub and export it to a JSON file:
 
-```
+```bash
 oras manifest fetch docker.io/library/hello-world@sha256:f54a58bc1aac5ea1a25d796ae155dc228b3f0e11d046ae276b39c4bf2f13d8c4 --output hello-manifest.json
 ```
 
 Modify the manifest file `hello-manifest.json` from Docker to OCI type in each `mediatype` field of config and layer:
 
-```
+```json
 {
    "schemaVersion": 2,
    "mediaType": "application/vnd.oci.image.manifest.v1+json",
@@ -99,15 +138,16 @@ Modify the manifest file `hello-manifest.json` from Docker to OCI type in each `
 Push the modified manifest file to the repository in the Distribution registry. It will also create a new repository automatically:
 
 ```
-oras manifest push localhost:5000/oras-repo/hello-world:latest hello-manifest.json
+oras manifest push localhost:5000/oras-distribution/hello-world:latest hello-manifest.json
 ```
 
 ## Validate the new image 
 
 View the manifest of this Docker image from the Distribution registry, you will find all `mediatype` are changed to OCI type: 
 
-```
-$ oras manifest fetch localhost:5000/oras-repo/hello-world:latest
+```bash
+oras manifest fetch localhost:5000/oras-distribution/hello-world:latest
+
 {
    "schemaVersion": 2,
    "mediaType": "application/vnd.oci.image.manifest.v1+json",
@@ -128,8 +168,8 @@ $ oras manifest fetch localhost:5000/oras-repo/hello-world:latest
 
 Run and validate the new OCI image:
 
-```
-$ docker run localhost:5000/oras-repo/hello-world:latest
+```bash
+docker run localhost:5000/oras-distribution/hello-world:latest
 
 Hello from Docker!
 This message shows that your installation appears to be working correctly.
@@ -160,14 +200,14 @@ It turns out the conversion works.
 
 Tag the manifest with 'latest' to 'v1.0.0', 'v2.0.0':
 
-```
-$ oras tag localhost:5000/oras-repo/hello-world:latest v1.0.0 v2.0.0
+```bash
+oras tag localhost:5000/oras-distribution/hello-world:latest v1.0.0 v2.0.0
 ```
 
 View the newly created tags in the sample repository:
 
-```
-$ oras repo show-tags localhost:5000/oras-repo/hello-world
+```bash
+oras repo tags localhost:5000/oras-distribution/hello-world
 latest
 v1.0.0
 v2.0.0
@@ -179,7 +219,7 @@ Congratulations! You have experienced all new top-level commands in ORAS CLI 0.1
 
 Recently the OCI and ORAS maintainers submitted a proposal to [unify the ORAS Artifact manifest with an OCI Artifact manifest (pr-934)](https://github.com/opencontainers/image-spec/pull/934) and [pr-335](https://github.com/opencontainers/distribution-spec/pull/335), to consolidate the specs. These changes provide adds new capabilities to OCI registries while maintaining the ability to function on registries that don't yet support the [new Artifact manifest](https://github.com/opencontainers/image-spec/blob/main/artifact.md). This proposal originates from the [ORAS artifact ](https://github.com/oras-project/artifacts-spec) and has been accepted by the OCI group. The OCI group also cut a new release in the distribution-spec and image-spec supporting Reference Types, enabling a breadth of supply chain evidence to benefit from existing registries.
 
-In [ORAS CLI 0.16](https://github.com/oras-project/oras/milestone/9) and [ORAS-go v2.0.0-rc.4](https://github.com/oras-project/oras-go/milestone/10), we'll add support for the [OCI artifact spec](https://github.com/opencontainers/image-spec/blob/main/artifact.md) will be the mostwill be the most significant plan and is targeted to be released at the end of October. You can find the migration proposal from this [doc](https://hackmd.io/zLnCh8WRQDG-3S_jXR626g?view). See also the [ORAS Roadmap](https://github.com/oras-project/community/blob/main/Roadmap.md) for more detailed future plans.
+In [ORAS CLI 0.16](https://github.com/oras-project/oras/milestone/9) and [ORAS-go v2.0.0-rc.4](https://github.com/oras-project/oras-go/milestone/10), we'll add support for the [OCI artifact spec](https://github.com/opencontainers/image-spec/blob/main/artifact.md) will be the most significant plan and is targeted to be released at the end of October. You can find the migration proposal from this [doc](https://hackmd.io/zLnCh8WRQDG-3S_jXR626g?view). See also the [ORAS Roadmap](https://github.com/oras-project/community/blob/main/Roadmap.md) for more detailed future plans.
 
 ## Join the ORAS community
  
