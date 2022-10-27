@@ -1,4 +1,4 @@
-# ORAS 0.15: A fully Functional OCI Registry Client
+# ORAS 0.15: A Fully Functional OCI Registry Client
 
 _Author: [Feynman Zhou](https://twitter.com/FeynmanZhou), [Yi Zha](https://github.com/yizha1)_
 
