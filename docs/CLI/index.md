@@ -17,21 +17,21 @@ Install from the latest [release artifacts](https://github.com/oras-project/oras
 ### Linux
 
 ```bash
-curl -LO https://github.com/oras-project/oras/releases/download/v0.15.1/oras_0.15.1_linux_amd64.tar.gz
+curl -LO https://github.com/oras-project/oras/releases/download/v0.16.0/oras_0.16.0_linux_amd64.tar.gz
 mkdir -p oras-install/
-tar -zxf oras_0.15.1_*.tar.gz -C oras-install/
+tar -zxf oras_0.16.0_*.tar.gz -C oras-install/
 mv oras-install/oras /usr/local/bin/
-rm -rf oras_0.15.1_*.tar.gz oras-install/
+rm -rf oras_0.16.0_*.tar.gz oras-install/
 ```
 
 ### macOS
 
 ```bash
-curl -LO https://github.com/oras-project/oras/releases/download/v0.15.1/oras_0.15.1_darwin_amd64.tar.gz
+curl -LO https://github.com/oras-project/oras/releases/download/v0.16.0/oras_0.16.0_darwin_amd64.tar.gz
 mkdir -p oras-install/
-tar -zxf oras_0.15.1_*.tar.gz -C oras-install/
+tar -zxf oras_0.16.0_*.tar.gz -C oras-install/
 mv oras-install/oras /usr/local/bin/
-rm -rf oras_0.15.1_*.tar.gz oras-install/
+rm -rf oras_0.16.0_*.tar.gz oras-install/
 ```
 
 ### Windows
@@ -39,8 +39,8 @@ rm -rf oras_0.15.1_*.tar.gz oras-install/
 Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
 
 ```shell
-curl.exe -sLO  https://github.com/oras-project/oras/releases/download/v0.15.1/oras_0.15.1_windows_amd64.zip
-tar.exe -xvzf oras_0.15.1_windows_amd64.zip
+curl.exe -sLO  https://github.com/oras-project/oras/releases/download/v0.16.0/oras_0.16.0_windows_amd64.zip
+tar.exe -xvzf oras_0.16.0_windows_amd64.zip
 mkdir -p %USERPROFILE%\bin\
 copy oras.exe %USERPROFILE%\bin\
 set PATH=%USERPROFILE%\bin\;%PATH%
@@ -51,7 +51,7 @@ set PATH=%USERPROFILE%\bin\;%PATH%
 A public Docker image containing the CLI is available on [GitHub Container Registry](https://github.com/orgs/oras-project/packages/container/package/oras):
 
 ```
-docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v0.15.1 help
+docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v0.16.0 help
 ```
 
 > Note: the default WORKDIR  in the image is `/workspace`.
@@ -60,8 +60,8 @@ docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v0.15.1 help
 
 ```shell
 $ oras version
-Version:        0.15.1
+Version:        0.16.0
 Go version:     go1.19
-Git commit:     36dc01d02c54bf410d56d5e16b597eedbe666ec6
+Git commit:     7aae814306dcf8bb45f2f886f2579e4e18c4b55c
 Git tree state: clean
 ```
