@@ -8,37 +8,37 @@ oras copy [flags] <from>{:<tag>|@<digest>} <to>[:<tag>[,<tag>][...]]
 
 ## Examples
 
-Copy the artifact tagged with 'v1' from repository 'localhost:5000/net-monitor' to repository 'localhost:5000/net-monitor-copy':
+Copy the artifact tagged with `v1` from repository `localhost:5000/net-monitor` to repository `localhost:5000/net-monitor-copy`:
 
 ```
 oras copy localhost:5000/net-monitor:v1 localhost:5000/net-monitor-copy:v1
 ```
 
-Copy the artifact tagged with 'v1' and its referrers from repository 'localhost:5000/net-monitor' to 'localhost:5000/net-monitor-copy':
+Copy the artifact tagged with `v1` and its referrers from repository `localhost:5000/net-monitor` to `localhost:5000/net-monitor-copy`:
 
 ```
 oras copy -r localhost:5000/net-monitor:v1 localhost:5000/net-monitor-copy:v1
 ```
 
-Copy the artifact tagged with 'v1' from repository 'localhost:5000/net-monitor' to 'localhost:5000/net-monitor-copy' with certain platform:
+Copy the artifact tagged with `v1` from repository `localhost:5000/net-monitor` to `localhost:5000/net-monitor-copy` with certain platform:
 
 ```
 oras copy --platform linux/arm/v5 localhost:5000/net-monitor:v1 localhost:5000/net-monitor-copy:v1 
 ```
 
-Copy the artifact tagged with 'v1' from repository 'localhost:5000/net-monitor' to 'localhost:5000/net-monitor-copy' with multiple tags:
+Copy the artifact tagged with `v1` from repository `localhost:5000/net-monitor` to `localhost:5000/net-monitor-copy` with multiple tags:
 
 ```
 oras copy localhost:5000/net-monitor:v1 localhost:5000/net-monitor-copy:v1,tag2,tag3
 ```
 
-Copy the artifact tagged with 'v1' from repository 'localhost:5000/net-monitor' to 'localhost:5000/net-monitor-copy' with multiple tags and concurrency level tuned:
+Copy the artifact tagged with `v1` from repository `localhost:5000/net-monitor` to `localhost:5000/net-monitor-copy` with multiple tags and concurrency level tuned:
 
 ```
 oras copy --concurrency 6 localhost:5000/net-monitor:v1 localhost:5000/net-monitor-copy:v1,tag2,tag3
 ```
 
-### Options
+## Options
 
 ```
       --concurrency int                             concurrency level (default 3)

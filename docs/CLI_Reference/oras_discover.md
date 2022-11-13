@@ -1,28 +1,32 @@
 ## oras discover
 
-[Preview] Discover referrers of a manifest in the remote registry
-
-### Synopsis
-
-[Preview] Discover referrers of a manifest in the remote registry
-
-** This command is in preview and under development. **
-
-Example - Discover direct referrers of manifest 'hello:latest' in registry 'localhost:5000':
-  oras discover localhost:5000/hello
-
-Example - Discover all the referrers of manifest 'hello:latest' in registry 'localhost:5000' and display in a tree view:
-  oras discover -o tree localhost:5000/hello
-
-Example - Discover referrers with type 'test-artifact' of manifest 'hello:latest' in registry 'localhost:5000':
-  oras discover --artifact-type test-artifact localhost:5000/hello
-
+Discover referrers of a manifest in the remote registry.
 
 ```
 oras discover [flags] <name>{:<tag>|@<digest>}
 ```
 
-### Options
+## Examples
+
+Discover direct referrers of manifest `hello:latest` in registry `localhost:5000`:
+
+```
+oras discover localhost:5000/hello
+```
+
+Discover all the referrers of manifest `hello:latest` in registry `localhost:5000` and display in a tree view:
+
+```
+oras discover -o tree localhost:5000/hello
+```
+
+Discover referrers with type `test-artifact` of manifest `hello:latest` in registry `localhost:5000`:
+
+```
+oras discover --artifact-type test-artifact localhost:5000/hello
+```
+
+## Options
 
 ```
       --artifact-type string   artifact type
