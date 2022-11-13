@@ -1,4 +1,4 @@
-## oras blob push
+# oras blob push
 
 Push a blob to a remote registry.
 

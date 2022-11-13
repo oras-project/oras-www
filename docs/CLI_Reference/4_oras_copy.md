@@ -1,4 +1,4 @@
-## oras copy
+# oras copy
 
 Copy artifacts from one target to another.
 

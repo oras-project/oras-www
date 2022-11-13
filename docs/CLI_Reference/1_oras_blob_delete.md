@@ -1,4 +1,4 @@
-## oras blob delete
+# oras blob delete
 
 Delete a blob from a remote registry.
 

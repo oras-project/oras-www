@@ -1,4 +1,4 @@
-## oras blob fetch
+# oras blob fetch
 
 Fetch a blob from a remote registry.
 

@@ -1,4 +1,4 @@
-## oras discover
+# oras discover
 
 Discover referrers of a manifest in the remote registry.
 
