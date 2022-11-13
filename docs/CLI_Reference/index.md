@@ -2,8 +2,6 @@
 
 To list available commands, either run `oras` with no parameters or execute `oras help`:
 
-## Options
-
 ```
 $ oras
 Usage:
@@ -31,7 +29,7 @@ Flags:
 Use "oras [command] --help" for more information about a command.
 ```
 
-### SEE ALSO
+## See also
 
 * [oras attach](oras_attach.md)	 - Attach files to an existing artifact
 * oras blob - Blob operations

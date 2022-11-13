@@ -1,4 +1,4 @@
-## oras attach
+# oras attach
 
 Attach files to an existing artifact.
 
