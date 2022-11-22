@@ -6,7 +6,7 @@ _Author: [maxgio92](https://github.com/maxgio92)_
 
 [Notary project](https://notaryproject.dev/) is a set of tools that helps you sign, store, and verify OCI artifacts using OCI-conformant registries.
 
-[Notation]() is an implementation of the [Notary v2 specifications](https://github.com/notaryproject/notaryproject).
+[Notation](https://github.com/notaryproject/notation) is an implementation of the [Notary v2 specifications](https://github.com/notaryproject/notaryproject).
 As an implementation provides a CLI that adds signatures as standard items in the registry ecosystem, and can build a set of simple tooling for signing and verifying these signatures.
 
 Notary v2 provides for multiple signatures of an [OCI Artifact](https://github.com/opencontainers/artifacts) (including container images) to be persisted in an OCI conformant registry.
