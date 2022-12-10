@@ -1,4 +1,5 @@
 on:
+  workflow_dispatch:
   schedule:
     # nightly at 5am
     - cron: '0 5 * * *'
