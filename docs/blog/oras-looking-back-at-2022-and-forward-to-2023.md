@@ -4,15 +4,15 @@ _[Feynman Zhou](https://twitter.com/FeynmanZhou), CNCF Ambassador, ORAS Release 
 
 ORAS is a tool for working with OCI artifacts and OCI registries. It allows you to distribute OCI artifacts across OCI Registries. ORAS was established and open-sourced in Dec 2018 and joined CNCF as a Sandbox project in June 2021.
 
-As you can see, ORAS has a long history and is still keep growing since it has an active community behind it. I was fortunate to join the ORAS community as a release manager in May 2022 and keep growing with the project this year. So I write this article to share the growth of the active community and project iteration that I witnessed in 2022. Let’s look back at what’s been happening this year and what we can expect in 2023 and beyond.
+As you can see, ORAS has a long history and is still growing since it has an active community behind it. I was fortunate to join the ORAS community as a release manager in May 2022 and growing with the project this year. So I write this article to share the growth of the active community and project iteration that I witnessed in 2022. Let’s look back at what’s been happening this year and what we can expect in 2023 and beyond.
 
 ## Moving fast with monthly release cadence
 
-ORAS provides an OCI registry client [ORAS CLI](https://oras.land/CLI/) with functional-rich command sets that users can benefit from it, while developers can build their own clients on top of one of the [ORAS client libraries](https://oras.land/client_libraries/) including Golang and Python libraries.
+ORAS provides an OCI registry client [ORAS CLI](https://oras.land/CLI/) with functional-rich command sets that users can benefit from, while developers can build their own clients on top of one of the [ORAS client libraries](https://oras.land/client_libraries/) including Golang and Python libraries.
 
 We are following a monthly release cadence to ensure fast iteration so that we can get feedback and detect problems from the community and then fix them efficiently. 
 
-- ORAS CLI has 4 Minor releases and 2 Patch releases in 2022. It supported the OCI artifact manifest and complied with the OCI v1.1 Specifications in the latest release, and evolved into a powerful and easy-to-use OCI registry client
+- ORAS CLI has 4 Minor releases and 2 Patch releases in 2022 and evolved into a powerful and easy-to-use OCI registry client. It supported the OCI artifact manifest and complied with the OCI v1.1 Specifications in the latest release
 - ORAS-go has shifted the focus and feature development from v1 to v2 this year. It has [15 releases](https://github.com/oras-project/oras-go/releases) and recently announced the last RC (ORAS v2.0.0-RC.6) release. In contrast to v1, v2 brings more unified interfaces, notably fewer dependencies, higher test coverage, better documentation, etc. For those who are still relying on v1, don’t worry about its deprecation at this moment as v1 is still under maintenance. But it’s highly recommended to give v2 a try and you can expect a stable v2.0.0 to be available in Jan 2023.
 - Similar to ORAS-go, ORAS-py is a Python SDK for ORAS. It was established and contributed by [Vanessa](https://github.com/vsoch) starting in May 2022. Thanks to Vanessa,  ORAS-py delivered [10 releases](https://github.com/oras-project/oras-py/releases) and a well-organized [API and user documentation](https://oras-project.github.io/oras-py/index.html) in 2022.
 
@@ -59,7 +59,7 @@ Initially, the reference types work was incubated under the CNCF [ORAS Artifact 
 
 ## Diverse evangelism and advocacy
 
-Open-source contributions are not limited to coding. The non-code contributions like blogging, writing documentation, and technical sharing are also important for the ORAS community. It’s so glad to see more and more users and contributors from different organizations sharing their use cases and best practices with ORAS toolings via blog posts or conference presentations this year. You can learn more about their experience from their articles and videos below.
+Open-source contributions are not limited to coding. The non-code contributions like blogging, writing documentation, and technical sharing are also important for the ORAS community. It’s so good to see more and more users and contributors from different organizations sharing their use cases and best practices with ORAS toolings via blog posts or conference presentations this year. You can learn more about their experience from their articles and videos below.
 
 ### Blogs
 
