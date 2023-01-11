@@ -47,7 +47,7 @@ Currently, the biggest cloud providers like Microsoft Azure, AWS, and Google Clo
 - [Notary v2](https://github.com/notaryproject/notation)
 - [KubeApps](https://github.com/vmware-tanzu/kubeapps) by VMware Tanzu
 - [VMware Application Catalog](https://tanzu.vmware.com/application-catalog)
-- [UOR Framework](https://universalreference.io/) by Red Hat
+- [Emporous (Formerly UOR Framework)](https://universalreference.io/) by Red Hat
 - [soci-snapshotter](https://github.com/awslabs/soci-snapshotter) by AWS
 - [Zot](https://github.com/project-zot/zot)
 
@@ -76,6 +76,7 @@ Open-source contributions are not limited to coding. The non-code contributions 
 - [It’s Complicated: Relationships Between Objects In OCI Registries](https://youtu.be/VZckJNkJ0nQ) by Josh Dolitsky & Sajay Antony
 - [Secure Container Supply Chain with Notation, ORAS, and Ratify](https://youtu.be/7RvFj_RWE7c) by Feynman Zhou from Microsoft
 - [Build and Deploy Cloud Native (OCI) Artifacts, the GitOps Way](https://youtu.be/08ARHTeiXmo) by Mathieu Benoit from Google
+- [Unleashing the Power of the Container Registry](https://www.youtube.com/watch?v=6fohG10y3z0&t=2002s) at DevConf.us by Andrew Block & Alex Flom
 
 ## Looking forward: what’s next in 2023
 
