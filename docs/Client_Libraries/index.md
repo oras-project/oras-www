@@ -5,7 +5,7 @@
 The following languages are currently supported:
 
 - [Go](./Go/)
-- [Python](./1_python) (in progress)
+- [Python](https://oras-project.github.io/oras-py/getting_started/user-guide.html) 
 - [Rust](./2_rust) (in progress)
 
 ## Unified Experience
