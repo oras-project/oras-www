@@ -55,7 +55,7 @@ Currently, the biggest cloud providers like Microsoft Azure, AWS, and Google Clo
 
 Just a few years ago, there were no standards nor tooling for registries to natively store, discover, and pull a graph of OCI artifacts. To extend the registry’s role and form the industry standard, ORAS maintainers proposed a new artifact manifest type to describe and query relationships between objects stored in a registry, without mutating the existing content.
 
-Initially, the reference types work was incubated under the CNCF [ORAS Artifact manifest](https://github.com/oras-project/artifacts-spec) project. It has been contributed to the OCI Image and Distribution v1.1 specifications in Sep 2022. Now it forms the industry standard and has been adopted by some cloud providers and open-source projects, such as [Azure Container Registry](https://azure.microsoft.com/en-us/products/container-registry) and [Zot registry](https://zotregistry.io/v1.4.3/).
+Initially, the reference types work was incubated under the CNCF [ORAS Artifact manifest](https://github.com/oras-project/artifacts-spec) project. It has been contributed to the OCI [Image](https://github.com/opencontainers/image-spec/blob/main/artifact.md) and [Distribution](https://github.com/opencontainers/distribution-spec) v1.1-RC specifications in Sep 2022. Now it is an industry standard and there are already a few early implementations, such as [Azure Container Registry](https://azure.microsoft.com/en-us/products/container-registry) and [Zot registry](https://zotregistry.io/). After the OCI v1.1 specification is available, we expect more registry vendors start to support and implement it.
 
 ## Diverse evangelism and advocacy
 
