@@ -20,6 +20,7 @@ We're happy to promote all usage, as well as provide feedback.*
 - [Google Artifact Registry](#google-artifact-registry-gar)
 - [GitHub Packages container registry](#github-packages-container-registry-ghcr)
 - [Bundle Bar](#bundle-bar)
+- [Docker Hub](#docker-hub)
 
 ### CNCF Distribution
 
@@ -297,6 +298,31 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
 
   ```
   oras pull bundle.bar/u/${BB_USER}/samples/artifact:1.0
+  ```
+
+[artifacts]:            https://github.com/opencontainers/artifacts
+[distribution-spec]:    https://github.com/opencontainers/distribution-spec/
+
+
+#### [Docker Hub](https://hub.docker.com/)
+
+- [Authenticating with Docker Hub](https://docs.docker.com/docker-hub/access-tokens/)
+
+  ```
+  echo $ACCESS_TOKEN | docker login -u $DH_USER --password-stdin
+  ```
+
+- Pushing Artifacts to Docker Hub
+
+  ```
+  oras push docker.io/${DH_USER}/artifact:1.0 \
+    ./artifact.txt:application/vnd.unknown.layer.v1+txt
+  ```
+
+- Pulling Artifacts from Docker Hub
+
+  ```
+  oras pull docker.io/${DH_USER}/artifact:1.0
   ```
 
 [artifacts]:            https://github.com/opencontainers/artifacts
