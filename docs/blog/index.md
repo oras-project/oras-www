@@ -1,5 +1,15 @@
 # ORAS Blog Index
 
+<h2>ORAS: Looking back on 2022 and forward to 2023</h2>
+
+_Feynman Zhou_
+
+ORAS was established and open-sourced in Dec 2018 and joined CNCF as a Sandbox project in June 2021. As you can see, ORAS has a long history and is still keep growing since it has an active community behind it. I was fortunate to join the ORAS community as a release manager in May 2022 and keep growing with the project this year. So I write this article to share the growth of the active community and project iteration that I witnessed in 2022. Let’s look back at what’s been happening this year and what we can expect in 2023 and beyond.
+
+[Read More...][4]
+
+  [4]: oras-looking-back-at-2022-and-forward-to-2023.md
+
 <h2>ORAS 0.15: A fully functional OCI registry client</h2>
 
 _Feynman Zhou，Yi Zha_
