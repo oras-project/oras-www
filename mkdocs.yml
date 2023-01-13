@@ -5,7 +5,7 @@ site_author: The ORAS Authors
 repo_url: https://github.com/oras-project/oras
 repo_name: oras-project/oras
 edit_uri: ""
-copyright: Copyright &copy; 2022 The ORAS Authors.<br>We are a Cloud Native Computing Foundation sandbox project.
+copyright: Copyright &copy; 2023 The ORAS Authors.<br>We are a Cloud Native Computing Foundation sandbox project.
 extra_css:
   - assets/stylesheets/extra.css
 plugins:
