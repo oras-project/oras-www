@@ -1,0 +1,221 @@
+# Bundle (oras), test (gator) and deploy (GitOps) Gatekeeper policies as OCI image
+
+_Author: [Mathieu Benoit](https://www.linkedin.com/in/mathieubenoitqc/), DevRel Engineer, Google_
+
+Policies are key to meet governance requirements as well as improve security postures of Kubernetes workloads and clusters. Policy engines like [OPA Gatekeeper](https://open-policy-agent.github.io/gatekeeper/website/docs/), [Kyverno](https://kyverno.io/) or even the new [Kubernetes's Validating Admission Policies feature](https://kubernetes.io/blog/2022/12/20/validating-admission-policies-alpha/) help write and enforce such policies. Once the policies written and tested, how to easily and securely share them with different projects and teams? How to deploy them across the fleet of clusters? How to evaluate them as early as possible in CI/CD pipelines?
+
+In this blog we will demonstrate how to bundle and share Gatekeeper policies as an OCI image thanks to `oras`, how to evaluate any Kubernetes manifests against this OCI image with `gator` CLI and finally how to deploy this OCI image in Kubernetes clusters, in a GitOps way.
+
+![Flow between ORAS, OCI registry, Gatekeeper and Config Sync](gatekeeper-policies-as-oci-image/overview-flow.png)
+
+Google Kubernetes Engine (GKE) is used to illustrate this blog, but everything is working with any other Kubernetes distributions. As for the OCI registry, Google Artifact Registry is used, but you can take [any registries supporting OCI artifacts](https://oras.land/implementors/#google-artifact-registry-gar). For the GitOps tool, we are using the OSS project: Config Sync, you can also use it as part of the Anthos Config Management service or even use other GitOps tools supporting OCI images like [FluxCD](https://fluxcd.io/flux/cheatsheets/oci-artifacts/). Finally, we are bundling and deploying Gatekeeper policies as OCI image, but it could be any Kubernetes manifests.
+
+## Create a Gatekeeper policy
+
+Let's create a Gatekeeper policy composed by one `Constraint` and one `ConstraintTemplate` which will be leveraged throughout this blog. In this example, we will are making sure that any non-system namespaces is leveraging the [Pod Security Admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/) feature by having the appropriate label. 
+
+Create a dedicated folder for the associated files:
+```bash
+mkdir policies
+```
+
+Define the `ConstraintTemplate` to ensure that the resources contain specified labels:
+```bash
+cat <<EOF> policies/k8srequiredlabels.yaml
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8srequiredlabels
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sRequiredLabels
+      validation:
+        openAPIV3Schema:
+          type: object
+          properties:
+            labels:
+              description: A list of labels and values the object must specify.
+              items:
+                properties:
+                  allowedRegex:
+                    description: If specified, a regular expression the annotation's
+                      value must match. The value must contain at least one match
+                      for the regular expression.
+                    type: string
+                  key:
+                    description: The required label.
+                    type: string
+                type: object
+              type: array
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8srequiredlabels
+        violation[{"msg": msg, "details": {"missing_labels": missing}}] {
+           provided := {label | input.review.object.metadata.labels[label]}
+           required := {label | label := input.parameters.labels[_].key}
+           missing := required - provided
+           count(missing) > 0
+           msg := sprintf("You must provide labels: %v for the %s: %s.", [missing, input.review.object.kind, input.review.object.metadata.name])
+        }
+        violation[{"msg": msg}] {
+           value := input.review.object.metadata.labels[key]
+           expected := input.parameters.labels[_]
+           expected.key == key
+           expected.allowedRegex != ""
+           not re_match(expected.allowedRegex, value)
+           msg := sprintf("Label %s: %s does not satisfy allowed regex: %s", [key, value, expected.allowedRegex])
+        }
+EOF
+```
+
+Define the associated `Constraint` for the `Namespaces` which must have the label `pod-security.kubernetes.io/enforce` as the key and either `baseline` or `restricted` as the value:
+```bash
+cat <<EOF> policies/ns-must-have-pss-label.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLabels
+metadata:
+  name: ns-must-have-pss-label
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups:
+        - ""
+        kinds:
+        - "Namespace"
+    excludedNamespaces:
+    - config-management-monitoring
+    - config-management-system
+    - gatekeeper-system
+    - kube-node-lease
+    - kube-public
+    - kube-system
+  parameters:
+    labels:
+    - key: pod-security.kubernetes.io/enforce
+      allowedRegex: (baseline|restricted)
+EOF
+```
+
+## Test this policy with local files
+
+Define a `Namespace` without the PSS label.
+```bash
+cat <<EOF > namespace-test.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test
+EOF
+```
+
+Let’s now locally test this `Namespace` against this policy with the `gator` CLI. Very convenient to test policies without any Kubernetes cluster!
+```bash
+gator test \
+   -f namespace-test.yaml \
+   -f policies/
+```
+
+Output similar to:
+```plaintext
+["ns-must-have-pss-label"] Message: "You must provide labels: {\"pod-security.kubernetes.io/enforce\"} for the Namespace: test."
+```
+
+## Push the Gatekeeper policy as OCI image to Artifact Registry
+
+Assuming we already have a Google Artifact Registry repository `ARTIFACT_REGISTRY_REPO_NAME` in the region `REGION` and project `PROJECT_ID`.
+
+Login to Artifact Registry:
+```bash
+gcloud auth configure-docker ${REGION}-docker.pkg.dev
+```
+
+Push the Gatekeeper policy as OCI image in Google Artifact Registry repository with `oras`:
+```bash
+oras push \
+    ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPO_NAME}/my-policies:1.0.0 \
+    policies/
+```
+_Note: `oras push` with the `policies/` folder will do an archive of its files._
+
+See that the OCI image has been uploaded in the Google Artifact Registry repository:
+```bash
+gcloud artifacts docker images list ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPO_NAME}
+```
+
+## Test this policy with the remote OCI image
+
+Let’s now locally test the `Namespace` created earlier against this policy as remote OCI image with the gator CLI. Very convenient to share and evaluate your policies in different places (i.e. locally, during Continuous Integration pipelines, etc.)!
+```bash
+gator test \
+   -f namespace-test.yaml \
+   --image ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPO_NAME}/my-policies:1.0.0
+```
+_Note: since `gator` version FIXME, the `--image` parameter has been added! We are leveraging this feature instead of pointing to the local files like we did previously with `-f policies/`_
+
+Output similar to:
+```plaintext
+["ns-must-have-pss-label"] Message: "You must provide labels: {\"pod-security.kubernetes.io/enforce\"} for the Namespace: test."
+```
+
+## Set up Config Sync to deploy this OCI image
+
+FIXME - GKE cluster already created and CS OSS and Gatekeeper OSS installed.
+
+```bash
+cat << EOF | kubectl apply -f -
+apiVersion: configsync.gke.io/v1beta1
+kind: RootSync
+metadata:
+  name: ${ROOT_SYNC_NAME}
+  namespace: config-management-system
+spec:
+  sourceFormat: unstructured
+  sourceType: oci
+  oci:
+    image: ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPO_NAME}/my-policies:1.0.0
+    dir: .
+    auth: none
+EOF
+```
+
+Verify that the `Constraint` and `ConstraintTemplate` are actually deployed:
+```bash
+kubectl get constraints
+kubectl get constrainttemplates
+```
+
+And voilà! That’s how easy it is to deploy Gatekeeper policies as OCI image in a GitOps way.
+
+## Test this policy in the cluster
+
+Let’s now try to deploy the `Namespace` defined earlier:
+```bash
+kubectl apply -f namespace-test.yaml
+```
+
+Output similar to:
+```plaintext
+Error from server (Forbidden): error when creating "namespace-test.yaml": admission webhook "validation.gatekeeper.sh" denied the request: ["ns-must-have-pss-label"] You must provide labels: {\"pod-security.kubernetes.io/enforce\"} for the Namespace: test.
+```
+
+## Conclusion
+
+In this article, we were able to package Gatekeeper policies as an OCI image and push it to Google Artifact Registry, thanks to `oras`. We also were able to leverage the new OCI image parameter of `gator test` command in order to shift-left the evaluation of these policies against any Kubernetes resources outside of an actual cluster. Finally, we deployed the Gatekeeper policies as OCI image in a GitOps way.
+
+The continuous reconciliation of GitOps reconciles between the desired state, now stored in an OCI registry, with the actual state, running in Kubernetes. Gatekeeper policies as OCI images are now just seen like any container images for your Kubernetes clusters as they are pulled from OCI registries. This continuous reconciliation from OCI registries, not interacting with Git, has a lot of benefits in terms of scalability, performance and security as you will be able to configure very fine grained access to your OCI images, across the fleet of your clusters.
+
+FIXME - public repo/image...
+
+At the end, you saw how you can sync this private OCI image with the `spec.oci.auth: gcpserviceaccount` setup on the Config Sync’s `RootSync` setup using Workload Identity to access Google Artifact Registry.
+
+For a complete tutorial illustrating this on GKE with ACM, you could check this blog out: https://medium.com/google-cloud/e1233429ae2.
+
+## Resources
+
+- [Deploy Gatekeeper policies as OCI image, the GitOps way](https://medium.com/google-cloud/e1233429ae2)
+- [Deploy OCI artifacts and Helm charts the GitOps way with Config Sync](https://cloud.google.com/blog/products/containers-kubernetes/gitops-with-oci-artifacts-and-config-sync)
+- [Sync OCI artifacts from Artifact Registry](https://cloud.google.com/anthos-config-management/docs/how-to/sync-oci-artifacts-from-artifact-registry)
