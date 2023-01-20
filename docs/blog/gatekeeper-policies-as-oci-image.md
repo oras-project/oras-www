@@ -1,4 +1,4 @@
-# Bundle (`oras`), test (`gator`) and deploy (GitOps) Gatekeeper policies as OCI image
+# Bundle  with `oras`, test with `gator` and deploy with GitOps your Gatekeeper policies as OCI image
 
 _Author: [Mathieu Benoit](https://www.linkedin.com/in/mathieubenoitqc/), DevRel Engineer, Google_
 
