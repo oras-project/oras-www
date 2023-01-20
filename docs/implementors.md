@@ -11,6 +11,11 @@ We're happy to promote all usage, as well as provide feedback.*
 
 - [Helm](https://v3.helm.sh/docs/topics/registries/)
 - [Singularity](https://sylabs.io/guides/3.1/user-guide/cli/singularity_push.html)
+- [falcoctl](https://github.com/falcosecurity/falcoctl)
+- [policy](https://github.com/opcr-io/policy)
+- [wasm-to-oci](https://github.com/engineerd/wasm-to-oci)
+- [conftest](https://github.com/open-policy-agent/conftest)
+
 
 ## Registries supporting OCI Artifacts
 
