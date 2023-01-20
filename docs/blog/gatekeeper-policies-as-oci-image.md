@@ -1,8 +1,8 @@
-# Bundle  with `oras`, test with `gator` and deploy with GitOps your Gatekeeper policies as OCI image
+# Bundle with `oras`, test with `gator` and deploy with GitOps your Gatekeeper policies as OCI image
 
 _Author: [Mathieu Benoit](https://www.linkedin.com/in/mathieubenoitqc/), DevRel Engineer, Google_
 
-Policies are key to meet governance requirements as well as improve the security of Kubernetes workloads and clusters. Policy engines like [OPA Gatekeeper](https://open-policy-agent.github.io/gatekeeper/website/docs/), [Kyverno](https://kyverno.io/) or even the new [Kubernetes's Validating Admission Policies feature](https://kubernetes.io/blog/2022/12/20/validating-admission-policies-alpha/) help write and enforce such policies. Once the policies are written, how to easily and securely share them with different projects and teams? How to deploy them across the fleet of clusters? How to evaluate them as early as possible in CI/CD pipelines?
+Policies are key to meet governance requirements as well as improve the security of Kubernetes workloads and clusters. Policy engines like [OPA Gatekeeper](https://open-policy-agent.github.io/gatekeeper/website/docs/), [Kyverno](https://kyverno.io/) or even the new Kubernetes's [Validating Admission Policies] feature(https://kubernetes.io/blog/2022/12/20/validating-admission-policies-alpha/) help write and enforce such policies. Once the policies are written, how to easily and securely share them with different projects and teams? How to deploy them across the fleet of clusters? How to evaluate them as early as possible in CI/CD pipelines?
 
 In this blog we will demonstrate how to bundle and share Gatekeeper policies as an OCI image thanks to [`oras`](https://oras.land/), how to evaluate any Kubernetes manifests against this OCI image with [`gator`](https://open-policy-agent.github.io/gatekeeper/website/docs/gator/) CLI and finally how to deploy this OCI image in Kubernetes clusters, in a GitOps way.
 
@@ -12,14 +12,14 @@ Google Kubernetes Engine (GKE) is used to illustrate this blog, but everything i
 
 ## Create a Gatekeeper policy
 
-Let's create a Gatekeeper policy composed by one `Constraint` and one `ConstraintTemplate` which will be leveraged throughout this blog. In this example, we are making sure that any non-system namespaces is leveraging the [Pod Security Admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/) feature by having the appropriate label. 
+Let's create a [Gatekeeper policy](https://open-policy-agent.github.io/gatekeeper/website/docs/howto) composed by one `Constraint` and one `ConstraintTemplate` which will be leveraged throughout this blog. In this example, we are making sure that any non-system namespaces is leveraging the [Pod Security Admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/) feature by having the appropriate label. 
 
 Create a dedicated folder for the associated files:
 ```bash
 mkdir policies
 ```
 
-Define the `ConstraintTemplate` to ensure that the resources contain specified labels:
+Define the `ConstraintTemplate` to ensure that the Kubernetes resources contain specified labels:
 ```bash
 cat <<EOF> policies/k8srequiredlabels.yaml
 apiVersion: templates.gatekeeper.sh/v1
@@ -181,7 +181,7 @@ spec:
     auth: none
 EOF
 ```
-_Note: here we are assuming that the OCI image is publicly exposed (`auth: none`) to simplify the flow of this blog. A more secure setup can be found [here][https://medium.com/google-cloud/deploying-gatekeeper-policies-as-oci-artifacts-the-gitops-way-e1233429ae2] to access the Google Artifact Registry repositry via Workload Identity._
+_Note: here we are assuming that the OCI image is publicly exposed (`auth: none`) to simplify the flow of this blog. A more secure setup can be found [here][https://medium.com/google-cloud/deploying-gatekeeper-policies-as-oci-artifacts-the-gitops-way-e1233429ae2] to securely access the Google Artifact Registry repository via Workload Identity._
 
 Verify that the `Constraint` and `ConstraintTemplate` are actually deployed:
 ```bash
