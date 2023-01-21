@@ -6,7 +6,7 @@ _Author: [Mathieu Benoit](https://www.linkedin.com/in/mathieubenoitqc/), DevRel 
 
 Policies are key to meet governance requirements as well as to improve the security of Kubernetes workloads and clusters. Policy engines like [OPA Gatekeeper](https://open-policy-agent.github.io/gatekeeper/website/docs/), [Kyverno](https://kyverno.io/) or even the new Kubernetes's [Validating Admission Policies](https://kubernetes.io/blog/2022/12/20/validating-admission-policies-alpha/) feature help write and enforce such policies. Once the policies are written, how to easily and securely share them with different projects and teams? How to deploy them across the fleet of clusters? How to evaluate them as early as possible in CI/CD pipelines?
 
-In this blog we will demonstrate how to bundle and share Gatekeeper policies as an OCI image thanks to the [ORAS](https://oras.land/cli/) CLI, how to evaluate any Kubernetes manifests against this OCI image with [`gator`](https://open-policy-agent.github.io/gatekeeper/website/docs/gator/) CLI and finally how to deploy this OCI image in Kubernetes clusters, in a GitOps way.
+In this blog we will demonstrate how to bundle and share Gatekeeper policies as an OCI image thanks to the [ORAS](https://oras.land/cli/) CLI, how to evaluate any Kubernetes manifests against this OCI image with the [`gator`](https://open-policy-agent.github.io/gatekeeper/website/docs/gator/) CLI and finally how to deploy this OCI image in Kubernetes clusters, in a GitOps way.
 
 ![Flow between ORAS, OCI registry, Gatekeeper and Config Sync](gatekeeper-policies-as-oci-image/overview-flow.png)
 
