@@ -4,13 +4,13 @@ _Author: [Mathieu Benoit](https://www.linkedin.com/in/mathieubenoitqc/), DevRel 
 
 [ORAS](https://oras.land/) is an important tool out there for working with OCI artifacts and OCI registries. In 2022, the ORAS project got a [growing trend in both user adoption and contributions](https://oras.land/blog/oras-looking-back-at-2022-and-forward-to-2023/). I thought I will share via this blog, one of my own use cases with ORAS as an end-to-end scenario with OPA Gatekeeper policies, from bundling to deploying them.
 
-Policies are key to meet governance requirements as well as improve the security of Kubernetes workloads and clusters. Policy engines like [OPA Gatekeeper](https://open-policy-agent.github.io/gatekeeper/website/docs/), [Kyverno](https://kyverno.io/) or even the new Kubernetes's [Validating Admission Policies] feature(https://kubernetes.io/blog/2022/12/20/validating-admission-policies-alpha/) help write and enforce such policies. Once the policies are written, how to easily and securely share them with different projects and teams? How to deploy them across the fleet of clusters? How to evaluate them as early as possible in CI/CD pipelines?
+Policies are key to meet governance requirements as well as improve the security of Kubernetes workloads and clusters. Policy engines like [OPA Gatekeeper](https://open-policy-agent.github.io/gatekeeper/website/docs/), [Kyverno](https://kyverno.io/) or even the new Kubernetes's [Validating Admission Policies](https://kubernetes.io/blog/2022/12/20/validating-admission-policies-alpha/) feature help write and enforce such policies. Once the policies are written, how to easily and securely share them with different projects and teams? How to deploy them across the fleet of clusters? How to evaluate them as early as possible in CI/CD pipelines?
 
 In this blog we will demonstrate how to bundle and share Gatekeeper policies as an OCI image thanks to the [ORAS](https://oras.land/cli/) CLI, how to evaluate any Kubernetes manifests against this OCI image with [`gator`](https://open-policy-agent.github.io/gatekeeper/website/docs/gator/) CLI and finally how to deploy this OCI image in Kubernetes clusters, in a GitOps way.
 
 ![Flow between ORAS, OCI registry, Gatekeeper and Config Sync](gatekeeper-policies-as-oci-image/overview-flow.png)
 
-Google Kubernetes Engine (GKE) is used to illustrate this blog, but everything is working with any other Kubernetes distributions. As for the OCI registry, Google Artifact Registry is used, but you can take [any registries supporting OCI artifacts](https://oras.land/implementors/#registries-supporting-oci-artifacts). For the GitOps tool, we are using the OSS project: Config Sync, you can also use it as part of the Anthos Config Management service or even use other GitOps tools supporting OCI images like [FluxCD](https://fluxcd.io/flux/cheatsheets/oci-artifacts/).
+_Google Artifact Registry is used to illustrate this blog as the OCI registry, but you can take [any registries supporting OCI artifacts](https://oras.land/implementors/#registries-supporting-oci-artifacts). For the GitOps tool, we are using the OSS project: [Config Sync](https://github.com/GoogleContainerTools/kpt-config-sync), you can also use it as part of the Anthos Config Management service or even use other GitOps tools supporting OCI images like [FluxCD](https://fluxcd.io/flux/cheatsheets/oci-artifacts/)._
 
 ## Create a Gatekeeper policy
 
@@ -95,6 +95,7 @@ spec:
     - kube-node-lease
     - kube-public
     - kube-system
+    - resource-group-system
   parameters:
     labels:
     - key: pod-security.kubernetes.io/enforce
@@ -117,8 +118,8 @@ EOF
 Let’s now locally test this `Namespace` against this policy with the `gator` CLI. Very convenient to test policies without any Kubernetes cluster!
 ```bash
 gator test \
-   -f namespace-test.yaml \
-   -f policies/
+   --filename namespace-test.yaml \
+   --filename policies/
 ```
 
 Output similar to:
@@ -153,10 +154,10 @@ gcloud artifacts docker images list ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ART
 Let’s now locally test the `Namespace` created earlier against this policy as remote OCI image with the gator CLI. Very convenient to share and evaluate your policies in different places (i.e. locally, during Continuous Integration pipelines, etc.)!
 ```bash
 gator test \
-   -f namespace-test.yaml \
+   --filename namespace-test.yaml \
    --image ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPO_NAME}/my-policies:1.0.0
 ```
-_Note: since [`gator` version 3.11.0](https://github.com/open-policy-agent/gatekeeper/releases/tag/v3.11.0), the `--image` parameter has been added! We are leveraging this feature instead of pointing to the local files like we did previously with `-f policies/`_
+_Note: since [`gator` version 3.11.0](https://github.com/open-policy-agent/gatekeeper/releases/tag/v3.11.0), the `--image` parameter has been added! We are leveraging this feature instead of pointing to the local files like we did previously with `--filename policies/`_
 
 Output similar to:
 ```plaintext
@@ -165,7 +166,7 @@ Output similar to:
 
 ## Deploy this OCI image with Config Sync
 
-FIXME - GKE cluster already created and CS OSS and Gatekeeper OSS installed.
+Assuming we already have a Kubernetes cluster where both [Config Sync](https://github.com/GoogleContainerTools/kpt-config-sync/blob/main/docs/installation.md) and [Gatekeeper](https://open-policy-agent.github.io/gatekeeper/website/docs/install) should be installed.
 
 ```bash
 cat << EOF | kubectl apply -f -
@@ -191,7 +192,7 @@ kubectl get constraints
 kubectl get constrainttemplates
 ```
 
-And voilà! That’s how easy it is to deploy Gatekeeper policies as OCI image in a GitOps way.
+And voilà! That’s how easy it is to deploy Gatekeeper policies as OCI image in a GitOps way. Congrats!
 
 ## Test this policy in the cluster
 
@@ -202,7 +203,7 @@ kubectl apply -f namespace-test.yaml
 
 Output similar to:
 ```plaintext
-Error from server (Forbidden): error when creating "namespace-test.yaml": admission webhook "validation.gatekeeper.sh" denied the request: ["ns-must-have-pss-label"] You must provide labels: {\"pod-security.kubernetes.io/enforce\"} for the Namespace: test.
+Error from server (Forbidden): error when creating "namespace-test.yaml": admission webhook "validation.gatekeeper.sh" denied the request: [ns-must-have-pss-label] You must provide labels: {"pod-security.kubernetes.io/enforce"} for the Namespace: test.
 ```
 
 ## Conclusion
@@ -211,4 +212,4 @@ In this article, we were able to package Gatekeeper policies as an OCI image and
 
 The continuous reconciliation of GitOps reconciles between the desired state, now stored in an OCI registry, with the actual state, running in Kubernetes. Gatekeeper policies as OCI images are now just seen like any container images for your Kubernetes clusters as they are pulled from OCI registries. This continuous reconciliation from OCI registries, not interacting with Git, has a lot of benefits in terms of scalability, performance and security as you will be able to configure very fine grained access to your OCI images, across the fleet of your clusters.
 
-_For a more complete tutorial illustrating this flow with Config Sync and Policy Controller as part of the Anthos Config Management service, you could [check this blog out](https://medium.com/google-cloud/deploying-gatekeeper-policies-as-oci-artifacts-the-gitops-way-e1233429ae2)._
+_For a more complete tutorial illustrating this flow with Config Sync and Policy Controller as part of the Anthos Config Management service with Google Kubernetes Engine (GKE), you could [check this blog out](https://medium.com/google-cloud/deploying-gatekeeper-policies-as-oci-artifacts-the-gitops-way-e1233429ae2)._
