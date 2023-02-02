@@ -14,7 +14,7 @@ _While we use [Google Artifact Registry](https://cloud.google.com/artifact-regis
 
 ## Create a Gatekeeper policy
 
-Let's create a [Gatekeeper policy](https://open-policy-agent.github.io/gatekeeper/website/docs/howto) composed by one `Constraint` and one `ConstraintTemplate` that will be leveraged throughout this blog. In this example, we are making sure that any non-system namespaces is leveraging the [Pod Security Admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/) feature by having the appropriate label. 
+Let's create a [Gatekeeper policy](https://open-policy-agent.github.io/gatekeeper/website/docs/howto) composed by one `Constraint` and one `ConstraintTemplate` that will be leveraged throughout this blog post. In this example, we are making sure that any non-system namespaces is leveraging the [Pod Security Admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/) feature by having the appropriate label. 
 
 Create a dedicated folder for the associated files:
 ```bash
@@ -184,7 +184,7 @@ spec:
     auth: none
 EOF
 ```
-_Note: here we are assuming that the OCI image is publicly exposed (`auth: none`) to simplify the flow of this blog. A more secure setup can be found [here](https://medium.com/google-cloud/deploying-gatekeeper-policies-as-oci-artifacts-the-gitops-way-e1233429ae2) showing how to privately access the Google Artifact Registry repository via Workload Identity._
+_Note: here we are assuming that the OCI image is publicly exposed (`auth: none`) to simplify the flow of this blog post. A more secure setup can be found [here](https://medium.com/google-cloud/deploying-gatekeeper-policies-as-oci-artifacts-the-gitops-way-e1233429ae2) showing how to privately access the Google Artifact Registry repository via Workload Identity._
 
 Verify that the `Constraint` and `ConstraintTemplate` are actually deployed:
 ```bash
@@ -212,4 +212,4 @@ In this article, we were able to package Gatekeeper policies as an OCI image and
 
 The continuous reconciliation of GitOps reconciles between the desired state, now stored in an OCI registry, with the actual state, running in Kubernetes. Gatekeeper policies as OCI images are now just seen like any container images for your Kubernetes clusters as they are pulled from OCI registries. This continuous reconciliation from OCI registries, not interacting with Git, has a lot of benefits in terms of scalability, performance and security as you will be able to configure very fine grained access to your OCI images, across the fleet of your clusters.
 
-_For a more complete tutorial illustrating this flow with Config Sync and Policy Controller as part of the Anthos Config Management service with Google Kubernetes Engine (GKE), you could [check this blog out](https://medium.com/google-cloud/deploying-gatekeeper-policies-as-oci-artifacts-the-gitops-way-e1233429ae2)._
+_For a more complete tutorial illustrating this flow with Config Sync and Policy Controller as part of the Anthos Config Management service with Google Kubernetes Engine (GKE), you could [check this other blog post out](https://medium.com/google-cloud/deploying-gatekeeper-policies-as-oci-artifacts-the-gitops-way-e1233429ae2)._
