@@ -1,4 +1,4 @@
-![ORAS](/assets/images/oras.png)
+![ORAS](/assets/images/oras.svg)
 
 ## Introduction
 

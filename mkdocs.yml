@@ -34,7 +34,7 @@ markdown_extensions:
            - docs/custom/.icons
 theme:
   name: material
-  logo: assets/images/oras.png
+  logo: assets/images/oras.svg
   favicon: assets/favicon.ico
   custom_dir: docs/custom/
   # there are for golang vanity imports
