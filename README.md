@@ -17,20 +17,19 @@ This site is deployed using [Netlify](https://www.netlify.com/)
 System requirements:
 
 - Python 3.7+
-- [Poetry](https://python-poetry.org/)
 
 The website is an [Mkdocs](https://www.mkdocs.org/)-based documentation site, using the [Material theme](https://squidfunk.github.io/mkdocs-material/).
 
 First install dependencies:
 
 ```
-poetry install
+pip3 install -r requirements.txt
 ```
 
 Then run the development server:
 
 ```
-poetry run mkdocs serve
+mkdocs serve
 ```
 
 The site will be available at [http://localhost:8000/](http://localhost:8000/)
