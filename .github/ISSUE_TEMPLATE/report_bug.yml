@@ -1,6 +1,6 @@
 name: Report a bug
 description: A clear and concise description of what the bug is.
-title: "[Bug Report]: "
+title: "[Bug Report]:"
 labels:
   - bug-report
 body:
