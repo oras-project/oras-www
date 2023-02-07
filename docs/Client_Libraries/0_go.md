@@ -33,7 +33,7 @@ import "oras.land/oras-go/v2"
 go mod tidy
 ```
 
-The API documentation and examples are available at [pkg.go.dev](https://pkg.go.dev/oras.land/oras-go/v2).
+**The API documentation and examples are available at [pkg.go.dev](https://pkg.go.dev/oras.land/oras-go/v2).**
 
 ## Quick Start
 
