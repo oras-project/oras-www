@@ -4,7 +4,7 @@
 
 The following languages are currently supported:
 
-- [Go](./Go/)
+- [Go](./0_go)
 - [Python](https://oras-project.github.io/oras-py/getting_started/user-guide.html) 
 - [Rust](./2_rust) (in progress)
 
