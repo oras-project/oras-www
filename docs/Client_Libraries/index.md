@@ -47,13 +47,13 @@ It is worth noting that a target is not equal to a registry.
 Besides plain blobs, it is natural to store [directed acyclic graphs (DAGs)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) in a CAS.
 Precisely, all blobs are leaf nodes and most manifests are non-leaf nodes.
 
-An artifact is a rooted DAG where its root node is an [OCI manifest](https://github.com/opencontainers/image-spec/blob/main/manifest.md).
+An artifact is a rooted DAG where its root node is an [OCI manifest](https://github.com/opencontainers/image-spec/blob/main/manifest.md) or an [OCI Artifact Manifest](https://github.com/opencontainers/image-spec/blob/v1.1.0-rc2/artifact.md).
 Additionally, artifacts can be grouped by an [OCI index](https://github.com/opencontainers/image-spec/blob/main/image-index.md), which is also a rooted DAG.
 
 Given a node of a DAG in a CAS, it is efficient to find out all its children.
 Since CASs are usually not enumerable or indexed, it is not possible to find the parent nodes of an arbitrary node.
 Nevertheless, some CASs choose to implement or partially implement the functionality of parent node finding.
-For instances, registries with [Manifest Referrers API](https://github.com/oras-project/artifacts-spec/blob/main/manifest-referrers-api.md) support are CASs with partially implementation where parent node finding is only available for manifest nodes.
+For instances, registries with [Referrers API](https://github.com/opencontainers/distribution-spec/blob/v1.1.0-rc1/spec.md#listing-referrers) support are CASs with partially implementation where parent node finding is only available for manifest nodes.
 
 ### Extended Copy
 
@@ -99,12 +99,24 @@ Some examples of a `Target` may include the following:
 
 ### `Copy`
 
-`Copy` copies a ref from one `Target` to a ref in another `Target`.
+`Copy` copies a rooted DAG identified by a reference from one `Target` to another `Target`.
 
 #### Method signature
 
 The following is a rough method signature based on the Go version:
 
-```
+```go
 func Copy(from Target, fromRef string, to Target, toRef string) Descriptor
+```
+
+### `ExtendedCopy`
+
+`Copy` copies a DAG reachable from a node identified by a reference from one `Target` to another `Target`.
+
+#### Method signature
+
+The following is a rough method signature based on the Go version:
+
+```go
+func ExtendedCopy(from Target, fromRef string, to Target, toRef string) Descriptor
 ```
