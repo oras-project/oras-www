@@ -25,7 +25,7 @@ For instances,
 ### Targets
 
 Generally, a target is a [content-addressable storage (CAS)](https://en.wikipedia.org/wiki/Content-addressable_storage) with tags.
-All blobs in a CAS are addressed by their [descriptors](https://github.com/opencontainers/image-spec/blob/main/descriptor.md).
+All blobs in a CAS are addressed by their [descriptors](https://github.com/opencontainers/image-spec/blob/v1.1.0-rc2/descriptor.md).
 
 To retrieve a blob,
 
@@ -47,8 +47,8 @@ It is worth noting that a target is not equal to a registry.
 Besides plain blobs, it is natural to store [directed acyclic graphs (DAGs)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) in a CAS.
 Precisely, all blobs are leaf nodes and most manifests are non-leaf nodes.
 
-An artifact is a rooted DAG where its root node is an [OCI manifest](https://github.com/opencontainers/image-spec/blob/main/manifest.md) or an [OCI Artifact Manifest](https://github.com/opencontainers/image-spec/blob/v1.1.0-rc2/artifact.md).
-Additionally, artifacts can be grouped by an [OCI index](https://github.com/opencontainers/image-spec/blob/main/image-index.md), which is also a rooted DAG.
+An artifact is a rooted DAG where its root node is an [OCI manifest](https://github.com/opencontainers/image-spec/blob/v1.1.0-rc2/manifest.md) or an [OCI Artifact Manifest](https://github.com/opencontainers/image-spec/blob/v1.1.0-rc2/artifact.md).
+Additionally, artifacts can be grouped by an [OCI index](https://github.com/opencontainers/image-spec/blob/v1.1.0-rc2/image-index.md), which is also a rooted DAG.
 
 Given a node of a DAG in a CAS, it is efficient to find out all its children.
 Since CASs are usually not enumerable or indexed, it is not possible to find the parent nodes of an arbitrary node.
@@ -94,7 +94,7 @@ or retrieve artifacts.
 Some examples of a `Target` may include the following:
 
 - An OCI Registry
-- An [OCI Image Layout](https://github.com/opencontainers/image-spec/blob/master/image-layout.md)
+- An [OCI Image Layout](https://github.com/opencontainers/image-spec/blob/v1.1.0-rc2/image-layout.md)
 - A local collection of files
 
 ### `Copy`
