@@ -2,4 +2,4 @@
 oras_meta: true
 ---
 
-Nothing to see here; <a href=https://github.com/oras-project/oras>move along</a>
+>Do not remove redirect for go get oras.land/oras; <a href=https://github.com/oras-project/oras>move along</a>
