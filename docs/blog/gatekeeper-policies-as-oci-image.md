@@ -10,11 +10,13 @@ In this blog post we will demonstrate how to bundle and share Gatekeeper policie
 
 ![Flow between ORAS, OCI registry, Gatekeeper and Config Sync](gatekeeper-policies-as-oci-image/overview-flow.png)
 
-_While we use [Google Artifact Registry](https://cloud.google.com/artifact-registry) as the OCI registry for this example, you can [any registry supporting OCI artifacts](https://oras.land/implementors/#registries-supporting-oci-artifacts). For the GitOps tool, we are using the OSS project: [Config Sync](https://github.com/GoogleContainerTools/kpt-config-sync), and you can also use it as part of the [Anthos Config Management](https://cloud.google.com/anthos/config-management) service or even use other GitOps tools supporting OCI images like [FluxCD](https://fluxcd.io/flux/cheatsheets/oci-artifacts/)._
+_While we use [Google Artifact Registry](https://cloud.google.com/artifact-registry) as the OCI registry for this example, you can use [any registry supporting OCI artifacts](https://oras.land/implementors/#registries-supporting-oci-artifacts). For the GitOps tool, we are using the OSS project: [Config Sync](https://github.com/GoogleContainerTools/kpt-config-sync), and you can also use it as part of the [Anthos Config Management](https://cloud.google.com/anthos/config-management) service or even use other GitOps tools supporting OCI images like [FluxCD](https://fluxcd.io/flux/cheatsheets/oci-artifacts/)._
 
 ## Create a Gatekeeper policy
 
-Let's create a [Gatekeeper policy](https://open-policy-agent.github.io/gatekeeper/website/docs/howto) composed by one `Constraint` and one `ConstraintTemplate` that will be leveraged throughout this blog post. In this example, we are making sure that any non-system namespaces is leveraging the [Pod Security Admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/) feature by having the appropriate label. 
+Let's create a [Gatekeeper policy](https://open-policy-agent.github.io/gatekeeper/website/docs/howto) composed by one `Constraint` and one `ConstraintTemplate` that will be leveraged throughout this blog post.
+
+In this example, we are making sure that any non-system namespaces is leveraging the [Pod Security Admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/) feature to enforce the [Pod Security Standards](https://kubernetes.io/docs/concepts/security/pod-security-standards/).
 
 Create a dedicated folder for the associated files:
 ```bash
@@ -105,7 +107,7 @@ EOF
 
 ## Test this policy with local files
 
-Define a `Namespace` without the PSS label.
+Define a `Namespace` without the required label.
 ```bash
 cat <<EOF > namespace-test.yaml
 apiVersion: v1
@@ -206,7 +208,7 @@ Output similar to:
 Error from server (Forbidden): error when creating "namespace-test.yaml": admission webhook "validation.gatekeeper.sh" denied the request: [ns-must-have-pss-label] You must provide labels: {"pod-security.kubernetes.io/enforce"} for the Namespace: test.
 ```
 
-## Conclusion
+## That's a wrap!
 
 In this article, we were able to package Gatekeeper policies as an OCI image and push it to an OCI Registry, thanks to ORAS. Then, we were able to leverage the new OCI image parameter of `gator test` command in order to shift-left the evaluation of these policies against any Kubernetes resources outside of an actual cluster. Finally, we deployed the Gatekeeper policies as OCI image in a GitOps way.
 
