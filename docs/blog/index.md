@@ -1,5 +1,15 @@
 # ORAS Blog Index
 
+<h2>Bundle with ORAS, test with `gator` and deploy with GitOps your Gatekeeper policies as OCI image</h2>
+
+_Mathieu Benoit_
+
+In this blog we will demonstrate how to bundle and share Gatekeeper policies as an OCI image thanks to the ORAS CLI, how to evaluate any Kubernetes manifests against this OCI image with the `gator` CLI and finally how to deploy this OCI image in Kubernetes clusters, in a GitOps way.
+
+[Read More...][5]
+
+  [5]: gatekeeper-policies-as-oci-image.md
+
 <h2>ORAS: Looking back on 2022 and forward to 2023</h2>
 
 _Feynman Zhou_
