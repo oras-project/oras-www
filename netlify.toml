@@ -11,7 +11,7 @@ mkdocs build -d site
 [[redirects]]
   from = "https://oras.land/oras-go/"
   to = "https://github.com/oras-project/oras-go"
-  status = 200
+  status = 301
   force = true
 
 """
