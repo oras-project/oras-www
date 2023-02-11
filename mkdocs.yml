@@ -47,3 +47,37 @@ theme:
       toggle:
         icon: material/toggle-switch
         name: Switch to light mode
+
+nav:
+    - Home: 'index.md'
+    - Community: 'community.md'   
+    - Implementors: 'implementors.md'
+    - CLI: 
+      - Installation: 'CLI/index.md'
+      - Authentication: 'CLI/0_authentication.md'
+      - Pushing: 'CLI/1_pushing.md'
+      - Pulling: 'CLI/2_pulling.md'
+      - Manifest Config: 'CLI/3_manifest_config.md'
+      - Manifest Annotations: 'CLI/4_manifest_annotations.md'
+      - Developer Guide: 'CLI/5_developer_guide.md'
+      - ORAS Artifact Reference Types (Alpha 1): 'CLI/6_reference_types.md'
+    - CLI Reference: 
+      - Use the ORAS command line: 'CLI_Reference/index.md'
+      - oras attach: 'CLI_Reference/0_oras_attach.md'
+      - oras blob delete: 'CLI_Reference/1_oras_blob_delete.md'
+      - oras blob fetch: 'CLI_Reference/2_oras_blob_fetch.md'
+      - oras blob push: 'CLI_Reference/3_oras_blob_push.md'
+      - oras copy: 'CLI_Reference/4_oras_copy.md'
+      - oras discover: 'CLI_Reference/5_oras_discover.md'
+    - Client Libraries: 
+      - Overview: 'Client_Libraries/index.md'
+      - Go: 'Client_Libraries/0_go.md'
+      - Python: 'Client_Libraries/1_python.md'
+      - Rust: 'Client_Libraries/2_rust.md'
+    - Blog: 
+      - 'ORAS Blog Index': 'blog/index.md'
+      - 'Bundle, test and deploy Gatekeeper policies as OCI image': 'blog/gatekeeper-policies-as-oci-image.md'
+      - 'ORAS 0.14 and Future: Empower Container Secure Supply Chain': 'blog/oras-0.14-and-future.md'
+      - 'ORAS 0.15: A Fully Functional OCI Registry Client': 'blog/oras-0.15-a-fully-functional-registry-client.md'
+      - 'ORAS Artifacts Draft Specification Release – Adding Secure Supply Chain Artifacts References': 'blog/oras-artifacts-draft-specification-release.md'
+      - 'ORAS: Looking back on 2022 and forward to 2023': 'blog/oras-looking-back-at-2022-and-forward-to-2023.md'
