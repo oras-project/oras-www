@@ -4,7 +4,7 @@
 
 _Mathieu Benoit_
 
-In this blog we will demonstrate how to bundle and share Gatekeeper policies as an OCI image thanks to the ORAS CLI, how to evaluate any Kubernetes manifests against this OCI image with the `gator` CLI and finally how to deploy this OCI image in Kubernetes clusters, in a GitOps way.
+In this blog post we will demonstrate how to bundle and share Gatekeeper policies as an OCI image using the ORAS command line client, how to evaluate any Kubernetes manifests against this OCI image with the gator command line client, and how to deploy this OCI image in Kubernetes clusters, in a GitOps way.
 
 [Read More...][5]
 
