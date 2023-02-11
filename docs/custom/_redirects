@@ -1,0 +1,9 @@
+# https://oras.land/oras-go/* https://github.com/oras-project/oras-go:splat 301!
+# https://oras.land/oras/* https://github.com/oras-project/oras:splat 301!
+# https://oras.land/oras-go/v2/* https://github.com/oras-project/oras:splat 301!
+
+https://orasredirect.netlify.app/oras-go/* https://github.com/oras-project/oras-go/:splat 301! 
+
+https://orasredirect.netlify.app/oras/* https://github.com/oras-project/oras/:splat 301! 
+
+# https://orasredirect.netlify.app/oras-go/
