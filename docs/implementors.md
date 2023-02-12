@@ -15,6 +15,7 @@ We're happy to promote all usage, as well as provide feedback.*
 - [policy](https://github.com/opcr-io/policy)
 - [wasm-to-oci](https://github.com/engineerd/wasm-to-oci)
 - [conftest](https://github.com/open-policy-agent/conftest)
+- [notation](https://github.com/notaryproject/notation)
 
 
 ## Registries supporting OCI Artifacts
