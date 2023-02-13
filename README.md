@@ -4,7 +4,12 @@
 
 <h1>ORAS Documentation</h1>
  
-An ORAS UI is written in Hugo Framework, to provide an awesome user interface for configuring simulations.
+An ORAS UI is the web site and documentation for the ORAS project.
+<br>
+Link: [oras.land](https://oras.land/)
+<br>
+Documentation : [Link](/docs/index.md).
+
 
 
 <br>
@@ -41,7 +46,7 @@ Users seeking a generic registry client can benefit from the ORAS CLI, while dev
 ## Getting started
 In order to use and work on this project you need to install python to run the app locally.
 
-You can install python following the download's [instructions](https://www.python.org/downloads/).
+You can install python version 3.8 by following the download's [instructions](https://www.python.org/downloads/).
 
 
 In order to check whether python installed or not, open a terminal and types:
@@ -67,50 +72,6 @@ mkdocs serve
 
 4. To view the UI please navigate to [http://localhost:8000/](http://localhost:8000/)
 
-
-<br>
-
-## Contributing
-
-### Commit Convention
-Before you create a Pull Request, please check whether your commits comply with
-the commit conventions used in this repository.
-
-When you create a commit we kindly ask you to follow the convention
-`category(scope or module): message` in your commit message while using one of
-the following categories:
-
-- `feat / feature`: all changes that introduce completely new code or new
-  features
-- `fix`: changes that fix a bug (ideally you will additionally reference an
-  issue if present)
-- `refactor`: any code related change that is not a fix nor a feature
-- `docs`: changing existing or creating new documentation (i.e. README, docs for
-  usage of a lib or cli usage)
-- `build`: all changes regarding the build of the software, changes to
-  dependencies or the addition of new dependencies
-- `test`: all changes regarding tests (adding new tests or changing existing
-  ones)
-- `ci`: all changes regarding the configuration of continuous integration (i.e.
-  github actions, ci system)
-- `chore`: all changes to the repository that do not fit into any of the above
-  categories
-
-<br>
-
-### Branch-name Convention
-<br>
-We follow the convention `[type/scope]`. For example `fix/lint-error` or `docs/component-api`. `type` can be either `docs`, `fix`, `feat`, `build`, or any other conventional commit type. `scope` is just a short id that describes the scope of work.
-
-Source for ORAS website and documentation
-
-### Development notes
-
-For the developer environment setup, project structure, best practices etc. you can go through the following link.
-<br>
-Link: [oras.land](https://oras.land/)
-<br>
-Documentation : [Link](/docs/index.md).
 
 <br>
 
