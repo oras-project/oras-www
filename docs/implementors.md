@@ -11,6 +11,12 @@ We're happy to promote all usage, as well as provide feedback.*
 
 - [Helm](https://v3.helm.sh/docs/topics/registries/)
 - [Singularity](https://sylabs.io/guides/3.1/user-guide/cli/singularity_push.html)
+- [falcoctl](https://github.com/falcosecurity/falcoctl)
+- [policy](https://github.com/opcr-io/policy)
+- [wasm-to-oci](https://github.com/engineerd/wasm-to-oci)
+- [conftest](https://github.com/open-policy-agent/conftest)
+- [notation](https://github.com/notaryproject/notation)
+
 
 ## Registries supporting OCI Artifacts
 
@@ -21,6 +27,7 @@ We're happy to promote all usage, as well as provide feedback.*
 - [GitHub Packages container registry](#github-packages-container-registry-ghcr)
 - [Bundle Bar](#bundle-bar)
 - [Docker Hub](#docker-hub)
+- [Zot Registry](#zot-registry)
 
 ### CNCF Distribution
 
@@ -323,6 +330,31 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
 
   ```
   oras pull docker.io/${DH_USER}/artifact:1.0
+  ```
+
+[artifacts]:            https://github.com/opencontainers/artifacts
+[distribution-spec]:    https://github.com/opencontainers/distribution-spec/
+
+### [Zot Registry](https://zotregistry.io)
+
+- [Authenticating with Zot Registry](https://zotregistry.io/user-guides/user-guide-datapath/#authentication_2)
+
+  ```
+  echo $ZR_PASSWORD | oras login <registry-ip>:5000 -u $ZR_USER --password-stdin 
+  ```
+
+- [Pushing Artifacts to Zot Registry](https://zotregistry.io/user-guides/user-guide-datapath/#push-an-artifact)
+
+  ```
+  oras push --plain-http <registry-ip>:5000/hello-artifact:v2 \
+        --config config.json:application/vnd.acme.rocket.config.v1+json \
+        artifact.txt:text/plain -d -v
+  ```
+
+- [Pulling Artifacts from Zot Registry](https://zotregistry.io/user-guides/user-guide-datapath/#pull-an-artifact)
+
+  ```
+  oras pull --plain-http <registry-ip>:5000/hello-artifact:v2 -d -v
   ```
 
 [artifacts]:            https://github.com/opencontainers/artifacts
