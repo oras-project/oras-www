@@ -16,7 +16,7 @@ We're happy to promote all usage, as well as provide feedback.*
 - [wasm-to-oci](https://github.com/engineerd/wasm-to-oci)
 - [conftest](https://github.com/open-policy-agent/conftest)
 - [notation](https://github.com/notaryproject/notation)
-
+- [awslabs/soci-snapshotter](https://github.com/awslabs/soci-snapshotter)
 
 ## Registries supporting OCI Artifacts
 
