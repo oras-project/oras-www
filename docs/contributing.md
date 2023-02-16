@@ -4,7 +4,7 @@
 * [New Contributor Guide](#contributing-guide)
   * [Ways to Contribute](#ways-to-contribute)
   * [Find an Issue](#find-an-issue)
-  * [Ask for Help](#ask-for-help)
+  * [Contact Us](#contact-us)
   * [Pull Request Lifecycle](#pull-request-lifecycle)
   * [Development Environment Setup](#development-environment-setup)
   * [Sign Your Commits](#sign-your-commits)
@@ -24,7 +24,7 @@ bug report and let us know!
 
 ## Ways to Contribute
 
-We welcome many different types of contributions including:
+We welcome many types of contributions including:
 
 * New features
 * New end-to-end tests
@@ -41,7 +41,7 @@ together.
 ### Come to Meetings
 
 Absolutely everyone is welcome to come to any of our meetings. You never need an
-invite to join us. In fact, we want you to join us, even if you don’t have
+invitation to join us. In fact, we want you to join us, even if you don’t have
 anything you feel like you want to contribute. Just being there is enough!
 
 Join the weekly ORAS community meeting at 4:00 PM PST on [Zoom](https://zoom.us/j/8079328631?pwd=UzN0NUlmbmcvTTN5L0o5VUQ2YndyQT09) with ID 807 932 8631.
@@ -54,38 +54,38 @@ feedback on others’ ideas, and even sharing your own ideas, and experiences.
 
 ### Contact Us
 
-Other than pull requests and github issues, the best way to contact us is to join us at the [CNCF Slack](https://cloud-native.slack.com) under the [**#oras** channel](https://app.slack.com/client/T08PSQ7BQ/CJ1KHJM5Z).
+Other than pull requests and GitHub issues, the best way to contact us is to join us at the [CNCF Slack](https://cloud-native.slack.com) under the [**#oras** channel](https://app.slack.com/client/T08PSQ7BQ/CJ1KHJM5Z).
 
 ## Find an Issue
 
-Each ORAS sub-project has a label `good-first-issue` for issues that are appropriate for new contributors.
-Each ORAS sub-project has a label `help-wanted` for issues suitable for someone who is ready to move onto after their first pull request.
+Each ORAS subproject has a label `good-first-issue` for issues that are appropriate for new contributors.
+Each ORAS subproject has a label `help-wanted` for issues suitable for someone who is ready to move onto after their first pull request.
 For example, for the ORAS CLI project:
 * [good first issue](https://github.com/oras-project/oras/labels/good%20first%20issue)
 * [help wanted](https://github.com/oras-project/oras/labels/help%20wanted)
 
 Sometimes there won’t be any issues with these labels. That’s ok! There is
-likely still something for you to work on. If you want to contribute but you
-don’t know where to start or can't find a suitable issue, you can ask in the ORAS slack channel.
+likely still something for you to work on. If you want to contribute, but you
+don’t know where to start or can't find a suitable issue, you can ask in the ORAS Slack channel.
 
 Once you see an issue that you'd like to work on, please post a comment saying
 that you want to work on it. Something like "I want to work on this" is fine.
 
 ## Pull Request Lifecycle
 
-Please remember that most contributors and maintainers of the project have responsibilities outside of this project and will review your pull request as time allows. In general:
+Please remember that most contributors and maintainers of the project have responsibilities outside this project and will review your pull request as time allows. In general:
 * If you have a pull request for a security vulnerability, please contact the maintainers directly before making your pull request public.
 * Feature enhancement pull requests will likely take a week or more to get reviewed.
 * Pull requests will be reviewed by at least two maintainers before being merged.
 * If you are submitting a pull request that is a work in progress, mark it as a draft.
-* If you have a pull request that is an urgent fix or effects the project widely, bring it up in the slack channel.
+* If you have a pull request that is an urgent fix or effects the project widely, bring it up in the Slack channel.
 * More details on the [review process](https://github.com/oras-project/community/blob/main/REVIEWING.md)
 
 ## Development Environment Setup
 
-The ORAS project contains several sub-projects which use different build, test and deployment methods.
+The ORAS project contains several subprojects which use different build, test and deployment methods.
 It is best to consult the project specific `README.md` for development environment setup instructions.
-The first step for contributution for any sub-project would be to fork the repository on github and then clone it locally.
+The first step for contribution for any subproject would be to fork the repository on GitHub and then clone it locally.
 For example:
 ```
 MY_GITHUB_NAME="my-name"
