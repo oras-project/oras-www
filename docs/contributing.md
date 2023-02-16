@@ -1,6 +1,5 @@
 # Contributing Guide
 
-[Instructions](https://contribute.cncf.io/maintainers/github/templates/required/contributing/#introduction)
 
 * [New Contributor Guide](#contributing-guide)
   * [Ways to Contribute](#ways-to-contribute)
@@ -11,7 +10,7 @@
   * [Sign Your Commits](#sign-your-commits)
   * [Pull Request Checklist](#pull-request-checklist)
 
-Welcome! We are glad that you want to contribute to our project! 💖
+Welcome! We are glad that you want to contribute to the ORAS project! 💖
 
 As you get started, you are in the best position to give us feedback on areas of
 our project that we need help with including:
@@ -25,85 +24,84 @@ bug report and let us know!
 
 ## Ways to Contribute
 
-[Instructions](https://contribute.cncf.io/maintainers/github/templates/required/contributing/#ways-to-contribute)
-
 We welcome many different types of contributions including:
 
 * New features
-* Builds, CI/CD
+* New end-to-end tests
 * Bug fixes
 * Documentation
 * Issue Triage
-* Answering questions on Slack/Mailing List
+* Answering questions on Slack channel
 * Web design
-* Communications / Social Media / Blog Posts
-* Release management
 
-Not everything happens through a GitHub pull request. Please come to our
-[meetings](TODO) or [contact us](TODO) and let's discuss how we can work
-together. 
+Not everything happens through a GitHub pull request.
+Please come to our [meetings](#come-to-meetings) or [contact us](#contact-us) and let's discuss how we can work
+together.
 
 ### Come to Meetings
-
-[Instructions](https://contribute.cncf.io/maintainers/github/templates/required/contributing/#come-to-meetings)
 
 Absolutely everyone is welcome to come to any of our meetings. You never need an
 invite to join us. In fact, we want you to join us, even if you don’t have
 anything you feel like you want to contribute. Just being there is enough!
 
-You can find out more about our meetings [here](TODO). You don’t have to turn on
-your video. The first time you come, introducing yourself is more than enough.
+Join the weekly ORAS community meeting at 4:00 PM PST on [Zoom](https://zoom.us/j/8079328631?pwd=UzN0NUlmbmcvTTN5L0o5VUQ2YndyQT09) with ID 807 932 8631.
+See the [meeting notes](https://hackmd.io/P-O6n222TcSMoJgHmTTduw?view) for agenda and past meeting notes.
+
+You don’t have to turn on your video.
+The first time you come, introducing yourself is more than enough.
 Over time, we hope that you feel comfortable voicing your opinions, giving
 feedback on others’ ideas, and even sharing your own ideas, and experiences.
 
+### Contact Us
+
+Other than pull requests and github issues, the best way to contact us is to join us at the [CNCF Slack](https://cloud-native.slack.com) under the [**#oras** channel](https://app.slack.com/client/T08PSQ7BQ/CJ1KHJM5Z).
+
 ## Find an Issue
 
-[Instructions](https://contribute.cncf.io/maintainers/github/templates/required/contributing/#find-an-issue)
-
-We have good first issues for new contributors and help wanted issues suitable
-for any contributor. [good first issue](TODO) has extra information to
-help you make your first contribution. [help wanted](TODO) are issues
-suitable for someone who isn't a core maintainer and is good to move onto after
-your first pull request.
+Each ORAS sub-project has a label `good-first-issue` for issues that are appropriate for new contributors.
+Each ORAS sub-project has a label `help-wanted` for issues suitable for someone who is ready to move onto after their first pull request.
+For example, for the ORAS CLI project:
+* [good first issue](https://github.com/oras-project/oras/labels/good%20first%20issue)
+* [help wanted](https://github.com/oras-project/oras/labels/help%20wanted)
 
 Sometimes there won’t be any issues with these labels. That’s ok! There is
 likely still something for you to work on. If you want to contribute but you
-don’t know where to start or can't find a suitable issue, you can ⚠️ **explain how people can ask for an issue to work on**.
+don’t know where to start or can't find a suitable issue, you can ask in the ORAS slack channel.
 
 Once you see an issue that you'd like to work on, please post a comment saying
 that you want to work on it. Something like "I want to work on this" is fine.
 
-## Ask for Help
-
-[Instructions](https://contribute.cncf.io/maintainers/github/templates/required/contributing/#ask-for-help)
-
-The best way to reach us with a question when contributing is to ask on:
-
-⚠️ **Pick the way(s) that you prefer people ask for help**
-
-* The original github issue
-* The developer mailing list
-* Our Slack channel
-
 ## Pull Request Lifecycle
 
-[Instructions](https://contribute.cncf.io/maintainers/github/templates/required/contributing/#pull-request-lifecycle)
-
-⚠️ **Explain your pull request process**
+Please remember that most contributors and maintainers of the project have responsibilities outside of this project and will review your pull request as time allows. In general:
+* If you have a pull request for a security vulnerability, please contact the maintainers directly before making your pull request public.
+* Feature enhancement pull requests will likely take a week or more to get reviewed.
+* Pull requests will be reviewed by at least two maintainers before being merged.
+* If you are submitting a pull request that is a work in progress, mark it as a draft.
+* If you have a pull request that is an urgent fix or effects the project widely, bring it up in the slack channel.
+* More details on the [review process](https://github.com/oras-project/community/blob/main/REVIEWING.md)
 
 ## Development Environment Setup
 
-[Instructions](https://contribute.cncf.io/maintainers/github/templates/required/contributing/#development-environment-setup)
-
-⚠️ **Explain how to set up a development environment**
+The ORAS project contains several sub-projects which use different build, test and deployment methods.
+It is best to consult the project specific `README.md` for development environment setup instructions.
+The first step for contributution for any sub-project would be to fork the repository on github and then clone it locally.
+For example:
+```
+MY_GITHUB_NAME="my-name"
+git clone git@github.com:${MY_GITHUB_NAME}/oras.git
+cd oras
+cat README.md
+```
 
 ## Sign Your Commits
 
-[Instructions](https://contribute.cncf.io/maintainers/github/templates/required/contributing/sign-your-commits)
+All contributors to the project retain copyright to their work. However, to ensure
+that they are only submitting work that they have rights to, we require
+everyone to acknowledge this by signing their work.
+Any copyright notices in this repo should specify the authors as
+"The ORAS Authors".
 
-⚠️ **Keep either the DCO or CLA section depending on which you use**
-
-### DCO
 Licensing is important to open source projects. It provides some assurances that
 the software will continue to be available based under the terms that the
 author(s) desired. We require that contributors sign off on commits submitted to
@@ -127,12 +125,10 @@ repository, you can amend your commit with the sign-off by running
 
     git commit --amend -s 
 
-### CLA
-We require that contributors have signed our Contributor License Agreement (CLA). 
-
-⚠️ **Explain how to sign the CLA**
-
 ## Pull Request Checklist
+
+When you submit your pull request, make sure the title follows the [conventional commits specification](https://www.conventionalcommits.org/).
+There is a formal [review process](https://github.com/oras-project/community/blob/main/REVIEWING.md) followed by contributors and maintainers.
 
 When you submit your pull request, or you push new commits to it, our automated
 systems will run some checks on your new code. We require that your pull request
@@ -140,4 +136,7 @@ passes these checks, but we also have more criteria than just that before we can
 accept and merge it. We recommend that you check the following things locally
 before you submit your code:
 
-⚠️ **Create a checklist that authors should use before submitting a pull request**
+- [ ]  Does the affected code have corresponding tests, e.g. unit test, E2E test?
+- [ ]  Does this change require a documentation update?
+- [ ]  Does this introduce breaking changes that would require an announcement or bumping the major version?
+- [ ]  Do all new files have an appropriate license header?
