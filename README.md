@@ -1,10 +1,10 @@
 
-<img src="https://github.com/oras-project/oras-www/raw/main/docs/assets/images/oras.png" alt="FLINT UI logo" height ="auto" width="200" />
+<img src="https://github.com/oras-project/oras-www/raw/main/docs/assets/images/oras.png" alt="Oras logo" height ="auto" width="200" />
 <br />
 
 <h1>ORAS Documentation</h1>
  
-An ORAS UI is the web site and documentation for the ORAS project.
+An ORAS is the web site and documentation for the ORAS project.
 <br>
 Link: [oras.land](https://oras.land/)
 <br>
