@@ -1,0 +1,10 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[http]
+	postBuffer = 2147483648
+[remote "origin"]
+	url = https://github.com/ConnectBhawna/oras-www.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
