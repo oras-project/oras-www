@@ -14,7 +14,7 @@ brew install oras
 
 ## Release artifacts
 
-Install from the latest [release artifacts](https://github.com/oras-project/oras/releases):
+Install ORAS from the latest [release artifacts](https://github.com/oras-project/oras/releases):
 
 ### Linux
 
