@@ -13,7 +13,7 @@
 Welcome! We are glad that you want to contribute to the ORAS project! 💖
 
 As you get started, you are in the best position to give us feedback on areas of
-our project that we need help with including:
+our project that we need help with, including:
 
 * Problems found during setting up a new developer environment
 * Gaps in our Quickstart Guide or documentation
