@@ -18,6 +18,8 @@ Install ORAS from the latest [release artifacts](https://github.com/oras-project
 
 ### Linux
 
+If you want to install ORAS on an AMD64-based Linux machine, run the following command:
+
 ```bash
 curl -LO https://github.com/oras-project/oras/releases/download/v1.0.0-rc.1/oras_1.0.0-rc.1_linux_amd64.tar.gz
 mkdir -p oras-install/
