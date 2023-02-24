@@ -44,7 +44,7 @@ Absolutely everyone is welcome to come to any of our meetings. You never need an
 invitation to join us. In fact, we want you to join us, even if you don’t have
 anything you feel like you want to contribute. Just being there is enough!
 
-Join the weekly ORAS community meeting at 4:00 PM PST on [Zoom](https://zoom.us/j/8079328631?pwd=UzN0NUlmbmcvTTN5L0o5VUQ2YndyQT09) with ID 807 932 8631.
+Join the bi-weekly ORAS community meeting at 4:00 PM PST on [Zoom](https://zoom.us/j/8079328631?pwd=UzN0NUlmbmcvTTN5L0o5VUQ2YndyQT09) with ID 807 932 8631.
 See the [meeting notes](https://hackmd.io/P-O6n222TcSMoJgHmTTduw?view) for agenda and past meeting notes.
 
 You don’t have to turn on your video.
