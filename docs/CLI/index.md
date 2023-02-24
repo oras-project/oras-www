@@ -10,6 +10,8 @@ Install `oras` using [Homebrew](https://brew.sh/):
 brew install oras
 ```
 
+> Note: Homebrew only has ORAS v0.16.0 available to be used so far. It will be updated when ORAS v1.0.0 is released in Mar 2023.
+
 ## Release artifacts
 
 Install from the latest [release artifacts](https://github.com/oras-project/oras/releases):
@@ -20,19 +22,25 @@ Install from the latest [release artifacts](https://github.com/oras-project/oras
 curl -LO https://github.com/oras-project/oras/releases/download/v1.0.0-rc.1/oras_1.0.0-rc.1_linux_amd64.tar.gz
 mkdir -p oras-install/
 tar -zxf oras_1.0.0-rc.1_*.tar.gz -C oras-install/
-mv oras-install/oras /usr/local/bin/
+sudo mv oras-install/oras /usr/local/bin/
 rm -rf oras_1.0.0-rc.1_*.tar.gz oras-install/
 ```
+
+> Note: If you want to install ORAS on an ARM64-based Linux machine, you can download it from `https://github.com/oras-project/oras/releases/download/v1.0.0-rc.1/oras_1.0.0-rc.1_linux_arm64.tar.gz`.
 
 ### macOS
 
+If you want to install ORAS on an ARM64-based machine, run the following command:
+
 ```bash
-curl -LO https://github.com/oras-project/oras/releases/download/v1.0.0-rc.1/oras_1.0.0-rc.1_darwin_amd64.tar.gz
+curl -LO https://github.com/oras-project/oras/releases/download/v1.0.0-rc.1/oras_1.0.0-rc.1_darwin_arm64.tar.gz
 mkdir -p oras-install/
 tar -zxf oras_1.0.0-rc.1_*.tar.gz -C oras-install/
-mv oras-install/oras /usr/local/bin/
+sudo mv oras-install/oras /usr/local/bin/
 rm -rf oras_1.0.0-rc.1_*.tar.gz oras-install/
 ```
+
+> Note: If you want to install ORAS on an ARM64-based machine, you can download it from `https://github.com/oras-project/oras/releases/download/v1.0.0-rc.1/oras_1.0.0-rc.1_darwin_amd64.tar.gz`.
 
 ### Windows
 
@@ -54,7 +62,7 @@ A public Docker image containing the CLI is available on [GitHub Container Regis
 docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.0.0-rc.1 help
 ```
 
-> Note: the default WORKDIR  in the image is `/workspace`.
+> Note: the default WORKDIR in the image is `/workspace`.
 
 ## Verify
 
