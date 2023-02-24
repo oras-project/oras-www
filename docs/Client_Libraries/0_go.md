@@ -122,6 +122,19 @@ func main() {
 ### Pull files from a remote repository
 
 ```go
+package main
+
+import (
+    "context"
+    "fmt"
+
+    "oras.land/oras-go/v2"
+    "oras.land/oras-go/v2/content/file"
+    "oras.land/oras-go/v2/registry/remote"
+    "oras.land/oras-go/v2/registry/remote/auth"
+    "oras.land/oras-go/v2/registry/remote/retry"
+)
+
 func pullFiles() error {
     // 0. Create a file store
     fs, err := file.New("/tmp/")
@@ -155,5 +168,11 @@ func pullFiles() error {
     }
     fmt.Println("manifest descriptor:", manifestDescriptor)
     return nil
+}
+
+func main() {
+    if err := pullFiles(); err != nil {
+        panic(err)
+    }
 }
 ```
