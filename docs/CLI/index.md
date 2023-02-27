@@ -32,7 +32,7 @@ rm -rf oras_1.0.0-rc.1_*.tar.gz oras-install/
 
 ### macOS
 
-If you want to install ORAS on an ARM64-based machine, run the following command:
+If you want to install ORAS on a Mac computer with Apple silicon, run the following command:
 
 ```bash
 curl -LO https://github.com/oras-project/oras/releases/download/v1.0.0-rc.1/oras_1.0.0-rc.1_darwin_arm64.tar.gz
@@ -42,7 +42,7 @@ sudo mv oras-install/oras /usr/local/bin/
 rm -rf oras_1.0.0-rc.1_*.tar.gz oras-install/
 ```
 
-> Note: If you want to install ORAS on an ARM64-based machine, you can download it from `https://github.com/oras-project/oras/releases/download/v1.0.0-rc.1/oras_1.0.0-rc.1_darwin_amd64.tar.gz`.
+> Note: If you want to install ORAS on an Intel-based Mac, you can download it from `https://github.com/oras-project/oras/releases/download/v1.0.0-rc.1/oras_1.0.0-rc.1_darwin_amd64.tar.gz`.
 
 ### Windows
 
