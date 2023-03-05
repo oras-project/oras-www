@@ -2,25 +2,22 @@
 
 ## Prerequisites
 
-- Go 1.18+
+- Go 1.20+
 - Git
+- Make
 
 ## Clone the repository
 
-You can clone the repository and get the main branch using the following command:
-
+Once you have the basic tools installed, fork the repository on GitHub and clone it locally:
 ```bash
-git clone https://github.com/oras-project/oras.git
-```
-
-Enter the `oras` directory:
-
-```bash
+MY_GITHUB_NAME="my-name"
+git clone git@github.com:${MY_GITHUB_NAME}/oras.git
 cd oras
 ```
 
 ## Building binary
 
+To compile and run the tests, just run the `make` command.
 Use `make build` to build all platform binaries to the `bin/` directory.
 
 Mac:
