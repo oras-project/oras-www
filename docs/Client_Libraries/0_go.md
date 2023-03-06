@@ -54,11 +54,11 @@ import (
     "oras.land/oras-go/v2/registry/remote/retry"
 )
 
-func pushFiles() {
+func pushFiles() error {
     // 0. Create a file store
     fs, err := file.New("/tmp/")
     if err != nil {
-        panic(err)
+        return err
     }
     defer fs.Close()
     ctx := context.Background()
@@ -70,27 +70,25 @@ func pushFiles() {
     for _, name := range fileNames {
         fileDescriptor, err := fs.Add(ctx, name, mediaType, "")
         if err != nil {
-            panic(err)
+            return err
         }
         fileDescriptors = append(fileDescriptors, fileDescriptor)
         fmt.Printf("file descriptor for %s: %v\n", name, fileDescriptor)
     }
 
     // 2. Pack the files and tag the packed manifest
-    // Note:
-    // oras.Pack() packs an artifact manifest by default.
-    // If the remote repository does not support the artifact manifest media type,
-    // try Image manifest instead by specifying oras.PackOptions{PackImageManifest: true}.
     artifactType := "example/files"
-    manifestDescriptor, err := oras.Pack(ctx, fs, artifactType, fileDescriptors, oras.PackOptions{})
+    manifestDescriptor, err := oras.Pack(ctx, fs, artifactType, fileDescriptors, oras.PackOptions{
+        PackImageManifest: true,
+    })
     if err != nil {
-        panic(err)
+        return err
     }
     fmt.Println("manifest descriptor:", manifestDescriptor)
 
     tag := "latest"
     if err = fs.Tag(ctx, manifestDescriptor, tag); err != nil {
-        panic(err)
+        return err
     }
 
     // 3. Connect to a remote repository
@@ -111,7 +109,11 @@ func pushFiles() {
 
     // 3. Copy from the file store to the remote repository
     _, err = oras.Copy(ctx, fs, tag, repo, tag, oras.DefaultCopyOptions)
-    if err != nil {
+    return err
+}
+
+func main() {
+    if err := pushFiles(); err != nil {
         panic(err)
     }
 }
@@ -120,11 +122,24 @@ func pushFiles() {
 ### Pull files from a remote repository
 
 ```go
-func pullFiles() {
+package main
+
+import (
+    "context"
+    "fmt"
+
+    "oras.land/oras-go/v2"
+    "oras.land/oras-go/v2/content/file"
+    "oras.land/oras-go/v2/registry/remote"
+    "oras.land/oras-go/v2/registry/remote/auth"
+    "oras.land/oras-go/v2/registry/remote/retry"
+)
+
+func pullFiles() error {
     // 0. Create a file store
     fs, err := file.New("/tmp/")
     if err != nil {
-        panic(err)
+        return err
     }
     defer fs.Close()
 
@@ -133,7 +148,7 @@ func pullFiles() {
     reg := "myregistry.example.com"
     repo, err := remote.NewRepository(reg + "/myrepo")
     if err != nil {
-        panic(err)
+        return err
     }
     // Note: The below code can be omitted if authentication is not required
     repo.Client = &auth.Client{
@@ -149,8 +164,15 @@ func pullFiles() {
     tag := "latest"
     manifestDescriptor, err := oras.Copy(ctx, repo, tag, fs, tag, oras.DefaultCopyOptions)
     if err != nil {
-        panic(err)
+        return err
     }
     fmt.Println("manifest descriptor:", manifestDescriptor)
+    return nil
+}
+
+func main() {
+    if err := pullFiles(); err != nil {
+        panic(err)
+    }
 }
 ```
