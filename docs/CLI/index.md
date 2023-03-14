@@ -21,11 +21,12 @@ Install ORAS from the latest [release artifacts](https://github.com/oras-project
 If you want to install ORAS on an AMD64-based Linux machine, run the following command:
 
 ```bash
-curl -LO https://github.com/oras-project/oras/releases/download/v1.0.0-rc.2/oras_1.0.0-rc.2_linux_amd64.tar.gz
+VERSION="1.0.0-rc.2"
+curl -LO "https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_linux_amd64.tar.gz"
 mkdir -p oras-install/
-tar -zxf oras_1.0.0-rc.2_*.tar.gz -C oras-install/
+tar -zxf oras_${VERSION}_*.tar.gz -C oras-install/
 sudo mv oras-install/oras /usr/local/bin/
-rm -rf oras_1.0.0-rc.2_*.tar.gz oras-install/
+rm -rf oras_${VERSION}_*.tar.gz oras-install/
 ```
 
 > Note: If you want to install ORAS on an ARM64-based Linux machine, you can download it from `https://github.com/oras-project/oras/releases/download/v1.0.0-rc.2/oras_1.0.0-rc.2_linux_arm64.tar.gz`.
@@ -35,11 +36,12 @@ rm -rf oras_1.0.0-rc.2_*.tar.gz oras-install/
 If you want to install ORAS on a Mac computer with Apple silicon, run the following command:
 
 ```bash
-curl -LO https://github.com/oras-project/oras/releases/download/v1.0.0-rc.2/oras_1.0.0-rc.2_darwin_arm64.tar.gz
+VERSION="1.0.0-rc.2"
+curl -LO "https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_darwin_arm64.tar.gz"
 mkdir -p oras-install/
-tar -zxf oras_1.0.0-rc.2_*.tar.gz -C oras-install/
+tar -zxf oras_${VERSION}_*.tar.gz -C oras-install/
 sudo mv oras-install/oras /usr/local/bin/
-rm -rf oras_1.0.0-rc.2_*.tar.gz oras-install/
+rm -rf oras_${VERSION}_*.tar.gz oras-install/
 ```
 
 > Note: If you want to install ORAS on an Intel-based Mac, you can download it from `https://github.com/oras-project/oras/releases/download/v1.0.0-rc.2/oras_1.0.0-rc.2_darwin_amd64.tar.gz`.
@@ -48,9 +50,10 @@ rm -rf oras_1.0.0-rc.2_*.tar.gz oras-install/
 
 Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
 
-```shell
-curl.exe -sLO  https://github.com/oras-project/oras/releases/download/v1.0.0-rc.2/oras_1.0.0-rc.2_windows_amd64.zip
-tar.exe -xvzf oras_1.0.0-rc.2_windows_amd64.zip
+```cmd
+set VERSION="1.0.0-rc.2"
+curl.exe -sLO  "https://github.com/oras-project/oras/releases/download/v%VERSION%/oras_%VERSION%_windows_amd64.zip"
+tar.exe -xvzf oras_%VERSION%_windows_amd64.zip
 mkdir -p %USERPROFILE%\bin\
 copy oras.exe %USERPROFILE%\bin\
 set PATH=%USERPROFILE%\bin\;%PATH%
