@@ -24,7 +24,7 @@ This blog post will demonstrate how to use ORAS CLI v0.15 to convert a Docker im
 Run a local instance of the CNCF Distribution Registry, with ORAS Artifacts support (Note: OCI Artifact support is coming soon):
 
 ```bash
-docker run -d -p 5000:5000 ghcr.io/oras-project/registry:v1.0.0-rc.2
+docker run -d -p 5000:5000 ghcr.io/oras-project/registry:latest
 ```
 
 ## Fetch and view the manifest of a sample Docker image
