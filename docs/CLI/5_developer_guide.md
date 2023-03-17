@@ -78,10 +78,10 @@ To update or add new dependencies, run `go get <package name>`.
 1. Make sure your GPG is available on GitHub at `https://github.com/<username>.gpg`. This can be added at https://github.com/settings/keys
 2. If you haven't already, open PR to add your GPG key to the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file (see file for instructions)
 3. Open a release PR to
-   - Build with latest golang: replace go version of [binary](https://github.com/oras-project/oras/blob/main/.github/workflows/release-github.yml#L32) and [image](https://github.com/oras-project/oras/blob/main/Dockerfile#L14) to latest stable version
+   - Build with latest golang: replace go version of [binary](https://github.com/oras-project/oras/blob/main/.github/workflows/release-github.yml#L32) and [image](https://github.com/oras-project/oras/blob/main/Dockerfile#L14) to latest stable one
    - Update oras version: replace [current stable version](https://github.com/oras-project/oras/blob/main/internal/version/version.go#L5) with upcoming release version
 4. After the release PR got merged, [create an issue](https://github.com/oras-project/oras/issues/new) to call for vote on cutting off a release tag `release-<version>` based on the version update commit.
-5. Make fresh clone the repo after all above steps are completed. Create a new tag for the version prefixed with "v", for example: `git tag v0.15.0`. Push the tag directly to the repo, for example `git push origin v0.15.0`.
+5. Make fresh clone of the repo after all above steps are completed. Create a new tag for the version prefixed with "v", for example: `git tag v0.15.0`. Push the tag directly to the repo, for example `git push origin v0.15.0`.
     ```sh
     version=0.15.0
     git tag v${version}
