@@ -1,6 +1,6 @@
 # ORAS Blog Index
 
-<h2>>March 2023: ORAS Welcomes New Owners, Maintainers, and Thanks Emeritus Owners</h2>
+<h2>March 2023: ORAS Welcomes New Owners, Maintainers, and Thanks Emeritus Owners</h2>
 
 _ORAS Community_
 
