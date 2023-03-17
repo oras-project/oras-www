@@ -80,7 +80,6 @@ To update or add new dependencies, run `go get <package name>`.
 3. Open a release PR to
    - Build with latest golang: replace go version of [binary](https://github.com/oras-project/oras/blob/main/.github/workflows/release-github.yml#L32) and [image](https://github.com/oras-project/oras/blob/main/Dockerfile#L14) to latest stable version
    - Update oras version: replace [current stable version](https://github.com/oras-project/oras/blob/main/internal/version/version.go#L5) with upcoming release version
-
 4. After the release PR got merged, [create an issue](https://github.com/oras-project/oras/issues/new) to call for vote on cutting off a release tag `release-<version>` based on the version update commit.
 5. Make fresh clone the repo after all above steps are completed. Create a new tag for the version prefixed with "v", for example: `git tag v0.15.0`. Push the tag directly to the repo, for example `git push origin v0.15.0`.
     ```sh
