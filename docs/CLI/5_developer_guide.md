@@ -79,11 +79,11 @@ To update or add new dependencies, run `go get <package name>`.
 2. If you haven't already, open PR to add your GPG key to the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file (see file for instructions)
 3. Open a release PR to
    - Build with latest golang: replace go version of [binary](https://github.com/oras-project/oras/blob/main/.github/workflows/release-github.yml#L32) and [image](https://github.com/oras-project/oras/blob/main/Dockerfile#L14) to latest stable one
-   - Update oras version: replace [current stable version](https://github.com/oras-project/oras/blob/main/internal/version/version.go#L5) with upcoming release version
+   - Update oras version: replace [current stable version](https://github.com/oras-project/oras/blob/main/internal/version/version.go#L20) with upcoming release version
 4. After the release PR got merged, [create an issue](https://github.com/oras-project/oras/issues/new) to call for vote on cutting off a release tag `release-<version>` based on the version update commit.
-5. Make fresh clone of the repo after all above steps are completed. Create a new tag for the version prefixed with "v", for example: `git tag v0.15.0`. Push the tag directly to the repo, for example `git push origin v0.15.0`.
+5. Make fresh clone of the repo after all above steps are completed. Create a new tag for the version prefixed with "v" and push the tag directly to the repo.
     ```sh
-    version=0.15.0
+    version=1.0.0
     git tag v${version}
     git push origin v${version}
     ```
@@ -115,7 +115,7 @@ To update or add new dependencies, run `go get <package name>`.
     ```
     ## Notes
 
-    This release was signed with `E97F 9DA5 AE2E 39CF 48A1 42B7 852A 7470 A39F B81D` (@jdolitsky's GPG key) which can be found [here](https://github.com/jdolitsky.gpg).
+    This release was signed with `BE6F A8DD A48D 4C23 0091 A0A9 276D 8A72 4CE1 C704` (@qweeah's GPG key) which can be found [here](https://github.com/qweeah.gpg).
     ```
 13. Click "Publish Release" button to save. Double-check that the release contains a corresponding `.asc` file for each release artifact.
 14. Consume beverage of choice.. you're done! Thanks for moving the project forward.
@@ -144,4 +144,4 @@ Once ready, this should be a doc in the project itself.
 
 oras actually serves 2 purposes: library and utility. All of the above steps, except for the tag, are entirely about the utility.
 
-For better or for worse, semver is tied up with both. As an example, the current issue with the go modules solely affects its inclusion as a library, but it is immediate. It can be fixed by cutting v0.15.0, and the downstream problems go away. yet cutting a release _also_ means all of the above, which are far more complicated.
+For better or for worse, semver is tied up with both. As an example, the current issue with the go modules solely affects its inclusion as a library, but it is immediate. It can be fixed by cutting v1.0.0, and the downstream problems go away. yet cutting a release _also_ means all of the above, which are far more complicated.
