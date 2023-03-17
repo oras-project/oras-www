@@ -77,56 +77,56 @@ To update or add new dependencies, run `go get <package name>`.
 
 1. Make sure your GPG is available on GitHub at `https://github.com/<username>.gpg`. This can be added at https://github.com/settings/keys
 2. If you haven't already, open PR to add your GPG key to the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file (see file for instructions)
-3. Look for any references to the current stable version, and replace with upcoming version. Open a PR with these changes, such as "prepare for <version>". Examples:
-    * https://github.com/oras-project/oras/blob/main/internal/version/version.go#L5
-4. Make fresh clone the repo after all above steps are completed and merged. Create a new tag for the version prefixed with "v", for example: `git tag v0.15.0`. Push the tag directly to the repo, for example `git push origin v0.15.0`.
+3. Look for any reference(e.g. [here](https://github.com/oras-project/oras/blob/main/internal/version/version.go#L5)) to the current stable version. replace with upcoming version and open a PR to check in those changes.
+4. After the PR is merged, cut off the release branch with a tag `release-<version>` and create an issue to call for vote.
+5. Make fresh clone the repo after all above steps are completed and merged. Create a new tag for the version prefixed with "v", for example: `git tag v0.15.0`. Push the tag directly to the repo, for example `git push origin v0.15.0`.
     ```sh
     version=0.15.0
     git tag v${version}
     git push origin v${version}
     ```
-5. Wait for GitHub Actions to complete successfully for both the `release-ghcr` and `release-github` pipelines
-6. Download all of the artifacts uploaded to the new GitHub release locally (`*checksums.txt`, `*darwin_amd64.tar.gz`, `*linux_armv7.tar.gz`, `*linux_arm64.tar.gz`, `*linux_amd64.tar.gz`, `*windows_amd64.zip`).
-7. Verify the checksum of the file, downloaded platform should pass the check:
+6. Wait for GitHub Actions to complete successfully for both the `release-ghcr` and `release-github` pipelines
+7. Download all of the artifacts uploaded to the new GitHub release locally (`*checksums.txt`, `*darwin_amd64.tar.gz`, `*linux_armv7.tar.gz`, `*linux_arm64.tar.gz`, `*linux_amd64.tar.gz`, `*windows_amd64.zip`).
+8. Verify the checksum of the file, downloaded platform should pass the check:
     ```sh
     shasum -c oras_${version}_checksums.txt
     ```
-8. Run version command and make sure that version number and git commit digest is what you expect it to be (same as the commit used to create the tag). Example:
+9. Run version command and make sure that version number and git commit digest is what you expect it to be (same as the commit used to create the tag). Example:
     ```sh
     mkdir -p oras-bin/
     tar -zxf oras_${version}_linux_amd64.tar.gz -C oras-bin
     ./oras-bin/oras version
     ```
-9. Create armored GPG signatures (`.asc`) using the key in the `KEYS` file.
+10.  Create armored GPG signatures (`.asc`) using the key in the `KEYS` file.
     ```sh
     for file in `ls`; do
         gpg --armor --detach-sign $file
     done
     ```
-10. Validate the signatures. Not that the `KEYS` file should be imported with `gpg --import KEYS`. Run some form of the following (adapted from Linux project):
+11.  Validate the signatures. Not that the `KEYS` file should be imported with `gpg --import KEYS`. Run some form of the following (adapted from Linux project):
     ```bash
     for file in `ls *.asc`; do
         gpg --verify $file
     done
     ```
-11. Click "Edit release" button on the release, and add the `.asc` files created in the previous step. Edit the release description for change logs and also add a note indicating your GPG key used to sign the artifacts. Example (replace with your fingerprint etc.):
+12. Click "Edit release" button on the release, and add the `.asc` files created in the previous step. Edit the release description for change logs and also add a note indicating your GPG key used to sign the artifacts. Example (replace with your fingerprint etc.):
     ```
     ## Notes
 
     This release was signed with `E97F 9DA5 AE2E 39CF 48A1 42B7 852A 7470 A39F B81D` (@jdolitsky's GPG key) which can be found [here](https://github.com/jdolitsky.gpg).
     ```
-12. Click "Publish Release" button to save. Double-check that the release contains a corresponding `.asc` file for each release artifact.
-13. Consume beverage of choice.. you're done! Thanks for moving the project forward.
-14. Oh yea, tell people about it in `#oras`
+13. Click "Publish Release" button to save. Double-check that the release contains a corresponding `.asc` file for each release artifact.
+14. Consume beverage of choice.. you're done! Thanks for moving the project forward.
+15. Oh yea, tell people about it in `#oras`
     
 ### Some Comments
 
 There is a large number of steps here, mostly manual. Here are some comments and/or thoughts on it.
 
 * Step 3: Editing files for stable version. I can see that in one place, say, `README.md`. But do we really have to edit the code? Could we not use build-time flags as in `go build -ldflags="-X main.Version=foo"` or similar?
-* Step 5: This is the heart of the release. Adding a tag triggers a github release and an image build pushed to GHCR.
-* Steps 6-12: These are all signing and verifying. Of course, it is possible that GH Actions built and released something other than what we thought, but we cannot counter every single possible risk. It still would be nice if we could automate this somehow.
-* Step 14: :beer:
+* Step 6: This is the heart of the release. Adding a tag triggers a github release and an image build pushed to GHCR.
+* Steps 7-13: These are all signing and verifying. Of course, it is possible that GH Actions built and released something other than what we thought, but we cannot counter every single possible risk. It still would be nice if we could automate this somehow.
+* Step 15: :beer:
 
 From a documentation perspective, I would break this down into sections:
 
