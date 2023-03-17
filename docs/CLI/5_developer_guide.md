@@ -99,14 +99,15 @@ To update or add new dependencies, run `go get <package name>`.
     tar -zxf oras_${version}_linux_amd64.tar.gz -C oras-bin
     ./oras-bin/oras version
     ```
-10.  Create armored GPG signatures (`.asc`) using the key in the `KEYS` file.
+
+10. Create armored GPG signatures(`.asc`) using the key in the `KEYS` file.
     ```sh
     for file in `ls`; do
         gpg --armor --detach-sign $file
     done
     ```
-11.  Validate the signatures. Not that the `KEYS` file should be imported with `gpg --import KEYS`. Run some form of the following (adapted from Linux project):
-    ```bash
+11. Validate the signatures. Not that the `KEYS` file should be imported with `gpg --import KEYS`. Run some form of the following (adapted from Linux project):
+    ```sh
     for file in `ls *.asc`; do
         gpg --verify $file
     done
@@ -117,9 +118,9 @@ To update or add new dependencies, run `go get <package name>`.
 
     This release was signed with `BE6F A8DD A48D 4C23 0091 A0A9 276D 8A72 4CE1 C704` (@qweeah's GPG key) which can be found [here](https://github.com/qweeah.gpg).
     ```
-13. Click "Publish Release" button to save. Double-check that the release contains a corresponding `.asc` file for each release artifact.
-14. Consume beverage of choice.. you're done! Thanks for moving the project forward.
-15. Oh yea, tell people about it in `#oras`
+13.  Click "Publish Release" button to save. Double-check that the release contains a corresponding `.asc` file for each release artifact.
+14.  Consume beverage of choice.. you're done! Thanks for moving the project forward.
+15.  Oh yea, tell people about it in `#oras`
     
 ### Some Comments
 
