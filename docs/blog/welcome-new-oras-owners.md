@@ -4,9 +4,9 @@ _ORAS Community_
 
 ## Welcomes new owners and maintainers
 
-With a supermajority vote from the existing ORAS organization owners, we are excited to announce that [Terry Howe](https://github.com/TerryHowe) and [Andrew Block](https://github.com/sabre1041) have been nominated and accepted as new owners of the ORAS project in Mar 2023. In addition, ORAS also has two contributors [Billy Zha](https://github.com/qweeah) and [Feynman Zhou](https://github.com/feynmanzhou) been nominated and accepted as subproject maintainers in Feb 2023.
+With a supermajority vote from the existing ORAS Organization Owners, we are excited to announce that [Terry Howe](https://github.com/TerryHowe) and [Andrew Block](https://github.com/sabre1041) have been accepted as new ORAS Organization owners. In addition, [Billy Zha](https://github.com/qweeah) and [Feynman Zhou](https://github.com/feynmanzhou) been accepted as ORAS subproject maintainers.
 
-Terry has been actively contributing to ORAS since Dec 2022 and has been nominated to a subproject maintainer on Feb 21. He raised 19 PRs to multiple ORAS repositories includes ORAS CLI, ORAS-go, and ORAS-www in the last quarter. He also reviewed Pull Request actively and left 126 comments in the same period. 
+Terry has been actively contributing to ORAS since Dec 2022 and has been nominated to a sub-project maintainer on Feb 21. He raised 19 PRs to multiple ORAS repositories includes ORAS CLI, ORAS-go, and ORAS-www in the last quarter. He also reviewed Pull Request actively and left 126 comments in the same period. 
 
 Andrew has been involved in the ORAS community since its inception as a Helm maintainer. He saw how the capabilities produced by ORAS could be used outside of the Helm ecosystem, such as in [Emporous](https://emporous.io) (formerly called Universal Object Reference UOR) as a way to manage content within OCI registries. He also contributed to several features and bug fixes for ORAS-go.
 

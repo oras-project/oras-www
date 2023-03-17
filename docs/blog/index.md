@@ -1,14 +1,14 @@
 # ORAS Blog Index
 
-<h2>ORAS Welcomes New Owners, Maintainers, and Thanks Emeritus Owners</h2>
+<h2>>March 2023: ORAS Welcomes New Owners, Maintainers, and Thanks Emeritus Owners</h2>
 
 _ORAS Community_
 
-With a supermajority vote from the existing ORAS organization owners, we are excited to announce that [Terry Howe](https://github.com/TerryHowe) and [Andrew Block](https://github.com/sabre1041) have been nominated and accepted as new owners of the ORAS project in Mar 2023. In addition, ORAS also has two contributors [Billy Zha](https://github.com/qweeah) and [Feynman Zhou](https://github.com/feynmanzhou) been nominated and accepted as subproject maintainers in Feb 2023.
+With a supermajority vote from the existing ORAS Organization Owners, we are excited to announce that [Terry Howe](https://github.com/TerryHowe) and [Andrew Block](https://github.com/sabre1041) have been accepted as new ORAS Organization owners. In addition, [Billy Zha](https://github.com/qweeah) and [Feynman Zhou](https://github.com/feynmanzhou) been accepted as ORAS subproject maintainers.
 
 [Read More...][6]
 
-  [5]: gatekeeper-policies-as-oci-image.md
+  [6]: welcome-new-oras-owners.md
 
 <h2>Bundle with ORAS, test with `gator` and deploy with GitOps your Gatekeeper policies as OCI image</h2>
 
