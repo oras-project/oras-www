@@ -93,7 +93,7 @@ To update or add new dependencies, run `go get <package name>`.
     ```sh
     shasum -c oras_${version}_checksums.txt
     ```
-1.  Run version command and make sure that version number and git commit digest is what you expect it to be (same as the commit used to create the tag). Example:
+1. Run version command and make sure that version number and git commit digest is what you expect it to be (same as the commit used to create the tag). Example:
     ```sh
     mkdir -p oras-bin/
     tar -zxf oras_${version}_linux_amd64.tar.gz -C oras-bin
@@ -118,9 +118,9 @@ To update or add new dependencies, run `go get <package name>`.
 
     This release was signed with `BE6F A8DD A48D 4C23 0091 A0A9 276D 8A72 4CE1 C704` (@qweeah's GPG key) which can be found [here](https://github.com/qweeah.gpg).
     ```
-1.  Click "Publish Release" button to save. Double-check that the release contains a corresponding `.asc` file for each release artifact.
-1.  Consume beverage of choice.. you're done! Thanks for moving the project forward.
-1.  Oh yea, tell people about it in `#oras`
+1. Click "Publish Release" button to save. Double-check that the release contains a corresponding `.asc` file for each release artifact.
+1. Consume beverage of choice.. you're done! Thanks for moving the project forward.
+1. Oh yea, tell people about it in `#oras`
     
 ### Some Comments
 
