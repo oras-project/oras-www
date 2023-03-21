@@ -9,9 +9,6 @@ Install `oras` using [Homebrew](https://brew.sh/):
 ```bash
 brew install oras
 ```
-
-> Note: Homebrew only has ORAS v0.16.0 available to be used so far. It will be updated when ORAS v1.0.0 is released in Mar 2023.
-
 ## Release artifacts
 
 Install ORAS from the latest [release artifacts](https://github.com/oras-project/oras/releases):
