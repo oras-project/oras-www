@@ -9,9 +9,6 @@ Install `oras` using [Homebrew](https://brew.sh/):
 ```bash
 brew install oras
 ```
-
-> Note: Homebrew only has ORAS v0.16.0 available to be used so far. It will be updated when ORAS v1.0.0 is released in Mar 2023.
-
 ## Release artifacts
 
 Install ORAS from the latest [release artifacts](https://github.com/oras-project/oras/releases):
@@ -21,7 +18,7 @@ Install ORAS from the latest [release artifacts](https://github.com/oras-project
 If you want to install ORAS on an AMD64-based Linux machine, run the following command:
 
 ```bash
-VERSION="1.0.0-rc.2"
+VERSION="1.0.0"
 curl -LO "https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_linux_amd64.tar.gz"
 mkdir -p oras-install/
 tar -zxf oras_${VERSION}_*.tar.gz -C oras-install/
@@ -29,14 +26,14 @@ sudo mv oras-install/oras /usr/local/bin/
 rm -rf oras_${VERSION}_*.tar.gz oras-install/
 ```
 
-> Note: If you want to install ORAS on an ARM64-based Linux machine, you can download it from `https://github.com/oras-project/oras/releases/download/v1.0.0-rc.2/oras_1.0.0-rc.2_linux_arm64.tar.gz`.
+> Note: If you want to install ORAS on an ARM64-based Linux machine, you can download it from `https://github.com/oras-project/oras/releases/download/v1.0.0/oras_1.0.0_linux_arm64.tar.gz`.
 
 ### macOS
 
 If you want to install ORAS on a Mac computer with Apple silicon, run the following command:
 
 ```bash
-VERSION="1.0.0-rc.2"
+VERSION="1.0.0"
 curl -LO "https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_darwin_arm64.tar.gz"
 mkdir -p oras-install/
 tar -zxf oras_${VERSION}_*.tar.gz -C oras-install/
@@ -44,14 +41,14 @@ sudo mv oras-install/oras /usr/local/bin/
 rm -rf oras_${VERSION}_*.tar.gz oras-install/
 ```
 
-> Note: If you want to install ORAS on an Intel-based Mac, you can download it from `https://github.com/oras-project/oras/releases/download/v1.0.0-rc.2/oras_1.0.0-rc.2_darwin_amd64.tar.gz`.
+> Note: If you want to install ORAS on an Intel-based Mac, you can download it from `https://github.com/oras-project/oras/releases/download/v1.0.0/oras_1.0.0_darwin_amd64.tar.gz`.
 
 ### Windows
 
 Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
 
 ```cmd
-set VERSION="1.0.0-rc.2"
+set VERSION="1.0.0"
 curl.exe -sLO  "https://github.com/oras-project/oras/releases/download/v%VERSION%/oras_%VERSION%_windows_amd64.zip"
 tar.exe -xvzf oras_%VERSION%_windows_amd64.zip
 mkdir -p %USERPROFILE%\bin\
@@ -64,7 +61,7 @@ set PATH=%USERPROFILE%\bin\;%PATH%
 A public Docker image containing the CLI is available on [GitHub Container Registry](https://github.com/orgs/oras-project/packages/container/package/oras):
 
 ```
-docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.0.0-rc.2 help
+docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.0.0 help
 ```
 
 > Note: the default WORKDIR in the image is `/workspace`.
@@ -73,8 +70,8 @@ docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.0.0-rc.2 h
 
 ```shell
 $ oras version
-Version:        1.0.0-rc.2
-Go version:     go1.20.1
-Git commit:     3c5e899f6f32299080074e665ba7c44e25aa639f
+Version:        1.0.0
+Go version:     go1.20.2
+Git commit:     b58e7b910ca556973d111e9bd734a71baef03db2
 Git tree state: clean
 ```
