@@ -149,7 +149,7 @@ A reference implementation of the ORAS Artifacts Spec is available at [github.co
 To run distribution locally:
 
   ```bash
-  docker run -d -p 5000:5000 ghcr.io/oras-project/registry:v0.0.3-alpha
+  docker run -d -p 5000:5000 ghcr.io/oras-project/registry:v1.0.0-rc.4
   REGISTRY=localhost:5000
   ```
 
