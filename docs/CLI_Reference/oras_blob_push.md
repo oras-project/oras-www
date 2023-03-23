@@ -2,7 +2,7 @@
 
 Push a blob to a remote registry.
 
-```
+```bash
 oras blob push [flags] <name>[@digest] <file>
 ```
 
@@ -10,43 +10,43 @@ oras blob push [flags] <name>[@digest] <file>
 
 Push blob "hi.txt":
 
-```
+```bash
 oras blob push localhost:5000/hello hi.txt
 ```
 
 Push blob "hi.txt" with the specific digest:
 
-```
+```bash
 oras blob push localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5 hi.txt
 ```
 
 Push blob from stdin with blob size and digest:
 
-```
+```bash
 oras blob push --size 12 localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5 -
 ```
 
 Push blob "hi.txt" and output the descriptor:
 
-```
+```bash
 oras blob push --descriptor localhost:5000/hello hi.txt
 ```
 
 Push blob "hi.txt" with the specific returned media type in the descriptor:
 
-```
+```bash
 oras blob push --media-type application/vnd.oci.image.config.v1+json --descriptor localhost:5000/hello hi.txt
 ```
 
 Push blob "hi.txt" and output the prettified descriptor:
 
-```
+```bash
 oras blob push --descriptor --pretty localhost:5000/hello hi.txt
 ```
 
 Push blob without TLS:
 
-```
+```bash
 oras blob push --insecure localhost:5000/hello hi.txt
 ```
 

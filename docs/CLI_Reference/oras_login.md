@@ -46,16 +46,17 @@ oras login --insecure localhost:5000
 
 ## Options
 
-```bash
-      --ca-file string              server certificate authority file for the remote registry
-  -d, --debug                       debug mode
-  -h, --help                        help for login
-      --insecure                    allow connections to SSL registry without certs
-  -p, --password string             registry password or identity token
-      --password-stdin              read password or identity token from stdin
-      --plain-http                  allow insecure connections to registry without SSL check
-      --registry-config path        path of the authentication file
-      --resolve host:port:address   customized DNS formatted in host:port:address
-  -u, --username string             registry username
-  -v, --verbose                     verbose output
+```
+      --ca-file string                             server certificate authority file for the remote registry
+  -d, --debug                                      debug mode
+  -H, --header stringArray                         add custom headers to requests
+  -h, --help                                       help for login
+      --insecure                                   allow connections to SSL registry without certs
+  -p, --password string                            registry password or identity token
+      --password-stdin                             read password or identity token from stdin
+      --plain-http                                 allow insecure connections to registry without SSL check
+      --registry-config path                       path of the authentication file for registry
+      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]
+  -u, --username string                            registry username
+  -v, --verbose                                    verbose output
 ```

@@ -11,14 +11,12 @@ oras logout [flags] <registry>
 Log out from a remote registry.
 
 ```bash
-  oras logout localhost:5000
+oras logout localhost:5000
 ```
-
-
 
 ## Options
 
-```bash
+```
   -d, --debug                         debug mode
   -h, --help                          help for logout
       --registry-config stringArray   auth config path

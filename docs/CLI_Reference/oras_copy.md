@@ -2,7 +2,7 @@
 
 Copy artifacts from one target to another.
 
-```
+```bash
 oras copy [flags] <from>{:<tag>|@<digest>} <to>[:<tag>[,<tag>][...]]
 ```
 
@@ -10,31 +10,31 @@ oras copy [flags] <from>{:<tag>|@<digest>} <to>[:<tag>[,<tag>][...]]
 
 Copy the artifact tagged with `v1` from repository `localhost:5000/net-monitor` to repository `localhost:5000/net-monitor-copy`:
 
-```
+```bash
 oras copy localhost:5000/net-monitor:v1 localhost:5000/net-monitor-copy:v1
 ```
 
 Copy the artifact tagged with `v1` and its referrers from repository `localhost:5000/net-monitor` to `localhost:5000/net-monitor-copy`:
 
-```
+```bash
 oras copy -r localhost:5000/net-monitor:v1 localhost:5000/net-monitor-copy:v1
 ```
 
 Copy the artifact tagged with `v1` from repository `localhost:5000/net-monitor` to `localhost:5000/net-monitor-copy` with certain platform:
 
-```
+```bash
 oras copy --platform linux/arm/v5 localhost:5000/net-monitor:v1 localhost:5000/net-monitor-copy:v1 
 ```
 
 Copy the artifact tagged with `v1` from repository `localhost:5000/net-monitor` to `localhost:5000/net-monitor-copy` with multiple tags:
 
-```
+```bash
 oras copy localhost:5000/net-monitor:v1 localhost:5000/net-monitor-copy:v1,tag2,tag3
 ```
 
 Copy the artifact tagged with `v1` from repository `localhost:5000/net-monitor` to `localhost:5000/net-monitor-copy` with multiple tags and concurrency level tuned:
 
-```
+```bash
 oras copy --concurrency 6 localhost:5000/net-monitor:v1 localhost:5000/net-monitor-copy:v1,tag2,tag3
 ```
 

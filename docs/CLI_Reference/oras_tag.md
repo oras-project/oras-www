@@ -41,17 +41,18 @@ oras tag layout-dir:v1.0.1 v1.0.2
 ## Options
 
 ```
-      --ca-file string              server certificate authority file for the remote registry
-      --concurrency int             concurrency level (default 5)
-  -d, --debug                       debug mode
-  -h, --help                        help for tag
-      --insecure                    allow connections to SSL registry without certs
-      --oci-layout                  Set target as an OCI image layout.
-  -p, --password string             registry password or identity token
-      --password-stdin              read password or identity token from stdin
-      --plain-http                  allow insecure connections to registry without SSL check
-      --registry-config path        path of the authentication file
-      --resolve host:port:address   customized DNS formatted in host:port:address
-  -u, --username string             registry username
-  -v, --verbose                     verbose output
+      --ca-file string                             server certificate authority file for the remote registry
+      --concurrency int                            concurrency level (default 5)
+  -d, --debug                                      debug mode
+  -H, --header stringArray                         add custom headers to requests
+  -h, --help                                       help for tag
+      --insecure                                   allow connections to SSL registry without certs
+      --oci-layout                                 set target as an OCI image layout
+  -p, --password string                            registry password or identity token
+      --password-stdin                             read password or identity token from stdin
+      --plain-http                                 allow insecure connections to registry without SSL check
+      --registry-config path                       path of the authentication file for registry
+      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]
+  -u, --username string                            registry username
+  -v, --verbose                                    verbose output
 ```

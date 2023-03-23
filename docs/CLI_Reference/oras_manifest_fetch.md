@@ -52,14 +52,14 @@ oras manifest fetch --oci-layout layout.tar:v1
 
 ## Options
 
-```bash
+```
       --ca-file string                              server certificate authority file for the remote registry
   -d, --debug                                       debug mode
       --descriptor                                  output the descriptor
   -h, --help                                        help for fetch
       --insecure                                    allow connections to SSL registry without certs
       --media-type strings                          accepted media types
-      --oci-layout                                  Set target as an OCI image layout.
+      --oci-layout                                  set target as an OCI image layout.
   -o, --output path                                 file path to write the fetched manifest to, use - for stdout
   -p, --password string                             registry password or identity token
       --password-stdin                              read password or identity token from stdin

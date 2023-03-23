@@ -31,13 +31,13 @@ Use "oras [command] --help" for more information about a command.
 
 ## See also
 
-* [oras attach](0_oras_attach.md)	 - Attach files to an existing artifact
+* [oras attach](oras_attach.md)	 - Attach files to an existing artifact
 * oras blob - Blob operations
-    * [oras blob delete](1_oras_blob_delete.md)	 - Delete a blob from a remote registry
-    * [oras blob fetch](2_oras_blob_fetch.md)	 - Fetch a blob from a remote registry
-    * [oras blob push](3_oras_blob_push.md)	 - Push a blob to a remote registry
-    * [oras copy](4_oras_copy.md)	 - Copy artifacts from one target to another
-* [oras discover](5_oras_discover.md)	 - Discover referrers of a manifest in the remote registry
+    * [oras blob delete](oras_blob_delete.md)	 - Delete a blob from a remote registry
+    * [oras blob fetch](oras_blob_fetch.md)	 - Fetch a blob from a remote registry
+    * [oras blob push](oras_blob_push.md)	 - Push a blob to a remote registry
+    * [oras copy](oras_copy.md)	 - Copy artifacts from one target to another
+* [oras discover](oras_discover.md)	 - Discover referrers of a manifest in the remote registry
 * [oras login](oras_login.md)	 - Log in to a remote registry
 * [oras logout](oras_logout.md)	 - Log out from a remote registry
 * oras manifest - Manifest operations

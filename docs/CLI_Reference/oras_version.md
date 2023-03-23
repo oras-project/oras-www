@@ -16,6 +16,6 @@ oras version
 
 ### Options
 
-```bash
+```
   -h, --help   help for version
 ```

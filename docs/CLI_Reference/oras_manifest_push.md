@@ -65,22 +65,23 @@ oras manifest push --oci-layout layout-dir:v1 manifest.json
 
 ## Options
 
-```bash
-      --ca-file string              server certificate authority file for the remote registry
-      --concurrency int             concurrency level (default 5)
-  -d, --debug                       debug mode
-      --descriptor                  output the descriptor
-      --distribution-spec string    set OCI distribution spec version and API option for target. options: v1.1-referrers-api, v1.1-referrers-tag
-  -h, --help                        help for push
-      --insecure                    allow connections to SSL registry without certs
-      --media-type string           media type of manifest
-      --oci-layout                  Set target as an OCI image layout.
-  -p, --password string             registry password or identity token
-      --password-stdin              read password or identity token from stdin
-      --plain-http                  allow insecure connections to registry without SSL check
-      --pretty                      prettify JSON objects printed to stdout
-      --registry-config path        path of the authentication file
-      --resolve host:port:address   customized DNS formatted in host:port:address
-  -u, --username string             registry username
-  -v, --verbose                     verbose output
+```
+      --ca-file string                             server certificate authority file for the remote registry
+      --concurrency int                            concurrency level (default 5)
+  -d, --debug                                      debug mode
+      --descriptor                                 output the descriptor
+      --distribution-spec string                   [Preview] set OCI distribution spec version and API option for target. options: v1.1-referrers-api, v1.1-referrers-tag
+  -H, --header stringArray                         add custom headers to requests
+  -h, --help                                       help for push
+      --insecure                                   allow connections to SSL registry without certs
+      --media-type string                          media type of manifest
+      --oci-layout                                 set target as an OCI image layout
+  -p, --password string                            registry password or identity token
+      --password-stdin                             read password or identity token from stdin
+      --plain-http                                 allow insecure connections to registry without SSL check
+      --pretty                                     prettify JSON objects printed to stdout
+      --registry-config path                       path of the authentication file for registry
+      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]
+  -u, --username string                            registry username
+  -v, --verbose                                    verbose output
 ```

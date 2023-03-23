@@ -65,7 +65,7 @@ oras pull --oci-layout layout.tar:v1
 
 ## Options
 
-```bash
+```
   -T, --allow-path-traversal                        allow storing files out of the output directory
       --ca-file string                              server certificate authority file for the remote registry
       --concurrency int                             concurrency level (default 3)
@@ -75,7 +75,7 @@ oras pull --oci-layout layout.tar:v1
       --include-subject                             recursively pull the subject of artifacts
       --insecure                                    allow connections to SSL registry without certs
   -k, --keep-old-files                              do not replace existing files when pulling, treat them as errors
-      --oci-layout                                  Set target as an OCI image layout.
+      --oci-layout                                  set target as an OCI image layout.
   -o, --output string                               output directory (default ".")
   -p, --password string                             registry password or identity token
       --password-stdin                              read password or identity token from stdin

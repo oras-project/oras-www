@@ -2,7 +2,7 @@
 
 Discover referrers of a manifest in the remote registry.
 
-```
+```bash
 oras discover [flags] <name>{:<tag>|@<digest>}
 ```
 
@@ -10,19 +10,19 @@ oras discover [flags] <name>{:<tag>|@<digest>}
 
 Discover direct referrers of manifest `hello:latest` in registry `localhost:5000`:
 
-```
+```bash
 oras discover localhost:5000/hello
 ```
 
 Discover all the referrers of manifest `hello:latest` in registry `localhost:5000` and display in a tree view:
 
-```
+```bash
 oras discover -o tree localhost:5000/hello
 ```
 
 Discover referrers with type `test-artifact` of manifest `hello:latest` in registry `localhost:5000`:
 
-```
+```bash
 oras discover --artifact-type test-artifact localhost:5000/hello
 ```
 
