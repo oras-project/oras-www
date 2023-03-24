@@ -47,17 +47,20 @@ oras blob fetch --oci-layout --output - layout.tar@sha256:9a201d228ebd966211f7d1
 ## Options
 
 ```
-      --ca-file string         server certificate authority file for the remote registry
-  -d, --debug                  debug mode
-      --descriptor             output the descriptor
-  -h, --help                   help for fetch
-      --insecure               allow connections to SSL registry without certs
-  -o, --output path            output file path, use - for stdout
-  -p, --password string        registry password or identity token
-      --password-stdin         read password or identity token from stdin
-      --plain-http             allow insecure connections to registry without SSL check
-      --pretty                 prettify JSON objects printed to stdout
-      --registry-config path   path of the authentication file
-  -u, --username string        registry username
-  -v, --verbose                verbose output
+      --ca-file string                             server certificate authority file for the remote registry
+  -d, --debug                                      debug mode
+      --descriptor                                 output the descriptor
+  -H, --header stringArray                         add custom headers to requests
+  -h, --help                                       help for fetch
+      --insecure                                   allow connections to SSL registry without certs
+      --oci-layout                                 set target as an OCI image layout
+  -o, --output path                                output file path, use - for stdout
+  -p, --password string                            registry password or identity token
+      --password-stdin                             read password or identity token from stdin
+      --plain-http                                 allow insecure connections to registry without SSL check
+      --pretty                                     prettify JSON objects printed to stdout
+      --registry-config path                       path of the authentication file for registry
+      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]
+  -u, --username string                            registry username
+  -v, --verbose                                    verbose output
 ```
