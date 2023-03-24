@@ -1,7 +1,6 @@
 # Pulling
 
 Pulling artifacts involves specifying the content addressable artifact, along with the type of artifact.
-> See: [Issue 130](https://github.com/oras-project/oras/issues/130) for eliminating `-a` and `--media-type`
 
 ```
 oras pull localhost:5000/hello-artifact:v2 -a
