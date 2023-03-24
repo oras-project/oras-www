@@ -8,13 +8,13 @@ oras blob fetch [flags] {--output <file> | --descriptor} <name>@<digest>
 
 ## Examples
 
-Fetch the blob and save it to a local file:
+Fetch a blob from registry and save it to a local file:
 
 ```bash
 oras blob fetch --output blob.tar.gz localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5
 ```
 
-Fetch the blob and print the raw blob content:
+Fetch a blob from registry and print the raw blob content:
 
 ```bash
 oras blob fetch --output - localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5
@@ -26,10 +26,22 @@ Fetch and print the descriptor of a blob:
 oras blob fetch --descriptor localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5
 ```
 
-Fetch the blob, save it to a local file and print the descriptor:
+Fetch a blob, save it to a local file and print the descriptor:
 
 ```bash
 oras blob fetch --output blob.tar.gz --descriptor localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5
+```
+
+Fetch and print a blob from OCI image layout folder 'layout-dir':
+
+```bash
+oras blob fetch --oci-layout --output - layout-dir@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5
+```
+
+Fetch and print a blob from OCI image layout archive file 'layout.tar':
+
+```bash
+oras blob fetch --oci-layout --output - layout.tar@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5
 ```
 
 ## Options
