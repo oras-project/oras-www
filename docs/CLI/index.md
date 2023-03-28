@@ -66,6 +66,22 @@ docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.0.0 help
 
 > Note: the default WORKDIR in the image is `/workspace`.
 
+## Nix
+
+Nix is a tool that takes a unique approach to package management and system configuration.
+
+The Nix Packages collection ([Nixpkgs](https://github.com/NixOS/nixpkgs)) is a set of over 80 000 packages for the Nix package manager.
+
+oras also has a [Nix package](https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/tools/oras/default.nix) available in the Nixpkgs repository.
+
+> You can intall nix CLI from [here](https://nixos.org/download.html).
+
+You can install oras using the following command:
+
+```bash
+nix-env -iA nixpkgs.oras
+```
+
 ## Verify
 
 ```shell
