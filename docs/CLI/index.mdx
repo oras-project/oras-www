@@ -30,8 +30,11 @@ tar -zxf oras_${VERSION}_*.tar.gz -C oras-install/
 sudo mv oras-install/oras /usr/local/bin/
 rm -rf oras_${VERSION}_*.tar.gz oras-install/
 ```
+:::note
 
-> Note: If you want to install ORAS on an ARM64-based Linux machine, you can download it from `https://github.com/oras-project/oras/releases/download/v1.0.0/oras_1.0.0_linux_arm64.tar.gz`.
+If you want to install ORAS on an ARM64-based Linux machine, you can download it from `https://github.com/oras-project/oras/releases/download/v1.0.0/oras_1.0.0_linux_arm64.tar.gz`.
+
+:::
 
 ### macOS
 
@@ -45,8 +48,11 @@ tar -zxf oras_${VERSION}_*.tar.gz -C oras-install/
 sudo mv oras-install/oras /usr/local/bin/
 rm -rf oras_${VERSION}_*.tar.gz oras-install/
 ```
+:::note
 
-> Note: If you want to install ORAS on an Intel-based Mac, you can download it from `https://github.com/oras-project/oras/releases/download/v1.0.0/oras_1.0.0_darwin_amd64.tar.gz`.
+If you want to install ORAS on an Intel-based Mac, you can download it from `https://github.com/oras-project/oras/releases/download/v1.0.0/oras_1.0.0_darwin_amd64.tar.gz`.
+
+:::
 
 ### Windows
 
@@ -68,8 +74,11 @@ A public Docker image containing the CLI is available on [GitHub Container Regis
 ```
 docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.0.0 help
 ```
+:::note
 
-> Note: the default WORKDIR in the image is `/workspace`.
+The default WORKDIR in the image is `/workspace`.
+
+:::
 
 ## Nix
 
@@ -78,8 +87,12 @@ Nix is a tool that takes a unique approach to package management and system conf
 The Nix Packages collection ([Nixpkgs](https://github.com/NixOS/nixpkgs)) is a set of over 80 000 packages for the Nix package manager.
 
 oras also has a [Nix package](https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/tools/oras/default.nix) available in the Nixpkgs repository.
+ 
+:::info
 
-> You can intall nix CLI from [here](https://nixos.org/download.html).
+You can intall nix CLI from [here](https://nixos.org/download.html).
+
+:::
 
 You can install oras using the following command:
 
