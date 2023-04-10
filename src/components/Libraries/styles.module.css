@@ -1,0 +1,77 @@
+.libraries {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    margin: 4rem;
+    border-radius: 1rem;
+    background: var(--gradient-blue);
+}
+
+.libraries_heading h2 {
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 35px;
+    text-align: center;
+}
+
+.libraries_logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.libraries_logos svg {
+    margin: 1.5rem 2rem 0 2rem;
+    transition: all 0.3s ease-out;
+}
+
+.libraries_logos svg:hover {
+    transform: scale(1.2);
+}
+
+.section_padding {
+    padding: 4rem 6rem;
+}
+
+@media screen and (max-width: 650px) {
+    .libraries {
+        margin: 3rem;
+    }
+
+    .libraries_heading h2 {
+        font-size: 30px;
+    }
+
+    .libraries_logos svg {
+        transform: scale(0.9);
+    }
+
+    .libraries_logos svg:hover {
+        transform: scale(1);
+    }
+
+    .section_padding {
+        padding: 3rem;
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .libraries {
+        margin: 2rem;
+    }
+
+    .libraries_heading h2 {
+        font-size: 25px;
+    }
+
+    .libraries_logos svg {
+        transform: scale(0.8);
+    }
+
+    .section_padding {
+        padding: 2rem;
+    }
+}

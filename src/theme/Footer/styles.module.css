@@ -1,0 +1,24 @@
+.footer_section {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.section_padding {
+    padding: 4rem 6rem;
+}
+
+@media screen and (max-width: 650px) {
+    .section_padding {
+        padding: 4rem;
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .section_padding {
+        padding: 3rem;
+    }
+}

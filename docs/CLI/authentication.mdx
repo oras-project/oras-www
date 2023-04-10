@@ -1,0 +1,20 @@
+---
+title: Authentication
+sidebar_position: 1
+---
+
+# Authentication
+
+Run `oras login` in advance for any private registries. By default, this will store credentials in `~/.docker/config.json` *(same file used by the docker client)*. If you have previously authenticated to a registry using `docker login`, the credentials will be reused.
+
+Use the `-c`/`--config` option to specify an alternate location.
+
+> While ORAS leverages the local docker client config store, ORAS does NOT have a dependency on Docker Desktop running or being installed. ORAS can be used independently of a local docker daemon.
+
+`oras` also accepts explicit credentials via options, for example,
+
+```
+oras pull -u username -p password myregistry.io/myimage:latest
+```
+
+See [Supported Registries] for registry specific authentication usage.
