@@ -149,7 +149,12 @@ oras push \
     ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPO_NAME}/my-policies:1.0.0 \
     policies/
 ```
-_Note: `oras push` with the `policies/` folder will do an archive of its files._
+
+:::info
+
+`oras push` with the `policies/` folder will do an archive of its files.
+
+:::
 
 See that the OCI image has been uploaded in the Google Artifact Registry repository:
 ```bash
@@ -164,7 +169,12 @@ gator test \
    --filename namespace-test.yaml \
    --image ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPO_NAME}/my-policies:1.0.0
 ```
-_Note: since [`gator` version 3.11.0](https://github.com/open-policy-agent/gatekeeper/releases/tag/v3.11.0), the `--image` parameter has been added! We are leveraging this feature instead of pointing to the local files like we did previously with `--filename policies/`_
+
+:::note
+
+Since [`gator` version 3.11.0](https://github.com/open-policy-agent/gatekeeper/releases/tag/v3.11.0), the `--image` parameter has been added! We are leveraging this feature instead of pointing to the local files like we did previously with `--filename policies/`
+
+:::
 
 Output similar to:
 ```plaintext
@@ -191,7 +201,12 @@ spec:
     auth: none
 EOF
 ```
-_Note: here we are assuming that the OCI image is publicly exposed (`auth: none`) to simplify the flow of this blog post. A more secure setup can be found [here](https://medium.com/google-cloud/deploying-gatekeeper-policies-as-oci-artifacts-the-gitops-way-e1233429ae2) showing how to privately access the Google Artifact Registry repository via Workload Identity._
+
+:::note
+
+Here we are assuming that the OCI image is publicly exposed (`auth: none`) to simplify the flow of this blog post. A more secure setup can be found [here](https://medium.com/google-cloud/deploying-gatekeeper-policies-as-oci-artifacts-the-gitops-way-e1233429ae2) showing how to privately access the Google Artifact Registry repository via Workload Identity.
+
+:::
 
 Verify that the `Constraint` and `ConstraintTemplate` are actually deployed:
 ```bash
