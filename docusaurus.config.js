@@ -130,15 +130,15 @@ const config = {
               },
               {
                 label: 'CLI',
-                to: '/docs/CLI',
+                to: '/docs/cli/installation',
               },
               {
                 label: 'CLI Reference',
-                to: '/docs/CLI_Reference/',
+                to: '/docs/cli_reference/use_oras_cli',
               },
               {
                 label: 'Client Libraries',
-                to: '/docs/Client_Libraries/',
+                to: '/docs/client_libraries/overview',
               },
             ],
           },

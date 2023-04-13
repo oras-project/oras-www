@@ -9,7 +9,7 @@ export default function Header() {
                 <h1>ORAS</h1>
                 <h3>Distribute Artifacts Across OCI Registries With Ease</h3>
                 <div className={styles.header_content_input}>
-                    <a class="button button--secondary button--lg" href="/docs/CLI/">Get Started</a>
+                    <a class="button button--secondary button--lg" href="/docs/cli/installation">Get Started</a>
                 </div>
             </div>
             <div className={styles.header_image}>
