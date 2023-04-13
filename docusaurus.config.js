@@ -55,7 +55,6 @@ const config = {
           versions: {
             current: {
               label: '1.0.0',
-              path: '1.0.0',
             },
           },
         },
@@ -127,7 +126,7 @@ const config = {
             items: [
               {
                 label: 'Introduction',
-                to: '/docs/index',
+                to: '/docs/',
               },
               {
                 label: 'CLI',
