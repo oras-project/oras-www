@@ -1,0 +1,60 @@
+---
+title: Use the ORAS command line
+sidebar_position: 0
+---
+
+# Use the ORAS command line
+
+To list available commands, either run `oras` with no parameters or execute `oras help`:
+
+```
+$ oras
+Usage:
+  oras [command]
+
+Available Commands:
+  attach      Attach files to an existing artifact
+  blob        Blob operations
+  completion  Generate the autocompletion script for the specified shell
+  cp          Copy artifacts from one target to another
+  discover    Discover referrers of a manifest in the remote registry
+  help        Help about any command
+  login       Log in to a remote registry
+  logout      Log out from a remote registry
+  manifest    Manifest operations
+  pull        Pull files from remote registry
+  push        Push files to remote registry
+  repo        Repository operations
+  tag         Tag a manifest in the remote registry
+  version     Show the oras version information
+
+Flags:
+  -h, --help   help for oras
+
+Use "oras [command] --help" for more information about a command.
+```
+
+## See also
+
+* [oras attach](oras_attach.mdx)	 - Attach files to an existing artifact
+* oras blob - Blob operations
+    * [oras blob delete](oras_blob_delete.mdx)	 - Delete a blob from a remote registry
+    * [oras blob fetch](oras_blob_fetch.mdx)	 - Fetch a blob from a remote registry
+    * [oras blob push](oras_blob_push.mdx)	 - Push a blob to a remote registry
+    * [oras copy](oras_copy.mdx)	 - Copy artifacts from one target to another
+* [oras discover](oras_discover.mdx)	 - Discover referrers of a manifest in the remote registry
+* [oras login](oras_login.mdx)	 - Log in to a remote registry
+* [oras logout](oras_logout.mdx)	 - Log out from a remote registry
+* oras manifest - Manifest operations
+    * [oras manifest delete](oras_manifest_delete.mdx)	 - Delete a manifest from a remote registry
+    * [oras manifest fetch-config](oras_manifest_fetch-config.mdx)	 - Fetch the config of a manifest from a remote registry
+    * [oras manifest fetch](oras_manifest_fetch.mdx)	 - Fetch manifest of the target artifact
+    * [oras manifest push](oras_manifest_push.mdx)	 - Push a manifest to a remote registry
+* [oras pull](oras_pull.mdx)	 - Pull files from a remote registry
+* [oras push](oras_push.mdx)	 - Push files to a remote registry
+* oras repo	 - Repository operations
+    * [oras repo ls](oras_repo_ls.mdx)  - List the repositories under the registry.
+    * [oras repo tags](./oras_repo_tags.mdx)  - Show tags of the target repository.
+* [oras tag](oras_tag.mdx)	 - Tag a manifest in the remote registry
+* [oras version](oras_version.mdx)	 - Show ORAS CLI version
+
