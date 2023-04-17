@@ -47,8 +47,9 @@ export default function Features() {
                         ))}
                     </ul>
 
-                </div>
-            ))}
-        </div>
+                </div >
+            ))
+            }
+        </div >
     );
 }
