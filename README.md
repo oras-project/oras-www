@@ -2,7 +2,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/db61db6e-a953-4b02-b5fb-7f04f018b9d8/deploy-status)](https://app.netlify.com/sites/oras-project/deploys)
 
-![ORAS](https://github.com/oras-project/oras-www/raw/main/docs/assets/images/oras.png)
+![ORAS](https://oras.land/img/oras.svg)
 
 Source for ORAS website and documentation
 
