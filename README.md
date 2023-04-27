@@ -1,43 +1,59 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/db61db6e-a953-4b02-b5fb-7f04f018b9d8/deploy-status)](https://app.netlify.com/sites/oras-project/deploys)
+
 # ORAS Documentation
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/db61db6e-a953-4b02-b5fb-7f04f018b9d8/deploy-status)](https://app.netlify.com/sites/oras-project/deploys)
+Source for ORAS website and documentation
 
 <p align="left">
 <a href="https://oras.land/"><img src="https://oras.land/img/oras.svg" alt="banner" width="100px"></a>
 </p>
 
-Source for ORAS website and documentation
+[This website](https://oras.land/) is built using [Docusaurus 2](https://v2.docusaurus.io/). Pages and components are built in JavaScript, and styles are written in vanilla CSS.
 
-Link: [oras.land](https://oras.land/)
+<div align="center">
+  <a href="https://oras.land/">
+    <img src=".github/preview.png" width="400" />
+  </a>
+</div>
+<div align="center">
+  <a href="https://oras.land/">
+    oras.land
+  </a>
+</div>
 
-**[The documentation can be found here](/docs/index.md).**
+## System Requirements
 
-## Deployment
+* [Node.js v16.x](https://nodejs.org/en/download/) and above
 
-This site is deployed using [Netlify](https://www.netlify.com/)
+## Installation
 
-
-## Development
-
-System requirements:
-
-- Python 3.7+
-
-The website is an [Mkdocs](https://www.mkdocs.org/)-based documentation site, using the [Material theme](https://squidfunk.github.io/mkdocs-material/).
-
-First install dependencies:
-
-```
-pip3 install -r requirements.txt
+```script
+npm install
 ```
 
-Then run the development server:
+## Local development
 
-```
-mkdocs serve
+```script
+npm run start
 ```
 
-The site will be available at [http://localhost:8000/](http://localhost:8000/)
+This command starts a local development server and open up a browser window.
+Most changes are reflected live without having to restart the server.
+The site will be available at http://localhost:3000/
+
+## Build for production
+
+```script
+npm run build
+```
+
+This command generates static content into the `build` directory and can be
+served using any static contents hosting service. For that purpose, you can also
+use:
+
+```script
+npm run serve
+```
 
 ## Code of Conduct
 
