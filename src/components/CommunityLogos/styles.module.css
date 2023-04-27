@@ -1,0 +1,38 @@
+.logo {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+}
+
+.logo div {
+    margin: 0 1rem 0 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ind_logo {
+    display: flex;
+    padding: 0 1rem 0 1rem;
+}
+
+.community_title {
+    padding-bottom: 2rem;
+    text-align: center;
+}
+
+.section_padding {
+    padding: 4rem 6rem;
+}
+
+@media screen and (max-width: 650px) {
+    .section_padding {
+        padding: 2rem;
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .section_padding {
+        padding: 2rem;
+    }
+}

@@ -1,0 +1,80 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+@font-face {
+  font-family: 'Nunito';
+  src: url('/fonts/Nunito-VariableFont_wght.ttf');
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/fonts/OpenSans-VariableFont_wdth,wght.ttf');
+}
+
+:root {
+  --ifm-font-heading-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  --ifm-font-content-family: 'OpenSans', ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+}
+
+:root {
+  --ifm-color-primary: #4051B5;
+  --ifm-color-primary-dark: #3A49A3;
+  --ifm-color-primary-darker: #36459A;
+  --ifm-color-primary-darkest: #2D397F;
+  --ifm-color-primary-light: #4D5EC0;
+  --ifm-color-primary-lighter: #5666C3;
+  --ifm-color-primary-lightest: #727FCD;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-navbar-link-color: #D3D7F6;
+  --ifm-navbar-link-hover-color: #FFFFFF;
+  --gradient-blue: linear-gradient(90.36deg, #4051B5 15.63%, #4285F4 90.96%);
+  --theme-card: #FBFBFB;
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #727FCD;
+  --ifm-color-primary-dark: #5A6AC5;
+  --ifm-color-primary-darker: #4F5FC0;
+  --ifm-color-primary-darkest: #3A4AA5;
+  --ifm-color-primary-light: #8A94D5;
+  --ifm-color-primary-lighter: #959FDA;
+  --ifm-color-primary-lightest: #B9BFE6;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-navbar-link-color: #B9BFE6;
+  --theme-card: #31353A;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--ifm-font-heading-family);
+}
+
+p,
+a {
+  font-family: var(--ifm-font-content-family);
+}
+
+.button.button--secondary {
+  color: var(--ifm-color-primary);
+}
+
+/* Navbar Elements */
+.navbar,
+.navbar-sidebar__brand {
+  background: var(--gradient-blue)
+}
+
+.navbar-sidebar__close svg g,
+.navbar__toggle svg path {
+  stroke: #FFFFFF;
+}

@@ -1,0 +1,28 @@
+oras:
+  name: ORAS Community
+  url: https://github.com/oras-project
+  image_url: https://github.com/oras-project.png
+
+slasker:
+  name: Steve Lasker
+  title: ORAS Maintainer
+  url: https://github.com/SteveLasker
+  image_url: https://github.com/SteveLasker.png
+
+fzhou:
+  name: Feynman Zhou
+  title: ORAS Maintainer
+  url: https://github.com/FeynmanZhou
+  image_url: https://github.com/FeynmanZhou.png
+
+yzha:
+  name: Yi Zha
+  title:  Engineer, Microsoft
+  url: https://github.com/yizha1
+  image_url: https://github.com/yizha1.png
+
+mbenoit:
+  name: Mathieu Benoit
+  title: DevRel Engineer, Google
+  url: https://github.com/mathieu-benoit
+  image_url: https://github.com/mathieu-benoit.png
