@@ -1,0 +1,94 @@
+---
+slug: oras-looking-back-at-2022-and-forward-to-2023
+title: ORAS - Looking back on 2022 and forward to 2023
+authors: fzhou
+tags: [oras, artifact]
+---
+
+ORAS is a tool for working with OCI artifacts and OCI registries. It allows you to distribute OCI artifacts across OCI Registries. ORAS was established and open-sourced in Dec 2018 and joined CNCF as a Sandbox project in June 2021.
+
+As you can see, ORAS has a long history and is still growing since it has an active community behind it. I was fortunate to join the ORAS community as a release manager in May 2022 and growing with the project this year. So I write this article to share the growth of the active community and project iteration that I witnessed in 2022. Let’s look back at what’s been happening this year and what we can expect in 2023 and beyond.
+
+<!--truncate-->
+
+## Moving fast with monthly release cadence
+
+ORAS provides an OCI registry client [ORAS CLI](https://oras.land/CLI/) with functional-rich command sets that users can benefit from, while developers can build their own clients on top of one of the [ORAS client libraries](https://oras.land/client_libraries/) including Golang and Python libraries.
+
+We are following a monthly release cadence to ensure fast iteration so that we can get feedback and detect problems from the community and then fix them efficiently. 
+
+- ORAS CLI has 4 Minor releases and 2 Patch releases in 2022 and evolved into a powerful and easy-to-use OCI registry client. It supported the OCI artifact manifest and complied with the OCI v1.1 Specifications in the latest release
+- ORAS-go has shifted the focus and feature development from v1 to v2 this year. It has [15 releases](https://github.com/oras-project/oras-go/releases) and recently announced the last RC (ORAS v2.0.0-RC.6) release. In contrast to v1, v2 brings more unified interfaces, notably fewer dependencies, higher test coverage, better documentation, etc. For those who are still relying on v1, don’t worry about its deprecation at this moment as v1 is still under maintenance. But it’s highly recommended to give v2 a try and you can expect a stable v2.0.0 to be available in Jan 2023.
+- Similar to ORAS-go, ORAS-py is a Python SDK for ORAS. It was established and contributed by [Vanessa](https://github.com/vsoch) starting in May 2022. Thanks to Vanessa,  ORAS-py delivered [10 releases](https://github.com/oras-project/oras-py/releases) and a well-organized [API and user documentation](https://oras-project.github.io/oras-py/index.html) in 2022.
+
+## More active engagement in the community
+
+As some users might be aware, the ORAS project has an obvious growing trend in both user adoption and contributions starting from the middle of 2022. We are working to properly document the contribution and development process.  Let’s see the remarkable statistics in 2022 as follows. You can also check out the detailed dashboards [here](https://oras.devstats.cncf.io/d/8/dashboards?orgId=1&refresh=15m&search=open). 
+
+- A total of [48 contributors](https://oras.devstats.cncf.io/d/22/prs-authors-table?orgId=1&var-period_name=Last%20year&var-repogroup_name=All&kiosk&viewPanel=1) submitted Pull Requests to ORAS repositories
+- On average, there are [around 764 contributions and 25 contributors per month](https://oras.devstats.cncf.io/d/74/contributions-chart?orgId=1&var-period=m&var-metric=contributions&var-repogroup_name=All&var-country_name=All&var-company_name=All&var-company=all&from=now-1y&to=now) and contained within [34 merged PRs per month](https://oras.devstats.cncf.io/d/24/prs-merged-repository-groups?orgId=1&var-period=m&var-repogroups=All)
+- These contributors come from [35 companies](https://oras.devstats.cncf.io/d/5/companies-table?orgId=1&var-period_name=Last%20year&var-metric=contributions)
+- All [Stars](https://oras.devstats.cncf.io/d/3/stars-and-forks-by-repository?orgId=1&from=now-1y&to=now) increased from 605 to 964, all [Forks](https://oras.devstats.cncf.io/d/3/stars-and-forks-by-repository?orgId=1&from=now-1y&to=now) increased from 123 to 220 in the past year
+- The total downloads of ORAS CLI are 600,368
+- [The number of new PRs has tripled in the last year](https://oras.devstats.cncf.io/d/15/new-prs-in-repository-groups?orgId=1)
+- Organized 17 public community meetings in 2022, see [meeting notes](https://hackmd.io/P-O6n222TcSMoJgHmTTduw?view)
+
+## Adoption: Powering multiple industries and OSS communities
+
+ORAS CLI, ORAS Go, and Python SDK are designed to help users and developers manage [OCI Distribution](https://github.com/opencontainers/distribution-spec) based artifacts. ORAS empowers the secure supply chain by enabling users to leverage the existing services they already have across their development to production environments.
+
+Currently, the biggest cloud providers like Microsoft Azure, AWS, and Google Cloud are using ORAS to manage OCI artifacts in registries. ORAS Go SDK has been integrated and adopted by some industry-leading vendors and popular open-source projects. Here is part of known adopters till now:
+
+- [Amazon ECR](https://aws.amazon.com/ecr/)
+- [Amazon EKS Anywhere](https://anywhere.eks.amazonaws.com/docs/workshops/packages/harbor/#set-up-trivy-image-scanner-in-an-air-gapped-environment)
+- [Alibaba Cloud Service Mesh](https://www.alibabacloud.com/help/en/alibaba-cloud-service-mesh/latest/use-oras-to-simplify-wasm-based-asm-instance-extension)
+- [Artifact Hub](https://artifacthub.io/docs/topics/repositories/helm-charts/#oci-support)
+- [Docker Hub](https://www.docker.com/blog/announcing-docker-hub-oci-artifacts-support/)
+- [GitHub](https://github.com/)
+- [Google Cloud](https://cloud.google.com/anthos-config-management/docs/how-to/sync-oci-artifacts-from-artifact-registry#oras)
+- [Helm](https://v3.helm.sh/docs/topics/registries/)
+- [Singularity](https://sylabs.io/guides/3.1/user-guide/cli/singularity_push.html)
+- [Microsoft Azure - ACR](https://azure.microsoft.com/en-us/products/container-registry/)
+- [Notary v2](https://github.com/notaryproject/notation)
+- [KubeApps](https://github.com/vmware-tanzu/kubeapps) by VMware Tanzu
+- [VMware Application Catalog](https://tanzu.vmware.com/application-catalog)
+- [Emporous (Formerly UOR Framework)](https://universalreference.io/) by Red Hat
+- [soci-snapshotter](https://github.com/awslabs/soci-snapshotter) by AWS
+- [Zot](https://github.com/project-zot/zot)
+
+## Contributions to upstream OCI
+
+Just a few years ago, there were no standards nor tooling for registries to natively store, discover, and pull a graph of OCI artifacts. To extend the registry’s role and form the industry standard, ORAS maintainers proposed a new artifact manifest type to describe and query relationships between objects stored in a registry, without mutating the existing content.
+
+Initially, the reference types work was incubated under the CNCF [ORAS Artifact manifest](https://github.com/oras-project/artifacts-spec) project. It has been contributed to the OCI [Image](https://github.com/opencontainers/image-spec/blob/main/artifact.md) and [Distribution](https://github.com/opencontainers/distribution-spec) v1.1-RC specifications in Sep 2022. Now it is an industry standard and there are already a few early implementations, such as [Azure Container Registry](https://azure.microsoft.com/en-us/products/container-registry) and [Zot registry](https://zotregistry.io/). After the OCI v1.1 specification is available, we expect more registry vendors start to support and implement it.
+
+## Diverse evangelism and advocacy
+
+Open-source contributions are not limited to coding. The non-code contributions like blogging, writing documentation, and technical sharing are also important for the ORAS community. It’s so good to see more and more users and contributors from different organizations sharing their use cases and best practices with ORAS toolings via blog posts or conference presentations this year. You can learn more about their experience from their articles and videos below.
+
+### Blogs
+
+- [Notation signatures as ORAS and OCI artifacts](https://notaryproject.dev/blog/2022/oras-oci-artifacts-notation-signatures/) by [maxgio92](https://github.com/maxgio92) from Clastix
+- [Announcing Docker Hub OCI Artifacts Support](https://www.docker.com/blog/announcing-docker-hub-oci-artifacts-support/) by [MILOS GAJDOS](https://www.docker.com/author/milos-gajdos/) from Docker
+- [ORAS 0.14 and Future: Empower Container Secure Supply Chain](https://oras.land/blog/oras-0.14-and-future/) by Feynman Zhou from Microsoft
+- [ORAS 0.15: A Fully Functional OCI Registry Client](https://oras.land/blog/oras-0.15-a-fully-functional-registry-client/) by Feynman Zhou and Yi Zha from Microsoft
+- [Deploy OCI artifacts and Helm charts the GitOps way with Config Sync](https://cloud.google.com/blog/products/containers-kubernetes/gitops-with-oci-artifacts-and-config-sync) from Google Cloud blogs
+- [Storing ABAP build artifacts in OCI registry](https://blogs.sap.com/2022/07/26/storing-abap-build-artifacts-in-oci-registry/) by [Lars Hvam](https://people.sap.com/lars.hvam) from the SAP community blog
+
+### Presentations at conferences
+
+- [Distributing Supply Chain Artifacts with OCI & ORAS Artifacts](https://youtu.be/lT2ZMRJrQsU) at KubeCon EU by Steve Lasker from Microsoft
+- [It’s Complicated: Relationships Between Objects In OCI Registries](https://youtu.be/VZckJNkJ0nQ) by Josh Dolitsky & Sajay Antony
+- [Secure Container Supply Chain with Notation, ORAS, and Ratify](https://youtu.be/7RvFj_RWE7c) by Feynman Zhou from Microsoft
+- [Build and Deploy Cloud Native (OCI) Artifacts, the GitOps Way](https://youtu.be/08ARHTeiXmo) by Mathieu Benoit from Google
+- [Unleashing the Power of the Container Registry](https://www.youtube.com/watch?v=6fohG10y3z0&t=2002s) at DevConf.us by Andrew Block & Alex Flom
+
+## Looking forward: what’s next in 2023
+
+Looking forward to 2023, several exciting plans have already been identified:
+
+- A stable release for ORAS CLI v1.0.0 and Go library v2.0.0, which are planned on Feb, 2023
+- A new website that brings developer-friendly layout design, demos, and documentation
+- Apply to become a CNCF Incubating project
+
+Last but not least, special thanks go to the many outstanding contributors, community evangelists, adopters.  We are also grateful to those who have incorporated ORAS in production and have been providing feedback to ensure ORAS is continuously improving. Let’s collaborate more on future milestones in 2023.
