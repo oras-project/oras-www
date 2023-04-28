@@ -13,11 +13,6 @@ const os = [
     },
     {
         label: 'MacOS',
-        value: 'macos',
-        content: 'VERSION=\"1.0.0\"\ncurl -LO \"https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_darwin_arm64.tar.gz\"\nmkdir -p oras-install/\ntar -zxf oras_${VERSION}_*.tar.gz -C oras-install/\nsudo mv oras-install/oras /usr/local/bin/\nrm -rf oras_${VERSION}_*.tar.gz oras-install/',
-    },
-    {
-        label: 'MacOS (Homebrew)',
         value: 'macosbrew',
         content: 'brew install oras',
     },
