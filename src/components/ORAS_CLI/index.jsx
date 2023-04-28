@@ -33,7 +33,7 @@ export default function ORASCLI() {
         <div className={[styles.orascli, styles.section_padding].join(' ')}>
             <div className={styles.orascli_content}>
                 <h1>ORAS CLI</h1>
-                <p>The simplest way to install ORAS with one line cmd is to use <code>brew install oras</code>. See all <a href="/docs/CLI/installation">installation methods</a>.</p>
+                <p>The simplest way to install ORAS with one line command is to use <code>brew install oras</code>. See all <a href="/docs/CLI/installation">installation methods</a>.</p>
             </div>
             <div className={styles.orascli_cli}>
                 <TerminalWindow>
