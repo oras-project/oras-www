@@ -87,7 +87,7 @@ const config = {
         isCloseable: true,
       },
       // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'img/oras_social_card.png',
       navbar: {
         logo: {
           alt: 'ORAS Logo',
