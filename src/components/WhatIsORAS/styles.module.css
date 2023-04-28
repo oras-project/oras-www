@@ -1,7 +1,6 @@
 .what_is_oras {
     display: flex;
     flex-wrap: wrap;
-    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -34,10 +33,10 @@
 }
 
 .what_is_oras_content p {
-    font-size: 22px;
+    font-size: 21px;
     font-weight: 400;
     text-align: justify;
-    padding: 15px;
+    padding-right: 35px;
 }
 
 .what_is_oras_video {
@@ -65,6 +64,10 @@
 
     .what_is_oras_content {
         margin: 0 0 1rem;
+    }
+
+    .what_is_oras_content p {
+        padding-right: 0px;
     }
 
     .what_is_oras_video iframe {
