@@ -195,7 +195,7 @@ import (
 )
 
 func pullImage() error {
-	// 0. Create a oci store
+	// 0. Create an oci store
 	o, err := oci.New("/tmp/")
 	if err != nil {
 		return err
