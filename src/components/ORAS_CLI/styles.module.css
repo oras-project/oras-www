@@ -1,0 +1,65 @@
+.section_padding {
+    padding: 4rem 6rem;
+}
+
+.orascli_content {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.orascli_content h1 {
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 55px;
+    color: var(--ifm-color-primary);
+}
+
+.orascli_content p {
+    font-size: 22px;
+    font-weight: 400;
+    text-align: justify;
+    padding: 15px;
+}
+
+.orascli_cli_font {
+    font-family: monospace;
+    font-size: 18px;
+}
+
+@media screen and (max-width: 1050px) {
+    .orascli_content {
+        margin-bottom: 1rem;
+    }
+
+}
+
+@media screen and (max-width: 650px) {
+    .section_padding {
+        padding: 2rem;
+    }
+
+    .orascli_content h1 {
+        font-size: 40px;
+        line-height: 60px;
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .section_padding {
+        padding: 2rem;
+    }
+
+    .orascli_content h1 {
+        font-size: 35px;
+        line-height: 48px;
+    }
+
+    .orascli_content p {
+        font-size: 20px;
+    }
+}
