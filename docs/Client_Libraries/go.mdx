@@ -1,9 +1,3 @@
----
-title: Go
-sidebar_position: 1
----
-
-
 # Go
 
 Source code: [github.com/oras-project/oras-go](https://github.com/oras-project/oras-go)
@@ -181,4 +175,69 @@ func main() {
         panic(err)
     }
 }
+```
+
+### Pull a docker or OCI image from a remote repository
+You can also use an OCI layout folder to store docker/OCI images:
+```golang
+package main
+
+import (
+	"context"
+	"fmt"
+
+	"oras.land/oras-go/v2"
+	"oras.land/oras-go/v2/content/oci"
+	"oras.land/oras-go/v2/registry/remote"
+	"oras.land/oras-go/v2/registry/remote/auth"
+	"oras.land/oras-go/v2/registry/remote/retry"
+)
+
+func pullImage() error {
+	// 0. Create a oci store
+	o, err := oci.New("/tmp/")
+	if err != nil {
+		return err
+	}
+
+	// 1. Connect to a remote repository
+	ctx := context.Background()
+	reg := "myregistry.example.com"
+	repo, err := remote.NewRepository(reg + "/myrepo")
+	if err != nil {
+		return err
+	}
+	// Note: The below code can be omitted if authentication is not required
+	repo.Client = &auth.Client{
+		Client: retry.DefaultClient,
+		Cache:  auth.DefaultCache,
+		Credential: auth.StaticCredential(reg, auth.Credential{
+			Username: "username",
+			Password: "password",
+		}),
+	}
+
+	// 2. Copy from the remote repository to the oci store
+	tag := "latest"
+	manifestDescriptor, err := oras.Copy(ctx, repo, tag, o, tag, oras.DefaultCopyOptions)
+	if err != nil {
+		return err
+	}
+	fmt.Println("manifest pulled:", manifestDescriptor.Digest, manifestDescriptor.MediaType)
+
+    // 3. Fetch from OCI layout to verify
+	fetched, err := content.FetchAll(ctx, o, manifestDescriptor)
+	if err != nil {
+		return err
+	}
+	fmt.Printf("manifest content:\n%s", fetched)
+	return nil
+}
+
+func main() {
+	if err := pullImage(); err != nil {
+		panic(err)
+	}
+}
+
 ```
