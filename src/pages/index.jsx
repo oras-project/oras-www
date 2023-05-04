@@ -7,6 +7,7 @@ import Workflow from '@site/src/components/Workflow';
 import CommunityLogos from '../components/CommunityLogos';
 import Libraries from '../components/Libraries';
 import Features from '../components/Features';
+import ORASCLI from '../components/ORAS_CLI';
 
 export default function Home() {
   const { siteConfig } = useDocusaurusContext();
@@ -21,6 +22,7 @@ export default function Home() {
         <Features />
         <Workflow />
         <Libraries />
+        <ORASCLI />
       </main>
     </Layout>
   );
