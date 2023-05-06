@@ -3,21 +3,21 @@ oras:
   url: https://github.com/oras-project
   image_url: https://github.com/oras-project.png
 
-slasker:
+stevelasker:
   name: Steve Lasker
   title: ORAS Maintainer
   url: https://github.com/SteveLasker
   image_url: https://github.com/SteveLasker.png
 
-fzhou:
+feynmanzhou:
   name: Feynman Zhou
   title: ORAS Maintainer
   url: https://github.com/FeynmanZhou
   image_url: https://github.com/FeynmanZhou.png
 
-yzha:
+yizha:
   name: Yi Zha
-  title:  ORAS Maintainer
+  title:  ORAS Contributor, ACR Product Manager
   url: https://github.com/yizha1
   image_url: https://github.com/yizha1.png
 
