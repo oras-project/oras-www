@@ -195,8 +195,8 @@ import (
 )
 
 func pullImage() error {
-	// 0. Create an oci store
-	o, err := oci.New("/tmp/")
+	// 0. Create an OCI layout store
+	store, err := oci.New("/tmp/oci-layout-root")
 	if err != nil {
 		return err
 	}
@@ -218,16 +218,16 @@ func pullImage() error {
 		}),
 	}
 
-	// 2. Copy from the remote repository to the oci store
+	// 2. Copy from the remote repository to the OCI layout store
 	tag := "latest"
-	manifestDescriptor, err := oras.Copy(ctx, repo, tag, o, tag, oras.DefaultCopyOptions)
+	manifestDescriptor, err := oras.Copy(ctx, repo, tag, store, tag, oras.DefaultCopyOptions)
 	if err != nil {
 		return err
 	}
 	fmt.Println("manifest pulled:", manifestDescriptor.Digest, manifestDescriptor.MediaType)
 
-    // 3. Fetch from OCI layout to verify
-	fetched, err := content.FetchAll(ctx, o, manifestDescriptor)
+	// 3. Fetch from OCI layout store to verify
+	fetched, err := content.FetchAll(ctx, store, manifestDescriptor)
 	if err != nil {
 		return err
 	}
