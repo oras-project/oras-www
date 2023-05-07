@@ -123,4 +123,4 @@ const registries = [
     },
 ];
 
-export { projects, registries };
+export default { projects, registries };

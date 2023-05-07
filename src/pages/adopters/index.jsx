@@ -1,13 +1,13 @@
 import React from 'react';
 import Layout from '@theme/Layout';
-import { projects, registries, regsitries } from './data'
+import data from '@site/static/adopters/data.js';
 import ProjectCard from '../../components/adopters/project_card';
 import RegistryCard from '../../components/adopters/registry_card';
 import styles from './styles.module.css';
 
 export default function Adopters() {
 
-    const ProjectCards = projects.map((item, index) => {
+    const ProjectCards = data.projects.map((item, index) => {
 
         return (
             <ProjectCard
@@ -21,7 +21,7 @@ export default function Adopters() {
         )
     })
 
-    const RegistryCards = registries.map((item, index) => {
+    const RegistryCards = data.registries.map((item, index) => {
 
         return (
             <RegistryCard
