@@ -105,6 +105,10 @@ const config = {
             position: 'left',
             label: 'Docs',
           },
+          {
+            label: 'Adopters',
+            to: '/adopters',
+          },
           { to: '/blog', label: 'Blog', position: 'left' },
           {
             type: 'docsVersionDropdown',

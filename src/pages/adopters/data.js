@@ -1,0 +1,126 @@
+const projects = [
+    {
+        title: "Helm",
+        light: "img/adopters/helm_light.svg",
+        dark: "img/adopters/helm_dark.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet flex-basis: 33.33333%;",
+        link: "https://v3.helm.sh/docs/topics/registries/",
+    },
+    {
+        title: "Singularity",
+        light: "img/adopters/singularity.svg",
+        dark: "img/adopters/singularity.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet",
+        link: "https://sylabs.io/guides/3.1/user-guide/cli/singularity_push.html",
+    },
+    {
+        title: "Falcoctl",
+        light: "img/adopters/falco.svg",
+        dark: "img/adopters/falco.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet",
+        link: "https://github.com/falcosecurity/falcoctl",
+    },
+    {
+        title: "Policy",
+        light: "img/adopters/policy.svg",
+        dark: "img/adopters/policy.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet height: 100%;",
+        link: "https://github.com/opcr-io/policy",
+    },
+    {
+        title: "Wasm to OCI",
+        light: "img/adopters/wasmtooci_light.svg",
+        dark: "img/adopters/wasmtooci_dark.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet",
+        link: "https://github.com/engineerd/wasm-to-oci",
+    },
+    {
+        title: "Conftest",
+        light: "img/adopters/opa_light.svg",
+        dark: "img/adopters/opa_dark.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet",
+        link: "https://github.com/open-policy-agent/conftest",
+    },
+    {
+        title: "Notation",
+        light: "img/adopters/notary_light.svg",
+        dark: "img/adopters/notary_dark.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet",
+        link: "https://github.com/notaryproject/notation",
+    },
+    {
+        title: "SOCI Snapshotter",
+        light: "img/adopters/aws_light.svg",
+        dark: "img/adopters/aws_dark.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet",
+        link: "https://github.com/awslabs/soci-snapshotter",
+    },
+];
+
+const registries = [
+    {
+        title: "CNCF Distribution",
+        light: "img/adopters/cncf.svg",
+        dark: "img/adopters/cncf.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit height: 100%;",
+        link: "/docs/adopters#cncf-distribution",
+    },
+    {
+        title: "Amazon Elastic Container Registry",
+        light: "img/adopters/aws_light.svg",
+        dark: "img/adopters/aws_dark.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit",
+        link: "/docs/adopters#amazon-elastic-container-registry-ecr",
+    },
+    {
+        title: "Azure Container Registry",
+        light: "img/adopters/azure.svg",
+        dark: "img/adopters/azure.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit",
+        link: "/docs/adopters#azure-container-registry-acr",
+    },
+    {
+        title: "Google Artifact Registry",
+        light: "img/adopters/gcp.svg",
+        dark: "img/adopters/gcp.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit",
+        link: "/docs/adopters#google-artifact-registry-gar",
+    },
+    {
+        title: "GitHub Packages Container Registry",
+        light: "img/adopters/github_light.svg",
+        dark: "img/adopters/github_dark.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit",
+        link: "/docs/adopters#github-packages-container-registry-ghcr",
+    },
+    {
+        title: "Bundle Bar",
+        light: "img/adopters/bundlebar.svg",
+        dark: "img/adopters/bundlebar.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit",
+        link: "/docs/adopters#bundle-bar",
+    },
+    {
+        title: "Docker Hub",
+        light: "img/adopters/docker_light.svg",
+        dark: "img/adopters/docker_dark.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit",
+        link: "/docs/adopters#docker-hub",
+    },
+    {
+        title: "Zot Registry",
+        light: "img/adopters/zot.svg",
+        dark: "img/adopters/zot.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit",
+        link: "/docs/adopters#zot-registry",
+    },
+    {
+        title: "Harbor",
+        light: "img/adopters/harbor.svg",
+        dark: "img/adopters/harbor.svg",
+        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit",
+        link: "https://goharbor.io/",
+    },
+];
+
+export { projects, registries };
