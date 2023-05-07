@@ -26,7 +26,7 @@
 .header_content h3 {
     font-size: 30px;
     font-weight: 500;
-    margin-top: 1em;
+    margin-top: 1rem;
     text-align: center;
 }
 
@@ -37,8 +37,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 3rem;
-    margin-bottom: 1.5em;
 }
 
 .projects_oras h1,
@@ -54,7 +52,33 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1em;
-    margin: 1.5em;
+    margin: 1.5rem;
+}
+
+.adopters_issue {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    margin: 4rem;
+    border-radius: 1rem;
+    background: var(--gradient-blue);
+}
+
+.adopters_heading h4 {
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 20px;
+    text-align: center;
+}
+
+.adopters_submit_issue {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
 }
 
 @media screen and (max-width: 1050px) {
@@ -93,8 +117,12 @@
         grid-template-columns: repeat(1, 1fr);
     }
 
+    .adopters_issue {
+        margin: 2rem;
+    }
+
     .section_padding {
-        padding: 4rem;
+        padding: 3rem;
     }
 }
 

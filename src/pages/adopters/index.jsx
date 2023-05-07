@@ -47,7 +47,7 @@ export default function Adopters() {
                     </div>
                 </div>
                 <div>
-                    <div className={styles.projects_oras}>
+                    <div className={[styles.projects_oras, styles.section_padding].join(' ')}>
                         <h1>Projects using ORAS</h1>
                     </div>
                     <div className={styles.projectcards}>
@@ -55,11 +55,19 @@ export default function Adopters() {
                     </div>
                 </div>
                 <div>
-                    <div className={styles.regsitries_oras}>
+                    <div className={[styles.regsitries_oras, styles.section_padding].join(' ')}>
                         <h1>Registries supporting OCI Artifacts</h1>
                     </div>
                     <div className={styles.registrycards}>
                         {RegistryCards}
+                    </div>
+                </div>
+                <div className={[styles.adopters_issue, styles.section_padding].join(' ')}>
+                    <div className={styles.adopters_heading}>
+                        <h4>Would like your registries and/or projects listed here? Please submit an issue. We're happy to promote all usage, as well as provide feedback.</h4>
+                    </div>
+                    <div className={styles.adopters_submit_issue}>
+                        <a class="button button--secondary button--lg" target='_blank' href="https://github.com/oras-project/oras-www/issues/new?assignees=&labels=adopter&template=submit_adopter.yml&title=%5BAdd+adopter%5D%3A">Submit an issue</a>
                     </div>
                 </div>
             </main>
