@@ -56,7 +56,13 @@ If you want to install ORAS on an Intel-based Mac, you can download it from `htt
 
 ### Windows
 
-Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
+- You can install ORAS CLI on Windows using [WinGet (Windows Package Manager)](https://github.com/microsoft/winget-pkgs):
+
+```bash
+winget install oras
+```
+
+- Alternatively, you can install ORAS CLI using `.exe` installer. Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
 
 ```cmd
 set VERSION="1.0.0"
@@ -90,7 +96,7 @@ oras also has a [Nix package](https://github.com/NixOS/nixpkgs/blob/master/pkgs/
  
 :::info
 
-You can intall nix CLI from [here](https://nixos.org/download.html).
+You can install nix CLI from [here](https://nixos.org/download.html).
 
 :::
 

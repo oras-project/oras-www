@@ -7,19 +7,19 @@ import CodeBlock from '@theme/CodeBlock';
 
 const os = [
     {
-        label: 'Linux',
-        value: 'linux',
-        content: 'VERSION=\"1.0.0\"\ncurl -LO \"https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_linux_amd64.tar.gz\"\nmkdir -p oras-install/\ntar -zxf oras_${VERSION}_*.tar.gz -C oras-install/\nsudo mv oras-install/oras /usr/local/bin/\nrm -rf oras_${VERSION}_*.tar.gz oras-install/',
-    },
-    {
-        label: 'MacOS',
+        label: 'macOS',
         value: 'macosbrew',
         content: 'brew install oras',
     },
     {
         label: 'Windows',
         value: 'windows',
-        content: 'set VERSION=\"1.0.0\"\ncurl.exe -sLO \"https://github.com/oras-project/oras/releases/download/v%VERSION%/oras_%VERSION%_windows_amd64.zip\"\ntar.exe -xvzf oras_%VERSION%_windows_amd64.zip\nmkdir -p %USERPROFILE%\\bin\\\ncopy oras.exe %USERPROFILE%\\bin\\\nset PATH=%USERPROFILE%\\bin\\;%PATH%',
+        content: 'winget install oras',
+    },
+    {
+        label: 'Linux',
+        value: 'linux',
+        content: 'VERSION=\"1.0.0\"\ncurl -LO \"https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_linux_amd64.tar.gz\"\nmkdir -p oras-install/\ntar -zxf oras_${VERSION}_*.tar.gz -C oras-install/\nsudo mv oras-install/oras /usr/local/bin/\nrm -rf oras_${VERSION}_*.tar.gz oras-install/',
     },
 ];
 
@@ -27,8 +27,8 @@ export default function ORASCLI() {
     return (
         <div className={[styles.orascli, styles.section_padding].join(' ')}>
             <div className={styles.orascli_content}>
-                <h1>ORAS CLI</h1>
-                <p>The simplest way to install ORAS with one line command is to use <code>brew install oras</code>. See all <a href="/docs/CLI/installation">installation methods</a>.</p>
+                <h1>Install ORAS CLI in seconds</h1>
+                <p>You can install ORAS CLI on different systems or set up in GitHub Actions in just a few seconds. See more <a href="/docs/CLI/installation">installation methods</a>.</p>
             </div>
             <div className={styles.orascli_cli}>
                 <TerminalWindow>
