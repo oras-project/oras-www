@@ -53,7 +53,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/asmitbm/oras-website/tree/main/',
+            'https://github.com/oras-project/oras-www/tree/main/',
           lastVersion: 'current',
           versions: {
             current: {
@@ -66,7 +66,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/asmitbm/oras-website/tree/main/',
+            'https://github.com/oras-project/oras-www/tree/main/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -78,6 +78,12 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      algolia: {
+        appId: 'KXO9RCDQGX',
+        apiKey: '6f21a78a8681d337c3b93995f3291e08',
+        indexName: 'oras',
+        contextualSearch: true,
+      },
       announcementBar: {
         id: 'announcement_bar',
         content:
@@ -86,7 +92,6 @@ const config = {
         textColor: 'var(--ifm-color-primary)',
         isCloseable: true,
       },
-      // Replace with your project's social card
       image: 'img/oras_social_card.png',
       navbar: {
         logo: {
