@@ -8,6 +8,7 @@ import CommunityLogos from '../components/CommunityLogos';
 import Libraries from '../components/Libraries';
 import Features from '../components/Features';
 import ORASCLI from '../components/ORAS_CLI';
+import Community from '../components/JoinCommunity';
 
 export default function Home() {
   const { siteConfig } = useDocusaurusContext();
@@ -23,6 +24,7 @@ export default function Home() {
         <Workflow />
         <Libraries />
         <ORASCLI />
+        <Community />
       </main>
     </Layout>
   );
