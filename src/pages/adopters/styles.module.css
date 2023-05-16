@@ -73,10 +73,6 @@
 }
 
 .adopters_submit_issue {
-    margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     margin-top: 2rem;
 }
 
