@@ -9,7 +9,8 @@ export default function Workflow() {
         <div className={[styles.workflow, styles.section_padding].join(' ')}>
             <div className={styles.how_oras_works}>
                 <h1>How ORAS Works?</h1>
-                <p>Able to distribute any artifacts across OCI-compliant registries or OCI Image Layout. See all <Link to="/docs/implementors/#registries-supporting-oci-artifacts">compatible registries</Link>.</p>
+                <p>Able to distribute any artifacts across OCI-compliant registries or OCI Image Layout. See all <Link to="/adopters">compatible registries</Link>.</p>
+
             </div>
             <div className={styles.workflow_image}>
                 <ThemedImage
