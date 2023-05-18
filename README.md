@@ -30,6 +30,13 @@ Source for ORAS website and documentation
 ```script
 npm install
 ```
+By using jq and pv, one can show the content downloading progress when using ORAS. This demonstrates how to fetch a blob with a specific reference, determine its size using jq, and use pv to display the progress while redirecting the output to a file named layer.bin.
+
+```
+$ blob_ref=ghcr.io/oras-project/oras@sha256:74529e03eae02d1fff5c05e9a6ec2089e1f5ae96421169c29a7c165346e042e4
+$ size=$(oras blob fetch --descriptor $blob_ref | jq -r .size)
+$ oras blob fetch $blob_ref --output - | pv -s $size > layer.bin
+```
 
 ## Local development
 
