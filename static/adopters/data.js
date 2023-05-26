@@ -1,0 +1,126 @@
+const projects = [
+    {
+        title: "Helm",
+        light: "img/adopters/helm_light.svg",
+        dark: "img/adopters/helm_dark.svg",
+        description: "Helm is the package manager for Kubernetes. It helps you manage Kubernetes applications.",
+        link: "https://v3.helm.sh/docs/topics/registries/",
+    },
+    {
+        title: "Singularity",
+        light: "img/adopters/singularity.svg",
+        dark: "img/adopters/singularity.svg",
+        description: "Linux container platform optimized for High Performance Computing (HPC) and Enterprise Performance Computing (EPC).",
+        link: "https://docs.sylabs.io/guides/3.1/user-guide/cli/singularity.html",
+    },
+    {
+        title: "Falcoctl",
+        light: "img/adopters/falco.svg",
+        dark: "img/adopters/falco.svg",
+        description: "Open source standard for runtime security for hosts, containers, Kubernetes and the cloud.",
+        link: "https://github.com/falcosecurity/falcoctl",
+    },
+    {
+        title: "Policy",
+        light: "img/adopters/policy.svg",
+        dark: "img/adopters/policy.svg",
+        description: "CLI for building Open Policy Agent (OPA) policies into OCI images.",
+        link: "https://github.com/opcr-io/policy",
+    },
+    {
+        title: "Wasm to OCI",
+        light: "img/adopters/wasmtooci_light.svg",
+        dark: "img/adopters/wasmtooci_dark.svg",
+        description: "Use OCI registries to distribute WebAssembly modules.",
+        link: "https://github.com/engineerd/wasm-to-oci",
+    },
+    {
+        title: "Conftest",
+        light: "img/adopters/opa_light.svg",
+        dark: "img/adopters/opa_dark.svg",
+        description: "Write tests against structured configuration data using the Open Policy Agent Rego query language.",
+        link: "https://github.com/open-policy-agent/conftest",
+    },
+    {
+        title: "Notation",
+        light: "img/adopters/notary_light.svg",
+        dark: "img/adopters/notary_dark.svg",
+        description: "Signing and verifying artifacts. Safeguarding the software delivery security from development to deployment.",
+        link: "https://github.com/notaryproject/notation",
+    },
+    {
+        title: "SOCI Snapshotter",
+        light: "img/adopters/aws_light.svg",
+        dark: "img/adopters/aws_dark.svg",
+        description: "A containerd snapshotter plugin which enables standard OCI images to be lazily loaded without requiring a build-time conversion step.",
+        link: "https://github.com/awslabs/soci-snapshotter",
+    },
+];
+
+const registries = [
+    {
+        title: "CNCF Distribution",
+        light: "img/adopters/cncf.svg",
+        dark: "img/adopters/cncf.svg",
+        description: "The toolkit to pack, ship, store, and deliver container content.",
+        link: "/docs/adopters#cncf-distribution",
+    },
+    {
+        title: "Amazon Elastic Container Registry",
+        light: "img/adopters/aws_light.svg",
+        dark: "img/adopters/aws_dark.svg",
+        description: "Fully managed container registry offering high-performance hosting, to reliably deploy application images and artifacts anywhere.",
+        link: "/docs/adopters#amazon-elastic-container-registry-ecr",
+    },
+    {
+        title: "Azure Container Registry",
+        light: "img/adopters/azure.svg",
+        dark: "img/adopters/azure.svg",
+        description: "A private registry service for building, storing, and managing container images and related artifacts.",
+        link: "/docs/adopters#azure-container-registry-acr",
+    },
+    {
+        title: "Google Artifact Registry",
+        light: "img/adopters/gcp.svg",
+        dark: "img/adopters/gcp.svg",
+        description: "A single place for an organization to manage container images and language packages (such as Maven and npm).",
+        link: "/docs/adopters#google-artifact-registry-gar",
+    },
+    {
+        title: "GitHub Packages Container Registry",
+        light: "img/adopters/github_light.svg",
+        dark: "img/adopters/github_dark.svg",
+        description: "Stores container images within your organization or personal account, and allows you to associate an image with a repository.",
+        link: "/docs/adopters#github-packages-container-registry-ghcr",
+    },
+    {
+        title: "Bundle Bar",
+        light: "img/adopters/bundlebar.svg",
+        dark: "img/adopters/bundlebar.svg",
+        description: "Bundle Bar is a new type of registry for storing small artifacts.",
+        link: "/docs/adopters#bundle-bar",
+    },
+    {
+        title: "Docker Hub",
+        light: "img/adopters/docker_light.svg",
+        dark: "img/adopters/docker_dark.svg",
+        description: "Docker Hub is a service provided by Docker for finding and sharing container images.",
+        link: "/docs/adopters#docker-hub",
+    },
+    {
+        title: "Zot Registry",
+        light: "img/adopters/zot.svg",
+        dark: "img/adopters/zot.svg",
+        description: "An OCI-native container registry for distributing container images and OCI artifacts.",
+        link: "/docs/adopters#zot-registry",
+    },
+    {
+        title: "Harbor",
+        light: "img/adopters/harbor.svg",
+        dark: "img/adopters/harbor.svg",
+        description: "An open source registry that secures artifacts with policies and role-based access control, ensures images are scanned and signs images as trusted.",
+        link: "https://goharbor.io/",
+    },
+];
+
+export default { projects, registries };

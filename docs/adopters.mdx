@@ -1,33 +1,22 @@
 ---
-title: Implementors
+title: Adopters
 sidebar_position: 7
 ---
 
-# Implementors
+# Adopters
 
 This page contains a list of projects leveraging ORAS, as well as
 registries that are known to support [OCI Artifacts][artifacts].
 
 *Would like your registry and/or project listed here?
-Please [submit a PR](https://github.com/oras-project/oras-www/pulls).
+Please [submit an issue](https://github.com/oras-project/oras-www/issues/new?assignees=&labels=adopter&template=submit_adopter.yml&title=%5BAdd+adopter%5D%3A).
 We're happy to promote all usage, as well as provide feedback.*
-
-## Projects using ORAS
-
-- [Helm](https://v3.helm.sh/docs/topics/registries/)
-- [Singularity](https://sylabs.io/guides/3.1/user-guide/cli/singularity_push.html)
-- [falcoctl](https://github.com/falcosecurity/falcoctl)
-- [policy](https://github.com/opcr-io/policy)
-- [wasm-to-oci](https://github.com/engineerd/wasm-to-oci)
-- [conftest](https://github.com/open-policy-agent/conftest)
-- [notation](https://github.com/notaryproject/notation)
-- [awslabs/soci-snapshotter](https://github.com/awslabs/soci-snapshotter)
 
 ## Registries supporting OCI Artifacts
 
 - [CNCF Distribution](#cncf-distribution) - local/offline verification
-- [Azure Container Registry](#azure-container-registry-acr)
 - [Amazon Elastic Container Registry](#amazon-elastic-container-registry-ecr)
+- [Azure Container Registry](#azure-container-registry-acr)
 - [Google Artifact Registry](#google-artifact-registry-gar)
 - [GitHub Packages container registry](#github-packages-container-registry-ghcr)
 - [Bundle Bar](#bundle-bar)
@@ -192,7 +181,7 @@ Then you can pull files from the registry or push files to the registry.
   oras logout <registry-ip>:5000
   ```
 
-#### [Amazon Elastic Container Registry (ECR)](https://aws.amazon.com/ecr/)
+### [Amazon Elastic Container Registry (ECR)](https://aws.amazon.com/ecr/)
 
 ECR Artifact Blog Post: <https://aws.amazon.com/blogs/containers/oci-artifact-support-in-amazon-ecr/>
 
@@ -218,7 +207,7 @@ ECR Artifact Blog Post: <https://aws.amazon.com/blogs/containers/oci-artifact-su
   oras pull $REPO_URI:1.0
   ```
 
-#### [Azure Container Registry (ACR)](https://aka.ms/acr)
+### [Azure Container Registry (ACR)](https://aka.ms/acr)
 
 ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
 
@@ -249,7 +238,7 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
   oras pull myregistry.azurecr.io/samples/artifact:1.0
   ```
 
-#### [Google Artifact Registry (GAR)](https://cloud.google.com/artifact-registry)
+### [Google Artifact Registry (GAR)](https://cloud.google.com/artifact-registry)
 
 - Authenticating with GAR using the gcloud command-line tool
 
@@ -270,7 +259,7 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
   oras pull ${REGION}-docker.pkg.dev/${GCP_PROJECT}/samples/artifact:1.0
   ```
 
-#### [GitHub Packages container registry (GHCR)](https://docs.github.com/en/packages/guides/about-github-container-registry)
+### [GitHub Packages container registry (GHCR)](https://docs.github.com/en/packages/guides/about-github-container-registry)
 
 - [Authenticating with GHCR](https://docs.github.com/en/packages/guides/pushing-and-pulling-docker-images#authenticating-to-github-container-registry)
 
@@ -291,7 +280,7 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
   oras pull ghcr.io/${GITHUB_OWNER}/samples/artifact:1.0
   ```
 
-#### [Bundle Bar](https://bundle.bar/docs/supported-clients/oras/)
+### [Bundle Bar](https://bundle.bar/docs/supported-clients/oras/)
 
 - Authenticating with Bundle Bar
 
@@ -316,7 +305,7 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
 [distribution-spec]:    https://github.com/opencontainers/distribution-spec/
 
 
-#### [Docker Hub](https://hub.docker.com/)
+### [Docker Hub](https://hub.docker.com/)
 
 - [Authenticating with Docker Hub](https://docs.docker.com/docker-hub/access-tokens/)
 

@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <Layout
       title={siteConfig.title}
-      description="Description will go into a meta tag in <head />">
+      description="Distribute Artifacts Across OCI Registries With Ease">
       <main>
         <Header />
         <CommunityLogos />

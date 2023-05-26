@@ -1,0 +1,139 @@
+.header {
+    display: flex;
+    background: var(--gradient-blue);
+}
+
+.section_padding {
+    padding: 4rem 6rem;
+}
+
+.header_content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #FFFFFF;
+}
+
+.header_content h1 {
+    font-weight: 750;
+    font-size: 75px;
+    line-height: 75px;
+}
+
+.header_content h3 {
+    font-size: 30px;
+    font-weight: 500;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.projects_oras,
+.regsitries_oras {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.projects_oras h1,
+.regsitries_oras h1 {
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 55px;
+    color: var(--ifm-color-primary);
+}
+
+.projectcards,
+.registrycards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1em;
+    margin: 1.5rem;
+}
+
+.adopters_issue {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    margin: 4rem;
+    border-radius: 1rem;
+    background: var(--gradient-blue);
+}
+
+.adopters_heading h4 {
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 20px;
+    text-align: center;
+}
+
+.adopters_submit_issue {
+    margin-top: 2rem;
+}
+
+@media screen and (max-width: 1050px) {
+    .header {
+        flex-direction: column;
+    }
+
+    .header_content {
+        margin: 0 0 3rem;
+    }
+
+    .projectcards,
+    .registrycards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .header h1 {
+        font-size: 50px;
+        line-height: 60px;
+    }
+
+    .header h3 {
+        font-size: 20px;
+    }
+
+    .projects_oras h1,
+    .regsitries_oras h1 {
+        font-size: 40px;
+        line-height: 60px;
+    }
+
+    .projectcards,
+    .registrycards {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .adopters_issue {
+        margin: 2rem;
+    }
+
+    .section_padding {
+        padding: 3rem;
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .header h1 {
+        font-size: 35px;
+        line-height: 48px;
+    }
+
+    .projects_oras h1,
+    .regsitries_oras h1 {
+        font-size: 35px;
+        line-height: 48px;
+    }
+
+    .section_padding {
+        padding: 2rem;
+    }
+}

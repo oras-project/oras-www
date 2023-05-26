@@ -1,0 +1,52 @@
+name: Submit a project or registry
+description: Create a new issue to list projects leveraging ORAS, as well as registries that are known to support OCI Artifacts.
+title: "[Add adopter]: "
+labels:
+  - adopter
+body:
+  - type: markdown
+    attributes:
+      value: |
+
+        * For questions, ask in [Slack](https://cloud-native.slack.com/archives/CJ1KHJM5Z).
+        * Check to make sure someone hasn't already opened a similar [issue](https://github.com/oras-project/oras-www/issues).
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: This project has a Code of Conduct that all participants are expected to understand and follow.
+      options:
+        - label: I have read and agree to the ORAS' [Code of Conduct](https://github.com/oras-project/oras-www/blob/main/CODE_OF_CONDUCT.md)
+          required: true
+
+  - type: textarea
+    attributes:
+      label: What is the name of your project/registry?
+      description: |
+        - Give as much detail as you can to help us understand the project.
+        - Why do you want to add this project/registry to oras.land?
+        - Are you the maintainer of the project/registry?
+    validations:
+      required: true
+  
+  - type: textarea
+    attributes:
+      label: Link of your project/registry
+      description: Please provide a valid link to the repository (eg:https://github.com/engineerd/wasm-to-oci)
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Link of your project's/registry's SVG
+      description: Please provide a SVG image of your project's/registry's logo. If you have a light and dark mode logo, provide those links as well.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Additional comments?
+      description: Any additional information, configuration, or data that you want to mention?.
+    validations:
+      required: false
