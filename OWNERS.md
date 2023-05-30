@@ -1,6 +1,7 @@
 # Owners
 
 Owners:
+  - Asmit Malakannawar (@asmitbm)
   - Feynman Zhou (@FeynmanZhou)
   - Sajay Antony (@sajayantony)
   - Shiwei Zhang (@shizhMSFT)
