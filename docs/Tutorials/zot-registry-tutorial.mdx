@@ -1,5 +1,5 @@
 ---
-title: Tutorial distribute an OCI artifact to Zot Registry using ORAS CLI
+title: Tutorial to distribute an OCI artifact to Zot Registry using ORAS CLI
 sidebar_position: 0
 ---
 
@@ -7,7 +7,7 @@ sidebar_position: 0
 
 Before we tackle how to distribute an OCI artifact to an OCI registry, let us first take a look at what we mean by distributing OCI artifacts, why we need it and what OCI registries are. 
 
-OCI registries are like a single location where container images are stored and made available to everyone. Distributing OCI artifacts refers to when artifacts are pushed to these registries. These artifacts can then be pulled (or retrieved) by someone else and used in their environments. These images often help with packaging and distributing software applications.
+OCI registries are like a single location where container images and other artifacts are stored and made available to everyone. Distributing OCI artifacts refers to when artifacts are pushed to these registries. These artifacts can then be pulled (or retrieved) by someone else and used in their environments. These images often help with packaging and distributing software applications.
 
 We will be using zot registry in this guide. Zot registry is an OCI-native container registry for distributing container images and OCI artifacts.
 
@@ -150,7 +150,7 @@ echo "hello world" > artifact.txt
 
 **Step 2: Authenticate with zot registry**
 
-It is to be noted that in case of zot, authentication is disabled by default. Still, if you wish to authenticate, you can either use `docker login` or [`oras login`](https://oras.land/docs/CLI_Reference/oras_login) to do so.
+It is to be noted that in case of zot, authentication is disabled by default. Still, if you wish to authenticate, you can use [`oras login`](https://oras.land/docs/CLI_Reference/oras_login) to do so.
 
 **Step 3: Pushing artifacts to the zot repository**
 
@@ -233,4 +233,4 @@ doc/example     sha256:bcdd6799fed0fca0eaedfc1c642f3d1dd7b8e78b43986a89935d6fe21
 
 You can now successfully push OCI artifacts to your zot registry! 
 
-Distributing OCI artifacts to OCI registries aids in collaboration and code sharing. It enables teams to acquire and use standardized container images. This is why it is considered to play a crucial role in maintaining consistency among teams.
+Distributing OCI artifacts to OCI registries aids in collaboration and code sharing. It enables teams to acquire and use through a standardized artifact interface. This is why it is considered to play a crucial role in maintaining consistency among teams.
