@@ -1,23 +1,21 @@
 ---
-title: Tutorial to distribute an OCI artifact to Zot Registry using ORAS CLI
+title: Introduction to OCI registries using ORAS
 sidebar_position: 0
 ---
 
-# Tutorial to Install Zot Registry and Distribute OCI Artifacts to Zot Registry using ORAS CLI
+# Introduction to OCI registries using ORAS
 
-Before we tackle how to distribute an OCI artifact to an OCI registry, let us first take a look at what we mean by distributing OCI artifacts, why we need it and what OCI registries are. 
+Before we tackle how to distribute an OCI artifact to an OCI registry, let us first take a look at what we mean by distributing OCI artifacts, why we need it, and what OCI registries are. 
 
 OCI registries are like a single location where container images and other artifacts are stored and made available to everyone. Distributing OCI artifacts refers to when artifacts are pushed to these registries. These artifacts can then be pulled (or retrieved) by someone else and used in their environments. These images often help with packaging and distributing software applications.
 
 We will be using zot registry in this guide. Zot registry is an OCI-native container registry for distributing container images and OCI artifacts.
 
-In order to follow the steps given, you would be required to install ORAS CLI. You can follow the [installation guide](https://oras.land/docs/CLI/installation) to do so.
+In order to follow the steps given, you would be required to install the ORAS CLI. You can follow the [installation guide](https://oras.land/docs/CLI/installation) to do so. 
 
-### Phase 1: To Install Zot Registry
+### Phase 1: To Install Zot Registry 
 
-We will be covering 2 methods of installation in this tutorial. 
-
-#### Method 1: Using docker
+We will be installing zot using docker. However, you can refer to their [installation guide](https://zotregistry.io/install-guides/install-guide-linux/) to find more ways to install the registry.
 
 Prerequisites for this method:
 * [Docker](https://www.docker.com/) 
@@ -32,115 +30,16 @@ latest: Pulling from project-zot/zot-linux-amd64
 a7ca0d9ba68f: Pull complete 
 fe5ca62666f0: Pull complete 
 
-<!-- truncate -->
+<!-- truncated -->
 
 after":"2h0m0s","goroutine":24,"caller":"zotregistry.io/zot/pkg/extensions/extension_search.go:160","time":"2023-05-20T10:50:45.892076536Z"}
 {"level":"debug","component":"scheduler","worker":3,"goroutine":24,"caller":"zotregistry.io/zot/pkg/scheduler/scheduler.go:105","time":"2023-05-20T10:50:45.892089946Z","message":"scheduler: finished task"}
 ```
 
-#### Method 2: Using a Kubernetes cluster and helm
-
-Prerequisites for this phase:
-* [helm](https://helm.sh/docs/intro/install/)
-* [kubectl](https://kubernetes.io/docs/tasks/tools/)
-* [Docker](https://www.docker.com/) (alternatives: podman or a virtualization tool like VirtualBox)
-* [Minikube](https://minikube.sigs.k8s.io/docs/start/) (alternatives: kubeadm)
-
-If you would like to install zot registry on Bare Metal Linux, you could follow their [installation guide](https://zotregistry.io/v1.4.3/install-guides/install-guide-linux/).
-
-**Step 1: Create a Kubernetes cluster using minikube.**
-
-```
-minikube start
-```
-
-The output should look similar to this if you were successful in creating one:
-
-```
-😄  minikube v1.30.1 on Ubuntu 22.04
-✨  Using the docker driver based on existing profile
-👍  Starting control plane node minikube in cluster minikube
-🚜  Pulling base image ...
-🏃  Updating the running docker "minikube" container ...
-❗  This container is having trouble accessing https://registry.k8s.io
-💡  To pull new external images, you may need to configure a proxy: https://minikube.sigs.k8s.io/docs/reference/networking/proxy/
-🐳  Preparing Kubernetes v1.26.3 on Docker 23.0.2 ...
-🔎  Verifying Kubernetes components...
-    ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
-🌟  Enabled addons: storage-provisioner, default-storageclass
-🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
-```
-
-**Step 2: Specify a remote repository that contains the Helm charts for zot.**
-
-```
-helm repo add project-zot http://zotregistry.io/helm-charts
-```
-
-```
-"project-zot" has been added to your repositories
-```
-
-**Step 3: Update to the latest information of available charts from the chart repository, as shown below:**
-
-```
-helm repo update project-zot
-```
-
-```
-Hang tight while we grab the latest from your chart repositories...
-...Successfully got an update from the "project-zot" chart repository
-Update Complete. ⎈Happy Helming!⎈
-```
-
-You can use `helm show all project-zot/zot` to view the default information of the project. 
-
-To follow this tutorial, we do not need to make any changes to the default values. But, if you would like to see the configurable settings, run `helm show values project-zot/zot`. You can find more information on how to customize the Helm chart using `set` or a file through the [Helm documentation](https://helm.sh/docs/).
-
-**Step 4: Install zot**
-
-```
-helm install zot project-zot/zot
-```
-
-If you have successfully installed zot, you can expect a similar output:
-
-```
-NAME: zot
-LAST DEPLOYED: Sat May 20 15:50:22 2023
-NAMESPACE: default
-STATUS: deployed
-REVISION: 1
-NOTES:
-Get the application URL by running these commands:
-  export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services zot)
-  export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
-  echo http://$NODE_IP:$NODE_PORT
-```
-
-Step 5: To verify the installation
-
-```
-export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services zot)
-export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
-echo http://$NODE_IP:$NODE_PORT
-```
-
-Your output may be different but it should look like this:
-```
-http://192.168.49.2:30276
-```
-
-If you redirect to the above link, the screen will show the following:
-
-![](https://hackmd.io/_uploads/SJT67IYH3.png)
-
 
 ### Phase 2: Distribution of OCI Artifacts to Zot Registry Using Oras CLI
 
 Please open a new terminal window for the next phase.
-
-**Note:** If you have used method 1 for the installation, you will need to replace the IP address and port with `localhost:5000`.
 
 **Step 1: Create a sample file** 
 
@@ -155,21 +54,19 @@ It is to be noted that in case of zot, authentication is disabled by default. St
 **Step 3: Pushing artifacts to the zot repository**
 
 ```
-oras push --plain-http 192.168.49.2:30276/hello-artifact:v1 \
+oras push --plain-http localhost:5000/hello-artifact:v1 \
         --artifact-type application/vnd.acme.rocket.config \
         artifact.txt:text/plain -d -v
 ```
 
-In this command, we have used the output we got in step 5 of phase 1.
-
 ```
 Uploading a948904f2f0f artifact.txt
 Uploaded  a948904f2f0f artifact.txt
-Pushed [registry] 192.168.49.2:30276/hello-artifact:v1
+Pushed [registry] localhost:5000/hello-artifact:v1
 Digest: sha256:bcdd6799fed0fca0eaedfc1c642f3d1dd7b8e78b43986a89935d6fe217a09cee
 ```
 
-After pushing the artifact, we can see them on the same link:
+After pushing the artifact, it can be seen in the zot user interface:
 
 ![](https://hackmd.io/_uploads/SJdQHUKSn.png)
 
@@ -177,25 +74,25 @@ After pushing the artifact, we can see them on the same link:
 **Step 4: Pulling artifacts from the zot repository**
 
 ```
-oras pull --plain-http 192.168.49.2:30276/hello-artifact:v1 -d -v
+oras pull --plain-http localhost:5000/hello-artifact:v1 -d -v
 ```
 
 ```
-DEBU[0000] > Request URL: "http://192.168.49.2:30276/v2/hello-artifact/manifests/v1" 
+DEBU[0000] > Request URL: "http://localhost:5000/v2/hello-artifact/manifests/v1" 
 DEBU[0000] > Request method: "GET"                      
 DEBU[0000] > Request headers: 
 
-<!-- truncate -->
+<!-- truncated -->
 
 Downloaded  a948904f2f0f artifact.txt
 Downloaded  bcdd6799fed0 application/vnd.oci.image.manifest.v1+json
-Pulled [registry] 192.168.49.2:30276/hello-artifact:v1
+Pulled [registry] localhost:5000/hello-artifact:v1
 Digest: sha256:bcdd6799fed0fca0eaedfc1c642f3d1dd7b8e78b43986a89935d6fe217a09cee
 ```
 
 **Step 5: To attach files to an existing artifact**
 
-First, let's create another sample file to add,
+First, let's create another sample file to attach to the previously uploaded artifact,
 
 ```
 echo "hello world" > hi.txt
@@ -204,19 +101,19 @@ echo "hello world" > hi.txt
 You can use the command below to attach `hi.txt` to the artifact we pushed above:
 
 ```
-oras attach --plain-http --artifact-type doc/example 192.168.49.2:30276/hello-artifact:v1 hi.txt
+oras attach --plain-http --artifact-type doc/example localhost:5000/hello-artifact:v1 hi.txt
 ```
 
 ```
 Exists    a948904f2f0f hi.txt
-Attached to [registry] 192.168.49.2:30276/hello-artifact@sha256:327db68f73d0ed53d528d927a6703c00739d7c1076e50762c3f6641b51b76fdc
+Attached to [registry] localhost:5000/hello-artifact@sha256:327db68f73d0ed53d528d927a6703c00739d7c1076e50762c3f6641b51b76fdc
 Digest: sha256:bcdd6799fed0fca0eaedfc1c642f3d1dd7b8e78b43986a89935d6fe217a09cee
 ```
 
 **Step 6: To check the referrers of the manifest in our zot registry**
 
 ```
-oras discover --plain-http 192.168.49.2:30276/hello-artifact:v1
+oras discover --plain-http localhost:5000/hello-artifact:v1
 ```
 
 ```
@@ -227,7 +124,8 @@ Artifact Type   Digest
 doc/example     sha256:bcdd6799fed0fca0eaedfc1c642f3d1dd7b8e78b43986a89935d6fe217a09cee
 ```
 
-**Note:** We have used the flag `--plain-http` in the steps because we want to allow insecure connections to registry without SSL check.
+**Note:** The  `--plain-http` flag allows connections to the registry without SSL check. As this set up is insecure,
+it can be used for testing purposes. However, you can set up TLS using [these steps](https://github.com/project-zot/zot/blob/main/examples/README.md#network).
 
 ### Conclusion
 
