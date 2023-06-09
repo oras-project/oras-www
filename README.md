@@ -25,7 +25,7 @@ Source for ORAS website and documentation
 
 ## Online one-click setup
 
-You can use Gitpod (a free, online, VS Code-like IDE) for contributing. With a single click, it will launch a workspace (for Docusaurus 2) and automatically:
+You can use Gitpod (a free, online, VS Code-like IDE) for contributing. With a single click, it will launch a workspace (for Docusaurus 2) automatically:
 
 * clone the docusaurus repo.
 * install the dependencies.
