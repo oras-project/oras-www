@@ -1,7 +1,9 @@
 ---
-title: Pushing
+title: Pushing and Pulling
 sidebar_position: 2
 ---
+
+All users can access container images stored in centralized repositories called OCI registries. Pushing OCI artifacts to the registries is the first step in distributing them. These artifacts can be pulled by other people and used in their own environment once they have been stored.
 
 # Pushing
 
@@ -127,3 +129,26 @@ See [OCI Artifacts][artifacts] for more details.
     ]
   }
   ```
+# Pulling 
+
+Pulling artifacts involves specifying the content addressable artifact, along with the type of artifact.
+
+```
+oras pull localhost:5000/hello-artifact:v2
+```
+
+## Using cache when pulling artifacts
+
+In order to save unnecessary network bandwidth and disk I/O oras should provides a solution to pull the artifacts into a local content-address storage (CAS) if the content does not exist, and then copy the artifact to the desired storage.
+
+The cache directory is specified by using the environment variable `ORAS_CACHE`. If not specified, cache is not used.
+
+```
+# Set cache root
+export ORAS_CACHE=~/.oras/cache
+```
+
+```
+# Pull artifacts as usual
+oras pull localhost:5000/hello:latest
+```
