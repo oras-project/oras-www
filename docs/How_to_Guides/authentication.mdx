@@ -7,7 +7,7 @@ sidebar_position: 1
 
 In order to push or pull artifacts or images to an OCI registry, we need to prove our identity using authentication. Following this, authorization provides the required permissions to the user.
 
-In ORAS, we can use [`oras login`](../CLI_Reference/oras_login.mdx) in advance to authenticate ourselves for private registries. By default, this command stores the credentials in `~/.docker/config.json` (same file used by the docker client). If you have previously authenticated to a registry using `docker login`, the credentials will be reused.
+In ORAS, we can use [`oras login`](../commands/oras_login.mdx) in advance to authenticate ourselves for private registries. By default, this command stores the credentials in `~/.docker/config.json` (same file used by the docker client). If you have previously authenticated to a registry using `docker login`, the credentials will be reused.
 
 You can use the `-c/–config` option to specify an alternate location.
 
@@ -24,4 +24,4 @@ oras pull -u username -p password myregistry.io/myimage:latest
 ```
 **Note:** The drawback of the above method is that it requires you to authenticate for every command rather than once for multiple commands.   
 
-See [Supported Registries] for registry specific authentication usage.
+You can see the [Supported Registries](../adopters.mdx) for registry specific authentication usage.

@@ -124,3 +124,15 @@ Go version:     go1.20.2
 Git commit:     b58e7b910ca556973d111e9bd734a71baef03db2
 Git tree state: clean
 ```
+
+## To validate the checksum of ORAS CLI binaries:
+
+You can download all of the artifacts uploaded to the new [GitHub release](https://github.com/oras-project/oras/releases) locally.
+
+The checksum can be performed using the following command:
+
+```
+shasum -c oras_${version}_checksums.txt
+```
+
+If you get an 'OK' in your output, you may presume that the file is original and unmodified. 

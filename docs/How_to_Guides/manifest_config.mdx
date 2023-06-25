@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # Manifest Config
 
-According to [OCI Image Manifest Specification](https://github.com/opencontainers/image-spec/blob/master/manifest.md#image-manifest-property-descriptions),
+According to [OCI Image Manifest Specification](https://github.com/opencontainers/image-spec/blob/main/manifest.md#image-manifest-property-descriptions),
 the property `config` is required by an image manifest.
 Since `oras` does not make use of the configuration object, an empty JSON object `{}` is used by default when pushing, and never being fetched when pulling.
 
@@ -129,7 +129,7 @@ Additionally, the latest version of `dockerd` recognizes OCI manifests and does 
 ## Push / Pull config
 
 As mentioned in the beginning of this doc, the manifest config is not used by `oras` and is not worth pulling in most scenarios.
-However, it is still possible to push pullable config with the `oras` CLI by leveraging [Manifest Annotations](./manifest_annotations).
+However, it is still possible to push pullable config with the `oras` CLI by leveraging [Manifest Annotations](./manifest_annotations.mdx).
 
 ```
 $ cat config.json
