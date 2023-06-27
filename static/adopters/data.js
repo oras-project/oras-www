@@ -94,6 +94,13 @@ const registries = [
         link: "/docs/adopters#github-packages-container-registry-ghcr",
     },
     {
+        title: "GitLab Container Registry",
+        light: "img/adopters/gitlab.svg",
+        dark: "img/adopters/gitlab.svg",
+        description: "Fully-integrated with GitLab making it easy for developers to code, test, and deploy container images.",
+        link: "https://docs.gitlab.com/ee/user/packages/container_registry/",
+    },
+    {
         title: "Bundle Bar",
         light: "img/adopters/bundlebar.svg",
         dark: "img/adopters/bundlebar.svg",
