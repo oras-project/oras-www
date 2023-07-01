@@ -101,6 +101,13 @@ const registries = [
         link: "https://docs.gitlab.com/ee/user/packages/container_registry/",
     },
     {
+        title: "JFrog Artifactory",
+        light: "img/adopters/jfrog.svg",
+        dark: "img/adopters/jfrog.svg",
+        description: "Fully hybrid - on-prem / cloud binary repository that supports Docker containers, provides reliable, consistent, and efficient access to remote Docker container registries.",
+        link: "https://jfrog.com/container-registry/",
+    },
+    {
         title: "Bundle Bar",
         light: "img/adopters/bundlebar.svg",
         dark: "img/adopters/bundlebar.svg",
