@@ -5,7 +5,7 @@ sidebar_position: 4
 
 # Manifest Config
 
-According to [OCI Image Manifest Specification](https://github.com/opencontainers/image-spec/blob/master/manifest.md#image-manifest-property-descriptions),
+According to [OCI Image Manifest Specification](https://github.com/opencontainers/image-spec/blob/main/manifest.md#image-manifest-property-descriptions),
 the property `config` is required by an image manifest.
 Since `oras` does not make use of the configuration object, an empty JSON object `{}` is used by default when pushing, and never being fetched when pulling.
 
@@ -21,7 +21,7 @@ The descriptor of the default configuration object is fixed as follows.
 
 ## Customize config
 
-Users can customize the configuration object by the `--manifest-config file[:type]` option. To push a file `hi.txt` with the custom manifest config file `config.json`, run
+To push a file `hi.txt` with the custom manifest config file `config.json`, you can run:
 
 ```
 oras push --config config.json localhost:5000/hello:latest hi.txt
@@ -50,7 +50,7 @@ In this section, docker behaviors are shown given various configs.
 ### Empty config file
 
 ```
-$ oras push --manifest-config /dev/null localhost:5000/hello:latest hi.txt
+$ oras push --export-manifest /dev/null localhost:5000/hello:latest hi.txt
 Uploading a948904f2f0f hi.txt
 Pushed localhost:5000/hello:latest
 Digest: sha256:34897815cbf060e1d11b4c2938c7476d9326269e2179aef3559ce25af11a9ced
@@ -111,7 +111,7 @@ Additionally, the latest version of `dockerd` recognizes OCI manifests and does 
 ## Push / Pull config
 
 As mentioned in the beginning of this doc, the manifest config is not used by `oras` and is not worth pulling in most scenarios.
-However, it is still possible to push pullable config with the `oras` CLI by leveraging [Manifest Annotations](./manifest_annotations).
+However, it is still possible to push pullable config with the `oras` CLI by leveraging [Manifest Annotations](./manifest_annotations.mdx).
 
 ```
 $ cat config.json
