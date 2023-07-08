@@ -1,7 +1,9 @@
 ---
-title: Pushing
+title: Pushing and Pulling
 sidebar_position: 2
 ---
+
+All users can access container images stored in centralized repositories called OCI registries. Pushing OCI artifacts to the registries is the first step in distributing them. These artifacts can be pulled by other people and used in their own environment once they have been stored.
 
 # Pushing
 
@@ -10,7 +12,7 @@ sidebar_position: 2
 Pushing single files involves referencing the unique artifact type and at least one file.
 Defining an Artifact uses the `config.mediaType` as the unique artifact type. If a config object is provided, the `mediaType` extension defines the config filetype. If a `null` config is passed, the config extension must be removed.
 
-See: [Defining a Unique Artifact Type](https://github.com/opencontainers/artifacts/blob/master/artifact-authors.md#defining-a-unique-artifact-type)
+See: [Defining a Unique Artifact Type](https://github.com/opencontainers/artifacts/blob/main/artifact-authors.md#defining-a-unique-artifact-type)
 
 The following sample defines a new Artifact Type of **Acme Rocket**, using `application/vnd.acme.rocket.config` as the `manifest.config.mediaType`.
 
@@ -46,7 +48,7 @@ The following sample defines a new Artifact Type of **Acme Rocket**, using `appl
 
 ## Pushing artifacts with config files
 
-The [OCI distribution-spec][distribution-spec] provides for storing optional config objects. These can be used by the artifact to determine how or where to process and/or route the blobs. When providing a config object, the version and file type is required.
+The [OCI distribution-spec](https://github.com/opencontainers/distribution-spec/) provides for storing optional config objects. These can be used by the artifact to determine how or where to process and/or route the blobs. When providing a config object, the version and file type is required.
 
 - Create a config file
 
@@ -127,3 +129,27 @@ See [OCI Artifacts][artifacts] for more details.
     ]
   }
   ```
+
+# Pulling 
+
+Pulling artifacts involves specifying the content addressable artifact, along with the type of artifact.
+
+```
+oras pull localhost:5000/hello-artifact:v2
+```
+
+## Using cache when pulling artifacts
+
+In order to save unnecessary network bandwidth and disk I/O oras should provides a solution to pull the artifacts into a local content-address storage (CAS) if the content does not exist, and then copy the artifact to the desired storage.
+
+The cache directory is specified by using the environment variable `ORAS_CACHE`. If not specified, cache is not used.
+
+```
+# Set cache root
+export ORAS_CACHE=~/.oras/cache
+```
+
+```
+# Pull artifacts as usual
+oras pull localhost:5000/hello:latest
+```
