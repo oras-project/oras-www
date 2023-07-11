@@ -124,3 +124,41 @@ Go version:     go1.20.2
 Git commit:     b58e7b910ca556973d111e9bd734a71baef03db2
 Git tree state: clean
 ```
+
+## To Validate the Checksum of ORAS CLI Binaries
+
+
+The following commands can be used to verify the ORAS CLI binaries using GPG:
+
+1. First, we import a GPG Key which can be used for verification:
+
+```
+$ curl -sSL https://github.com/qweeah.gpg | gpg --import -
+gpg: key 276D8A724CE1C704: "Billy Zha <jinzha1@microsoft.com>" not changed
+gpg: Total number processed: 1
+gpg: unchanged: 1
+```
+
+2. Next, we need to sign and save the binary:
+
+```
+$ gpg --armor --detach-sign $file
+```
+
+The signed file gets saved with a `.asc` extenstion.
+
+3. In order to verify the binaries against a trusted source, we run the following command to declare the trust,
+
+```
+gpg --edit-key qweeah trust
+```
+Here, we are required to choose "4 = I trust fully"
+
+4. Last but not the least, we verify our binaries using the command,
+
+```
+$ gpg --verify oras_1.0.0_linux_amd64.tar.gz.asc oras_1.0.0_linux_amd64.tar.gz
+gpg: Signature made Wed Jul 12 00:14:49 2023 IST
+gpg: using RSA key 03387B6C7C3D9BD9FC2D318670CE7E4FFF445FC8
+gpg: Good signature from "Deepesha <deepesha.3007@gmail.com>" [ultimate]
+```
