@@ -52,7 +52,7 @@ oras login --insecure localhost:5000
 Log in to registry with customized DNS resolution
 
 ```bash
-oras login prod.registry.io:80 --resolve prod.registry.io:80:127.0.0.1:5000 --plain-http
+oras login prod.registry.io --resolve prod.registry.io:5000:127.0.0.1 --plain-http
 ```
 
 ## Options
