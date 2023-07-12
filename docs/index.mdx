@@ -11,7 +11,7 @@ Registries are evolving as generic artifact stores.
 To enable this goal, the ORAS project provides a way to
 push and pull OCI Artifacts to and from OCI Registries.
 
-Users seeking a generic registry client can benefit from the [ORAS CLI](./cli/installation), while
+Users seeking a generic registry client can benefit from the [ORAS CLI](./installation.mdx), while
 developers can build their own clients on top of one of the [ORAS client libraries](./client_libraries/overview).
 
 ## What are OCI Registries?
@@ -41,9 +41,9 @@ The [OCI Artifacts](https://github.com/opencontainers/artifacts) project is an a
 define an opinionated way to leverage OCI Registries for arbitrary artifacts without masquerading
 them as container images.
 
-Specifically, [OCI Image Manifests](https://github.com/opencontainers/image-spec/blob/master/manifest.md)
+Specifically, [OCI Image Manifests](https://github.com/opencontainers/image-spec/blob/main/manifest.md)
 have a required field known as `config.mediaType`. According to the
-[guidelines](https://github.com/opencontainers/artifacts/blob/master/artifact-authors.md)
+[guidelines](https://github.com/opencontainers/artifacts/blob/main/artifact-authors.md)
 provided by OCI Artifacts, this field provides the ability to differentiate between various types of artifacts.
 
 Artifacts stored in an OCI Registry using this method are referred to herein as **OCI Artifacts**.
@@ -67,7 +67,6 @@ application/vnd.unknown.config.v1+json
 Authors of new OCI Artifacts are thus encouraged to define their own media types specific to
 their artifact, which their custom client(s) know how to operate on.
 
-If you wish to start publishing OCI Artifacts right away, take a look at the [ORAS CLI](./cli/installation).
+If you wish to start publishing OCI Artifacts right away, take a look at the [ORAS CLI](./installation.mdx).
 Developers who wish to provide their own user experience should use one of the
 [ORAS client libraries](./client_libraries/overview).
-

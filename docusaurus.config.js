@@ -149,12 +149,16 @@ const config = {
                 to: '/docs/',
               },
               {
-                label: 'CLI',
-                to: '/docs/cli/installation',
+                label: 'Installation',
+                to: '/docs/installation',
               },
               {
-                label: 'CLI Reference',
-                to: '/docs/cli_reference/use_oras_cli',
+                label: 'How-to Guides',
+                to: '/docs/how_to_guides/authentication',
+              },
+              {
+                label: 'ORAS Commands',
+                to: '/docs/commands/use_oras_cli',
               },
               {
                 label: 'Client Libraries',
