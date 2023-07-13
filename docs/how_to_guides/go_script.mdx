@@ -1,0 +1,45 @@
+---
+title: Go Scripting
+sidebar_position: 90
+---
+
+# Scripting ORAS in Go
+
+It is possible to use the ORAS CLI in Go scripts.  When you are scripting ORAS in Go, the parameters should be specified just like they are on the command line.
+
+For example:
+
+```go
+package main
+import (
+	"fmt"
+	"os"
+	"strings"
+	"oras.land/oras/cmd/oras/root"
+)
+func main() {
+	// change below array to play with your own cmd args:
+	args := []string{"repo", "ls", "mcr.microsoft.com"}
+	cmd := root.New()
+	cmd.SetArgs(args)
+	fmt.Printf("Executing 'oras %s':", strings.Join(args, " "))
+	err := cmd.Execute()
+	if err != nil {
+		fmt.Errorf("Failed to execute : %w", err)
+		os.Exit(-1)
+	}
+	os.Exit(0)
+}
+```
+
+To run this example:
+```
+mkdir example
+cd example
+go mod init example
+go mod edit --require oras.land/oras@v1.1.0-rc.1
+# copy the example code into the directory...
+cat >main.go
+go mod tidy
+go run main.go
+```
