@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './styles.module.css';
+import Link from '@docusaurus/Link';
 
 const LibraryList = [
     {
@@ -28,12 +29,12 @@ const LibraryList = [
 function Logo({ title, alt, Svg, width, link }) {
     return (
         <div className={styles.ind_logo}>
-            <a href={link}><Svg
+            <Link href={link}><Svg
                 alt={alt}
                 title={title}
                 width={width}
                 role="img"
-            /></a>
+            /></Link>
         </div>
     );
 }

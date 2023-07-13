@@ -2,11 +2,12 @@ import React from "react";
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from "./styles.module.css";
+import Link from '@docusaurus/Link';
 
 export default function LinkCard({ link, title, light, dark }) {
     return (
         <div className={styles.container}>
-            <a
+            <Link
                 target="_blank"
                 href={link}
                 className={styles.card}
@@ -26,7 +27,7 @@ export default function LinkCard({ link, title, light, dark }) {
                         <div className={styles.title}>{title}</div>
                     </div>
                 </div>
-            </a>
+            </Link>
         </div>
     );
 };

@@ -8,12 +8,12 @@ export default function Home() {
   return (
     <Layout
       title={siteConfig.title}
-      description="Description will go into a meta tag in <head />">
-        <Head>
-        <meta charset="utf-8"/>
-        <meta name="go-import" content="oras.land/oras-go git https://github.com/oras-project/oras-go"/>
-        <meta name="go-source" content="oras.land/oras-go git https://github.com/oras-project/oras-go https://github.com/oras-project/oras-go/tree/main{/dir} https://github.com/oras-project/oras-go/blob/main{/dir}/{file}#L{line}"/>
-        <meta http-equiv="refresh" content="0; url=https://github.com/oras-project/oras-go"/>
+      description="This page will redirect to https://github.com/oras-project/oras-go">
+      <Head>
+        <meta charset="utf-8" />
+        <meta name="go-import" content="oras.land/oras-go git https://github.com/oras-project/oras-go" />
+        <meta name="go-source" content="oras.land/oras-go git https://github.com/oras-project/oras-go https://github.com/oras-project/oras-go/tree/main{/dir} https://github.com/oras-project/oras-go/blob/main{/dir}/{file}#L{line}" />
+        <meta http-equiv="refresh" content="0; url=https://github.com/oras-project/oras-go" />
       </Head>
     </Layout>
   );

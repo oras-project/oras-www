@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './styles.module.css';
 import LinkCard from './community_links';
+import Link from '@docusaurus/Link';
 
 export default function Community() {
     return (
@@ -21,7 +22,7 @@ export default function Community() {
                         <h4>Biweekly Tuesday of every month | 5:00 PM PDT</h4>
                     </div>
                     <div className={styles.calendar_link}>
-                        <a class="button button--secondary button--lg" target='_blank' href="https://hackmd.io/P-O6n222TcSMoJgHmTTduw">Add to Calendar</a>
+                        <Link class="button button--secondary button--lg" target='_blank' href="https://hackmd.io/P-O6n222TcSMoJgHmTTduw">Add to Calendar</Link>
                     </div>
                 </div>
             </div>
