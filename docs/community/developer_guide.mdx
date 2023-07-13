@@ -83,14 +83,19 @@ To update or add new dependencies, run `go get <package name>`.
 This section needs a lot of love and automation 🙂
 
 :::
-
+### Preparation
 1. Make sure your GPG is available on GitHub at `https://github.com/<username>.gpg`. This can be added at https://github.com/settings/keys
 1. If you haven't already, open PR to add your GPG key to the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file (see file for instructions)
-1. Open a release PR to
-   - Build with latest golang: replace go version of [binary](https://github.com/oras-project/oras/blob/main/.github/workflows/release-github.yml#L32) and [image](https://github.com/oras-project/oras/blob/main/Dockerfile#L14) to latest stable one
-   - Update oras version: replace [current stable version](https://github.com/oras-project/oras/blob/main/internal/version/version.go#L20) with upcoming release version
-1. After the release PR got merged, [create an issue](https://github.com/oras-project/oras/issues/new) to call for vote on cutting off a release branch named `release-<major>.<minor>` based on the version update commit.
-1. Make fresh clone of the repo after all above steps are completed. Create a new tag for the version prefixed with "v" and push the tag directly to the repo.
+1. Open a PR to update Github Actions with latest version of golang: replace go version of [binary](https://github.com/oras-project/oras/blob/main/.github/workflows/release-github.yml#L32) and [image](https://github.com/oras-project/oras/blob/main/Dockerfile#L14) to latest stable one
+
+### Cut release branch
+1. Open a release PR to update oras version: replace [current stable version](https://github.com/oras-project/oras/blob/main/internal/version/version.go#L20) with upcoming release version
+1. Send a message to slack channel to call for vote on cutting off a release branch named `release-<major>.<minor>` based on the version update commit. If the vote passes, merge the PR.
+ - The target commit should be the SHA digest of the last commit in the release PR
+ - Make sure that the PR is merged with `Create a merge commit` option
+
+### Release
+1. Make fresh clone of the repo after all above steps are completed. Create a new tag for the version prefixed with "v" and push the tag directly to the repo. The tag should be created on the target commit, **NOT** the merge commit.
     ```sh
     version=1.0.0
     git tag v${version}
