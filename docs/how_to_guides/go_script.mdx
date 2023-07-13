@@ -31,3 +31,15 @@ func main() {
 	os.Exit(0)
 }
 ```
+
+To run this example:
+```
+mkdir example
+cd example
+go mod init example
+go mod edit --require oras.land/oras@v1.1.0-rc.1
+# copy the example code into the directory...
+cat >main.go
+go mod tidy
+go run main.go
+```
