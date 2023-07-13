@@ -10,7 +10,7 @@ export default function Header() {
                 <h1>ORAS</h1>
                 <h3>Distribute Artifacts Across OCI Registries With Ease</h3>
                 <div className={styles.header_content_input}>
-                    <Link to="/docs/cli/installation" className='button button--secondary button--lg'>Get Started</Link>
+                    <Link to="/docs/installation" className='button button--secondary button--lg'>Get Started</Link>
                 </div>
             </div>
             <div className={styles.header_image}>
