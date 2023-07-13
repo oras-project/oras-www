@@ -88,14 +88,14 @@ This section needs a lot of love and automation 🙂
 1. If you haven't already, open PR to add your GPG key to the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file (see file for instructions)
 1. Open a PR to update Github Actions with latest version of golang: replace go version of [binary](https://github.com/oras-project/oras/blob/main/.github/workflows/release-github.yml#L32) and [image](https://github.com/oras-project/oras/blob/main/Dockerfile#L14) to latest stable one
 
-### Raiaw release pull request
+### Raise a release pull request
 1. Open a release PR to update oras version: replace [current stable version](https://github.com/oras-project/oras/blob/main/internal/version/version.go#L20) with upcoming release version
 1. Send a message to slack channel to call for vote on releasing. If the vote passes, merge the PR.
  - The target commit should be the SHA digest of the last commit in the release PR
  - Make sure that the PR is merged with `Create a merge commit` option
  - (optional)  cut off a release branch named `release-<major>.<minor>` if there is not one already
 ### Release
-1. Make fresh clone of the repo after all above steps are completed. Create a new tag for the version prefixed with "v" and push the tag directly to the repo. The tag should be created on the target commit, **NOT** the merge commit.
+1. Make fresh clone of the repo after all above steps are completed. Create a new tag for the version prefixed with "v" and push the tag directly to the repo. The tag should be created on the last commit of release PR, **NOT** the merge commit.
     ```sh
     version=1.0.0
     git tag v${version}
