@@ -28,7 +28,7 @@ export default function ORASCLI() {
         <div className={[styles.orascli, styles.section_padding].join(' ')}>
             <div className={styles.orascli_content}>
                 <h1>Install ORAS CLI in seconds</h1>
-                <p>You can install ORAS CLI on different systems or set up in GitHub Actions in just a few seconds. See more <a href="/docs/cli/installation">installation methods</a>.</p>
+                <p>You can install ORAS CLI on different systems or set up in GitHub Actions in just a few seconds. See more <a href="/docs/installation">installation methods</a>.</p>
             </div>
             <div className={styles.orascli_cli}>
                 <TerminalWindow>
