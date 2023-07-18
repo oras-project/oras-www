@@ -3,6 +3,7 @@ import Layout from '@theme/Layout';
 import data from '@site/static/adopters/data.js';
 import ProjectCard from '../../components/adopters/project_card';
 import RegistryCard from '../../components/adopters/registry_card';
+import Link from '@docusaurus/Link';
 import styles from './styles.module.css';
 
 export default function Adopters() {
@@ -67,7 +68,7 @@ export default function Adopters() {
                         <h4>Would like your registries and/or projects listed here? Please submit an issue. We're happy to promote all usage, as well as provide feedback.</h4>
                     </div>
                     <div className={styles.adopters_submit_issue}>
-                        <a class="button button--secondary button--lg" target='_blank' href="https://github.com/oras-project/oras-www/issues/new?assignees=&labels=adopter&template=submit_adopter.yml&title=%5BAdd+adopter%5D%3A">Submit an issue</a>
+                        <Link class="button button--secondary button--lg" target='_blank' href="https://github.com/oras-project/oras-www/issues/new?assignees=&labels=adopter&template=submit_adopter.yml&title=%5BAdd+adopter%5D%3A">Submit an issue</Link>
                     </div>
                 </div>
             </main>
