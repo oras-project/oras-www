@@ -49,6 +49,12 @@ Log in with username and password in an interactive terminal and no TLS check:
 oras login --insecure localhost:5000
 ```
 
+Log in to a registry with custom DNS resolution
+
+```bash
+oras login prod.registry.io --resolve prod.registry.io:5000:127.0.0.1 --plain-http
+```
+
 ## Options
 
 ```
