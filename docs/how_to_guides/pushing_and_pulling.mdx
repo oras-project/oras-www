@@ -140,8 +140,8 @@ oras pull localhost:5000/hello-artifact:v2
 
 ## Using cache when pulling artifacts
 
-In order to save unnecessary network bandwidth and disk I/O, oras provides a solution to pull the artifacts into a local content-address storage (CAS) if the content does not exist, and then copy the artifact to the desired storage.
-
+Oras pulls the artifact into a content-addressable storage (CAS) cache if the content is not available locally to save bandwidth and disk I/O.
+Once the content is availabe in the cache, oras copies the artifact to the desired location. 
 The cache directory is specified by using the environment variable `ORAS_CACHE`. If not specified, cache is not used.
 
 ```
