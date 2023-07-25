@@ -11,7 +11,7 @@ sidebar_position: 30
 - Git
 - Make
 
-## Clone the repository
+## Clone the Repository
 
 Once you have the basic tools installed, fork the repository on GitHub and clone it locally:
 ```bash
@@ -20,7 +20,7 @@ git clone git@github.com:${MY_GITHUB_NAME}/oras.git
 cd oras
 ```
 
-## Building binary
+## Building the Binary
 
 To compile and run the tests, just run the `make` command.
 Use `make build` to build all platform binaries to the `bin/` directory.
@@ -66,17 +66,17 @@ Windows:
 make build-windows
 ```
 
-## Cleaning workspace
+## Cleaning Your Workspace
 
 To remove all files not manged by git, run `make clean` (be careful!)
 
-## Managing dependencies
+## Managing Dependencies
 
 [Using Go Modules](https://blog.golang.org/using-go-modules) to manage dependencies.
 
 To update or add new dependencies, run `go get <package name>`.
 
-## Release checklist
+## Release Checklist
 
 :::info
 
@@ -84,25 +84,25 @@ This section needs a lot of love and automation 🙂
 
 :::
 
-1. Make sure your GPG is available on GitHub at `https://github.com/<username>.gpg`. This can be added at https://github.com/settings/keys
-1. If you haven't already, open PR to add your GPG key to the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file (see file for instructions)
+1. Make sure your GPG is available on GitHub at `https://github.com/<username>.gpg`. This can be added at https://github.com/settings/keys.
+1. If you haven't already, open PR to add your GPG key to the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file (see file for instructions).
 1. Open a release PR to
-   - Build with latest golang: replace go version of [binary](https://github.com/oras-project/oras/blob/main/.github/workflows/release-github.yml#L32) and [image](https://github.com/oras-project/oras/blob/main/Dockerfile#L14) to latest stable one
-   - Update oras version: replace [current stable version](https://github.com/oras-project/oras/blob/main/internal/version/version.go#L20) with upcoming release version
-1. After the release PR got merged, [create an issue](https://github.com/oras-project/oras/issues/new) to call for vote on cutting off a release branch named `release-<major>.<minor>` based on the version update commit.
-1. Make fresh clone of the repo after all above steps are completed. Create a new tag for the version prefixed with "v" and push the tag directly to the repo.
+   - Build with the latest golang: replace go version of the [binary](https://github.com/oras-project/oras/blob/main/.github/workflows/release-github.yml#L32) and [image](https://github.com/oras-project/oras/blob/main/Dockerfile#L14) to match the latest stable version.
+   - Update oras version: replace the [current stable version](https://github.com/oras-project/oras/blob/main/internal/version/version.go#L20) with the upcoming release version.
+1. After the release PR gets merged, [create an issue](https://github.com/oras-project/oras/issues/new) to call for a vote cutting off a release branch named `release-<major>.<minor>` based on the version update commit.
+1. Make a fresh clone of the repo after all above steps are completed. Create a new tag for the version prefixed with "v" and push the tag directly to the repo.
     ```sh
     version=1.0.0
     git tag v${version}
     git push origin v${version}
     ```
-1. Wait for GitHub Actions to complete successfully for both the `release-ghcr` and `release-github` pipelines
+1. Wait for GitHub Actions to complete successfully for both the `release-ghcr` and `release-github` pipelines.
 1. Download all of the artifacts uploaded to the new GitHub release locally (`*checksums.txt`, `*darwin_amd64.tar.gz`, `*linux_armv7.tar.gz`, `*linux_arm64.tar.gz`, `*linux_amd64.tar.gz`, `*windows_amd64.zip`).
 1. Verify the checksum of the file, downloaded platform should pass the check:
     ```sh
     shasum -c oras_${version}_checksums.txt
     ```
-1. Run version command and make sure that version number and git commit digest is what you expect it to be (same as the commit used to create the tag). Example:
+1. Run `oras version` command and make sure that version number and git commit digest is the expected value (same as the commit used to create the tag). Example:
     ```sh
     mkdir -p oras-bin/
     tar -zxf oras_${version}_linux_amd64.tar.gz -C oras-bin
@@ -115,13 +115,13 @@ This section needs a lot of love and automation 🙂
         gpg --armor --detach-sign $file
     done
     ```
-1. Validate the signatures. Not that the `KEYS` file should be imported with `gpg --import KEYS`. Run some form of the following (adapted from Linux project):
+1. Validate the signatures. Note that the `KEYS` file should be imported with `gpg --import KEYS`. Run some form of the following (adapted from Linux project):
     ```sh
     for file in `ls *.asc`; do
         gpg --verify $file
     done
     ```
-1. Click "Edit release" button on the release, and add the `.asc` files created in the previous step. Edit the release description for change logs and also add a note indicating your GPG key used to sign the artifacts. Example (replace with your fingerprint etc.):
+1. Click the "Edit release" button on the release, and add the `.asc` files created in the previous step. Edit the release description for change logs and also add a note indicating your GPG key used to sign the artifacts. Example (replace with your fingerprint etc.):
     ```
     ## Notes
 
@@ -129,7 +129,7 @@ This section needs a lot of love and automation 🙂
     ```
 1. Click "Publish Release" button to save. Double-check that the release contains a corresponding `.asc` file for each release artifact.
 1. Consume beverage of choice.. you're done! Thanks for moving the project forward.
-1. Oh yea, tell people about it in `#oras`
+1. Oh yea, tell people about it in the `#oras` slack channel.
     
 ### Some Comments
 
@@ -142,11 +142,11 @@ There is a large number of steps here, mostly manual. Here are some comments and
 
 From a documentation perspective, I would break this down into sections:
 
-1. Prepare the release
-2. Cut the release
-3. Verify the release (hopefully automated)
-4. Sign the release
-5. Make available elsewhere (hopefully automated)
+1. Prepare the release.
+2. Cut the release.
+3. Verify the release (hopefully automated).
+4. Sign the release.
+5. Make available elsewhere (hopefully automated).
 
 Once ready, this should be a doc in the project itself.
 
