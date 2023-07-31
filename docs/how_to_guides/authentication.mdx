@@ -21,7 +21,7 @@ While ORAS leverages the local docker client config store, ORAS does NOT have a 
 
 :::
 
-You can either make use of [`oras login`](../commands/oras_login) or provide explicit credentials via options, for example,
+You can either make use of [`oras login`](../commands/oras_login.mdx) or provide explicit credentials via options, for example,
 
 ```
 oras pull -u username -p password myregistry.io/myimage:latest
@@ -58,7 +58,7 @@ Configure the credential store in the `~/.docker/config.json` file. Your file sh
 
 **Step 2**
 
-Before running the [`oras login`](../commands/oras_login) command, make sure you have logged out once so that the next time you enter your credentials, they get stored in the credential store.
+Before running the [`oras login`](../commands/oras_login.mdx) command, make sure you have logged out once so that the next time you enter your credentials, they get stored in the credential store.
 
 ```
 $ oras login localhost:5000
