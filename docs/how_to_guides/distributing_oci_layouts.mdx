@@ -5,9 +5,17 @@ sidebar_position: 6
 
 # Distributing OCI Layouts
 
-### Phase 1: Creating an OCI Image 
+The directory structure for OCI content-addressable blobs and location-addressable references (refs) is called the [OCI Image Layout](https://github.com/opencontainers/image-spec/blob/main/image-layout.md). An OCI Image needs to include:
 
-#### Step 1.1: Writing in the Dockerfile
+- `blobs` directory: Each hash algorithm's directory and its children, which make up the object names in the blobs subdirectories, will hold the real content.
+
+- `oci-layout` file: This JSON object indicates the base of an Open Container Image Layout and provides information about the current image-layout version.
+
+- `index.json` file: The image index is a multi-descriptor entry point.
+
+## Creating an OCI Image 
+
+### Step 1: Writing in the Dockerfile
 
 Put the following commands in the `Dockerfile` in order to run an image of Alpine Linux.
 
@@ -18,7 +26,7 @@ CMD echo 'hello world!'
 
 Our image is based on alpine and runs the command `echo hello world!`.
 
-#### Step 1.2: Building the image using docker
+### Step 2: Building the image using docker
 
 ```
 docker buildx create —use
@@ -55,7 +63,7 @@ hello-world:v1 is the name and tag associated with the image built.
 | file or -f   | Name of the Dockerfile (default: PATH/Dockerfile)    |
 | output or -o | Output destination (format: type=local,dest=path)    |
 
-#### Step 1.3: View the OCI Image
+### Step 3: View the OCI Image
 
 If you would like to view the image, you will need to extract the `.tar` file first.
 
@@ -64,7 +72,7 @@ mkdir hello-world
 tar -xf ./hello-world.tar -C hello-world
 ```
 
-### Phase 2: Push the OCI Image to a Repository
+## Push the OCI Image to a Repository
 
 You may use [`oras copy`](../commands/oras_copy.mdx) to push the OCI Image from your local disk to a repository.
 
@@ -81,7 +89,7 @@ Copied [oci-layout] ./hello-world.tar:v1 => [registry] localhost:5000/hello-arti
 Digest: sha256:3fd491e6dc3ce66cae989d23b3f3d5752314cd1793d0c580d3fd8bb280d07809
 ```
 
-### Phase 3: Pull the OCI Image from a Repository
+## Pull the OCI Image from a Repository
 
 You can pull the OCI image using the [`oras pull`](../commands/oras_pull.mdx) command.
 
