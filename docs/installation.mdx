@@ -139,22 +139,7 @@ gpg: Total number processed: 1
 gpg: unchanged: 1
 ```
 
-2. Next, we need to sign and save the binary:
-
-```
-$ gpg --armor --detach-sign $file
-```
-
-The signed file gets saved with a `.asc` extenstion.
-
-3. In order to verify the binaries against a trusted source, we run the following command to declare the trust,
-
-```
-gpg --edit-key qweeah trust
-```
-Here, we are required to choose "4 = I trust fully"
-
-4. Verify our binaries using the command,
+2. Verify our binaries using the command,
 
 ```
 $ gpg --verify oras_1.0.0_linux_amd64.tar.gz.asc oras_1.0.0_linux_amd64.tar.gz
