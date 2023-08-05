@@ -52,7 +52,10 @@ of the OCI artifact or blobs, such as the creation time, or data of the artifact
 ### Determining the artifact type
 
 For OCI artifacts the **type** of the artifact may be determined from the `artifactType` property
-in the image manifest or index.This property was introduced in v1.1 of the [image specification][image-properties].
+in the image manifest or index. This property was introduced in v1.1 of the [image specification][image-properties].
+
+In cases when the `artifactType` property is not defined, the `config.mediaType` property may be used to determine
+the type of the artifact as shown in the diagram below.
 
 ```mermaid
 flowchart TD
@@ -166,9 +169,9 @@ allowing the bundling of various OCI artifacts. An example use case if is when y
 multiple SBOMs of different architectures under one unified artifact.
 
 The Image Index is a higher-level construct in the OCI Image Specification that can point to
-multiple Image Manifests, each suitable for a different platform or architecture. It helps to
-group related artifacts together, providing a single entry-point for accessing any specific
-artifact depending on the required architecture.
+multiple Image Manifests, each suitable for a different platform or architecture or filtered by annotation.
+It helps to group related artifacts together, providing a single entry-point for accessing any specific
+artifact depending on the required condition.
 
 Below is an example of an OCI Image Index for an artifact that represents multiple SBOMs
 of different architectures:
@@ -204,20 +207,18 @@ of different architectures:
 
 ## Best Practices and Limitations
 
-While working with OCI artifacts, keep in mind that not all registries have implemented
-image-spec v1.1. For backward compatibility, OCI artifacts can use the `config.mediaType`
-to represent the artifact type, aligning with the IANA mediaType of the artifact.
+While working with OCI artifacts, keep in mind that not all client tools or registries
+have implemented support for the v1.1 version of the OCI image or distribution specifications.
 
-In cases where the creation of an artifact doesn't involve a config blob, make sure to use
-the `artifactType` field in the manifest. If a config blob is indispensable, comply with
-the image specification and employ an empty one. As a rule of thumb, keep the manifest
-size manageable by avoiding excessive annotations and leveraging blobs for larger data chunks.
+- For maximum portability, use the `config.mediaType` property to declare the type of the artifact when clients or registries don't support the `artifactType` property.
+- When clients or registries do support the `artifactType`property, the `config.mediaType` can be set to _application/vnd.oci.empty.v1+json_ if the artifact doesn't have a config blob as per the [empty descriptor guidance][empty-descriptor].
+- As a rule of thumb, keep the manifest size manageable by avoiding excessive annotations and leveraging blobs for larger data chunks.
 
 ## The Road Ahead
 
 The evolution of OCI artifacts is a journey in progress. While the current specification
 does not permit an empty config blob, it's plausible that future updates might
-make layers and blobs optional—bringing more flexibility to the table.
+make config and blobs optional eliminating the need for the empty blob.
 
 By understanding OCI artifacts and their role in representing
 container images, developers and DevOps teams can ensure the smooth deployment
