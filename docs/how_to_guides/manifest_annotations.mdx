@@ -82,6 +82,12 @@ In order to add annotations using the `annotations.json`, you may run the follow
 oras push --annotation-file annotations.json localhost:5000/club:party cake.txt juice.txt
 ```
 
+This creates a manifest file. Running the following command to output the manifest:
+
+```
+oras manifest fetch localhost:5000/club:party --pretty
+```
+
 Expected Output:
 
 ```json
