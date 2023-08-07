@@ -1,28 +1,7 @@
 # Security Policy
 
-Thank you for taking the time to report a security vulnerability. We would like to investigate every report thoroughly.
+We are so thankful for developers and users for reporting any security vulnerabilities or concerns that they have!
 
-## Reporting a Vulnerability
+Please note that this report will remain with only the maintainers of the project and anyone else who is required to evaluate/fix the issue. In case you have any other kind of issue to report, kindly open an issue in the appropriate repository for the same. 
 
-To make a report, please send an email to the `mail ID` with the vulnerability details. In case you would like to submit any other kind of issue, please open one in the appropriate repository.
-
-## When Should You Submit a Report
-
-Please send us a report whenever you:
-
-* Think any of the ORAS projects has a potential security vulnerability.
-* Are uncertain if the vulnerability exists or how it might impact our projects.
-
-## Evaluation
-
-The ORAS maintainers will acknowledge and analyze your report within `number` working days.
-
-Any vulnerability information you share with us, stays with the maintainers. We will only disclose the information that is required to resolve the problem.
-
-We will update you on the status of the report throughout.
-
-## Fixing the issue
-
-Once a security vulnerability has been identified, the maintainers (contributors, if required) will work on finding a solution. The development and testing for the fix will happen in a private GitHub repository in order to prevent premature disclosure of the vulnerability.
-
-After the fix has been tested and deemed fit to be made public, the changes will be merged from the private GitHub repository to the appropriate public branches. All the necessary binaries will be built and published.
+To make the report, you may follow the steps we have mentioned in ORAS's [security policy](https://oras.land/docs/community/reporting_security_concerns.mdx). 
