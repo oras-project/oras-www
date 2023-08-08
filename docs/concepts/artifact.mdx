@@ -64,9 +64,8 @@ flowchart TD
     B -->|No| E[type=manifest.config.mediaType]
 ```
 
-For aritifact authors, the the choice of whether to set the `artifactType` or 
-`config.mediaType` depends on the contents and shape of the artifact and is discussed in the 
-following sections.
+For aritifact authors, the the choice of whether to set the `artifactType` or
+`config.mediaType` depends on the contents and shape of the artifact and is discussed in the following sections.
 
 ## Dissecting the Manifest
 
@@ -168,7 +167,7 @@ as per the  [empty descriptors guidance][empty-descriptor].
 
 ### Deciding on artifactType or config.mediaType
 
-Considering the above types of artifacts, the decision tree below should help 
+Considering the above types of artifacts, the decision tree below should help
 determine what fields to set when creating an artifact.
 
 ```mermaid
@@ -193,54 +192,25 @@ graph TD
 ### Harnessing Image Indexes
 
 One of the key advantages of OCI artifacts is their ability to utilize [Image Indexes][image-index],
-allowing the bundling of various OCI artifacts. An example use case if is when you want to represent
-multiple SBOMs of different architectures under one unified artifact.
+allowing the bundling of various OCI artifacts.
 
 The Image Index is a higher-level construct in the OCI Image Specification that can point to
 multiple Image Manifests, each suitable for a different platform or architecture or filtered by annotation.
 It helps to group related artifacts together, providing a single entry-point for accessing any specific
 artifact depending on the required condition.
 
-Below is an example of an OCI Image Index for an artifact that represents multiple SBOMs
-of different architectures:
-
-```json 
-{
-  "schemaVersion": 2,
-  "artifactType": "application/vnd.example.sbom.v1",
-  "manifests": [
-    {
-      "mediaType": "application/vnd.oci.image.manifest.v1+json",
-      "artifactType": "application/vnd.example.sbom.v1",
-      "size": 7143,
-      "digest": "sha256:1111...",
-      "platform": {
-        "architecture": "amd64",
-        "os": "linux"
-      },
-    },
-    {
-      "mediaType": "application/vnd.oci.image.manifest.v1+json",
-      "artifactType": "application/vnd.example.sbom.v1",
-      "size": 7682,
-      "digest": "sha256:2222...",
-      "platform": {
-        "architecture": "arm64",
-        "os": "linux"
-      },
-    }
-  ]
-}
-```
-
 ## Best Practices and Limitations
 
 While working with OCI artifacts, keep in mind that not all client tools or registries
 have implemented support for the v1.1 version of the OCI image or distribution specifications.
 
-- For maximum portability, use the `config.mediaType` property to declare the type of the artifact when clients or registries don't support the `artifactType` property.
-- When clients or registries do support the `artifactType`property, the `config.mediaType` can be set to _application/vnd.oci.empty.v1+json_ if the artifact doesn't have a config blob as per the [empty descriptor guidance][empty-descriptor].
-- As a rule of thumb, keep the manifest size manageable by avoiding excessive annotations and leveraging blobs for larger data chunks.
+- For maximum portability, use the `config.mediaType` property to declare the type of the
+artifact when clients or registries don't support the `artifactType` property.
+- When clients or registries do support the `artifactType`property, the `config.mediaType`
+can be set to _application/vnd.oci.empty.v1+json_ if the artifact doesn't have a config
+blob as per the [empty descriptor guidance][empty-descriptor].
+- As a rule of thumb, keep the manifest size manageable by avoiding excessive annotations
+and leveraging blobs for larger data chunks.
 
 ## The Road Ahead
 
