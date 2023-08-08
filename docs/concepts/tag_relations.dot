@@ -18,7 +18,7 @@ digraph git_basics {
 	]
 
     tag [
-		label=<<b>tag</b>>
+		label=<<b>Tag</b>>
 		shape=box
 		color=lightcyan4
 		fillcolor=lightcyan1

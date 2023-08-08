@@ -7,7 +7,7 @@ sidebar_position: 1
 
 The Open Container Initiative (OCI) organization has played
 a crucial role in defining the industry-standard specifications for container
-formats and runtime and artifacts.
+formats, runtime, and artifacts.
 OCI artifacts encompass an extensive variety of content types, from signatures,
 Software Bill of Materials (SBOMs), Helm charts, container images, to Open Policy Agent (OPA)
 bundles and more, thereby lending incredible flexibility to how containerized
@@ -69,7 +69,7 @@ For aritifact authors, the the choice of whether to set the `artifactType` or
 
 ## Dissecting the Manifest
 
-The structure of the artifact depends on the prupose of the artifact and content.
+The structure of the artifact depends on the purpose of the artifact and content.
 The manifest is a JSON document that contains the metadata for the artifact.
 Artifacts may have files that are stored as blobs or metadata that is stored in the manifest
 as annotations. The manifest may also contain references to other artifacts.
@@ -119,6 +119,7 @@ artifact type below for the helm chart is `application/vnd.cncf.helm.config.v1+j
 ```json
 {
   "schemaVersion": 2,
+  "mediaType": "application/vnd.oci.image.manifest.v1+json",
   "config": {
     "mediaType": "application/vnd.cncf.helm.config.v1+json",
     "digest": "sha256:34bf03806938a59ee7dc3e2c33e314d0eaef573313ff9dcc677113502d568523",
@@ -149,13 +150,15 @@ as per the  [empty descriptors guidance][empty-descriptor].
   "config": {
     "mediaType": "application/vnd.oci.empty.v1+json",
     "digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
-    "size": 2
+    "size": 2.
+    "data": "e30="
   },
   "layers": [
     {
       "mediaType": "application/vnd.oci.empty.v1+json",
       "digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
-      "size": 2
+      "size": 2,
+      "data": "e30="
     }
   ],
   "annotations": {
@@ -172,21 +175,21 @@ determine what fields to set when creating an artifact.
 
 ```mermaid
 graph TD
-    A{Artifact has at least<br>one file or blob?}
-    B{Artifact has additional<br>JSON metadata?}
-    C{Artifact requires <br>different artifactType<br>from config.mediaType?}
-    D[Specify artifactType,<br>set config and layers<br>to empty descriptors.]
-    E[Specify artifactType, include<br>artifact in layers, set<br>config to empty descriptor.]
-    F[Specify config with metadata,<br>include artifact in layers,<br>do not set artifactType.]
-    G[Specify artifactType to common<br>value, specify config with<br>metadata, include artifact in layers.]
+    HasBlob{Artifact has at least<br>one file or blob?}
+    HasConfigData{Artifact has additional<br> metadata config blob?}
+    HasConfigEqArtifactType{Artifact has an artifactType<br>equalt to the <br>the config blob mediaType?}
+    
+    Artifact_NoBlobs[Specify artifactType,<br>set config and layers<br>to empty descriptors.]
+    Artifact_NoConfig[Specify artifactType, include<br>artifact in layers, set<br>config to empty descriptor.]
+    Artifact_WithConfigBlob[Specify artifactType to value,<br> specify config blob and mediaType,<br> include artifact in layers.]
+    Artifact_NoArtifactType[Specify config blob and it's mediaType<br>to indicate artifactType,<br>include artifact in layers,<br>do not set artifactType.]
 
-    A -- No --> D
-    A -- Yes --> B
-    B -- No --> E
-    B -- Yes --> C
-    C -- No --> F
-    C -- Yes --> G
-
+    HasBlob -- No --> Artifact_NoBlobs
+    HasBlob -- Yes --> HasConfigData
+    HasConfigData -- No --> Artifact_NoConfig
+    HasConfigData -- Yes --> HasConfigEqArtifactType
+    HasConfigEqArtifactType -- Yes --> Artifact_NoArtifactType
+    HasConfigEqArtifactType -- No --> Artifact_WithConfigBlob
 ```
 
 ### Harnessing Image Indexes
@@ -206,7 +209,7 @@ have implemented support for the v1.1 version of the OCI image or distribution s
 
 - For maximum portability, use the `config.mediaType` property to declare the type of the
 artifact when clients or registries don't support the `artifactType` property.
-- When clients or registries do support the `artifactType`property, the `config.mediaType`
+- When clients or registries do support the `artifactType` property, the `config.mediaType`
 can be set to _application/vnd.oci.empty.v1+json_ if the artifact doesn't have a config
 blob as per the [empty descriptor guidance][empty-descriptor].
 - As a rule of thumb, keep the manifest size manageable by avoiding excessive annotations
@@ -231,9 +234,9 @@ https://github.com/opencontainers/image-spec) and explore the detailed
 specifications.
 
 [cas]: https://en.wikipedia.org/wiki/Content-addressable_storage
-[oci-layout]: https://github.com/opencontainers/image-spec/blob/main/image-layout.md
-[descriptor]: https://github.com/opencontainers/image-spec/blob/main/descriptor.md
-[image-manifest]: https://github.com/opencontainers/image-spec/blob/main/manifest.md#image-manifest
-[image-properties]: https://github.com/opencontainers/image-spec/blob/main/manifest.md#image-manifest-property-descriptions
-[empty-descriptor]: https://github.com/opencontainers/image-spec/blob/main/manifest.md#guidance-for-an-empty-descriptor
-[image-index]: https://github.com/opencontainers/image-spec/blob/main/image-index.md#image-index-property-descriptions
+[oci-layout]: https://github.com/opencontainers/image-spec/blob/v1.1.0-rc/image-layout.md
+[descriptor]: https://github.com/opencontainers/image-spec/blob/v1.1.0-rc4/descriptor.md
+[image-manifest]: https://github.com/opencontainers/image-spec/blob/v1.1.0-rc4/manifest.md#image-manifest
+[image-properties]: https://github.com/opencontainers/image-spec/blob/v1.1.0-rc4/manifest.md#image-manifest-property-descriptions
+[empty-descriptor]: https://github.com/opencontainers/image-spec/blob/v1.1.0-rc4/manifest.md#guidance-for-an-empty-descriptor
+[image-index]: https://github.com/opencontainers/image-spec/blob/v1.1.0-rc4/image-index.md#image-index-property-descriptions
