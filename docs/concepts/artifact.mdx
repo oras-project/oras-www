@@ -201,13 +201,11 @@ artifact depending on the required condition.
 
 ## Best Practices and Limitations
 
-While working with OCI artifacts, keep in mind that not all client tools or registries
-have implemented support for the v1.1 version of the OCI image or distribution specifications.
+While working with OCI artifacts, keep in mind that client tools and registries
+are in the process of implementiong v1.1 version of the OCI image and distribution specifications.
 
-- For maximum portability, use the `config.mediaType` property to declare the type of the
-artifact when clients or registries don't support the `artifactType` property.
-- When clients or registries do support the `artifactType` property, the `config.mediaType`
-can be set to _application/vnd.oci.empty.v1+json_ if the artifact doesn't have a config
+- When clients or registries support the `artifactType` property, the `config.mediaType`
+can be set to _application/vnd.oci.empty.v1+json_ if the artifact doesn't have a config.
 blob as per the [empty descriptor guidance][empty-descriptor].
 - As a rule of thumb, keep the manifest size manageable by avoiding excessive annotations
 and leveraging blobs for larger data chunks.
