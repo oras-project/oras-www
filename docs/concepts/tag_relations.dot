@@ -34,7 +34,7 @@ digraph git_basics {
                     <tr> <td align="left">schema : <i>string</i><br align="left"/></td></tr>
                     <tr> <td align="left">artifactType : <i>string</i><br align="left"/></td></tr>
                     <tr> <td align="left">config : <i>descriptor</i><br align="left"/></td></tr>
-                    <tr> <td align="left">annotations : <i>map[string]</i><br align="left"/></td></tr>
+                    <tr> <td align="left">annotations : <i>map[string]string</i><br align="left"/></td></tr>
                     <tr> <td align="left">subject : <i>descriptor</i><br align="left"/></td></tr>
             </table>>
         ]
