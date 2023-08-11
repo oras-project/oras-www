@@ -5,7 +5,6 @@ sidebar_position: 20
 
 # Contributing Guide
 
-
 * [Contributing Guide](#contributing-guide)
   * [Ways to Contribute](#ways-to-contribute)
   * [Find an Issue](#find-an-issue)
@@ -39,9 +38,9 @@ We welcome many types of contributions including:
 * Answering questions on our Slack channel
 * Web design
 
-Not everything happens through a GitHub pull request.
-Please join our [meetings](#join-our-meetings) or [contact us](#contact-us) and let's discuss how we can work
-together.
+Not everything happens through a GitHub pull request. Please join our
+[meetings](#join-our-meetings) or [contact us](#contact-us) and let's discuss
+how we can work together.
 
 ### Join our Meetings
 
@@ -49,70 +48,90 @@ Absolutely everyone is welcome to come to any of our meetings. You never need an
 invitation to join us. In fact, we want you to join us, even if you don’t have
 anything you feel like you want to contribute. Just being there is enough!
 
-Join the bi-weekly ORAS community meeting at 4:00 PM PST on [Zoom](https://zoom.us/j/8079328631?pwd=UzN0NUlmbmcvTTN5L0o5VUQ2YndyQT09) with ID 807 932 8631.
-See the [meeting notes](https://hackmd.io/P-O6n222TcSMoJgHmTTduw?view) for agenda and past meeting notes.
+Join the bi-weekly ORAS community meeting at 4:00 PM PST on [Zoom][zoom] with ID
+807 932 8631. See the [meeting notes][meeting-notes] for agenda and past
+meeting notes.
 
-You don’t have to turn on your video.
-The first time you come, introducing yourself is more than enough.
-Over time, we hope that you feel comfortable voicing your opinions, giving
-feedback on others’ ideas, and even sharing your own ideas, and experiences.
+You don’t have to turn on your video. The first time you come, introducing
+yourself is more than enough. Over time, we hope that you feel comfortable
+voicing your opinions, giving feedback on others’ ideas, and even sharing your
+own ideas, and experiences.
 
 ### Contact Us
 
-Other than pull requests and GitHub issues, the best way to contact us is to join us at the [CNCF Slack](https://cloud-native.slack.com) under the [**#oras** channel](https://app.slack.com/client/T08PSQ7BQ/CJ1KHJM5Z). You can find the steps in the [community resources](./community_resources.mdx#joining-the-slack-channel).
+Other than pull requests and GitHub issues, the best way to contact us is to
+join us at the [CNCF Slack][cncf-slack] under the [**#oras** channel][slack].
+You can find the steps in the [community
+resources](./community_resources.mdx#joining-the-slack-channel).
 
 ## Find an Issue
 
-Each ORAS subproject has a label `good-first-issue` for issues that are appropriate for new contributors.
-Each ORAS subproject has a label `help-wanted` for issues suitable for someone who is ready to move onto after their first pull request.
-For example, for the ORAS CLI project:
-* [Good First Issues](https://github.com/oras-project/oras/labels/good%20first%20issue)
-* [Help Wanted](https://github.com/oras-project/oras/labels/help%20wanted)
+Each ORAS subproject has a label `good-first-issue` for issues that are
+appropriate for new contributors. Each ORAS subproject has a label `help-wanted`
+for issues suitable for someone who is ready to move onto after their first pull
+request. For example, for the ORAS CLI project:
+
+* [Good First Issues][good-first-issue]
+* [Help Wanted][help-wanted-label]
 
 Sometimes there won’t be any issues with these labels. That’s ok! There is
 likely still something for you to work on. If you want to contribute, but you
-don’t know where to start or can't find a suitable issue, you can ask in the ORAS Slack channel.
+don’t know where to start or can't find a suitable issue, you can ask in the
+ORAS Slack channel.
 
 Once you see an issue that you'd like to work on, please post a comment saying
 that you want to work on it. Something like "I want to work on this" is fine.
 
 ## Pull Request Lifecycle
 
-Please remember that most contributors and maintainers of the project have responsibilities outside this project and will review your pull request as time allows. In general:
-* If you have a pull request for a security vulnerability, please contact the maintainers directly before making your pull request public.
-* Feature enhancement pull requests will likely take a week or more to get reviewed.
-* Pull requests will be reviewed by at least two maintainers before being merged.
-* If you are submitting a pull request that is a work in progress, mark it as a draft.
-* If you have a pull request that is an urgent fix or effects the project widely, bring it up in the Slack channel.
-* More details on the [review process](https://github.com/oras-project/community/blob/main/REVIEWING.md).
+Please remember that most contributors and maintainers of the project have
+responsibilities outside this project and will review your pull request as time
+allows. In general:
+
+* If you have a pull request for a security vulnerability, please contact the
+  maintainers directly before making your pull request public.
+* Feature enhancement pull requests will likely take a week or more to get
+  reviewed.
+* Pull requests will be reviewed by at least two maintainers before being
+  merged.
+* If you are submitting a pull request that is a work in progress, mark it as a
+  draft.
+* If you have a pull request that is an urgent fix or effects the project
+  widely, bring it up in the Slack channel.
+* More details on the [review process][review-process].
 
 ## Development Environment Setup
 
-The ORAS project contains several subprojects which use different build, test and deployment methods.
-It is best to consult the project specific `README.md` for development environment setup instructions.
-The first step for contribution for any subproject would be to fork the repository on GitHub and then clone it locally.
-For example:
-```
+The ORAS project contains several subprojects which use different build, test
+and deployment methods. It is best to consult the project specific `README.md`
+for development environment setup instructions. The first step for contribution
+for any subproject would be to fork the repository on GitHub and then clone it
+locally. For example:
+
+```console
 MY_GITHUB_NAME="my-name"
 git clone git@github.com:${MY_GITHUB_NAME}/oras.git
 cd oras
 cat README.md
 ```
 
+### For documentation
+
+The recommendation is to follow [semantic line breaks][sembr].
+
 ## Sign Your Commits
 
-All contributors to the project retain copyright to their work. However, to ensure
-that they are only submitting work that they have rights to, we require
-everyone to acknowledge this by signing their work.
-Any copyright notices in this repo should specify the authors as
-"The ORAS Authors".
+All contributors to the project retain copyright to their work. However, to
+ensure that they are only submitting work that they have rights to, we require
+everyone to acknowledge this by signing their work. Any copyright notices in
+this repo should specify the authors as "The ORAS Authors".
 
 Licensing is important to open source projects. It provides some assurances that
 the software will continue to be available based under the terms that the
 author(s) desired. We require that contributors sign off on commits submitted to
-our project's repositories. The [Developer Certificate of Origin
-(DCO)](https://probot.github.io/apps/dco/) is a way to certify that you wrote and
-have the right to contribute the code you are submitting to the project.
+our project's repositories. The [Developer Certificate of Origin (DCO)][dco] is
+a way to certify that you wrote and have the right to contribute the code you
+are submitting to the project.
 
 You sign-off by adding the following to your commit messages. Your sign-off must
 match the git user and email associated with the commit.
@@ -126,14 +145,15 @@ Git has a `-s` command line option to do this automatically:
     git commit -s -m 'This is my commit message'
 
 If you forgot to do this and have not yet pushed your changes to the remote
-repository, you can amend your commit with the sign-off by running 
+repository, you can amend your commit with the sign-off by running
 
     git commit --amend -s 
 
 ## Pull Request Checklist
 
-When you submit your pull request, make sure the title follows the [conventional commits specification](https://www.conventionalcommits.org/).
-There is a formal [review process](https://github.com/oras-project/community/blob/main/REVIEWING.md) followed by contributors and maintainers.
+When you submit your pull request, make sure the title follows the [conventional
+commits specification][conventional-commits]. There is a formal [review
+process][review-process] followed by contributors and maintainers.
 
 When you submit your pull request, or you push new commits to it, our automated
 systems will run some checks on your new code. We require that your pull request
@@ -141,7 +161,20 @@ passes these checks, but we also have more criteria than just that before we can
 accept and merge it. We recommend that you check the following things locally
 before you submit your code:
 
-- [ ]  Does the affected code have corresponding tests, e.g. unit test, E2E test?
-- [ ]  Does this change require a documentation update?
-- [ ]  Does this introduce breaking changes that would require an announcement or bumping the major version?
-- [ ]  Do all new files have an appropriate license header?
+* [ ]  Does the affected code have corresponding tests, e.g. unit test, E2E
+  test?
+* [ ]  Does this change require a documentation update?
+* [ ]  Does this introduce breaking changes that would require an announcement
+  or bumping the major version?
+* [ ]  Do all new files have an appropriate license header?
+
+[zoom]: https://zoom.us/j/8079328631?pwd=UzN0NUlmbmcvTTN5L0o5VUQ2YndyQT09
+[cncf-slack]: https://cloud-native.slack.com
+[slack]: https://app.slack.com/client/T08PSQ7BQ/CJ1KHJM5Z
+[good-first-issue]: https://github.com/oras-project/oras/labels/good%20first%20issue
+[help-wanted-label]: https://github.com/oras-project/oras/labels/help%20wanted
+[sembr]: https://sembr.org/
+[conventional-commits]: https://www.conventionalcommits.org/
+[review-process]: https://github.com/oras-project/community/blob/main/REVIEWING.md
+[dco]: https://probot.github.io/apps/dco/
+[meeting-notes]: https://hackmd.io/P-O6n222TcSMoJgHmTTduw?view
