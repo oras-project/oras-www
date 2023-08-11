@@ -193,22 +193,23 @@ an empty layer is also created as per the  [empty descriptors guidance][empty-de
 
 ### Deciding on artifactType or config.mediaType
 
-Putting it all together with the types of artifacts listed above, the decision tree 
+Putting it all together with the types of artifacts listed above and
+[Artifact Guidance in the image specification][artifact-guidelines], the decision tree 
 below should help determine what fields to set when creating an artifact.
 
 ```mermaid
-graph TD
-    HasBlob{Artifact has at least<br>one file or blob?}
-    HasConfigData{Artifact has additional<br> metadata config blob?}
-    
-    Artifact_NoBlobs[Specify <b>artifactType</b>,<br>set config and layers<br>to empty descriptors.]
-    Artifact_NoConfig[Specify  <b>artifactType</b>, include<br>artifact in layers, set<br>config to empty descriptor.]
-    Artifact_WithConfig[Specify  <b>artifactType</b>,<br> specify config blob and mediaType,<br> include artifact in layers.]
+flowchart TD
+  HasBlob{Artifact has<br>at least one file?}
+  HasConfigData{Artifact has additional<br> metadata config blob?}
+  
+  Artifact_NoBlobs[Specify <b>artifactType</b>,<br>set config and layers<br>to empty descriptors.]
+  Artifact_NoConfig[Specify  <b>artifactType</b>,<br>set config to empty descriptor,<br>include file in layers, ]
+  Artifact_WithConfig[Specify  <b>artifactType</b>,<br> specify config blob and mediaType,<br> include files in layers.]
 
-    HasBlob -- No --> Artifact_NoBlobs
-    HasBlob -- Yes --> HasConfigData
-    HasConfigData -- Yes --> Artifact_WithConfig
-    HasConfigData -- No --> Artifact_NoConfig
+  HasBlob -- No --> Artifact_NoBlobs
+  HasBlob -- Yes --> HasConfigData
+  HasConfigData -- Yes --> Artifact_WithConfig
+  HasConfigData -- No --> Artifact_NoConfig
 ```
 
 ### Harnessing Image Indexes
@@ -258,3 +259,4 @@ specifications.
 [image-properties]: https://github.com/opencontainers/image-spec/blob/v1.1.0-rc4/manifest.md#image-manifest-property-descriptions
 [empty-descriptor]: https://github.com/opencontainers/image-spec/blob/v1.1.0-rc4/manifest.md#guidance-for-an-empty-descriptor
 [image-index]: https://github.com/opencontainers/image-spec/blob/v1.1.0-rc4/image-index.md#image-index-property-descriptions
+[artifact-guidelines]:  https://github.com/opencontainers/image-spec/blob/v1.1.0-rc4/manifest.md#guidelines-for-artifact-usage
