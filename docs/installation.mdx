@@ -127,14 +127,18 @@ Git tree state: clean
 
 ## To Validate the Checksum of ORAS CLI Binaries
 
+After finding your [target release](https://github.com/oras-project/oras/releases), 
+you may find the releaser's information under the `notes` section.
 
 The following commands can be used to verify the ORAS CLI binaries using GPG:
 
-1. First, we import a GPG Key which can be used for verification:
+1. First, we import the releaser's GPG Key which can be used for verification (here we have imported [Billy Zha](https://github.com/qweeah)'s key):
 
 ```
 $ curl -sSL https://github.com/qweeah.gpg | gpg --import -
 ```
+
+You can find the [GPG keys](https://github.com/oras-project/oras/blob/main/KEYS) which have been used for ORAS releases.
 
 2. You can run the following command to check if the key has been imported:
 
