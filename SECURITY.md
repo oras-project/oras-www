@@ -7,4 +7,4 @@ In case you have any other kind of issue to report,
 kindly open an issue in the appropriate repository for the same. 
 
 To make the report, 
-you may follow the steps we have mentioned in ORAS's [security policy](https://oras.land/docs/community/reporting_security_concerns.mdx). 
+you may follow the steps we have mentioned in ORAS's [security policy](https://oras.land/docs/community/reporting_security_concerns). 
