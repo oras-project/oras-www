@@ -1,0 +1,15 @@
+goofys3_8MiB	99	21	6
+goofys3_16MiB	190	36	10
+goofys3_32MiB	235	70	18
+goofys3_64MiB	317	144	26
+goofys3_128MiB	453	255	53
+goofys3_256MiB	54032	649	219
+goofys3_512MiB	220987	1530	673
+goofys3_1GiB	352444	2834	1358
+goofys3_2GiB	338009	10477	4856
+goofys3_16MiBx8	283	305	46
+goofys3_64MiBx8	70321	1333	518
+goofys3_64MiBx16	131588	3700	2226
+
+# NOTE: the averages hide the actual performace
+# Included for completeness
