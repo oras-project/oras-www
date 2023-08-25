@@ -1,6 +1,6 @@
 ---
 title: oras login
-sidebar_position: 7
+sidebar_position: 70
 ---
 
 # oras login
@@ -47,6 +47,12 @@ Log in with username and password in an interactive terminal and no TLS check:
 
 ```bash
 oras login --insecure localhost:5000
+```
+
+Log in to a registry with custom DNS resolution
+
+```bash
+oras login prod.registry.io --resolve prod.registry.io:5000:127.0.0.1 --plain-http
 ```
 
 ## Options

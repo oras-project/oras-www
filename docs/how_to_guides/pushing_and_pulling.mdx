@@ -7,9 +7,9 @@ All users can access container images stored in centralized repositories called 
 
 # Pushing
 
-## Pushing artifacts with single files
+## Pushing artifacts with single file
 
-Pushing single files involves referencing the unique artifact type and at least one file.
+Pushing a single file artifact involves referencing the unique artifact type and a file.
 Defining an Artifact uses the `config.mediaType` as the unique artifact type. If a config object is provided, the `mediaType` extension defines the config filetype. If a `null` config is passed, the config extension must be removed.
 
 See: [Defining a Unique Artifact Type](https://github.com/opencontainers/artifacts/blob/main/artifact-authors.md#defining-a-unique-artifact-type)
@@ -72,7 +72,7 @@ In this example, we'll push a collection of files.
 - A single file (`artifact.txt`) that represents overview content that might be displayed as a repository overview
 - A collection of files (`docs/*`) that represents detailed content. When specifying a directory, ORAS will automatically tar the contents.
 
-See [OCI Artifacts][artifacts] for more details.
+See [OCI Artifacts](https://github.com/opencontainers/image-spec/blob/main/manifest.md#guidelines-for-artifact-usage) for more details.
 
 - Create additional blobs
 
@@ -97,7 +97,13 @@ See [OCI Artifacts][artifacts] for more details.
     ./docs/:application/vnd.acme.rocket.docs.layer.v1+tar
   ```
 
-- The push would generate the following manifest:
+- The push will generate a manifest. Run the following command to output the manifest:
+
+  ```
+  oras manifest fetch localhost:5000/hello-artifact:v2 --pretty
+  ```
+
+  Results in:
 
   ```json
   {
@@ -140,8 +146,8 @@ oras pull localhost:5000/hello-artifact:v2
 
 ## Using cache when pulling artifacts
 
-In order to save unnecessary network bandwidth and disk I/O oras should provides a solution to pull the artifacts into a local content-address storage (CAS) if the content does not exist, and then copy the artifact to the desired storage.
-
+ORAS pulls the artifact into a content-addressable storage (CAS) cache if the content is not available locally to save bandwidth and disk I/O.
+Once the content is availabe in the cache, ORAS copies the artifact to the desired location. 
 The cache directory is specified by using the environment variable `ORAS_CACHE`. If not specified, cache is not used.
 
 ```

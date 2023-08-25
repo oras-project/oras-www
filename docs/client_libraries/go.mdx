@@ -1,10 +1,15 @@
+---
+title: Go
+sidebar_position: 1
+---
+
 # Go
 
 Source code: [github.com/oras-project/oras-go](https://github.com/oras-project/oras-go)
 
 ## Introduction
 
-The ORAS Go client library provides the ability to replicate artifacts between different [Targets](../#target).  
+The ORAS Go client library provides the ability to replicate artifacts between different [Targets](./overview.mdx#target).  
 Furthermore, the version `v2` is a registry client conforming [image-spec v1.1.0-rc.2](https://github.com/opencontainers/image-spec/releases/tag/v1.1.0-rc2) and [distribution-spec v1.1.0-rc1](https://github.com/opencontainers/distribution-spec/blob/v1.1.0-rc1/spec.md).
 
 Using the ORAS Go client library, you can develop your own registry client:
@@ -244,7 +249,7 @@ func main() {
 ```
 
 ### Pull an Image using the Docker credential store
-You can create a Docker credential store using [oras-credential-go](github.com/oras-project/oras-credentials-go). 
+You can create a Docker credential store using [oras-credential-go](https://github.com/oras-project/oras-credentials-go). 
 
 This enables you to use credentials that are saved by `docker login` in the client. 
 
