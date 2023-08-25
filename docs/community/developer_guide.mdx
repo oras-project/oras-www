@@ -85,18 +85,20 @@ This section needs a lot of love and automation 🙂
 :::
 ### Prerequisites
 1. Make sure your GPG is available on GitHub at `https://github.com/<username>.gpg`. This can be added at https://github.com/settings/keys
-1. If you haven't already, open PR to add your GPG key to the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file (see file for instructions)
-1. Open a PR to update Github Actions with latest version of golang: replace go version of [binary](https://github.com/oras-project/oras/blob/main/.github/workflows/release-github.yml#L32) and [image](https://github.com/oras-project/oras/blob/main/Dockerfile#L14) to latest stable one
-
+  -  If you haven't already, open PR to add your GPG key to the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file (see file for instructions)
+2. Open a PR to update Github Actions with latest version of golang: replace go version of [binary](https://github.com/oras-project/oras/blob/main/.github/workflows/release-github.yml#L32) and [image](https://github.com/oras-project/oras/blob/main/Dockerfile#L14) to latest stable one
+3. (patch-only) Cherry-pick the fix commits to the release branch
 ### Request to vote
 1. Open a release PR to update oras version: replace [current version](https://github.com/oras-project/oras/blob/main/internal/version/version.go#L20) with upcoming release version
- - The target branch is `main`
- - The title should be `bump: tag and release ORAS CLI v<major>.<minor>.<patch>[-<pre-release>]`
- - The description must reference the digest of version bump up commit for voting
-1. Send a message to slack channel to call for vote on releasing. If the vote passes, merge the PR.
- - The target commit should be the SHA digest of the last commit in the release PR
- - Make sure that the PR is merged with `Create a merge commit` option
- - (optional) cut off a release branch named `release-<major>.<minor>` if not present
+- The target branch is
+  - `main` if releasing a new version
+  - `release-<major>.<minor>` if releasing a patch
+- The title should be `bump: tag and release ORAS CLI v<major>.<minor>.<patch>[-<pre-release>]`
+- The description must reference the digest of version bump up commit for voting
+2. Send a message to slack channel to call for vote on releasing. If the vote passes, merge the PR.
+- The target commit should be the SHA digest of the last commit in the release PR
+- Make sure that the PR is merged with `Create a merge commit` option
+3. (optional) Cut off a release branch named `release-<major>.<minor>` **ONLY** when releasing a new minor version
 
 ### Release
 1. Make fresh clone of the repo after all above steps are completed. Create a new tag for the version prefixed with "v" and push the tag directly to the repo. The tag should be created on the voted commit, **NOT** the merge commit.
@@ -130,7 +132,7 @@ This section needs a lot of love and automation 🙂
         gpg --verify $file
     done
     ```
-1. Click "Edit release" button on the release, and add the `.asc` files created in the previous step. Edit the release description for change logs and also add a note indicating your GPG key used to sign the artifacts. Example (replace with your fingerprint etc.):
+1. Click "Edit release" button on the release, and add the `.asc` files created in the previous step. Edit the release description to include 1) vote result, 2) change logs and 3) a note indicating releaser's GPG key used to sign the artifacts. Example (replace with releaser's fingerprint etc.):
     ```
     ## Notes
 
