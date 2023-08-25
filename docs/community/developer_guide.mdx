@@ -98,16 +98,19 @@ This section needs a lot of love and automation 🙂
 - The description must reference the digest of version bump up commit for voting.
 2. Send a message to slack channel to call for vote on releasing. If the vote passes, merge the PR.
 - The target commit should be the SHA digest of the last commit in the release PR
-- Make sure that the PR is merged with `Create a merge commit` option.
+- Make sure that
+  - the PR is merged with `Create a merge commit` option.
+  - signoff info is added to the merge commit.
 4. (optional) Cut off a release branch named `release-<major>.<minor>` **ONLY** when releasing a new minor version.
 
 ### Release
 1. Make a fresh clone of the repo after all above steps are completed. Create a new tag for the version prefixed with "v" and push the tag directly to the repo. The tag should be created on the voted commit, **NOT** the merge commit.
 ```sh
     version=1.0.0
-    git tag v${version}
+    digest=b58e7b910ca556973d111e9bd734a71baef03db2 # replace with the digest of the voted commit
+    git tag v${version} $digest
     git push origin v${version}
-    ```
+```
 1. Wait for GitHub Actions to complete successfully for both the `release-ghcr` and `release-github` pipelines.
 1. Download all of the artifacts uploaded to the new GitHub release locally (`*checksums.txt`, `*darwin_amd64.tar.gz`, `*linux_armv7.tar.gz`, `*linux_arm64.tar.gz`, `*linux_amd64.tar.gz`, `*windows_amd64.zip`).
 1. Verify the checksum of the file, downloaded platform should pass the check:
@@ -133,7 +136,7 @@ This section needs a lot of love and automation 🙂
         gpg --verify $file
     done
     ```
-1. Click the "Edit release" button on the release, and add the `.asc` files created in the previous step. Edit the release description to include 1) vote result, 2) change logs and 3) a note indicating releaser's GPG key used to sign the artifacts. Example (replace with releaser's fingerprint etc.):
+1. Click the "Edit release" button on the release, and add the `.asc` files created in the previous step. Edit the release description to include change logs and a note indicating releaser's GPG key used to sign the artifacts. Example (replace with releaser's fingerprint etc.):
     ```
     ## Notes
 
