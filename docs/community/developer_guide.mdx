@@ -96,7 +96,7 @@ This section needs a lot of love and automation 🙂
   - `release-<major>.<minor>` if releasing a patch.
 - The title should be `bump: tag and release ORAS CLI v<major>.<minor>.<patch>[-<pre-release>]`.
 - The description must reference the digest of version bump up commit for voting.
-2. Send a message to slack channel to call for vote on releasing. If the vote passes, merge the PR.
+2. Send a message to the ORAS slack channel to call for a vote on the release PR. If the vote PR has a super-majority of approval from ORAS maintainers, then the PR could be merged into the target branch.
 - The target commit should be the SHA digest of the last commit in the release PR
 - Make sure that
   - the PR is merged with `Create a merge commit` option.
@@ -142,6 +142,7 @@ This section needs a lot of love and automation 🙂
 
     This release was signed with `BE6F A8DD A48D 4C23 0091 A0A9 276D 8A72 4CE1 C704` (@qweeah's GPG key) which can be found [here](https://github.com/qweeah.gpg).
     ```
+    The uploaded signatures and GPG key will be used for [binary validation](https://oras.land/docs/how_to_guides/verifying_binaries).
 1. Click "Publish Release" button to save. Double-check that the release contains a corresponding `.asc` file for each release artifact.
 1. Consume beverage of choice.. you're done! Thanks for moving the project forward.
 1. Oh yea, tell people about it in the `#oras` slack channel.
