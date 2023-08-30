@@ -9,8 +9,10 @@ To distribute OCI artifacts, we need to understand OCI registries.
 These registries store container images and other artifacts for easy access. 
 Distributing OCI artifacts means pushing them to these registries so others can pull them for use. 
 
-We will be using [zot registry](https://zotregistry.io/) as our example for a local registry 
-and [Docker Hub](https://hub.docker.com/) for remote. 
+We will be using [zot registry](https://zotregistry.io/) as our example.
+
+If you would like to distribute to remote registries, 
+you may refer to our [how-to guide](./how_to_guides/distributing_to_remote_registries.mdx).
 
 In order to follow the steps given, you would be required to install the ORAS CLI.
 You can follow the [installation guide](./installation.mdx) to do so. 
@@ -28,16 +30,6 @@ to find more ways to install the registry.
 ```
 docker run -d -p 5000:5000 --name oras-quickstart ghcr.io/project-zot/zot-linux-amd64:latest
 ```
-
-## Authentication
-
-Although it is not necessary to authenticate for all local registries (including zot registry),
-you will need to authenticate for remote registries.
-You can use [`oras login`](./commands/oras_login.mdx) for the same.
-
-**Note:** You will need to replace `localhost:5000` with the location of the remote registry.
-For example for Docker Hub, 
-you may replace `localhost:5000/hello-artifact:v1` with `docker.io/username/registry-name:tag`.
 
 ## Distribution of OCI artifacts
 

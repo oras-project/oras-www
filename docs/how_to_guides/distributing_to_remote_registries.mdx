@@ -1,0 +1,64 @@
+---
+title: Distributing to Remote Registries
+sidebar_position: 8
+---
+
+# Distributing OCI Artifacts to Remote Registries
+
+## Authentication
+
+Before pushing or pulling OCI Artifacts from a remote registry, 
+we need to authenticate ourselves.
+We can do so using the [`oras login`](../commands/oras_login.mdx) command.
+
+We will be using [Docker Hub](https://hub.docker.com/) as our example of a remote registry.
+
+## Distribution of OCI artifacts
+
+### Step 1: Create a sample file
+
+```
+echo "hello world" > artifact.txt
+```
+
+### Step 2: Push an artifact
+
+You may refer to [`oras push`](../commands/oras_blob_push.mdx) for more details on which flags to use.
+
+```bash
+oras push docker.io/username/repository-name:v1 artifact.txt
+```
+
+```
+Exists    a948904f2f0f artifact.txt
+Pushed [registry] docker.io/username/repository-name:v1
+Digest: sha256:528a33beb57f9e890c632178ef7c3ccbf89ee63fa06f050912f5b1acf56739ec
+```
+
+### Step 3: Pull the artifact
+
+Let's now use [`oras pull`](../commands/oras_pull.mdx) to pull the artifact we have pushed in the pervious step.
+
+```
+oras pull docker.io/username/repository-name:v1
+```
+
+```
+Downloading a948904f2f0f artifact.txt
+Downloaded  a948904f2f0f artifact.txt
+Pulled [registry] docker.io/username/repository-name:v1
+Digest: sha256:da9ed51a16f156b12c108f0fbc14f2e9e2f02b4f77434a1a44593d0da071c809
+```
+
+## View referrers 
+
+We can use [`oras discover`](../commands/oras_discover.mdx) to view referrers.
+
+```
+oras discover docker.io/username/repository-name:v1
+```
+
+```
+Discovered 0 artifact referencing v1
+Digest: sha256:da9ed51a16f156b12c108f0fbc14f2e9e2f02b4f77434a1a44593d0da071c809
+```
