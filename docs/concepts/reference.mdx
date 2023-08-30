@@ -25,28 +25,29 @@ Let's take a look at the components of an reference in these 2 scenarios.
 ### What a Reference Means in the Registry
 
 When you pull or push an artifact or image from a registry, you need to specify the reference.
-This reference is a combination of several parts:
+This reference is a combination of three parts:
 
 1. **Registry**: This is akin to the home or the server where your images or artifacts are stored.
-Think of it as the overarching domain. Examples include Docker Hub,
-Google Container Registry, or your own private registry.
-2. **Repository**: This is a namespace under the registry where a particular 
+Think of it as the overarching domain. Examples include Docker Hub (docker.io),
+GitHub Container Registry (ghcr.io), or your own private registry.
+2. **Repository**: This is a segment of the reference, after the registry where a particular 
 application or service's images are stored.
 The repository doesn't necessarily follow a hierarchy within the registry, meaning `a/b/c`
 and `a/b/c/d` are both valid and distinct repositories, with no implied hierarchy between them.
-3. **Tag or Digest**: This is the version of the image or artifact you want to pull or push.
+3. **Tag or Digest**: This is the last part indicating the version of the image or artifact 
+you want to pull or push.
 
 #### References by Tag
 
-- **Tag**: Tags are user-friendly references to specific image versions.
+- **Tag**: Tags are user-friendly references to specific image or artifact versions.
 Common tags include `latest`, `v1.0`,
-or any other description that makes sense for versioning or identiying.
+or any other description that makes sense for versioning or identiying and resolve to a digest.
 These are typically human readable and easy to remember.
 
 ![Diagram showing example of by tag reference](/img/concepts/reference/by_tag.png)
 
 :::caution
-Tags are mutable. This means that the same tag can point to different images over time.
+Tags are mutable. This means that the same tag can point to different digests over time.
 :::
 
 #### References by Digest
@@ -55,7 +56,7 @@ Reference by a digest is a unique, immutable identifier for a specific image or 
 Typically represented as a SHA256 hash of the image's content, the digest guarantees
 you're pulling or referencing the exact version of the image and artifact and is **immutable**.
 
-![Diagram showing example of by tag reference](/img/concepts/reference/by_digest.png)
+![Diagram showing example of by digest reference](/img/concepts/reference/by_digest.png)
 
 :::note
 The digest is the most precise way to reference an image.
@@ -113,15 +114,16 @@ For a detailed understanding, refer to the [OCI Layout Specification][oci-layout
 
 ### How OCI Uses Image References
 
-In the OCI standard, when a client (like Docker) needs to pull an image,
+In the OCI standard, when a client (like docker) needs to pull an image,
 it uses the combined image reference to precisely identify and retrieve the
 right image or artifact from a registry.
 
-However, it's worth noting that certain implementations, such as Docker, provide
-defaults or shortcuts. For instance, if you were to use Docker to pull an image
-using the reference `nginx:latest`, Docker would automatically resolve this to
+However, it's worth noting that certain implementations, such as docker, provide
+defaults or shortcuts. For instance, if you were to use docker to pull an image
+using the reference `nginx`, docker would automatically resolve this to
 `docker.io/library/nginx:latest`. Here, `docker.io` is the default registry and
-`library` is the default repository for official images.
+`library/nginx` is the repository with a 'library' prefix for official images and `latest` is the
+default tag. 
 
 ### Conclusion
 
@@ -130,4 +132,4 @@ These references ensure that clients are addressing the desired version of the i
 Having a solid grasp of foundational concepts like image references becomes even more essential
 as you start to use image and artifacts across your cloud native environments.
 
-[oci-layout-index]: https://github.com/opencontainers/image-spec/blob/main/image-layout.md#indexjson-file
+[oci-layout-index]: https://github.com/opencontainers/image-spec/blob/v1.1.0-rc4/image-layout.md#indexjson-file
