@@ -96,7 +96,7 @@ This section needs a lot of love and automation 🙂
     - `release-<major>.<minor>` if releasing a patch.
     - The title should be `bump: tag and release ORAS CLI v<major>.<minor>.<patch>[-<pre-release>]`.
     - The description must reference the digest of version bump up commit for voting.
-1. Send a message to slack channel to call for vote on releasing. If the vote passes, merge the PR.
+1. Send a message to the ORAS slack channel to call for a vote on the release PR. If the vote PR has a super-majority of approval from ORAS maintainers, then the PR could be merged into the target branch.
     - The target commit should be the SHA digest of the last commit in the release PR
     - Make sure that
         - the PR is merged with `Create a merge commit` option.
