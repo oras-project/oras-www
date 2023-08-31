@@ -93,7 +93,7 @@ This section needs a lot of love and automation 🙂
 1. Open a release PR to update oras version: replace [current version](https://github.com/oras-project/oras/blob/main/internal/version/version.go#L20) with upcoming release version.
     - The target branch is:
         - `main` if releasing a new version.
-    - `release-<major>.<minor>` if releasing a patch.
+        - `release-<major>.<minor>` if releasing a patch.
     - The title should be `bump: tag and release ORAS CLI v<major>.<minor>.<patch>[-<pre-release>]`.
     - The description must reference the digest of version bump up commit for voting.
 1. Send a message to the ORAS slack channel to call for a vote on the release PR. If the vote PR has a super-majority of approval from ORAS maintainers, then the PR could be merged into the target branch.
