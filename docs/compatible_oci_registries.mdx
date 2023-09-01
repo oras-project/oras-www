@@ -19,7 +19,6 @@ We're happy to promote all usage, as well as provide feedback.*
 - [Azure Container Registry](#azure-container-registry-acr)
 - [Google Artifact Registry](#google-artifact-registry-gar)
 - [GitHub Packages container registry](#github-packages-container-registry-ghcr)
-- [Bundle Bar](#bundle-bar)
 - [Docker Hub](#docker-hub)
 - [Zot Registry](#zot-registry)
 
@@ -279,31 +278,6 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
   ```
   oras pull ghcr.io/${GITHUB_OWNER}/samples/artifact:1.0
   ```
-
-### [Bundle Bar](https://bundle.bar/docs/supported-clients/oras/)
-
-- Authenticating with Bundle Bar
-
-  ```
-  echo $BB_TOKEN | oras login bundle.bar -u $BB_USER --password-stdin
-  ```
-
-- Pushing Artifacts to Bundle Bar
-
-  ```
-  oras push bundle.bar/u/${BB_USER}/samples/artifact:1.0 \
-    ./artifact.txt:application/vnd.unknown.layer.v1+txt
-  ```
-
-- Pulling Artifacts from Bundle Bar
-
-  ```
-  oras pull bundle.bar/u/${BB_USER}/samples/artifact:1.0
-  ```
-
-[artifacts]:            https://github.com/opencontainers/artifacts
-[distribution-spec]:    https://github.com/opencontainers/distribution-spec/
-
 
 ### [Docker Hub](https://hub.docker.com/)
 
