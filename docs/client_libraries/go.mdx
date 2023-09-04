@@ -98,7 +98,7 @@ func pullImage() error {
 	// Prepare the auth client for the registry and credential store
 	repo.Client = &auth.Client{
 		Client:     retry.DefaultClient,
-		Cache:      auth.NewCache()
+		Cache:      auth.DefaultCache,
 		Credential: credentials.Credential(credStore), // Use the credential store
 	}
 
