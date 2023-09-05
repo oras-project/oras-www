@@ -85,23 +85,23 @@ This section needs a lot of love and automation 🙂
 :::
 ### Prerequisites
 1. Make sure your GPG is available on GitHub at `https://github.com/<username>.gpg`. This can be added at https://github.com/settings/keys.
-  -  If you haven't already, open PR to add your GPG key to the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file (see file for instructions).
-2. Open a bump PR to build with the latest golang: replace go version of the [binary](https://github.com/oras-project/oras/blob/main/.github/workflows/release-github.yml#L32) and [image](https://github.com/oras-project/oras/blob/main/Dockerfile#L14) to match the latest stable version.
-3. (patch-release-only) Cherry-pick the fix commits to the patch release branch.
+    -  If you haven't already, open PR to add your GPG key to the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file (see file for instructions).
+1. Open a bump PR to build with the latest golang: replace go version of the [binary](https://github.com/oras-project/oras/blob/main/.github/workflows/release-github.yml#L32) and [image](https://github.com/oras-project/oras/blob/main/Dockerfile#L14) to match the latest stable version. Skippable if the latest version is already used.
+1. (patch-release-only) Cherry-pick or backport the fix commits to the patch release branch.
 
 ### Request to vote
 1. Open a release PR to update oras version: replace [current version](https://github.com/oras-project/oras/blob/main/internal/version/version.go#L20) with upcoming release version.
-- The target branch is:
-  - `main` if releasing a new version.
-  - `release-<major>.<minor>` if releasing a patch.
-- The title should be `bump: tag and release ORAS CLI v<major>.<minor>.<patch>[-<pre-release>]`.
-- The description must reference the digest of version bump up commit for voting.
-2. Send a message to the ORAS slack channel to call for a vote on the release PR. If the vote PR has a super-majority of approval from ORAS maintainers, then the PR could be merged into the target branch.
-- The target commit should be the SHA digest of the last commit in the release PR
-- Make sure that
-  - the PR is merged with `Create a merge commit` option.
-  - signoff info is added to the merge commit.
-4. (optional) Cut off a release branch named `release-<major>.<minor>` **ONLY** when releasing a new minor version.
+    - The target branch is:
+        - `main` if releasing a new version.
+        - `release-<major>.<minor>` if releasing a patch.
+    - The title should be `bump: tag and release ORAS CLI v<major>.<minor>.<patch>[-<pre-release>]`.
+    - The description must reference the digest of version bump up commit for voting.
+1. Send a message to the ORAS slack channel to call for a vote on the release PR. If the vote PR has a super-majority of approval from ORAS maintainers, then the PR could be merged into the target branch.
+    - The target commit should be the SHA digest of the last commit in the release PR
+    - Make sure that
+        - the PR is merged with `Create a merge commit` option.
+        - signoff info is added to the merge commit.
+1. (optional) Cut off a release branch named `release-<major>.<minor>` on the tagged commit **ONLY** when releasing a new minor version.
 
 ### Release
 1. Make a fresh clone of the [repo](https://github.com/oras-project/oras) after all above steps are completed. Create a new tag for the version prefixed with "v" and push the tag directly to the repo. The tag should be created on the voted commit, **NOT** the merge commit.
