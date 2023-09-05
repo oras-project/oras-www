@@ -109,6 +109,9 @@ This section needs a lot of love and automation 🙂
     version=1.0.0
     digest=b58e7b910ca556973d111e9bd734a71baef03db2 # replace with the digest of the voted commit
     git tag v${version} $digest
+    ```
+    After validating the tag is created on the voted commit, push the created tag:
+    ```sh
     git push origin v${version}
     ```
 1. Wait for GitHub Actions to complete successfully for both the `release-ghcr` and `release-github` pipelines.
