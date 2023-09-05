@@ -87,7 +87,7 @@ This section needs a lot of love and automation 🙂
 1. Make sure your GPG is available on GitHub at `https://github.com/<username>.gpg`. This can be added at https://github.com/settings/keys.
     -  If you haven't already, open PR to add your GPG key to the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file (see file for instructions).
 1. Open a bump PR to build with the latest golang: replace go version of the [binary](https://github.com/oras-project/oras/blob/main/.github/workflows/release-github.yml#L32) and [image](https://github.com/oras-project/oras/blob/main/Dockerfile#L14) to match the latest stable version. Skippable if the latest version is already used.
-1. (patch-release-only) Cherry-pick or backport the fix commits to the patch release branch.
+1. (patch-release-only) Cherry-pick or backport the fix commits to the patch release branch. Make sure applicable critical and high CVE patches are on the release branch.
 
 ### Request to vote
 1. Open a release PR to update oras version: replace [current version](https://github.com/oras-project/oras/blob/main/internal/version/version.go#L20) with upcoming release version.
