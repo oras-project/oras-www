@@ -83,17 +83,35 @@ To update or add new dependencies, run `go get <package name>`.
 This section needs a lot of love and automation 🙂
 
 :::
-
+### Prerequisites
 1. Make sure your GPG is available on GitHub at `https://github.com/<username>.gpg`. This can be added at https://github.com/settings/keys.
-1. If you haven't already, open PR to add your GPG key to the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file (see file for instructions).
-1. Open a release PR to
-   - Build with the latest golang: replace go version of the [binary](https://github.com/oras-project/oras/blob/main/.github/workflows/release-github.yml#L32) and [image](https://github.com/oras-project/oras/blob/main/Dockerfile#L14) to match the latest stable version.
-   - Update oras version: replace the [current stable version](https://github.com/oras-project/oras/blob/main/internal/version/version.go#L20) with the upcoming release version.
-1. After the release PR gets merged, [create an issue](https://github.com/oras-project/oras/issues/new) to call for a vote cutting off a release branch named `release-<major>.<minor>` based on the version update commit.
-1. Make a fresh clone of the repo after all above steps are completed. Create a new tag for the version prefixed with "v" and push the tag directly to the repo.
+    -  If you haven't already, open a PR to add your GPG key to the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file (see file for instructions).
+1. Open a bump PR to build with the latest golang: replace go version of the [binary](https://github.com/oras-project/oras/blob/main/.github/workflows/release-github.yml#L32) and [image](https://github.com/oras-project/oras/blob/main/Dockerfile#L14) to match the latest stable version. Skippable if the latest version is already used.
+1. (patch-release-only) Cherry-pick or backport the fix commits to the patch release branch. Make sure applicable critical and high CVE patches are on the release branch.
+
+### Request to vote
+1. Open a PR to update the `oras` version: replace the [current version](https://github.com/oras-project/oras/blob/main/internal/version/version.go#L20) with the upcoming release version.
+    - The target branch is:
+        - `main` if releasing a new version.
+        - `release-<major>.<minor>` if releasing a patch.
+    - The title should be `bump: tag and release ORAS CLI v<major>.<minor>.<patch>[-<pre-release>]`.
+    - The description must reference the digest of version bump up commit for voting.
+1. Send a message to the ORAS slack channel to call for a vote on the release PR. If the vote PR has a super-majority of approval from ORAS maintainers, then the PR could be merged into the target branch.
+    - The target commit should be the SHA digest of the last commit in the release PR
+    - Make sure that
+        - the PR is merged with `Create a merge commit` option.
+        - signoff info is added to the merge commit.
+1. (optional) Cut off a release branch named `release-<major>.<minor>` on the tagged commit **ONLY** when releasing a new minor version.
+
+### Release
+1. Make a fresh clone of the [repo](https://github.com/oras-project/oras) after all above steps are completed. Create a new tag for the version prefixed with "v" and push the tag directly to the repo. The tag should be created on the voted commit, **NOT** the merge commit.
     ```sh
     version=1.0.0
-    git tag v${version}
+    digest=b58e7b910ca556973d111e9bd734a71baef03db2 # replace with the digest of the voted commit
+    git tag v${version} $digest
+    ```
+    After validating the tag is created on the voted commit, push the created tag:
+    ```sh
     git push origin v${version}
     ```
 1. Wait for GitHub Actions to complete successfully for both the `release-ghcr` and `release-github` pipelines.
@@ -121,12 +139,13 @@ This section needs a lot of love and automation 🙂
         gpg --verify $file
     done
     ```
-1. Click the "Edit release" button on the release, and add the `.asc` files created in the previous step. Edit the release description for change logs and also add a note indicating your GPG key used to sign the artifacts. Example (replace with your fingerprint etc.):
+1. Click the "Edit release" button on the release, and add the `.asc` files created in the previous step. Edit the release description to include change logs and a note indicating the releaser's GPG key used to sign the artifacts. See an example:
     ```
     ## Notes
 
     This release was signed with `BE6F A8DD A48D 4C23 0091 A0A9 276D 8A72 4CE1 C704` (@qweeah's GPG key) which can be found [here](https://github.com/qweeah.gpg).
     ```
+    The uploaded signatures and GPG key will be used for [binary validation](https://oras.land/docs/how_to_guides/verifying_binaries).
 1. Click "Publish Release" button to save. Double-check that the release contains a corresponding `.asc` file for each release artifact.
 1. Consume beverage of choice.. you're done! Thanks for moving the project forward.
 1. Oh yea, tell people about it in the `#oras` slack channel.
