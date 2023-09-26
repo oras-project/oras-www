@@ -27,7 +27,7 @@
     "remark-parse": "^10.0.2"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "2.4.1",
+    "@docusaurus/module-type-aliases": "2.4.3",
     "netlify-plugin-cache": "^1.0.3",
     "remark-cli": "^11.0.0",
     "remark-validate-links": "^12.1.1"
