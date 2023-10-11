@@ -5,19 +5,17 @@ authors: [oras]
 tags: [oras, community]
 ---
 
-<!--TODO: spellcheck-->
-
 ## ORAS Lightweight Cloud Registry
 
-Setting up a centralized cloud registry is a sometimes too much for small scale tests and POCs!  
+Setting up a centralized cloud OCI registry is sometimes too much for small scale tests and proof of concepts!  
 What if I told you there was a lightweight alternative?  
 
 <!--truncate-->
 
-## Everything Should Be A file
+## Everything Should Be a File
 
 One of the great Unix philosophies is the concept of making everything a file.
-Modems, Keyboards, Printers, Drives, Serial, Config, IPC, Everything and Anything is a file descriptor that you can `read()` and/or `write()` to.
+Modems, keyboards, printers, disk drives, serial interfaces, configuration, kernel parameteres, IPC, everything and anything is a file that you can `read()` and/or `write()` to.
 
 In a nutshell this separates a large many concerns to the file system layer instead of your program.  
 It allows, among other things, plugging stuff into any program without writing special integration code.  
@@ -30,9 +28,9 @@ Making everything a file means that you can generally interface with every progr
 
 `oras` has a `--oci-layout`
 
-Instead of talking to an upstream service over `http/https`, `oras` can create the oci artifact structure as files and directories.
+Instead of talking to an upstream service over `http/https`, `oras` can create the OCI artifact structure as files and directories.
 
-Most (if not every) operation that can be performed on an upstream registry can also be performed locally as an oci directory structure.
+Most (if not every) operation that can be performed on an upstream registry can also be performed locally as an OCI directory structure.
 
 ### Cloud Object Storage is [EIAF](https://en.wikipedia.org/wiki/Everything_is_a_file) Compatible
 
@@ -103,7 +101,7 @@ cat goodbye.txt
 
 ### Congratulations!
 
-**Now you are running your own lightweight oci registry on the cloud!**
+**Now you are running your own lightweight OCI registry on the cloud!**
 
 ## Caveats 
 
