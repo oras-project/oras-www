@@ -1,6 +1,6 @@
 ---
 slug: lightweight-cloud-registry-oras
-title: Lightweight Registry with Oras OCI Layouts and Cloud Object Storage
+title: Lightweight Registry with Oras OCI-Layouts and Object Storage in The Cloud
 authors: [oras]
 tags: [oras, community]
 ---
@@ -15,11 +15,12 @@ What if I told you there was a lightweight alternative?
 ## Everything Should Be a File
 
 One of the great Unix philosophies is the concept of making everything a file.
-Modems, keyboards, printers, disk drives, serial interfaces, configuration, kernel parameteres, IPC, everything and anything is a file that you can `read()` and/or `write()` to.
+Modems, keyboards, printers, disk drives, serial interfaces, configuration, kernel parameteres, IPC, everything and anything is a file that you can `read()` and/or `write()`.
 
-In a nutshell this separates a large many concerns to the file system layer instead of your program.  
-It allows, among other things, plugging stuff into any program without writing special integration code.  
-That code was already written in the "driver" for that "device", why repeat yourself in the program?
+In a nutshell, this separates a many concerns to the file system layer instead of your program.  
+It allows, among other things, plugging stuff into any program without writing special integration code.
+That code was already written in the "driver" for that "device", so why repeat yourself in the program?  
+
 
 In General: **programs write and read files**  
 Making everything a file means that you can generally interface with every program.
@@ -35,7 +36,7 @@ Most (if not every) operation that can be performed on an upstream registry can 
 ### Cloud Object Storage is [EIAF](https://en.wikipedia.org/wiki/Everything_is_a_file) Compatible
 
 The file system is the foundation on which EIAF rests upon.  
-They are special components that convert media (CD, Tape, HDD, Controllers, etc.) into interface layers on which you can read/write files to.  
+They are special components that convert media (CD, Tape, HDD, Controllers, etc.) into interface layers of which you can read/write files.  
 
 If you can mount **it** as a file system, you got EIAF.
 
@@ -46,9 +47,9 @@ Your preferred Cloud provider should have its own FUSE driver for their object s
 
 ---
 
-It is useful to think of COS as `key: data` databases instead of the file systems they pretend to be.  
+It is useful to think of Object Storage as `key: data` databases instead of the file systems they pretend to be.  
 
-Mounting one as a file system **should** be seen as "unintended functionality" by the COS and breaks some assumptions programs make about file systems.  
+Mounting one as a file system **should** be seen as "unintended functionality" and it breaks some assumptions programs make about file systems.  
 
 > Example: Instant nanosecond retrieval times, turning into _millisecond_ or even **second** long affairs.
 
@@ -105,36 +106,35 @@ cat goodbye.txt
 
 ## Caveats 
 
-### **You can't delete**
+### **You can't delete yet!**
 
-**You can't delete your artifacts!**
+**You can't delete your artifacts yet!**
 
 Currently[^1] you can't delete your local `oci-layout` artifacts with `oras manifest delete` or `oras blob delete`
 
-The core reason for this is that normally it is the registry's responsibility to garbage collect blobs without any references.
+Normally it is the registry's responsibility to garbage collect blobs without any references, but in this case the cli does not have the fucntionality (yet).
 
 It is still possible to just do `rm -rf s3/my-repo`, but that is probably not what you want to do.
 
-[^1]: It is being worked on in [this issue](https://github.com/oras-project/oras-go/issues/454)
+[^1]: It will probably be available in the next releases `> v1.1.0`. See this [merged](https://github.com/oras-project/oras/pull/1197) issue.
 
 ### Concurrency?
 
-Same concurrency rules of your COS apply, generally [last-write-wins](https://en.wikipedia.org/wiki/Eventual_consistency).
+Same concurrency rules of your chosen Object Store apply, generally [last-write-wins](https://en.wikipedia.org/wiki/Eventual_consistency). Please check your documentation
 
 
 ## Using this trick in your application
 
 You can use this trick in your applications as well!  
 
-Instead of integrating in your application code (hard dependency, vendor lock-in, complicates your interface: "how do I pass in creds?") you instead mount the COS in the container and then "just use the file system" (transferable, simple, external, interfaceable) 
+Instead of integrating in your application code (hard dependency, vendor lock-in, complicates your interface: "how do I pass in creds?") you instead mount the Object Store in the container and then "just use the file system" (transferable, simple, external, interfaceable) 
 
-There are some caveats to this approach and your application might leverage the capabilities of the Native COS api extremely well, but if it's just a simple interaction, why complicate things?
+There are some caveats to this approach and your application might leverage the capabilities of the Native Object Storage API extremely well, but if it's just a simple interaction, why complicate things?
 
 
 ## Upgrading to Registry
 
-### AWS  Simple Storage Service (S3) to ZOT
-
+### AWS  Simple Storage Service (S3) to ZOT  
 
 You can just point [ZOT](https://github.com/project-zot/zot/blob/main/examples/README.md#storage-drivers) at the s3 bucket as it is already expecting an `oci-layout` 
 
@@ -155,17 +155,17 @@ ls -1 s3/ | xargs -P0 -n1 sh -c 'oras repo tags --oci-layout "s3/$1" | xargs -P0
 
 ## Performance
 
-[Goofys](https://github.com/kahing/goofys) was the definitive champion utilizing the strengths of a caching file system with the powers of Cloud Object Storage, it was the fastest in the cloud and local.
+[Goofys](https://github.com/kahing/goofys) was the definitive champion utilizing the strengths of a local caching file system with the powers of a remote Object Store, it was the fastest in the cloud and local.  
 
-[s3fs](https://github.com/s3fs-fuse/s3fs-fuse) made a commendable effort and was faster than the native api on small objects, but started to lose performance on the bigger objects.
+[s3fs](https://github.com/s3fs-fuse/s3fs-fuse) made a commendable effort and was faster than the native API on small objects, but started to lose performance on the bigger objects.  
 
 ## Findings
 
 **tl:dr**
 
 Local performance:  
-Test drive Goofys first, it made testing very difficult because it so effectively cached and reused object. Installing it was a pain though.  
-`s3fs` installed easy but suffered around 512MiB, was bad at 1Gib and was awful at 2Gib.
+Goofys made testing very difficult because it so effectively cached and reused objects, but installing it was a pain.  
+`s3fs` installed easily, but suffered around 512MiB, was bad at 1Gib, and was awful at 2Gib.   
 
 Cloud performance:  
 Amazing throughout.  
@@ -193,11 +193,11 @@ Welp it's WAY faster over here!
 `goofys` is an entire order of magnitude faster, but normalized around 2GiB.  
 `s3fs` was also faster than native up until about 2GiB.
 
-Chunking the are fact did not lead to any substantial speed increases... Except for goofys, which showed an up to 2x speed increase!
+Chunking the artifacts did not lead to any substantial speed increases... Except for goofys, which showed an upwards of 2x speed increase!
 
 ![aws plot](./img/aws-plot.svg)
 
-> AWS2023 removed the epel repos, I used a Debian for this test with the apt `s3fs` and the go `goofys`.
+> AWS2023 has removed the Extra Packages for Enterprise Linux (EPEL) repositories, so I used Debian instead. I used the `apt` distribution of `s3fs` and the `go` install of `goofys`.
 
 
 ## Scripts used
