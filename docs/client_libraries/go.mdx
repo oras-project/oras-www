@@ -10,7 +10,7 @@ Source code: [github.com/oras-project/oras-go](https://github.com/oras-project/o
 ## Introduction
 
 The ORAS Go client library provides the ability to replicate artifacts between different [Targets](./overview.mdx#target).  
-Furthermore, the version `v2` is a registry client conforming [image-spec v1.1.0-rc.5](https://github.com/opencontainers/image-spec/releases/tag/v1.1.0-rc5) and [distribution-spec v1.1.0-rc3](https://github.com/opencontainers/distribution-spec/releases/tag/v1.1.0-rc3).
+Furthermore, the version `v2` is a registry client conforming [image-spec v1.1.0-rc6](https://github.com/opencontainers/image-spec/releases/tag/v1.1.0-rc6) and [distribution-spec v1.1.0-rc4](https://github.com/opencontainers/distribution-spec/releases/tag/v1.1.0-rc4).
 
 Using the ORAS Go client library, you can develop your own registry client:
 
@@ -43,86 +43,13 @@ go mod tidy
 ## Quick Start
 
 ### Push files to a remote repository
-See [example](https://pkg.go.dev/oras.land/oras-go/v2#example-package-PushFilesToRemoteRepository).
+See [this example](https://pkg.go.dev/oras.land/oras-go/v2#example-package-PushFilesToRemoteRepository).
 
 ### Pull files from a remote repository
-See [example](https://pkg.go.dev/oras.land/oras-go/v2#example-package-PullFilesFromRemoteRepository).
+See [this example](https://pkg.go.dev/oras.land/oras-go/v2#example-package-PullFilesFromRemoteRepository).
 
 ### Pull a docker or OCI image from a remote repository
-See [example](https://pkg.go.dev/oras.land/oras-go/v2#example-package-PullImageFromRemoteRepository).
+See [this example](https://pkg.go.dev/oras.land/oras-go/v2#example-package-PullImageFromRemoteRepository).
 
 ### Pull an Image using the Docker credential store
-You can create a Docker credential store using [oras-credential-go](https://github.com/oras-project/oras-credentials-go). 
-
-This enables you to use credentials that are saved by `docker login` in the client. 
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-
-	credentials "github.com/oras-project/oras-credentials-go"
-	"oras.land/oras-go/v2"
-	"oras.land/oras-go/v2/content"
-	"oras.land/oras-go/v2/content/oci"
-	"oras.land/oras-go/v2/registry/remote"
-	"oras.land/oras-go/v2/registry/remote/auth"
-	"oras.land/oras-go/v2/registry/remote/retry"
-)
-
-func pullImage() error {
-
-	// 0. Create an OCI layout store
-	store, err := oci.New("/tmp/oci-layout-root")
-	if err != nil {
-		return err
-	}
-
-	// 1. Connect to a remote repository
-	ctx := context.Background()
-	reg := "docker.io"
-	repo, err := remote.NewRepository(reg + "/user/my-repo")
-	if err != nil {
-		return err
-	}
-
-	// 2. Get credentials from the docker credential store
-	storeOpts := credentials.StoreOptions{}
-	credStore, err := credentials.NewStoreFromDocker(storeOpts)
-	if err != nil {
-		return err
-	}
-
-	// Prepare the auth client for the registry and credential store
-	repo.Client = &auth.Client{
-		Client:     retry.DefaultClient,
-		Cache:      auth.DefaultCache,
-		Credential: credentials.Credential(credStore), // Use the credential store
-	}
-
-	// 3. Copy from the remote repository to the OCI layout store
-	tag := "latest"
-	manifestDescriptor, err := oras.Copy(ctx, repo, tag, store, tag, oras.DefaultCopyOptions)
-	if err != nil {
-		return err
-	}
-
-	fmt.Println("manifest pulled:", manifestDescriptor.Digest, manifestDescriptor.MediaType)
-
-	// 3. Fetch from OCI layout store to verify
-	fetched, err := content.FetchAll(ctx, store, manifestDescriptor)
-	if err != nil {
-		return err
-	}
-	fmt.Printf("manifest content:\n%s", fetched)
-	return nil
-}
-
-func main() {
-	if err := pullImage(); err != nil {
-		panic(err)
-	}
-}
-```
+See [this example](https://pkg.go.dev/oras.land/oras-go/v2#example-package-PullImageUsingDockerCredentials).
