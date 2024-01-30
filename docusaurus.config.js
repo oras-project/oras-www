@@ -193,7 +193,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} ORAS Project`,
+              copyright: `Copyright © ${new Date().getFullYear()} The Linux Foundation. All rights reserved.<br>The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our <a href="https://www.linuxfoundation.org/legal/trademark-usage">Trademark Usage page</a>.`,
       },
       prism: {
         theme: lightCodeTheme,
