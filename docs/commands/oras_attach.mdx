@@ -19,13 +19,6 @@ Attach file 'hi.txt' with type 'doc/example' to manifest 'hello:v1' in registry 
 oras attach --artifact-type doc/example localhost:5000/hello:v1 hi.txt
 ```
 
-Attach file "hi.txt" with specific media type when building the manifest:
-
-```bash
-oras attach --artifact-type doc/example --image-spec v1.1-image localhost:5000/hello:v1 hi.txt    # OCI image
-oras attach --artifact-type doc/example --image-spec v1.1-artifact localhost:5000/hello:v1 hi.txt # OCI artifact
-```
-
 Attach file "hi.txt" using a specific method for the Referrers API:
 
 ```bash
@@ -77,7 +70,6 @@ oras attach --oci-layout --artifact-type doc/example layout-dir:v1 hi.txt
       --export-manifest path                       path of the pushed manifest
   -H, --header stringArray                         add custom headers to requests
   -h, --help                                       help for attach
-      --image-spec string                          [Experimental] specify manifest type for building artifact. options: v1.1-image, v1.1-artifact (default "v1.1-image")
       --insecure                                   allow connections to SSL registry without certs
       --oci-layout                                 set target as an OCI image layout
   -p, --password string                            registry password or identity token
