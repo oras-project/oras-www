@@ -119,7 +119,7 @@ const registries = [
         light: "img/adopters/zot.svg",
         dark: "img/adopters/zot.svg",
         description: "An OCI-native container registry for distributing container images and OCI artifacts.",
-        link: "https://zotregistry.io/",
+        link: "https://zotregistry.dev/",
     },
     {
         title: "Harbor",
