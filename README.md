@@ -29,9 +29,9 @@ Source for ORAS website and documentation
 
 You can use Gitpod (a free, online, VS Code-like IDE) for contributing. With a single click, it will launch a workspace (for Docusaurus 2) automatically:
 
-* clone the docusaurus repo.
-* install the dependencies.
-* run `npm start`
+-   clone the docusaurus repo.
+-   install the dependencies.
+-   run `npm start`
 
 So that you can start contributing straight away.
 
@@ -39,7 +39,7 @@ So that you can start contributing straight away.
 
 ## System Requirements
 
-* [Node.js v16.x](https://nodejs.org/en/download/) and above
+-   [Node.js v18.x](https://nodejs.org/en/download/) and above
 
 ## Installation
 
@@ -74,7 +74,6 @@ npm run serve
 ## Code of Conduct
 
 This project has adopted the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/master/code-of-conduct.md). See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for further details.
-
 
 ## Contributions
 
