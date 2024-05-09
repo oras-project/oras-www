@@ -31,7 +31,7 @@
 .header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 2rem;
     font-size: 1.25rem;
     font-weight: bold;
