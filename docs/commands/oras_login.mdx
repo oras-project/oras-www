@@ -1,11 +1,11 @@
 ---
 title: oras login
-sidebar_position: 70
+sidebar_position: 50
 ---
 
 # oras login
 
-Log in to a remote registry.
+Log in to a remote registry
 
 ```bash
 oras login [flags] <registry>
@@ -47,12 +47,6 @@ Log in with username and password in an interactive terminal and no TLS check:
 
 ```bash
 oras login --insecure localhost:5000
-```
-
-Log in to a registry with custom DNS resolution
-
-```bash
-oras login prod.registry.io --resolve prod.registry.io:5000:127.0.0.1 --plain-http
 ```
 
 ## Options

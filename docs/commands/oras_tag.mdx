@@ -1,11 +1,11 @@
 ---
 title: oras tag
-sidebar_position: 170
+sidebar_position: 90
 ---
 
 # oras tag
 
-Tag a manifest in the remote registry.
+Tag a manifest in a registry or an OCI image layout
 
 ```bash
 oras tag [flags] <name>{:<tag>|@<digest>} <new_tag> [...]
@@ -19,13 +19,13 @@ Tag the manifest 'v1.0.1' in 'localhost:5000/hello' to 'v1.0.2':
 oras tag localhost:5000/hello:v1.0.1 v1.0.2
 ```
 
-Tag the manifest with digest sha256:9463e0d192846bc994279417b50114606712d516aab45f4d8b31cbc6e46aad71 to 'v1.0.2':
+Tag the manifest with digest sha256:9463e0d192846bc994279417b50114606712d516aab45f4d8b31cbc6e46aad71 to 'v1.0.2'
 
 ```bash
 oras tag localhost:5000/hello@sha256:9463e0d192846bc994279417b50114606712d516aab45f4d8b31cbc6e46aad71 v1.0.2
 ```
 
-Tag the manifest 'v1.0.1' in 'localhost:5000/hello' to 'v1.0.2', 'latest':
+Tag the manifest 'v1.0.1' in 'localhost:5000/hello' to 'v1.0.2', 'latest'
 
 ```bash
 oras tag localhost:5000/hello:v1.0.1 v1.0.2 latest
@@ -37,7 +37,7 @@ Tag the manifest 'v1.0.1' in 'localhost:5000/hello' to 'v1.0.1', 'v1.0.2', 'late
 oras tag --concurrency 1 localhost:5000/hello:v1.0.1 v1.0.2 latest
 ```
 
-Tag the manifest 'v1.0.1' to 'v1.0.2' in an OCI layout folder 'layout-dir':
+Tag the manifest 'v1.0.1' to 'v1.0.2' in an OCI image layout folder 'layout-dir':
 
 ```bash
 oras tag layout-dir:v1.0.1 v1.0.2

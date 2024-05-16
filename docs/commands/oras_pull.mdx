@@ -1,11 +1,11 @@
 ---
 title: oras pull
-sidebar_position: 130
+sidebar_position: 70
 ---
 
 # oras pull
 
-Pull files from remote registry.
+Pull files from a registry or an OCI image layout
 
 ```bash
 oras pull [flags] <name>{:<tag>|@<digest>}
@@ -56,7 +56,7 @@ Pull all files with concurrency level tuned:
 oras pull --concurrency 6 localhost:5000/hello:v1
 ```
 
-Pull artifact files from an OCI layout folder 'layout-dir':
+Pull artifact files from an OCI image layout folder 'layout-dir':
 
 ```bash
 oras pull --oci-layout layout-dir:v1
@@ -76,18 +76,19 @@ oras pull --oci-layout layout.tar:v1
       --concurrency int                             concurrency level (default 3)
       --config string                               output manifest config file
   -d, --debug                                       debug mode
+  -H, --header stringArray                          add custom headers to requests
   -h, --help                                        help for pull
-      --include-subject                             recursively pull the subject of artifacts
+      --include-subject                             [Preview] recursively pull the subject of artifacts
       --insecure                                    allow connections to SSL registry without certs
   -k, --keep-old-files                              do not replace existing files when pulling, treat them as errors
-      --oci-layout                                  set target as an OCI image layout.
+      --oci-layout                                  set target as an OCI image layout
   -o, --output string                               output directory (default ".")
   -p, --password string                             registry password or identity token
       --password-stdin                              read password or identity token from stdin
       --plain-http                                  allow insecure connections to registry without SSL check
       --platform os[/arch][/variant][:os_version]   request platform in the form of os[/arch][/variant][:os_version]
-      --registry-config path                        path of the authentication file
-      --resolve host:port:address                   customized DNS formatted in host:port:address
+      --registry-config path                        path of the authentication file for registry
+      --resolve host:port:address[:address_port]    customized DNS for registry, formatted in host:port:address[:address_port]
   -u, --username string                             registry username
   -v, --verbose                                     verbose output
 ```

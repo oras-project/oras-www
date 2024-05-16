@@ -5,7 +5,8 @@ sidebar_position: 10
 
 # oras attach
 
-Attach files to an existing artifact.
+[Preview] Attach files to an existing artifact
+** This command is in preview and under development. **
 
 ```bash
 oras attach [flags] --artifact-type=<type> <name>{:<tag>|@<digest>} <file>[:<type>] [...]
@@ -50,7 +51,7 @@ Attach file 'hi.txt' and export the pushed manifest to 'manifest.json':
 oras attach --artifact-type doc/example --export-manifest manifest.json localhost:5000/hello:v1 hi.txt
 ```
 
-Attach file to the manifest tagged 'v1' in an OCI layout folder 'layout-dir':
+Attach file to the manifest tagged 'v1' in an OCI image layout folder 'layout-dir':
 
 ```bash
 oras attach --oci-layout --artifact-type doc/example layout-dir:v1 hi.txt
@@ -80,5 +81,3 @@ oras attach --oci-layout --artifact-type doc/example layout-dir:v1 hi.txt
   -u, --username string                            registry username
   -v, --verbose                                    verbose output
 ```
-
-
