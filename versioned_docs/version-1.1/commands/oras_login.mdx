@@ -1,0 +1,67 @@
+---
+title: oras login
+sidebar_position: 50
+---
+
+# oras login
+
+Log in to a remote registry
+
+```bash
+oras login [flags] <registry>
+```
+
+## Examples
+
+Log in with username and password from command line flags:
+
+```bash
+oras login -u username -p password localhost:5000
+```
+
+Log in with username and password from stdin:
+
+```bash
+oras login -u username --password-stdin localhost:5000
+```
+
+Log in with identity token from command line flags:
+
+```bash
+oras login -p token localhost:5000
+```
+
+Log in with identity token from stdin:
+
+```bash
+oras login --password-stdin localhost:5000
+```
+
+Log in with username and password in an interactive terminal:
+
+```bash
+oras login localhost:5000
+```
+
+Log in with username and password in an interactive terminal and no TLS check:
+
+```bash
+oras login --insecure localhost:5000
+```
+
+## Options
+
+```
+      --ca-file string                             server certificate authority file for the remote registry
+  -d, --debug                                      debug mode
+  -H, --header stringArray                         add custom headers to requests
+  -h, --help                                       help for login
+      --insecure                                   allow connections to SSL registry without certs
+  -p, --password string                            registry password or identity token
+      --password-stdin                             read password or identity token from stdin
+      --plain-http                                 allow insecure connections to registry without SSL check
+      --registry-config path                       path of the authentication file for registry
+      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]
+  -u, --username string                            registry username
+  -v, --verbose                                    verbose output
+```

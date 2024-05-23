@@ -1,0 +1,75 @@
+---
+title: Authentication
+sidebar_position: 1
+---
+
+# Authentication
+
+There are two ways we will be covering in this guide to authenticate with OCI Registries.
+
+### Method 1: Authentication Using the `config` File
+
+This method is straightforward but insecure. It may be used for testing purposes. In this method, the command will store the credentials in `~/.docker/config.json` which is the same file used as the docker client. 
+
+Please note that if you have previously used `docker login`, the credentials will get reused.
+
+You may use the `-c`/`--config` option to specify an alternate location.
+
+:::info
+
+While ORAS leverages the local docker client config store, ORAS does NOT have a dependency on Docker Desktop running or being installed. ORAS can be used independently of a local docker daemon.
+
+:::
+
+You can either make use of [`oras login`](../commands/oras_login.mdx) or provide explicit credentials via options, for example,
+
+```
+oras pull -u username -p password myregistry.io/myimage:latest
+```
+However, you will get a warning message stating that the credentials will be stored unencrypted in the `config` file.
+
+### Method 2: Authentication Using Docker Credential Helper
+
+The native keychain of the operating system is an external credential store that the Docker Engine can use to store user credentials. It is safer to use an external store than to keep credentials in the Docker configuration file (`~/.docker/config.json`).
+
+An external helper program is needed to interact with a specific keychain or external store. Docker requires the helper program to be in the client’s host `$PATH`.
+
+Prerequisites to follow through with these commands:
+1. According to your operating system, you may download a credential helper from among these:
+    - [D-Bus Secret Service](https://github.com/docker/docker-credential-helpers/releases) 
+    - [Apple macOS keychain](https://github.com/docker/docker-credential-helpers/releases)
+    - [Microsoft Windows Credential Manager](https://github.com/docker/docker-credential-helpers/releases)
+    - [pass](https://www.passwordstore.org/)
+2. [Docker Credential Helpers](https://github.com/docker/docker-credential-helpers)
+
+**Step 1**
+
+Configure the credential store in the `~/.docker/config.json` file. Your file should look similar to this:
+
+```
+{
+  ...
+  "credStore": "pass"
+  ...
+}
+```
+
+**Note**: Please replace pass with the credential helper you want to use. 
+
+**Step 2**
+
+Before running the [`oras login`](../commands/oras_login.mdx) command, make sure you have logged out once so that the next time you enter your credentials, they get stored in the credential store.
+
+```
+$ oras login localhost:5000
+Username: deepeshaburse
+Password: 
+Login Succeeded
+```
+
+Your credential helper has been set up, the next time you run `oras login`, you should see an output like this:
+
+```
+Authenticating with existing credentials...
+Login Succeeded
+```
