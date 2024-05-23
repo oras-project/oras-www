@@ -1,11 +1,11 @@
 ---
 title: oras repo tags
-sidebar_position: 160
+sidebar_position: 170
 ---
 
 # oras repo tags
 
-Show tags of the target repository.
+Show tags of the target repository
 
 ```bash
 oras repo tags [flags] <name>
@@ -31,7 +31,7 @@ Show tags of the target repository that include values lexically after last:
 oras repo tags --last "last_tag" localhost:5000/hello
 ```
 
-Show tags of the target OCI layout folder 'layout-dir':
+Show tags of the target OCI image layout folder 'layout-dir':
 
 ```bash
 oras repo tags --oci-layout layout-dir
@@ -43,13 +43,13 @@ Show tags of the target OCI layout archive 'layout.tar':
 oras repo tags --oci-layout layout.tar
 ```
 
-Show tags associated with a particular tagged resource:
+[Experimental] Show tags associated with a particular tagged resource:
 
 ```bash
 oras repo tags localhost:5000/hello:latest
 ```
 
-Show tags associated with a digest:
+[Experimental] Show tags associated with a digest:
 
 ```bash
 oras repo tags localhost:5000/hello@sha256:c551125a624189cece9135981621f3f3144564ddabe14b523507bf74c2281d9b

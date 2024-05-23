@@ -1,11 +1,11 @@
 ---
 title: oras repo ls
-sidebar_position: 150
+sidebar_position: 160
 ---
 
 # oras repo ls
 
-List the repositories under the registry.
+List the repositories under the registry
 
 ```bash
 oras repo ls [flags] <registry>
@@ -13,19 +13,19 @@ oras repo ls [flags] <registry>
 
 ## Examples
 
-Example - List the repositories under the registry:
+List the repositories under the registry:
 
 ```bash
 oras repo ls localhost:5000
 ```
 
-Example - List the repositories under a namespace in the registry:
+List the repositories under a namespace in the registry:
 
 ```bash
 oras repo ls localhost:5000/example-namespace
 ```
 
-Example - List the repositories under the registry that include values lexically after last:
+List the repositories under the registry that include values lexically after last:
 
 ```bash
 oras repo ls --last "last_repo" localhost:5000
@@ -33,7 +33,7 @@ oras repo ls --last "last_repo" localhost:5000
 
 ## Options
 
-```bash
+```
       --ca-file string                             server certificate authority file for the remote registry
   -d, --debug                                      debug mode
   -H, --header stringArray                         add custom headers to requests
