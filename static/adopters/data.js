@@ -55,6 +55,13 @@ const projects = [
         description: "A containerd snapshotter plugin which enables standard OCI images to be lazily loaded without requiring a build-time conversion step.",
         link: "https://github.com/awslabs/soci-snapshotter",
     },
+    {
+        title: "Helmper",
+        light: "img/adopters/helmper.svg",
+        dark: "img/adopters/helmper.svg",
+        description: "A little helper that pushes Helm Charts and images to your registries, easily configured with a declarative spec.",
+        link: "https://github.com/christoffernissen/helmper",
+    },
 ];
 
 const registries = [
