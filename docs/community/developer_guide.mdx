@@ -150,8 +150,17 @@ This section needs a lot of love and automation 🙂
     The uploaded signatures and GPG key will be used for [binary validation](https://oras.land/docs/how_to_guides/verifying_binaries).
 1. Click "Publish Release" button to save. Double-check that the release contains a corresponding `.asc` file for each release artifact.
 1. Consume beverage of choice.. you're done! Thanks for moving the project forward.
-1. Oh yea, tell people about it in the `#oras` slack channel.
-    
+1. Oh yea, tell people about it in the `#oras` slack channel
+
+### Updating package managers
+#### Snap
+1. Go to https://github.com/oras-project/oras/actions/workflows/release-snap.yml
+1. Click on the top right drop-down `Run workflow`
+  - Select a branch or tag to run the release. **Github actions and snapcraft configuration in the selected ref will be used**
+  - Enter the release version. **DO add the `v`**
+  - (optional) Check the checkbox only when the target version is stable
+  - Click `Run workflow`
+
 ### Some Comments
 
 There is a large number of steps here, mostly manual. Here are some comments and/or thoughts on it.
