@@ -151,7 +151,16 @@ This section needs a lot of love and automation 🙂
 1. Click "Publish Release" button to save. Double-check that the release contains a corresponding `.asc` file for each release artifact.
 1. Consume beverage of choice.. you're done! Thanks for moving the project forward.
 1. Oh yea, tell people about it in the `#oras` slack channel.
-    
+
+### Updating package managers
+#### Snap
+1. Go to https://github.com/oras-project/oras/actions/workflows/release-snap.yml
+1. Click on the top right drop-down `Run workflow`
+  - Select a branch or tag to run the release. **This is not the actual to-be-released version** but only configuration of Github actions and Snapcraft.
+  - Enter the release version. **The version should start with a `v`**.
+  - (optional) If the target version is stable, check the stable release checkbox.
+  - Click `Run workflow`.
+
 ### Some Comments
 
 There is a large number of steps here, mostly manual. Here are some comments and/or thoughts on it.
