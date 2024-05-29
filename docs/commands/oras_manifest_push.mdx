@@ -1,11 +1,11 @@
 ---
 title: oras manifest push
-sidebar_position: 120
+sidebar_position: 130
 ---
 
 # oras manifest push
 
-Push a manifest to remote registry.
+Push a manifest to a registry or an OCI image layout
 
 ```bash
 oras manifest push [flags] <name>[:<tag>[,<tag>][...]|@<digest>] <file>
@@ -62,7 +62,7 @@ Push a manifest to repository 'localhost:5000/hello' and tag with 'tag1', 'tag2'
 oras manifest push --concurrency 6 localhost:5000/hello:tag1,tag2,tag3 manifest.json
 ```
 
-Push a manifest to an OCI layout folder 'layout-dir' and tag with 'v1':
+Push a manifest to an OCI image layout folder 'layout-dir' and tag with 'v1':
 
 ```bash
 oras manifest push --oci-layout layout-dir:v1 manifest.json

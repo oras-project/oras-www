@@ -1,14 +1,14 @@
 ---
-title: oras copy
+title: oras cp
 sidebar_position: 50
 ---
 
-# oras copy
+# oras cp
 
-Copy artifacts from one target to another.
+Copy artifacts from one target to another
 
 ```bash
-oras copy [flags] <from>{:<tag>|@<digest>} <to>[:<tag>[,<tag>][...]]
+oras cp [flags] <from>{:<tag>|@<digest>} <to>[:<tag>[,<tag>][...]]
 ```
 
 ## Examples
@@ -19,13 +19,13 @@ Copy an artifact between registries:
 oras cp localhost:5000/net-monitor:v1 localhost:6000/net-monitor-copy:v1
 ```
 
-Download an artifact into an OCI layout folder:
+Download an artifact into an OCI image layout folder:
 
 ```bash
 oras cp --to-oci-layout localhost:5000/net-monitor:v1 ./downloaded:v1
 ```
 
-Upload an artifact from an OCI layout folder:
+Upload an artifact from an OCI image layout folder:
 
 ```bash
 oras cp --from-oci-layout ./to-upload:v1 localhost:5000/net-monitor:v1
@@ -46,8 +46,7 @@ oras cp -r localhost:5000/net-monitor:v1 localhost:6000/net-monitor-copy:v1
 Copy an artifact and referrers using specific methods for the Referrers API:
 
 ```bash
-oras cp -r --from-distribution-spec v1.1-referrers-api --to-distribution-spec v1.1-referrers-tag \
-    localhost:5000/net-monitor:v1 localhost:6000/net-monitor-copy:v1
+oras cp -r --from-distribution-spec v1.1-referrers-api --to-distribution-spec v1.1-referrers-tag     localhost:5000/net-monitor:v1 localhost:6000/net-monitor-copy:v1 
 ```
 
 Copy certain platform of an artifact:

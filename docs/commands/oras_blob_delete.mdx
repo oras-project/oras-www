@@ -5,7 +5,7 @@ sidebar_position: 20
 
 # oras blob delete
 
-Delete a blob from a remote registry.
+Delete a blob from a remote registry
 
 ```bash
 oras blob delete [flags] <name>@<digest>
@@ -22,14 +22,14 @@ oras blob delete localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be
 Delete a blob without prompting confirmation:
 
 ```bash
-oras blob delete --yes localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5
+oras blob delete --force localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5
 ```
 
 Delete a blob and print its descriptor:
 
 ```bash
-oras blob delete --descriptor --yes localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5
-```  
+oras blob delete --descriptor --force localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5
+```
 
 ## Options
 
@@ -50,4 +50,3 @@ oras blob delete --descriptor --yes localhost:5000/hello@sha256:9a201d228ebd9662
   -u, --username string                            registry username
   -v, --verbose                                    verbose output
 ```
-
