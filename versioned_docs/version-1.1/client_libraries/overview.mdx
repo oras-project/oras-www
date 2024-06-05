@@ -1,0 +1,127 @@
+---
+title: Overview
+sidebar_position: 0
+---
+
+# Overview
+
+## Languages
+
+The following languages are currently supported:
+
+- [Go](./go.mdx)
+- [Python](https://oras-project.github.io/oras-py/getting_started/user-guide.html) 
+- [Rust](./rust.mdx) (in progress)
+
+## Unified Experience
+
+The objective of ORAS is simple as transferring artifacts from one place to another.
+
+In the conventional [client-server model](https://en.wikipedia.org/wiki/Client%E2%80%93server_model), the operation of downloading artifacts from the remote registries is referred to as **pull**, and the operation of uploading artifacts to the remote registry is referred to as **push**.
+
+This model can be generalized by abstracting the client and the server as **targets** so that pull and push can be viewed as **copying** from one target to another (see [**Copy API** oras-project/oras-go#8](https://github.com/oras-project/oras-go/pull/8)).
+For instances,
+
+- Copy from memory to a remote registry.
+- Copy from a remote registry to a local file folder.
+- Copy from a remote registry to another remote registry.
+- Copy from memory to a local file folder.
+
+### Targets
+
+Generally, a target is a [content-addressable storage (CAS)](https://en.wikipedia.org/wiki/Content-addressable_storage) with tags.
+All blobs in a CAS are addressed by their [descriptors](https://github.com/opencontainers/image-spec/blob/v1.1.0-rc2/descriptor.md).
+
+To retrieve a blob,
+
+1. Get a descriptor. Optionally, it can be resolved by a tag.
+2. Query the blob with a descriptor.
+
+To store a blob,
+
+1. Store the blob directly in the CAS. A descriptor will be returned.
+2. Optionally, associate the returned descriptor with a tag.
+
+It is worth noting that a target is not equal to a registry.
+
+- Blobs can be tagged in a target but not in a registry.
+- Tag list is available in a registry but not always available in a target.
+
+### Graphs
+
+Besides plain blobs, it is natural to store [directed acyclic graphs (DAGs)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) in a CAS.
+Precisely, all blobs are leaf nodes and most manifests are non-leaf nodes.
+
+An artifact is a rooted DAG where its root node is an [OCI manifest](https://github.com/opencontainers/image-spec/blob/v1.1.0-rc2/manifest.md) or an [OCI Artifact Manifest](https://github.com/opencontainers/image-spec/blob/v1.1.0-rc2/artifact.md).
+Additionally, artifacts can be grouped by an [OCI index](https://github.com/opencontainers/image-spec/blob/v1.1.0-rc2/image-index.md), which is also a rooted DAG.
+
+Given a node of a DAG in a CAS, it is efficient to find out all its children.
+Since CASs are usually not enumerable or indexed, it is not possible to find the parent nodes of an arbitrary node.
+Nevertheless, some CASs choose to implement or partially implement the functionality of parent node finding.
+For instances, registries with [Referrers API](https://github.com/opencontainers/distribution-spec/blob/v1.1.0-rc1/spec.md#listing-referrers) support are CASs with partially implementation where parent node finding is only available for manifest nodes.
+
+### Extended Copy
+
+With the concepts above, we can formally define that
+
+- **Copy** is a function to replicate a rooted DAG from one CAS to another.
+- **Extended Copy** is a function to replicate a DAG from one CAS to another.
+
+It is worth noting that extended copy is possible only if the source CAS supports parent node finding.
+Based on the scenarios, extended copy can have many options such as opting to copy a sub-DAG rooted by a certain node and all its parent nodes of a certain depth with / without their children.
+
+Optionally, node filters or even node modifiers can be attached to a copy process for advanced scenarios.
+
+Related issues:
+
+- [**Support copy of images and associated references** oras-project/oras-go#29](https://github.com/oras-project/oras-go/issues/29)
+- [**Copy Artifact Reference Graph** oras-project/oras#307](https://github.com/oras-project/oras/issues/307)
+
+Hint: A [polytree](https://en.wikipedia.org/wiki/Polytree) is a DAG.
+
+![polytree](./img/polytree.svg)
+
+## Paradigms
+
+🚧 *Note: this section is contingent on
+[oras-project/oras-go#8](https://github.com/oras-project/oras-go/pull/8) and
+does not reprersent the current state of the ORAS Go client library.*
+
+At a high-level, each client library provides the concept of a `Target` interface
+and a `Copy` method. `Copy` transfers content from one `Target` to another.
+
+### `Target`
+
+A `Target` represents a place to which one can send/push or retrieve/pull artifacts.
+Anything that implements this interface can be used as a place to send
+or retrieve artifacts.
+
+Some examples of a `Target` may include the following:
+
+- An OCI Registry
+- An [OCI Image Layout](https://github.com/opencontainers/image-spec/blob/v1.1.0-rc2/image-layout.md)
+- A local collection of files
+
+### `Copy`
+
+`Copy` copies a rooted DAG identified by a reference from one `Target` to another `Target`.
+
+#### Method signature
+
+The following is a rough method signature based on the Go version:
+
+```go
+func Copy(from Target, fromRef string, to Target, toRef string) Descriptor
+```
+
+### `ExtendedCopy`
+
+`Copy` copies a DAG reachable from a node identified by a reference from one `Target` to another `Target`.
+
+#### Method signature
+
+The following is a rough method signature based on the Go version:
+
+```go
+func ExtendedCopy(from Target, fromRef string, to Target, toRef string) Descriptor
+```
