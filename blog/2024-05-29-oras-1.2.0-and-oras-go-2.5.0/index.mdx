@@ -1,0 +1,98 @@
+---
+slug: oras-new-release
+title: Announcing ORAS v1.2.0 - OCI Spec v1.1.0 support, formatted output, and more!
+authors: oras
+tags: [oras, artifact]
+---
+
+
+The [ORAS](https://oras.land/) project maintainers are proud to announce ORAS CLI v1.2.0 and ORAS-go v2.5.0. These two releases are ready for production use. ORAS CLI v1.2.0 introduces OCI Spec v1.1.0 support, formatted output, brand-new terminal experience with progress bar, and more! 
+This article walks you through the notable features and how these enhancements benefit ORAS users as well as the cloud-native ecosystem.
+
+## What's new in ORAS v1.2.0
+
+### OCI Spec v1.1.0 support
+
+ORAS CLI v1.2.0 and ORAS-go v2.5.0 are now compliant with OCI [image-spec v1.1.0](https://github.com/opencontainers/image-spec/blob/v1.1.0) and [distribution-spec v1.1.0](https://github.com/opencontainers/distribution-spec/tree/v1.1.0). 
+With OCI Spec v1.1.0 implemented by more and more OCI registries and officially supported in the ORAS client side, these major capabilities are officially enabled for users:
+
+- Able to create, store, and distribute non-container artifacts, such as Helm Chart, Kubernetes manifest file, See [OCI Artifact concept](https://oras.land/docs/concepts/artifact) for details.
+- Able to establish relationships between different artifacts. This allows users to associate the supply chain artifacts like SBOM, signature, vulnerability scanning report with the image. See [The Art of Associating Artifacts](https://oras.land/docs/concepts/reftypes#the-art-of-associating-artifacts) for details.
+- Able to discover and query artifact relationships, able to distribute a graph of artifacts across registries. See [Listing Referrers concept](https://oras.land/docs/concepts/reftypes#listing-referrers) for details.
+
+### Formatted output
+
+ORAS CLI has very basic output to show command operation result to human. For machine processing, especially in automation scenarios like scripting and CI/CD pipelines, developers may want to perform batch operations and chain different commands with ORAS, as well as filtering, modifying, and sorting objects based on the ORAS outputs.
+Developers expect that ORAS output can be emitted as machine-readable text, so that it can be used to perform further data manipulation.
+
+With formatted output support in ORAS v1.2.0, it enables users to use the `--format` to format metadata output into structured data (e.g. JSON) and optionally use the `--template` with the [Go template](https://pkg.go.dev/text/template) to manipulate the output data. 
+
+For example, push a file and two tags to a repository and show the descriptor of the image manifest in pretty JSON format:
+
+```bash
+oras push $REGISTRY/$REPO:$TAG1,$TAG2 sbom.spdx vul-scan.json --format json 
+```
+
+```json
+{
+  "reference": "$REGISTRY/$REPO@sha256:4a5b8c83d153f52afdfcb422db56c2349aae3bd5ecf8338a58353b5eb6681c45",
+  "mediaType": "application/vnd.oci.image.manifest.v1+json",
+  "digest": "sha256:4a5b8c83d153f52afdfcb422db56c2349aae3bd5ecf8338a58353b5eb6681c45",
+  "size": 820,
+  "annotations": {
+    "org.opencontainers.image.created": "2023-12-15T09:41:54Z"
+  },
+  "artifactType": "json/example",
+  "referenceByTags": [
+    "$REGISTRY/$REPO:$TAG1",
+    "$REGISTRY/$REPO:$TAG2"
+  ]
+}
+```
+
+Futhermore, if you want to filter out the value of reference and media type of the pushed artifact in the standard output, use Go template functions as follows:
+
+```bash
+oras push $REGISTRY/$REPO:$TAG1,$TAG2 sbom.spdx vul-scan.json --format go-template='{{.reference}}, {{.mediaType}}'
+```
+
+```
+$REGISTRY/$REPO@sha256:4a5b8c83d153f52afdfcb422db56c2349aae3bd5ecf8338a58353b5eb6681c45, application/vnd.oci.image.manifest.v1+json
+```
+
+This feature is still in "Experimental" stage. We welcome feedback and contributions to make this feature more mature. 
+
+### Progress output to show real-time status
+
+Keeping track of manifest content download and upload has never been more intuitive and informative. With the progress output, users can witness the real-time status of manifest content pulling, pushing, and transferring. This is really helpful and effective when pulling or pushing large-size content from or to the registry.
+
+[![asciicast](https://asciinema.org/a/661599.svg)](https://asciinema.org/a/661599)
+
+### Other enhancements
+
+- Support X.509 mTLS authentication with OCI registries by introducing `--cert-file` and `--key-file` in several ORAS commands
+- Support deletion of manifests and blobs in OCI image layout
+- Introduce `--platform` to oras attach for better multi-arch attaching experience, which allows adding referrer artifact to a specific sub-platform
+- Introduce `oras resolve` to get the digest of an artifact
+
+In addition, the overall user experience and performance are also enhanced in this release:
+
+- Reduce authentication request count for several ORAS commands and support blob mounting across repositories in the same registry for `oras copy`
+- Improve error message based on [ORAS CLI error handling guidance](https://github.com/oras-project/oras/blob/v1.2.0/docs/proposals/error-handling-guideline.md)
+
+There are a few bug fixes and a deprecated feature in this release. For a concrete changelog, please see [ORAS CLI v1.2.0 Release Notes](https://github.com/oras-project/oras/releases/tag/v1.2.0).
+
+### Use ORAS CLI in terminal, Docker container and CI/CD pipelines
+
+ORAS installation binary is available on Winget, Homebrew, Snap, GitHub and Docker container image. It can be installed via one simple command. Please see the installation guide for your environment.
+
+The [ORAS GitHub Actions](https://github.com/marketplace/actions/setup-oras) has been upgraded to ORAS CLI v1.2.0. ORAS CLI has also been integrated with the hosted runner machines ([Ubuntu 22.04](https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md#cli-tools) and [Ubuntu 20.04](https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2004-Readme.md#cli-tools)) on GitHub Actions and Azure Devops as a preinstalled software. This delivers out-of-box experience to use ORAS in CI/CD pipelines.
+
+## What's next for ORAS
+
+ORAS CLI v1.3.0 will focus on verbose logs improvement for a better troubleshooting experience, image index for multi-arch image management, and annotating experience improvement. See the [ORAS v1.3.0 milestone](https://github.com/oras-project/oras/discussions/1311) for details. Any feedback are welcome!
+
+## Join the ORAS community
+ 
+- [Follow ORAS on X](https://x.com/intent/follow?screen_name=orasproject)
+- [Join the Slack channel in CNCF](https://slack.cncf.io/) and find us at **oras** channel
