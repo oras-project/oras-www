@@ -20,7 +20,7 @@ brew install oras
 Install `oras` using [Snap](https://snapcraft.io/store):
 
 ```bash
-snap install oras
+snap install oras --classic
 ```
 
 ## Release artifacts
@@ -32,7 +32,7 @@ Install ORAS from the latest [release artifacts](https://github.com/oras-project
 If you want to install ORAS on an AMD64-based Linux machine, run the following command:
 
 ```bash
-VERSION="1.1.0"
+VERSION="1.2.0"
 curl -LO "https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_linux_amd64.tar.gz"
 mkdir -p oras-install/
 tar -zxf oras_${VERSION}_*.tar.gz -C oras-install/
@@ -41,7 +41,7 @@ rm -rf oras_${VERSION}_*.tar.gz oras-install/
 ```
 :::note
 
-If you want to install ORAS on an ARM64-based Linux machine, you can download it from `https://github.com/oras-project/oras/releases/download/v1.1.0/oras_1.1.0_linux_arm64.tar.gz`.
+If you want to install ORAS on an ARM64-based Linux machine, you can download it from `https://github.com/oras-project/oras/releases/download/v1.2.0/oras_1.2.0_linux_arm64.tar.gz`.
 
 :::
 
@@ -50,7 +50,7 @@ If you want to install ORAS on an ARM64-based Linux machine, you can download it
 If you want to install ORAS on a Mac computer with Apple silicon, run the following command:
 
 ```bash
-VERSION="1.1.0"
+VERSION="1.2.0"
 curl -LO "https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_darwin_arm64.tar.gz"
 mkdir -p oras-install/
 tar -zxf oras_${VERSION}_*.tar.gz -C oras-install/
@@ -59,7 +59,7 @@ rm -rf oras_${VERSION}_*.tar.gz oras-install/
 ```
 :::note
 
-If you want to install ORAS on an Intel-based Mac, you can download it from `https://github.com/oras-project/oras/releases/download/v1.1.0/oras_1.1.0_darwin_amd64.tar.gz`.
+If you want to install ORAS on an Intel-based Mac, you can download it from `https://github.com/oras-project/oras/releases/download/v1.2.0/oras_1.2.0_darwin_amd64.tar.gz`.
 
 :::
 
@@ -68,13 +68,13 @@ If you want to install ORAS on an Intel-based Mac, you can download it from `htt
 - You can install ORAS CLI on Windows using [WinGet (Windows Package Manager)](https://github.com/microsoft/winget-pkgs):
 
 ```bash
-winget install oras --version 1.1.0
+winget install oras --version 1.2.0
 ```
 
 - Alternatively, you can install ORAS CLI using `.exe` installer. Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
 
 ```cmd
-set VERSION="1.1.0"
+set VERSION="1.2.0"
 curl.exe -sLO  "https://github.com/oras-project/oras/releases/download/v%VERSION%/oras_%VERSION%_windows_amd64.zip"
 tar.exe -xvzf oras_%VERSION%_windows_amd64.zip
 mkdir -p %USERPROFILE%\bin\
@@ -87,7 +87,7 @@ set PATH=%USERPROFILE%\bin\;%PATH%
 A public Docker image containing the CLI is available on [GitHub Container Registry](https://github.com/orgs/oras-project/packages/container/package/oras):
 
 ```
-docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.1.0 help
+docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.2.0 help
 ```
 :::note
 
@@ -119,9 +119,9 @@ nix-env -iA nixpkgs.oras
 
 ```shell
 $ oras version
-Version:        1.1.0
-Go version:     go1.21.0
-Git commit:     7079c468a06fb5815c99395eb4aaf46dd459d3fa
+Version:        1.2.0
+Go version:     go1.22.3
+Git commit:     dcef719e208a9b226b15bc6512ad729a7dd93270
 Git tree state: clean
 ```
 
