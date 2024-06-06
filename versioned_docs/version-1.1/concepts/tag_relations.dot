@@ -1,0 +1,66 @@
+# To generate the image used, run the following command
+# dot -Tpng -o tag_relations.png tag_relations.dot
+digraph git_basics {
+	graph [
+        dpi=600
+		fontname = "Helvetica,Arial,sans-serif"
+	]
+	node [
+		style=filled
+		pencolor="#00000044" // frames color
+		fontname="Helvetica,Arial,sans-serif"
+        penwidth=1
+	]
+	edge [
+		arrowsize=0.5
+		labelfontcolor="#00000080"
+		penwidth=2
+	]
+
+    tag [
+		label=<<b>Tag</b>>
+		shape=box
+		color=lightcyan4
+		fillcolor=lightcyan1
+    ]
+    
+    subgraph manifests {
+        rank=same
+        manifest [
+            color="#88000022"
+            shape=plain
+            label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+                <tr> <td> <b>Manifest</b> </td> </tr>
+                    <tr> <td align="left">schema : <i>string</i><br align="left"/></td></tr>
+                    <tr> <td align="left">artifactType : <i>string</i><br align="left"/></td></tr>
+                    <tr> <td align="left">config : <i>descriptor</i><br align="left"/></td></tr>
+                    <tr> <td align="left">annotations : <i>map[string]string</i><br align="left"/></td></tr>
+                    <tr> <td align="left">subject : <i>descriptor</i><br align="left"/></td></tr>
+            </table>>
+        ]
+        
+        index [
+            shape=plain
+            color="#88000022"
+            label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+                <tr> <td> <b>Index</b> </td> </tr>
+                    <tr> <td align="left">manifests : <i>[ ]descriptor</i><br align="left"/></td></tr>
+            </table>>
+        ]
+    }
+
+	blobs [
+		fillcolor="#88ff0022"
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+			<tr> <td  > <b>Blobs</b></td> </tr>
+			<tr> <td  align="left">config blob</td> </tr>
+            <tr> <td  align="left">layer blobs</td> </tr>
+            <tr> <td align="center">...</td> </tr>
+		</table>>
+		shape=plain
+	]
+
+    tag -> manifest
+    tag -> index -> manifest
+	manifest -> blobs 
+}
