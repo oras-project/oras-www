@@ -16,10 +16,10 @@
         "check-links": "remark --frail --use remark-validate-links \"docs/**/*.{md,mdx}\" \"blog/**/*.{md,mdx}\" ."
     },
     "dependencies": {
-        "@docusaurus/core": "^3.3.2",
-        "@docusaurus/preset-classic": "^3.3.2",
-        "@docusaurus/theme-common": "^3.3.2",
-        "@docusaurus/theme-mermaid": "^3.3.2",
+        "@docusaurus/core": "^3.4.0",
+        "@docusaurus/preset-classic": "^3.4.0",
+        "@docusaurus/theme-common": "^3.4.0",
+        "@docusaurus/theme-mermaid": "^3.4.0",
         "@docusaurus/types": "^3.4.0",
         "@mdx-js/react": "^3.0.1",
         "clsx": "^2.1.1",
