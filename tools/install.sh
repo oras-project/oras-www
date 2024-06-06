@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-TEMPDIR="${1?First argument is temporary directory}"
+VERSION="${1?First argument is version to install}"
+TEMPDIR="${2?Second argument is temporary directory}"
 
-VERSION="1.1.0"
 OS="$(uname -s | tr A-Z a-z)"
 ARCH=$(test "$(uname -m)" = 'x86_64' && echo 'amd64' || echo 'arm64')
 
