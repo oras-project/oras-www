@@ -50,13 +50,13 @@ oras push $REGISTRY/$REPO:$TAG1,$TAG2 sbom.spdx vul-scan.json --format json
 }
 ```
 
-Futhermore, if you want to filter out the value of reference and mediaType of the pushed artifact in the standard output, use Go template functions as follows:
+Futhermore, if you want to filter out the value of reference and media type of the pushed artifact in the standard output, use Go template functions as follows:
 
 ```bash
 oras push $REGISTRY/$REPO:$TAG1,$TAG2 sbom.spdx vul-scan.json --format go-template='{{.reference}}, {{.mediaType}}'
 ```
 
-```json
+```
 $REGISTRY/$REPO@sha256:4a5b8c83d153f52afdfcb422db56c2349aae3bd5ecf8338a58353b5eb6681c45, application/vnd.oci.image.manifest.v1+json
 ```
 
@@ -66,7 +66,7 @@ This feature is still in "Experimental" stage. We welcome feedback and contribut
 
 Keeping track of manifest content download and upload has never been more intuitive and informative. With the progress output, users can witness the real-time status of manifest content pulling, pushing, and transferring. This is really helpful and effective when pulling or pushing large-size content from or to the registry.
 
-<script src="https://asciinema.org/a/661599.js" id="asciicast-661599" async="true"></script>
+[![asciicast](https://asciinema.org/a/661599.svg)](https://asciinema.org/a/661599)
 
 ### Other enhancements
 
@@ -75,16 +75,16 @@ Keeping track of manifest content download and upload has never been more intuit
 - Introduce `--platform` to oras attach for better multi-arch attaching experience, which allows adding referrer artifact to a specific sub-platform
 - Introduce `oras resolve` to get the digest of an artifact
 
-In addition, the overall user experience and performance are also enhanced in this release：
+In addition, the overall user experience and performance are also enhanced in this release:
 
 - Reduce authentication request count for several ORAS commands and support blob mounting across repositories in the same registry for `oras copy`
 - Improve error message based on [ORAS CLI error handling guidance](https://github.com/oras-project/oras/blob/v1.2.0/docs/proposals/error-handling-guideline.md)
 
 There are a few bug fixes and a deprecated feature in this release. For a concrete changelog, please see [ORAS CLI v1.2.0 Release Notes](https://github.com/oras-project/oras/releases/tag/v1.2.0).
 
-### Use ORAS CLI in terminal and CI/CD pipelines
+### Use ORAS CLI in terminal, Docker container and CI/CD pipelines
 
-ORAS installation binary is available on Winget, Homebrew, Snap, Docker, and GitHub. It can be installed via one simple command. Please see the installation guide for your environment.
+ORAS installation binary is available on Winget, Homebrew, Snap, GitHub and also provides Docker container image. It can be installed via one simple command. Please see the installation guide for your environment.
 
 The [ORAS GitHub Actions](https://github.com/marketplace/actions/setup-oras) has been upgraded to ORAS CLI v1.2.0. ORAS CLI has also been integrated with the hosted runner machines ([Ubuntu 22.04](https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md#cli-tools) and [Ubuntu 20.04](https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2004-Readme.md#cli-tools)) on GitHub Actions and Azure Devops as a preinstalled software. This delivers out-of-box experience to use ORAS in CI/CD pipelines.
 
