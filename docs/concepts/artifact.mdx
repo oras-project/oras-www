@@ -64,7 +64,7 @@ flowchart TD
     B -->|No| E[type=manifest.config.mediaType]
 ```
 
-For artifact authors, the sections below should help deciding on the blob and 
+For artifact authors, the sections below should help deciding on the blob and
 config mediaTypes.
 
 ## Dissecting the Manifest
@@ -110,9 +110,9 @@ in this case the config is an empty blob as per the [empty descriptor guidance][
 
 ### Artifacts with config
 
-Clients have been using the `config.mediaType` property  to declare the artifact type. 
-For OCI artifacts that have a valid config blob the config blob may use its own 
-mediaType and the `artifactType` property can be set to indicate the type of artifact. 
+Clients have been using the `config.mediaType` property  to declare the artifact type.
+For OCI artifacts that have a valid config blob the config blob may use its own
+mediaType and the `artifactType` property can be set to indicate the type of artifact.
 
 ```json
    {
@@ -136,8 +136,8 @@ mediaType and the `artifactType` property can be set to indicate the type of art
 
 #### Prior Art
 
-Before version 1.1 of the [image specification][image-spec], the `config.mediaType` 
-was used to indicate the type of the artifact. 
+Before version 1.1 of the [image specification][image-spec], the `config.mediaType`
+was used to indicate the type of the artifact.
 For example the artifact type below for the helm chart is `application/vnd.cncf.helm.config.v1+json`
 as the manifest does not have the `artifactType` property.
 
@@ -165,7 +165,7 @@ as the manifest does not have the `artifactType` property.
 Artifacts may store metadata in the manifest as annotations and need not have a config or blobs.
 For these the `artifactType` property is used to declare the type of the artifact.
 The config property is required in the manifest and for maximum compatibility
-an empty layer is also created as per the  [empty descriptors guidance][empty-descriptor].  
+an empty layer is also created as per the  [empty descriptors guidance][empty-descriptor].
 
 ```json
 {
@@ -191,10 +191,10 @@ an empty layer is also created as per the  [empty descriptors guidance][empty-de
 }
 ```
 
-### Artifact authoring decision tree 
+### Artifact authoring decision tree
 
 Putting it all together with the types of artifacts listed above and
-[Artifact Guidance in the image specification][artifact-guidelines], the decision tree 
+[Artifact Guidance in the image specification][artifact-guidelines], the decision tree
 below should help determine what fields to set when creating an artifact.
 
 ```mermaid
