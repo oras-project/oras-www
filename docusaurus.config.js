@@ -118,7 +118,7 @@ const config = {
                         label: "Docs",
                     },
                     {
-                        to: '/community',
+                        to: '/community/community_resources',
                         label: 'Community Guide',
                         position: 'left',
                         activeBaseRegex: `/community/`,
