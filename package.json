@@ -13,7 +13,7 @@
         "write-translations": "docusaurus write-translations",
         "write-heading-ids": "docusaurus write-heading-ids",
         "refresh-commands": "./tools/refresh-commands.sh",
-        "check-links": "remark --frail --use remark-validate-links \"docs/**/*.{md,mdx}\" \"blog/**/*.{md,mdx}\" ."
+        "check-links": "remark --frail --use remark-validate-links \"docs/**/*.{md,mdx}\" \"blog/**/*.{md,mdx}\" \"community/**/*.{md,mdx}\" ."
     },
     "dependencies": {
         "@docusaurus/core": "^3.4.0",

@@ -51,14 +51,13 @@ const config = {
                     sidebarPath: require.resolve("./sidebars.js"),
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
-                    editUrl:
-                        "https://github.com/oras-project/oras-www/tree/main/",
-                        versions: {
-                            "1.1": {
-                                label: '1.1',
-                                path: '1.1',
-                            }
+                    editUrl: "https://github.com/oras-project/oras-www/tree/main/",
+                    versions: {
+                        "1.1": {
+                            label: '1.1',
+                            path: '1.1',
                         }
+                    }
                 },
                 blog: {
                     showReadingTime: true,
@@ -71,6 +70,21 @@ const config = {
                     customCss: require.resolve("./src/css/custom.css"),
                 },
             }),
+        ],
+    ],
+    plugins: [
+        [
+          'content-docs',
+          /** @type {import('@docusaurus/plugin-content-docs').Options} */
+          {
+            id: 'community',
+            path: 'community',
+            routeBasePath: 'community',
+            sidebarPath: require.resolve("./community/sidebars.js"),
+            editCurrentVersion: true,
+            showLastUpdateAuthor: true,
+            showLastUpdateTime: true,
+          },
         ],
     ],
 
@@ -103,6 +117,12 @@ const config = {
                         position: "left",
                         label: "Docs",
                     },
+                    {
+                        to: '/community/community_resources',
+                        label: 'Community',
+                        position: 'left',
+                        activeBaseRegex: `/community/`,
+                      },
                     {
                         label: "Adopters",
                         to: "/adopters",
