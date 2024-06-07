@@ -107,7 +107,6 @@ const config = {
                         label: "Adopters",
                         to: "/adopters",
                     },
-                    
                     {
                         label: "Community",
                         to: "/community",
