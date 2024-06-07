@@ -136,7 +136,7 @@ See [OCI Artifacts](https://github.com/opencontainers/image-spec/blob/main/manif
   }
   ```
 
-# Pulling 
+# Pulling
 
 Pulling artifacts involves specifying the content addressable artifact, along with the type of artifact.
 
@@ -147,7 +147,7 @@ oras pull localhost:5000/hello-artifact:v2
 ## Using cache when pulling artifacts
 
 ORAS pulls the artifact into a content-addressable storage (CAS) cache if the content is not available locally to save bandwidth and disk I/O.
-Once the content is availabe in the cache, ORAS copies the artifact to the desired location. 
+Once the content is availabe in the cache, ORAS copies the artifact to the desired location.
 The cache directory is specified by using the environment variable `ORAS_CACHE`. If not specified, cache is not used.
 
 ```

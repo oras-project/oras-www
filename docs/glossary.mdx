@@ -7,43 +7,43 @@ sidebar_position: 80
 
 ### Annotations
 
-[Annotations](https://github.com/opencontainers/image-spec/blob/main/annotations.md) are string key-value pairs similar to labels. 
-Annotations are supported by OCI Image Manifest and OCI Content Descriptors. 
+[Annotations](https://github.com/opencontainers/image-spec/blob/main/annotations.md) are string key-value pairs similar to labels.
+Annotations are supported by OCI Image Manifest and OCI Content Descriptors.
 You can refer to our [how-to guide](./how_to_guides/manifest_annotations.mdx) to understand how ORAS CLI could be used to add them.
 
 ### Artifacts
 
-Artifacts are a conceptual piece of content stored as [Blobs](#blob) with an accompanying Manifest containing a [Config](#config). 
-We can [push](./commands/oras_push.mdx), 
-[pull](./commands/oras_pull.mdx), 
-[attach](./commands/oras_attach.mdx) artifacts using the ORAS CLI. 
-In order to understand the usage better, 
+Artifacts are a conceptual piece of content stored as [Blobs](#blob) with an accompanying Manifest containing a [Config](#config).
+We can [push](./commands/oras_push.mdx),
+[pull](./commands/oras_pull.mdx),
+[attach](./commands/oras_attach.mdx) artifacts using the ORAS CLI.
+In order to understand the usage better,
 you may follow the steps in our [quick start guide](./quickstart.mdx).
 
 ### Blob
 
-Blob (which stands for Binary Large Objects) is the content stored by a registry and is addressable by a Digest. 
-ORAS allows you to [fetch](./commands/oras_blob_fetch.mdx), 
-[delete](./commands/oras_blob_delete.mdx) 
+Blob (which stands for Binary Large Objects) is the content stored by a registry and is addressable by a Digest.
+ORAS allows you to [fetch](./commands/oras_blob_fetch.mdx),
+[delete](./commands/oras_blob_delete.mdx)
 and [push](./commands/oras_blob_push.mdx) blobs.
 
 ### Config
 
-[Config](https://github.com/opencontainers/image-spec/blob/main/config.md) is the JSON format describing images for use with a container runtime and execution tool and its relationship to filesystem changesets. 
+[Config](https://github.com/opencontainers/image-spec/blob/main/config.md) is the JSON format describing images for use with a container runtime and execution tool and its relationship to filesystem changesets.
 You may use [`oras manifest fetch-config`](./commands/oras_manifest_fetch-config.mdx) to check out the config of your artifact.
 
 ### Container Images
 
-A [container image](https://www.docker.com/resources/what-container/#:~:text=A%20Docker%20container%20image%20is,tools%2C%20system%20libraries%20and%20settings.) is a small, standalone, 
-executable file that contains all the components required to run an application, 
+A [container image](https://www.docker.com/resources/what-container/#:~:text=A%20Docker%20container%20image%20is,tools%2C%20system%20libraries%20and%20settings.) is a small, standalone,
+executable file that contains all the components required to run an application,
 including the code, runtime, system tools, system libraries, and settings.
 
 ### Content Descriptors
 
-A [Content Descriptor](https://github.com/opencontainers/image-spec/blob/main/descriptor.md) (or simply Descriptor) describes the disposition of the targeted content. 
-It includes the type of the content, 
-a content identifier (digest), 
-and the byte-size of the raw content. 
+A [Content Descriptor](https://github.com/opencontainers/image-spec/blob/main/descriptor.md) (or simply Descriptor) describes the disposition of the targeted content.
+It includes the type of the content,
+a content identifier (digest),
+and the byte-size of the raw content.
 Optionally, it includes the type of artifact it is describing.
 
 ### Digest
@@ -60,8 +60,8 @@ The Distribution Specification Project includes a process and API for prototypin
 
 ### Image Layout
 
-The [OCI Image Layout](https://github.com/opencontainers/image-spec/blob/main/image-layout.md) is the directory structure for OCI content-addressable blobs and location-addressable references (refs). 
-It must contain a `blobs` directory, `oci-layout` file and an `index.json` file. 
+The [OCI Image Layout](https://github.com/opencontainers/image-spec/blob/main/image-layout.md) is the directory structure for OCI content-addressable blobs and location-addressable references (refs).
+It must contain a `blobs` directory, `oci-layout` file and an `index.json` file.
 To learn more, check out the [how-to guide](./how_to_guides/distributing_oci_layouts.mdx) on OCI Layouts.
 
 ### Image Manifests
@@ -70,33 +70,33 @@ An [image manifest](https://github.com/opencontainers/image-spec/blob/main/manif
 
 ### Image-spec
 
-The [OCI Image Spec](https://github.com/opencontainers/image-spec/blob/main/spec.md) defines an OCI Image, 
-consisting of an image manifest, 
-an image index (optional), 
-a set of filesystem layers, 
+The [OCI Image Spec](https://github.com/opencontainers/image-spec/blob/main/spec.md) defines an OCI Image,
+consisting of an image manifest,
+an image index (optional),
+a set of filesystem layers,
 and a configuration.
 
 ### Image Index Specification
 
-The [image index](https://github.com/opencontainers/image-spec/blob/main/image-index.md) is a higher-level manifest which points to specific image manifests, ideal for one or more platforms. 
+The [image index](https://github.com/opencontainers/image-spec/blob/main/image-index.md) is a higher-level manifest which points to specific image manifests, ideal for one or more platforms.
 It is a multi-descriptor entry point.
 
 ### Local Registry
 
-A registry is a place where container images and artifacts can easily be stored and accessed. 
-Whereas, a local registry (like [zot](https://zotregistry.dev/)) is a registry that is present on our local machine. 
+A registry is a place where container images and artifacts can easily be stored and accessed.
+Whereas, a local registry (like [zot](https://zotregistry.dev/)) is a registry that is present on our local machine.
 You can follow our [quick start guide](./quickstart.mdx) if you would like to try using zot registry.
 
 ### Manifest Referrers API
 
-Artifact-manifest provides the ability to reference artifacts to existing artifacts. Reference artifacts include signatures, 
-SBoMs and many other types. 
+Artifact-manifest provides the ability to reference artifacts to existing artifacts. Reference artifacts include signatures,
+SBoMs and many other types.
 The [manifest `referrers` API](https://github.com/oras-project/artifacts-spec/blob/main/manifest-referrers-api.md) returns all artifacts that have a `subject` of the given manifest digest.
 
 ### Referrer API
 
-The Referrers API returns a list of manifests that reference a blob. 
-You can understand how to use this API by referring to the [details](https://github.com/opencontainers/distribution-spec/blob/main/spec.md#listing-referrers) given in the distribution spec. 
+The Referrers API returns a list of manifests that reference a blob.
+You can understand how to use this API by referring to the [details](https://github.com/opencontainers/distribution-spec/blob/main/spec.md#listing-referrers) given in the distribution spec.
 
 ### Referrer Tag Schema
 
@@ -108,21 +108,21 @@ A registry is like a central repository where you can store, share and manage co
 
 ### Remote Registry
 
-A remote registry is when our registry is remotely available such as Docker Hub, ghcr.io, etc. 
-We can use ORAS CLI to perform many operations such as [pushing](./commands/oras_push.mdx), 
-[pulling](./commands/oras_pull.mdx), 
+A remote registry is when our registry is remotely available such as Docker Hub, ghcr.io, etc.
+We can use ORAS CLI to perform many operations such as [pushing](./commands/oras_push.mdx),
+[pulling](./commands/oras_pull.mdx),
 [attaching](./commands/oras_attach.mdx) artifacts.
 
 ### Software Bill of Materials
 
-A codebase's open source and third-party components are listed in a software Bill of Materials (SBOM). 
-Additionally, an SBOM provides the versions of the components used in the codebase, 
-their patch status, 
-and the licences that govern them. 
+A codebase's open source and third-party components are listed in a software Bill of Materials (SBOM).
+Additionally, an SBOM provides the versions of the components used in the codebase,
+their patch status,
+and the licences that govern them.
 
 ### Supply Chain Security
 
-Supply chain security emphasises risk management of outside vendors, suppliers, logistics, and transportation. 
+Supply chain security emphasises risk management of outside vendors, suppliers, logistics, and transportation.
 It recognises, assesses, and reduces risks related to collaborating with other organisations as a part of your supply chain.
 
 ### Tags
