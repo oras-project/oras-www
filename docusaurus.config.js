@@ -67,6 +67,21 @@ const config = {
             }),
         ],
     ],
+    plugins: [
+        [
+          'content-docs',
+          /** @type {import('@docusaurus/plugin-content-docs').Options} */
+          {
+            id: 'community',
+            path: 'community',
+            routeBasePath: 'community',
+            sidebarPath: require.resolve("./community/sidebars.js"),
+            editCurrentVersion: true,
+            showLastUpdateAuthor: true,
+            showLastUpdateTime: true,
+          },
+        ],
+    ],
 
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -97,6 +112,12 @@ const config = {
                         position: "left",
                         label: "Docs",
                     },
+                    {
+                        to: '/community/community_resources',
+                        label: 'Community',
+                        position: 'left',
+                        activeBaseRegex: `/community/`,
+                      },
                     {
                         label: "Adopters",
                         to: "/adopters",

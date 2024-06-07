@@ -1,6 +1,6 @@
 ---
 title: Reference
-sidebar_position: 3 
+sidebar_position: 3
 ---
 
 # Understanding References in the Open Container Initiative (OCI) Standard
@@ -30,11 +30,11 @@ This reference is a combination of three parts:
 1. **Registry**: This is akin to the home or the server where your images or artifacts are stored.
 Think of it as the overarching domain. Examples include Docker Hub (docker.io),
 GitHub Container Registry (ghcr.io), or your own private registry.
-2. **Repository**: This is a segment of the reference, after the registry where a particular 
+2. **Repository**: This is a segment of the reference, after the registry where a particular
 application or service's images are stored.
 The repository doesn't necessarily follow a hierarchy within the registry, meaning `a/b/c`
 and `a/b/c/d` are both valid and distinct repositories, with no implied hierarchy between them.
-3. **Tag or Digest**: This is the last part indicating the version of the image or artifact 
+3. **Tag or Digest**: This is the last part indicating the version of the image or artifact
 you want to pull or push.
 
 #### References by Tag
@@ -123,7 +123,7 @@ defaults or shortcuts. For instance, if you were to use docker to pull an image
 using the reference `nginx`, docker would automatically resolve this to
 `docker.io/library/nginx:latest`. Here, `docker.io` is the default registry and
 `library/nginx` is the repository with a 'library' prefix for official images and `latest` is the
-default tag. 
+default tag.
 
 ### Conclusion
 

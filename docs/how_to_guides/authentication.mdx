@@ -9,7 +9,7 @@ There are two ways we will be covering in this guide to authenticate with OCI Re
 
 ### Method 1: Authentication Using the `config` File
 
-This method is straightforward but insecure. It may be used for testing purposes. In this method, the command will store the credentials in `~/.docker/config.json` which is the same file used as the docker client. 
+This method is straightforward but insecure. It may be used for testing purposes. In this method, the command will store the credentials in `~/.docker/config.json` which is the same file used as the docker client.
 
 Please note that if you have previously used `docker login`, the credentials will get reused.
 
@@ -36,7 +36,7 @@ An external helper program is needed to interact with a specific keychain or ext
 
 Prerequisites to follow through with these commands:
 1. According to your operating system, you may download a credential helper from among these:
-    - [D-Bus Secret Service](https://github.com/docker/docker-credential-helpers/releases) 
+    - [D-Bus Secret Service](https://github.com/docker/docker-credential-helpers/releases)
     - [Apple macOS keychain](https://github.com/docker/docker-credential-helpers/releases)
     - [Microsoft Windows Credential Manager](https://github.com/docker/docker-credential-helpers/releases)
     - [pass](https://www.passwordstore.org/)
@@ -54,7 +54,7 @@ Configure the credential store in the `~/.docker/config.json` file. Your file sh
 }
 ```
 
-**Note**: Please replace pass with the credential helper you want to use. 
+**Note**: Please replace pass with the credential helper you want to use.
 
 **Step 2**
 

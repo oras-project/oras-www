@@ -38,7 +38,7 @@ create and list reference types.
 The creation of a reference artifact is a two-step process:
 
 - **Step One**: PUT an artifact, say Artifact A, using the PUT Manifest and
-blob upload APIs if the artifact has blob content. The prerequisite for a reference 
+blob upload APIs if the artifact has blob content. The prerequisite for a reference
 type is that the subject artifact must be known so that it may be added to the subject.
 
 - **Step Two**: Put another artifact, say Artifact B, which refers to Artifact A.
@@ -62,11 +62,11 @@ reference to Artifact A by specifying the digest of Artifact A as the subject.
 The association is now established in the registry.
 
 :::tip NOTE
-The specification does allow  pushing the reference artifact **without** requiring 
-the presense of the the `subject` in the target registry or OCI-Layout. 
+The specification does allow  pushing the reference artifact **without** requiring
+the presense of the the `subject` in the target registry or OCI-Layout.
 :::
 
-The following example shows the manifest of Artifact B with a reference to Artifact A 
+The following example shows the manifest of Artifact B with a reference to Artifact A
 in the `subject` field.
 
 ```json
@@ -134,7 +134,7 @@ of a certain media type from the registry, which then responds with the filtered
 The response will include the `OCI-Filters-Applied: artifactType` header to indicate
 that the response is filtered by the `artifactType` query parameter.
 
-The artifact type is determied by the same rules as per 
+The artifact type is determied by the same rules as per
 [OCI artifacts guidlines](artifact.mdx#determining-the-artifact-type).
 
 ```mermaid
@@ -203,23 +203,23 @@ sequenceDiagram
 
     Note over C,R: Save to OCI Layout or file system
 
-    C->>+C: Save manifest, config and blobs 
+    C->>+C: Save manifest, config and blobs
     Note over C: Pull Workflow Ends
 ```
 
 ## The Power of Associations
 
 The introduction of Reference Types (Associations) opens a world of possibilities in
-managing and linking of OCI Artifacts while also empowering the following scenarios: 
+managing and linking of OCI Artifacts while also empowering the following scenarios:
 
-- Discovery and distribution of artifacts like SBOMs or signatures for supply chain. 
-- Movement of a graph of OCI content across environments. 
-- Content management of a graph of artifacts by archiving, deleting or moving them 
+- Discovery and distribution of artifacts like SBOMs or signatures for supply chain.
+- Movement of a graph of OCI content across environments.
+- Content management of a graph of artifacts by archiving, deleting or moving them
 together.
 
-To further explore this concept, dive deeper into the 
+To further explore this concept, dive deeper into the
 [OCI Distribution Specification][distribution-spec] and the [OCI Image Specification][image-spec].
-These comprehensive guides will provide more insights into the use of 
+These comprehensive guides will provide more insights into the use of
 reference types and other details of managing OCI Artifacts.
 
 [listing-referrers]: https://github.com/opencontainers/distribution-spec/blob/v1.1.0-rc3/spec.md#listing-referrers

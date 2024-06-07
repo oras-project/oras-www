@@ -27,7 +27,7 @@ To push a file `hi.txt` with the custom manifest config file `config.json`, you 
 oras push --config config.json localhost:5000/hello:latest hi.txt
 ```
 
-The media type of the config is set to the default value `application/vnd.unknown.config.v1+json`. 
+The media type of the config is set to the default value `application/vnd.unknown.config.v1+json`.
 
 Similar to the file reference, it is possible to change the media type of the manifest config. To push a file `hi.txt` with the custom manifest config file  `config.json` with the custom media type `application/vnd.oras.config.v1+json`, run
 
