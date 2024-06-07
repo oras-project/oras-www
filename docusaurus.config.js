@@ -107,6 +107,11 @@ const config = {
                         label: "Adopters",
                         to: "/adopters",
                     },
+                    
+                    {
+                        label: "Community",
+                        to: "/community",
+                    },
                     { to: "/blog", label: "Blog", position: "left" },
                     {
                         type: "docsVersionDropdown",
