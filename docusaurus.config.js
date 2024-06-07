@@ -119,7 +119,7 @@ const config = {
                     },
                     {
                         to: '/community/community_resources',
-                        label: 'Community Guide',
+                        label: 'Community',
                         position: 'left',
                         activeBaseRegex: `/community/`,
                       },
