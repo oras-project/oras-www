@@ -154,31 +154,31 @@ const config = {
             footer: {
                 style: "dark",
                 links: [
-                    // {
-                    //     title: "Docs",
-                    //     items: [
-                    //         {
-                    //             label: "Introduction",
-                    //             to: "/docs/",
-                    //         },
-                    //         {
-                    //             label: "Installation",
-                    //             to: "/docs/installation",
-                    //         },
-                    //         {
-                    //             label: "How-to Guides",
-                    //             to: "/docs/how_to_guides/authentication",
-                    //         },
-                    //         {
-                    //             label: "ORAS Commands",
-                    //             to: "/docs/commands/use_oras_cli",
-                    //         },
-                    //         {
-                    //             label: "Client Libraries",
-                    //             to: "/docs/client_libraries/overview",
-                    //         },
-                    //     ],
-                    // },
+                    {
+                        title: "Docs",
+                        items: [
+                            {
+                                label: "Introduction",
+                                to: "/docs/",
+                            },
+                            {
+                                label: "Installation",
+                                to: "/docs/installation",
+                            },
+                            {
+                                label: "How-to Guides",
+                                to: "/docs/how_to_guides/authentication",
+                            },
+                            {
+                                label: "ORAS Commands",
+                                to: "/docs/commands/use_oras_cli",
+                            },
+                            {
+                                label: "Client Libraries",
+                                to: "/docs/client_libraries/overview",
+                            },
+                        ],
+                    },
                     {
                         title: "Community",
                         items: [
