@@ -8,6 +8,7 @@ ORAS="${TEMPDIR}/oras"
 echo '---'
 echo "title: oras ${COMMAND}"
 echo "sidebar_position: ${WEIGHT}"
+echo 'warning: Do NOT modify this generated file'
 echo '---'
 echo
 echo "# oras ${COMMAND}"
