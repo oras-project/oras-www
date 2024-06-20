@@ -2,12 +2,28 @@
 
 TEMPDIR=$(mktemp -d)
 trap 'rm -rf "$TEMPDIR"' EXIT
-ORAS_COMMAND=$(./tools/install.sh ${TEMPDIR})
+
+#
+# This script generates command documentation by downloading the oras command
+# and parsing the help text to generate documentation. It iterates over the
+# `versions.json` file to determine the releases that are currently supported.
+#
+# If there is a fix to the help documentation in a patch version, use the
+# `versions-latest` file to specify the patch release for document generation.
+#
+# For example, If you are generating documentation for `1.2` and you want to
+# use `1.2.2` to generate the documentation, put a line in the `versions-latest`
+# file `1.2.2`.  If there is no line in the `versions-latest` that matches
+# the major and minor release `1.2`, then `1.2.0` will be used to generate
+# the documentation.
+#
+map_version() {
+    grep "^$1" versions-latest || echo "$1.0"
+}
 
 list_commands() {
     STATE='Usage'
     IFS=''
-    # WEIGHT=1
     ${ORAS_COMMAND} help ${1} | grep -v '^  completion'| while read LINE
     do
         [[ "${LINE}" == "" ]] && continue
@@ -35,20 +51,27 @@ list_commands() {
     done
 }
 
-WEIGHT=10
-list_commands | while read COMMAND
+VERSIONS=$(tr '[]",' ' ' <versions.json)
+for VERSION
+in ${VERSIONS}
 do
-    RESULT=$(list_commands "${COMMAND}")
-    if [ -z "${RESULT}" ]
-    then
-        ./tools/parse.sh ${TEMPDIR} "${COMMAND}" $WEIGHT >docs/commands/oras_$COMMAND.mdx
-        WEIGHT=$(expr $WEIGHT + 10)
-    else
-        for SUBCOMMAND
-        in ${RESULT}
-        do
-            ./tools/parse.sh ${TEMPDIR} "${COMMAND} ${SUBCOMMAND}" $WEIGHT >docs/commands/oras_${COMMAND}_${SUBCOMMAND}.mdx
+    LATEST_VERSION=$(map_version $VERSION)
+    ORAS_COMMAND=$(./tools/install.sh ${LATEST_VERSION} ${TEMPDIR})
+    WEIGHT=10
+    list_commands | while read COMMAND
+    do
+        RESULT=$(list_commands "${COMMAND}")
+        if [ -z "${RESULT}" ]
+        then
+            ./tools/parse.sh ${TEMPDIR} "${COMMAND}" $WEIGHT >versioned_docs/version-${VERSION}/commands/oras_$COMMAND.mdx
             WEIGHT=$(expr $WEIGHT + 10)
-        done
-    fi
+        else
+            for SUBCOMMAND
+            in ${RESULT}
+            do
+                ./tools/parse.sh ${TEMPDIR} "${COMMAND} ${SUBCOMMAND}" $WEIGHT >docs/commands/oras_${COMMAND}_${SUBCOMMAND}.mdx
+                WEIGHT=$(expr $WEIGHT + 10)
+            done
+        fi
+    done
 done
