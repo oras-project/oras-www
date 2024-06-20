@@ -1,6 +1,7 @@
 ---
 title: oras push
-sidebar_position: 80
+sidebar_position: 150
+warning: Do NOT modify this generated file
 ---
 
 # oras push
@@ -104,21 +105,30 @@ oras push --oci-layout layout-dir:test hi.txt
       --annotation-file string                     path of the annotation file
       --artifact-type string                       artifact type
       --ca-file string                             server certificate authority file for the remote registry
+      --cert-file string                           client certificate file for the remote registry
       --concurrency int                            concurrency level (default 5)
       --config path                                path of image config file
-  -d, --debug                                      debug mode
+  -d, --debug                                      output debug logs (implies --no-tty)
       --disable-path-validation                    skip path validation
       --export-manifest path                       path of the pushed manifest
+      --format string                              [Experimental] Format output using a custom template:
+                                                   'json':         Print in JSON format
+                                                   'go-template':  Print output using the given Go template
   -H, --header stringArray                         add custom headers to requests
   -h, --help                                       help for push
-      --image-spec string                          [Experimental] specify manifest type for building artifact. options: v1.1, v1.0 (default "v1.1")
+      --identity-token string                      registry identity token
+      --identity-token-stdin                       read identity token from stdin
+      --image-spec string                          [Preview] specify manifest type for building artifact. Options: v1.1, v1.0 (default v1.1, overridden to v1.0 if --config is used without --artifact-type)
       --insecure                                   allow connections to SSL registry without certs
+      --key-file string                            client private key file for the remote registry
+      --no-tty                                     [Preview] do not show progress output
       --oci-layout                                 set target as an OCI image layout
   -p, --password string                            registry password or identity token
-      --password-stdin                             read password or identity token from stdin
+      --password-stdin                             read password from stdin
       --plain-http                                 allow insecure connections to registry without SSL check
       --registry-config path                       path of the authentication file for registry
       --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]
+      --template string                            [Experimental] Template string used to format output
   -u, --username string                            registry username
   -v, --verbose                                    verbose output
 ```

@@ -1,6 +1,7 @@
 ---
 title: oras discover
-sidebar_position: 30
+sidebar_position: 60
+warning: Do NOT modify this generated file
 ---
 
 # oras discover
@@ -62,19 +63,30 @@ oras discover --oci-layout -v -o tree layout-dir:v1
 ```
       --artifact-type string                        artifact type
       --ca-file string                              server certificate authority file for the remote registry
-  -d, --debug                                       debug mode
-      --distribution-spec string                    [Preview] set OCI distribution spec version and API option for target. options: v1.1-referrers-api, v1.1-referrers-tag
+      --cert-file string                            client certificate file for the remote registry
+  -d, --debug                                       output debug logs (implies --no-tty)
+      --distribution-spec string                    [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api
+      --format string                               [Experimental] Format output using a custom template:
+                                                    'tree':         Get referrers recursively and print in tree format
+                                                    'table':        Get direct referrers and output in table format
+                                                    'json':         Get direct referrers and output in JSON format
+                                                    'go-template':  Print direct referrers using the given Go template (default "tree")
   -H, --header stringArray                          add custom headers to requests
   -h, --help                                        help for discover
+      --identity-token string                       registry identity token
+      --identity-token-stdin                        read identity token from stdin
       --insecure                                    allow connections to SSL registry without certs
+      --key-file string                             client private key file for the remote registry
+      --no-tty                                      [Preview] do not show progress output
       --oci-layout                                  set target as an OCI image layout
-  -o, --output string                               format in which to display referrers (table, json, or tree). tree format will also show indirect referrers (default "table")
+  -o, --output string                               [Deprecated] format in which to display referrers (table, json, or tree). tree format will also show indirect referrers (default "tree")
   -p, --password string                             registry password or identity token
-      --password-stdin                              read password or identity token from stdin
+      --password-stdin                              read password from stdin
       --plain-http                                  allow insecure connections to registry without SSL check
       --platform os[/arch][/variant][:os_version]   request platform in the form of os[/arch][/variant][:os_version]
       --registry-config path                        path of the authentication file for registry
       --resolve host:port:address[:address_port]    customized DNS for registry, formatted in host:port:address[:address_port]
+      --template string                             [Experimental] Template string used to format output
   -u, --username string                             registry username
   -v, --verbose                                     verbose output
 ```
