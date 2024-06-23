@@ -51,6 +51,7 @@ list_commands() {
     done
 }
 
+DIFFS=false
 VERSIONS=$(tr '[]",' ' ' <versions.json)
 for VERSION
 in ${VERSIONS}
@@ -58,20 +59,36 @@ do
     LATEST_VERSION=$(map_version $VERSION)
     ORAS_COMMAND=$(./tools/install.sh ${LATEST_VERSION} ${TEMPDIR})
     WEIGHT=10
-    list_commands | while read COMMAND
+    list_commands >"${TEMPDIR}/commands"
+    while read COMMAND
     do
-        RESULT=$(list_commands "${COMMAND}")
-        if [ -z "${RESULT}" ]
+        list_commands >"${TEMPDIR}/subcommands"
+        if [ -s "${TEMPDIR}/subcommands" ]
         then
             ./tools/parse.sh ${TEMPDIR} "${COMMAND}" $WEIGHT >versioned_docs/version-${VERSION}/commands/oras_$COMMAND.mdx
+            if git diff versioned_docs/version-${VERSION}/commands/oras_$COMMAND.mdx >/dev/null
+            then
+                DIFFS=true
+            fi
             WEIGHT=$(expr $WEIGHT + 10)
         else
-            for SUBCOMMAND
-            in ${RESULT}
+            while read SUBCOMMAND
             do
-                ./tools/parse.sh ${TEMPDIR} "${COMMAND} ${SUBCOMMAND}" $WEIGHT >docs/commands/oras_${COMMAND}_${SUBCOMMAND}.mdx
+                FILE="docs/commands/oras_${COMMAND}_${SUBCOMMAND}.mdx"
+                echo $FILE
+                ./tools/parse.sh ${TEMPDIR} "${COMMAND} ${SUBCOMMAND}" $WEIGHT >"${FILE}"
+                if git diff "${FILE}" >/dev/null
+                then
+                    DIFFS=true
+                fi
                 WEIGHT=$(expr $WEIGHT + 10)
-            done
+            done <"${TEMPDIR}/subcommands"
         fi
-    done
+    done <"${TEMPDIR}/commands"
 done
+if $DIFFS
+then
+    echo
+    echo '** Command generator made updates **'
+    echo
+fi
