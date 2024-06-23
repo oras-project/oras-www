@@ -27,7 +27,7 @@ STATE=Introduction
 EXAMPLES=""
 PREFIX="Example - "
 >${EXAMPLES_FILE}
-cat ${TEMPFILE} | while read LINE
+cat ${TEMPFILE} | while read -r LINE
 do
     [[ "${LINE}" == "" ]] && continue
     if [[ "${LINE}" == Aliases* ]]
