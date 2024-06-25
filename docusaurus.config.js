@@ -53,6 +53,7 @@ const config = {
                     // Remove this to remove the "edit this page" links.
                     editUrl:
                         "https://github.com/oras-project/oras-www/tree/main/",
+                    includeCurrentVersion: false,
                 },
                 blog: {
                     showReadingTime: true,
