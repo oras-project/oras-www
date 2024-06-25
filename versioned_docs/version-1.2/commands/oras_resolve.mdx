@@ -1,0 +1,46 @@
+---
+title: oras resolve
+sidebar_position: 180
+warning: Do NOT modify this generated file
+---
+
+# oras resolve
+
+[Experimental] Resolves digest of the target artifact
+
+```bash
+oras resolve [flags] <name>{:<tag>|@<digest>}
+```
+
+## Examples
+
+Resolve digest of the target artifact:
+
+```bash
+oras resolve localhost:5000/hello-world:v1
+```
+
+## Options
+
+```
+      --ca-file string                              server certificate authority file for the remote registry
+      --cert-file string                            client certificate file for the remote registry
+  -d, --debug                                       output debug logs (implies --no-tty)
+  -l, --full-reference                              print the full artifact reference with digest
+  -H, --header stringArray                          add custom headers to requests
+  -h, --help                                        help for resolve
+      --identity-token string                       registry identity token
+      --identity-token-stdin                        read identity token from stdin
+      --insecure                                    allow connections to SSL registry without certs
+      --key-file string                             client private key file for the remote registry
+      --no-tty                                      [Preview] do not show progress output
+      --oci-layout                                  set target as an OCI image layout
+  -p, --password string                             registry password or identity token
+      --password-stdin                              read password from stdin
+      --plain-http                                  allow insecure connections to registry without SSL check
+      --platform os[/arch][/variant][:os_version]   request platform in the form of os[/arch][/variant][:os_version]
+      --registry-config path                        path of the authentication file for registry
+      --resolve host:port:address[:address_port]    customized DNS for registry, formatted in host:port:address[:address_port]
+  -u, --username string                             registry username
+  -v, --verbose                                     verbose output
+```

@@ -1,6 +1,7 @@
 ---
 title: oras attach
 sidebar_position: 10
+warning: Do NOT modify this generated file
 ---
 
 # oras attach
@@ -9,15 +10,27 @@ sidebar_position: 10
 ** This command is in preview and under development. **
 
 ```bash
-oras attach [flags] --artifact-type=<type> <name>{:<tag>|@<digest>} <file>[:<type>] [...]
+oras attach [flags] --artifact-type=<type> <name>{:<tag>|@<digest>} <file>[:<layer_media_type>] [...]
 ```
 
 ## Examples
 
-Attach file 'hi.txt' with type 'doc/example' to manifest 'hello:v1' in registry 'localhost:5000':
+Attach file 'hi.txt' with aritifact type 'doc/example' to manifest 'hello:v1' in registry 'localhost:5000':
 
 ```bash
 oras attach --artifact-type doc/example localhost:5000/hello:v1 hi.txt
+```
+
+Attach file 'hi.txt' to a specific artifact with platform 'linux/amd64' in multi-arch index 'hello:v1'
+
+```bash
+oras attach --artifact-type doc/example --platform linux/amd64 localhost:5000/hello:v1 hi.txt
+```
+
+Push file "hi.txt" with the custom layer media type 'application/vnd.me.hi':
+
+```bash
+oras attach --artifact-type doc/example localhost:5000/hello:v1 hi.txt:application/vnd.me.hi
 ```
 
 Attach file "hi.txt" using a specific method for the Referrers API:
@@ -60,24 +73,34 @@ oras attach --oci-layout --artifact-type doc/example layout-dir:v1 hi.txt
 ## Options
 
 ```
-  -a, --annotation stringArray                     manifest annotations
-      --annotation-file string                     path of the annotation file
-      --artifact-type string                       artifact type
-      --ca-file string                             server certificate authority file for the remote registry
-      --concurrency int                            concurrency level (default 5)
-  -d, --debug                                      debug mode
-      --disable-path-validation                    skip path validation
-      --distribution-spec string                   [Preview] set OCI distribution spec version and API option for target. options: v1.1-referrers-api, v1.1-referrers-tag
-      --export-manifest path                       path of the pushed manifest
-  -H, --header stringArray                         add custom headers to requests
-  -h, --help                                       help for attach
-      --insecure                                   allow connections to SSL registry without certs
-      --oci-layout                                 set target as an OCI image layout
-  -p, --password string                            registry password or identity token
-      --password-stdin                             read password or identity token from stdin
-      --plain-http                                 allow insecure connections to registry without SSL check
-      --registry-config path                       path of the authentication file for registry
-      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]
-  -u, --username string                            registry username
-  -v, --verbose                                    verbose output
+  -a, --annotation stringArray                      manifest annotations
+      --annotation-file string                      path of the annotation file
+      --artifact-type string                        artifact type
+      --ca-file string                              server certificate authority file for the remote registry
+      --cert-file string                            client certificate file for the remote registry
+      --concurrency int                             concurrency level (default 5)
+  -d, --debug                                       output debug logs (implies --no-tty)
+      --disable-path-validation                     skip path validation
+      --distribution-spec string                    [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api
+      --export-manifest path                        path of the pushed manifest
+      --format string                               [Experimental] Format output using a custom template:
+                                                    'json':         Print in JSON format
+                                                    'go-template':  Print output using the given Go template
+  -H, --header stringArray                          add custom headers to requests
+  -h, --help                                        help for attach
+      --identity-token string                       registry identity token
+      --identity-token-stdin                        read identity token from stdin
+      --insecure                                    allow connections to SSL registry without certs
+      --key-file string                             client private key file for the remote registry
+      --no-tty                                      [Preview] do not show progress output
+      --oci-layout                                  set target as an OCI image layout
+  -p, --password string                             registry password or identity token
+      --password-stdin                              read password from stdin
+      --plain-http                                  allow insecure connections to registry without SSL check
+      --platform os[/arch][/variant][:os_version]   [Preview] attach to an arch-specific subject in the form of os[/arch][/variant][:os_version]
+      --registry-config path                        path of the authentication file for registry
+      --resolve host:port:address[:address_port]    customized DNS for registry, formatted in host:port:address[:address_port]
+      --template string                             [Experimental] Template string used to format output
+  -u, --username string                             registry username
+  -v, --verbose                                     verbose output
 ```
