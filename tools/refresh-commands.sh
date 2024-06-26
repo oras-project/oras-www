@@ -59,14 +59,16 @@ do
     LATEST_VERSION=$(map_version $VERSION)
     ORAS_COMMAND=$(./tools/install.sh ${LATEST_VERSION} ${TEMPDIR})
     WEIGHT=10
+    VERSIONED_DOCS=versioned_docs/version-${VERSION}/commands
     list_commands >"${TEMPDIR}/commands"
     while read COMMAND
     do
-        list_commands >"${TEMPDIR}/subcommands"
-        if [ -s "${TEMPDIR}/subcommands" ]
+        list_commands "${COMMAND}" >"${TEMPDIR}/subcommands"
+        if [ ! -s "${TEMPDIR}/subcommands" ]
         then
-            ./tools/parse.sh ${TEMPDIR} "${COMMAND}" $WEIGHT >versioned_docs/version-${VERSION}/commands/oras_$COMMAND.mdx
-            if git diff versioned_docs/version-${VERSION}/commands/oras_$COMMAND.mdx >/dev/null
+            FILE="${VERSIONED_DOCS}/oras_${COMMAND}.mdx"
+            ./tools/parse.sh ${TEMPDIR} "${COMMAND}" $WEIGHT >"${FILE}"
+            if git diff "${FILE}" >/dev/null
             then
                 DIFFS=true
             fi
@@ -74,8 +76,7 @@ do
         else
             while read SUBCOMMAND
             do
-                FILE="docs/commands/oras_${COMMAND}_${SUBCOMMAND}.mdx"
-                echo $FILE
+                FILE="${VERSIONED_DOCS}/oras_${COMMAND}_${SUBCOMMAND}.mdx"
                 ./tools/parse.sh ${TEMPDIR} "${COMMAND} ${SUBCOMMAND}" $WEIGHT >"${FILE}"
                 if git diff "${FILE}" >/dev/null
                 then

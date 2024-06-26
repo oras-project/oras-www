@@ -1,11 +1,12 @@
 ---
 title: oras manifest fetch-config
-sidebar_position: 100
+sidebar_position: 120
+warning: Do NOT modify this generated file
 ---
 
 # oras manifest fetch-config
 
-Fetch the config of a manifest from a remote registry.
+Fetch the config of a manifest from a registry or an OCI image layout
 
 ```bash
 oras manifest fetch-config [flags] <name>{:<tag>|@<digest>}
@@ -49,7 +50,6 @@ Fetch and print the prettified descriptor of the config:
 oras manifest fetch-config --descriptor --pretty localhost:5000/hello:v1
 ```
 
-
 ## Options
 
 ```
@@ -57,11 +57,10 @@ oras manifest fetch-config --descriptor --pretty localhost:5000/hello:v1
   -d, --debug                                       debug mode
       --descriptor                                  output the descriptor
   -H, --header stringArray                          add custom headers to requests
-  -h, --help                                        help for fetch
+  -h, --help                                        help for fetch-config
       --insecure                                    allow connections to SSL registry without certs
-      --media-type strings                          accepted media types
       --oci-layout                                  set target as an OCI image layout
-  -o, --output path                                 file path to write the fetched manifest to, use - for stdout
+  -o, --output path                                 file path to write the fetched config to, use - for stdout
   -p, --password string                             registry password or identity token
       --password-stdin                              read password or identity token from stdin
       --plain-http                                  allow insecure connections to registry without SSL check
