@@ -1,11 +1,12 @@
 ---
 title: oras repo tags
-sidebar_position: 160
+sidebar_position: 170
+warning: Do NOT modify this generated file
 ---
 
 # oras repo tags
 
-Show tags of the target repository.
+Show tags of the target repository
 
 ```bash
 oras repo tags [flags] <name>
@@ -31,7 +32,7 @@ Show tags of the target repository that include values lexically after last:
 oras repo tags --last "last_tag" localhost:5000/hello
 ```
 
-Show tags of the target OCI layout folder 'layout-dir':
+Show tags of the target OCI image layout folder 'layout-dir':
 
 ```bash
 oras repo tags --oci-layout layout-dir
@@ -43,13 +44,13 @@ Show tags of the target OCI layout archive 'layout.tar':
 oras repo tags --oci-layout layout.tar
 ```
 
-Show tags associated with a particular tagged resource:
+[Experimental] Show tags associated with a particular tagged resource:
 
 ```bash
 oras repo tags localhost:5000/hello:latest
 ```
 
-Show tags associated with a digest:
+[Experimental] Show tags associated with a digest:
 
 ```bash
 oras repo tags localhost:5000/hello@sha256:c551125a624189cece9135981621f3f3144564ddabe14b523507bf74c2281d9b
@@ -59,15 +60,20 @@ oras repo tags localhost:5000/hello@sha256:c551125a624189cece9135981621f3f314456
 
 ```
       --ca-file string                             server certificate authority file for the remote registry
-  -d, --debug                                      debug mode
+      --cert-file string                           client certificate file for the remote registry
+  -d, --debug                                      output debug logs (implies --no-tty)
       --exclude-digest-tags                        [Preview] exclude all digest-like tags such as 'sha256-aaaa...'
   -H, --header stringArray                         add custom headers to requests
   -h, --help                                       help for tags
+      --identity-token string                      registry identity token
+      --identity-token-stdin                       read identity token from stdin
       --insecure                                   allow connections to SSL registry without certs
+      --key-file string                            client private key file for the remote registry
       --last last                                  start after the tag specified by last
+      --no-tty                                     [Preview] do not show progress output
       --oci-layout                                 set target as an OCI image layout
   -p, --password string                            registry password or identity token
-      --password-stdin                             read password or identity token from stdin
+      --password-stdin                             read password from stdin
       --plain-http                                 allow insecure connections to registry without SSL check
       --registry-config path                       path of the authentication file for registry
       --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]
