@@ -43,9 +43,11 @@ $ cat sample-manifest
 {"schemaVersion":2,"mediaType":"application/vnd.oci.image.manifest.v1+json","artifactType":"application/vnd.unknown.artifact.v1","config":{"mediaType":"application/vnd.oci.empty.v1+json","digest":"sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a","size":2,"data":"e30="},"layers":[{"mediaType":"application/vnd.oci.image.layer.v1.tar","digest":"sha256:6cb759c4296e67e35b0367f3c0f51dfdb776a0c99a45f39d0476e43d82696d65","size":14477,"annotations":{"org.opencontainers.image.title":"sbom.spdx"}},{"mediaType":"application/vnd.oci.image.layer.v1.tar","digest":"sha256:54c0e84503c8790e03afe34bfc05a5ce45c933430cfd9c5f8a99d2c89f1f1b69","size":6639,"annotations":{"org.opencontainers.image.title":"scan-test-verify-image.json"}}],"annotations":{"org.opencontainers.image.created":"2023-12-15T09:41:54Z"}}
 ```
 
-> [!NOTE]
->
-> - `--output -` and `--format` can not be used at the same time due to conflicts.
+:::note
+
+`--output -` and `--format` can not be used at the same time due to conflicts.
+
+:::
 
 - Example: use `--format json` to print the metadata output in prettified JSON:
 
@@ -152,8 +154,11 @@ oras pull $REGISTRY/$REPO:$TAG --artifact-type example/sbom sbom.spdx  --artifac
 }
 ```
 
-> [!NOTE]
-> When pulling a folder to filesystem, the value of `path` should be an absolute path of the folder and should be ended with slash `/` or backslash `\`, for example, `/home/Bob/sample-folder/` on Unix or `C:\Users\Bob\sample-folder\` on Windows. Other fields are the same as the example of pulling files as above.
+:::note
+
+When pulling a folder to filesystem, the value of `path` should be an absolute path of the folder and should be ended with slash `/` or backslash `\`, for example, `/home/Bob/sample-folder/` on Unix or `C:\Users\Bob\sample-folder\` on Windows. Other fields are the same as the example of pulling files as above.
+
+:::
 
 For example, pull an artifact that contains multiple layers (files) and show their descriptor metadata as compact JSON in the standard output.
 
@@ -200,8 +205,11 @@ oras push $REGISTRY/$REPO:$TAG1,$TAG2 sbom.spdx vul-scan.json --format json
 }
 ```
 
-> [!NOTE]
-> When pushing a folder to filesystem, the output fields are the same as the example of pushing files as above.
+:::note
+
+When pushing a folder to filesystem, the output fields are the same as the example of pushing files as above.
+
+:::
 
 Push a folder to a repository and filter out the value of `reference` and `mediaType` of the pushed artifact in the standard output.
 
