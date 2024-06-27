@@ -1,6 +1,7 @@
 ---
 title: Use the ORAS command line
 sidebar_position: 0
+warning: Do NOT modify this generated file
 ---
 
 # Use the ORAS command line
@@ -8,24 +9,24 @@ sidebar_position: 0
 To list available commands, either run `oras` with no parameters or execute `oras help`:
 
 ```
-$ oras
 Usage:
   oras [command]
 
 Available Commands:
-  attach      Attach files to an existing artifact
+  attach      [Preview] Attach files to an existing artifact
   blob        Blob operations
   completion  Generate the autocompletion script for the specified shell
   cp          Copy artifacts from one target to another
-  discover    Discover referrers of a manifest in the remote registry
+  discover    [Preview] Discover referrers of a manifest in a registry or an OCI image layout
   help        Help about any command
   login       Log in to a remote registry
   logout      Log out from a remote registry
   manifest    Manifest operations
-  pull        Pull files from remote registry
-  push        Push files to remote registry
+  pull        Pull files from a registry or an OCI image layout
+  push        Push files to a registry or an OCI image layout
   repo        Repository operations
-  tag         Tag a manifest in the remote registry
+  resolve     [Experimental] Resolves digest of the target artifact
+  tag         Tag a manifest in a registry or an OCI image layout
   version     Show the oras version information
 
 Flags:

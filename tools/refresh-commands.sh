@@ -60,6 +60,7 @@ do
     ORAS_COMMAND=$(./tools/install.sh ${LATEST_VERSION} ${TEMPDIR})
     WEIGHT=10
     VERSIONED_DOCS=versioned_docs/version-${VERSION}/commands
+    ${ORAS_COMMAND} help | ./tools/parse_main.sh >"${VERSIONED_DOCS}/use_oras_cli.mdx"
     list_commands >"${TEMPDIR}/commands"
     while read COMMAND
     do
