@@ -24,12 +24,16 @@ func main() {
 	args := []string{"repo", "ls", "mcr.microsoft.com"}
 	cmd := root.New()
 	cmd.SetArgs(args)
+	builder := &strings.Builder{}
+	cmd.SetOut(builder)
 	fmt.Printf("Executing 'oras %s':", strings.Join(args, " "))
 	err := cmd.Execute()
 	if err != nil {
+		fmt.Println(builder.String())
 		fmt.Errorf("Failed to execute : %w", err)
 		os.Exit(-1)
 	}
+	fmt.Println(builder.String())
 	os.Exit(0)
 }
 ```
