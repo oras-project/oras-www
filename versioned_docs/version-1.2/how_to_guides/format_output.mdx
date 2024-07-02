@@ -3,16 +3,20 @@ title: Formatted output
 sidebar_position: 100
 ---
 
-ORAS allows to use `--output` to output a file or directory in the filesystem. To enable users to format the metadata output of ORAS commands and compute figures based on the formatted output, these two options are proposed as follows:
+The ORAS command allows users to format the metadata output and perform computations on data based on the formatted output. The ORAS command also allows the `--output` option to write to a file or directory.
 
-- Use `--format <DATA_FORMAT>` to format metadata output of ORAS commands into different formats including prettified JSON, tree, table view, and Go template, i.e. `--format json|tree|table|go-template=GO_TEMPLATE`. It supports computing figures within the template using [Sprig](http://masterminds.github.io/sprig/) functions. This is the primary and recommended usage.
+- Use `--format <DATA_FORMAT>` to format metadata output of ORAS commands into different formats including prettified JSON, tree, table view, and Go template, i.e. `--format json|tree|table|go-template`. It supports computing figures within the template using [Sprig](http://masterminds.github.io/sprig/) functions. This is the primary and recommended usage.
 - Use `--template GO_TEMPLATE` to compute and manipulate the output data using Go template based on the chosen data format. To avoid ambiguity, this flag can only be used along with `--format go-template`.
 
-Note that both `--format` and `--template` are marked as "Experimental" in its first iteration v1.2.0.
+:::note
+
+Both `--format` and `--template` are marked as "Experimental" in its first iteration v1.2.0.
+
+:::
 
 ## How to format output in ORAS commands
 
-ORAS allows to use the `--format` flag to format metadata output into structured data (e.g. JSON) and optionally use the `--template` with the [Go template](https://pkg.go.dev/text/template) to manipulate the output data. See sample usages in several commands below.
+Use the `--format` flag to format metadata output into structured data (e.g. JSON) and optionally use the `--template` option with a [Go template](https://pkg.go.dev/text/template) to manipulate the output data. See sample usages in several commands below.
 
 ### oras manifest fetch
 
@@ -45,7 +49,7 @@ $ cat sample-manifest
 
 :::note
 
-`--output -` and `--format` can not be used at the same time due to conflicts.
+The `--output -` option for standard output cannot be used with the `--format` option due to conflicts.
 
 :::
 
