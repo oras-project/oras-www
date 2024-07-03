@@ -5,6 +5,8 @@
  */
 
 /* You can override the default Infima variables here. */
+@import "@fortawesome/fontawesome-free/css/all.css";
+
 @font-face {
   font-family: 'Nunito';
   src: url('/fonts/Nunito-VariableFont_wght.ttf');
@@ -118,4 +120,31 @@ a {
 .navbar-sidebar__close svg g,
 .navbar__toggle svg path {
   stroke: #FFFFFF;
+}
+
+.navbar__icon {
+  height: 2rem;
+  width: 2rem;
+}
+
+.navbar__github, .navbar__twitter, .navbar__slack {
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  transition: background var(--ifm-transition-fast);
+}
+
+html[data-theme='light'] .navbar__github, .navbar__twitter, .navbar__slack {
+  color: var(--ifm-navbar-link-color);
+}
+
+html[data-theme='dark'] .navbar__github, .navbar__twitter, .navbar__slack {
+  color: var(--ifm-navbar-link-color);
+}
+
+.navbar__github:hover, .navbar__twitter:hover, .navbar__slack:hover {
+  background: var(--ifm-color-primary);
 }

@@ -34,14 +34,6 @@ const config = {
         locales: ["en"],
     },
 
-    stylesheets: [
-        //Add Font Awesome stylesheets
-        "/fonts/font-awesome/fontawesome.css",
-        "/fonts/font-awesome/solid.css",
-        "/fonts/font-awesome/regular.css",
-        "/fonts/font-awesome/brands.css",
-    ],
-
     presets: [
         [
             "classic",
@@ -131,24 +123,27 @@ const config = {
                     },
                     {
                         to: "https://cloud-native.slack.com/archives/CJ1KHJM5Z",
-                        label: " ",
-                        position: "right",
                         target: "_blank",
-                        className: "fab fa-lg fa-slack",
+                        'aria-label': 'Slack',
+                        className: 'navbar__icon navbar__slack',
+                        position: "right",
+                        html: '<i class="fab fa-sm fa-slack"></i>',
                     },
                     {
-                        to: "https://github.com/oras-project",
-                        label: " ",
-                        position: "right",
+                        href: "https://github.com/oras-project",
                         target: "_blank",
-                        className: "fab fa-lg fa-github",
+                        'aria-label': 'GitHub',
+                        className: 'navbar__icon navbar__github',
+                        position: 'right',
+                        html: '<i class="fab fa-sm fa-github"></i>',
                     },
                     {
-                        to: "https://x.com/orasproject",
-                        label: " ",
-                        position: "right",
+                        href: "https://x.com/orasproject",
                         target: "_blank",
-                        className: "fab fa-lg fa-x-twitter",
+                        'aria-label': 'Twitter',
+                        className: 'navbar__icon navbar__twitter',
+                        position: "right",
+                        html: '<i class="fab fa-sm fa-x-twitter"></i>',
                     },
                 ],
             },
