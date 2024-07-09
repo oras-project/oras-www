@@ -24,8 +24,6 @@ ${ORAS} help ${COMMAND} >${TEMPFILE}
 
 IFS=''
 STATE=Introduction
-EXAMPLES=""
-PREFIX="Example - "
 >${EXAMPLES_FILE}
 cat ${TEMPFILE} | while read -r LINE
 do
@@ -43,18 +41,13 @@ do
         fi
         STATE=Examples
         echo >>${EXAMPLES_FILE}
-        echo "${LINE#"$PREFIX"}" >>${EXAMPLES_FILE}
+        echo "${LINE}" | sed -e 's/Example - //' >>${EXAMPLES_FILE}
         echo >>${EXAMPLES_FILE}
         echo '```bash' >>${EXAMPLES_FILE}
         continue
     fi
     if [[ "${LINE}" == Usage* ]]
     then
-        if [ "${STATE}" == "Examples" ]
-        then
-            echo '```' >>${EXAMPLES_FILE}
-            echo >>${EXAMPLES_FILE}
-        fi
         STATE=Usage
         continue
     fi
@@ -62,6 +55,8 @@ do
     then
         if [ -s $EXAMPLES_FILE ]
         then
+            echo '```' >>${EXAMPLES_FILE}
+            echo >>${EXAMPLES_FILE}
             echo '## Examples'
             cat $EXAMPLES_FILE
             >$EXAMPLES_FILE
@@ -74,25 +69,9 @@ do
     fi
     case "${STATE}" in
         Introduction)
-            if [[ "${LINE}" == Flags* ]]
-            then
-                echo '## Options'
-                echo
-                echo '```'
-                STATE=Flags
-                continue
-            fi
             echo "${LINE}"
             ;;
         Alias)
-            if [[ "${LINE}" == Flags* ]]
-            then
-                echo '## Options'
-                echo
-                echo '```'
-                STATE=Flags
-                continue
-            fi
             ;;
         Examples)
             echo "${LINE}" | sed -e 's/^[[:space:]]*//' >>${EXAMPLES_FILE}
