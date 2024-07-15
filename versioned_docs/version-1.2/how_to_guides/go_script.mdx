@@ -28,12 +28,11 @@ func main() {
 	cmd.SetOut(builder)
 	fmt.Printf("Executing 'oras %s':", strings.Join(args, " "))
 	err := cmd.Execute()
+	fmt.Println(builder.String())
 	if err != nil {
-		fmt.Println(builder.String())
 		fmt.Errorf("Failed to execute : %w", err)
 		os.Exit(-1)
 	}
-	fmt.Println(builder.String())
 	os.Exit(0)
 }
 ```
