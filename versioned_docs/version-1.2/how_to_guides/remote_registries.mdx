@@ -84,6 +84,26 @@ hello world
 % 
 ```
 
+## Referencing an artifact
+
+Use the [`oras attach`](/commands/oras_attach.mdx) command to add a reference to another artifact.
+
+```bash
+oras attach ghcr.io/${GHCR_USER}/my-repository:v1 --artifact-type 'doc/example' --annotation 'key=val' ref-artifact.txt 
+```
+
+The output will look something like this:
+```
+✓ Uploaded  ref-artifact.txt                                                                                           13/13  B 100.00%  490ms
+  └─ sha256:9e820c753b29c9ea7b85a7d1b9d88107330d625546c216facba451effe1b8dbd
+✓ Exists    application/vnd.oci.empty.v1+json                                                                            2/2  B 100.00%     0s
+  └─ sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+✓ Uploaded  application/vnd.oci.image.manifest.v1+json                                                               746/746  B 100.00%  930ms
+  └─ sha256:a461956f5500056ca03ee325c4c607ef421dfff6ad1902eeb2da67686c62004b
+Attached to [registry] ghcr.io/my_github_username/my-repository@sha256:b557297d52ec1bee854717827994fb616bffe936c583c7ce66fb21eb0c557df6
+Digest: sha256:a461956f5500056ca03ee325c4c607ef421dfff6ad1902eeb2da67686c62004b
+```
+
 ## View referrers 
 
 Use [`oras discover`](/commands/oras_discover.mdx) to view referrers.
@@ -95,4 +115,6 @@ oras discover ghcr.io/${GHCR_USER}/my-repository:v1
 The output will look something like this:
 ```
 ghcr.io/my_github_username/my-repository@sha256:b557297d52ec1bee854717827994fb616bffe936c583c7ce66fb21eb0c557df6
+└── doc/example
+    └── sha256:a461956f5500056ca03ee325c4c607ef421dfff6ad1902eeb2da67686c62004b
 ```
