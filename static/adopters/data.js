@@ -135,6 +135,13 @@ const registries = [
         description: "An open source registry that secures artifacts with policies and role-based access control, ensures images are scanned and signs images as trusted.",
         link: "https://goharbor.io/",
     },
+    {
+        title: "Red Hat Quay",
+        light: "img/adopters/quay.svg",
+        dark: "img/adopters/quay.svg",
+        description: "Quay is used by tens of thousands of Red Hat customers and open source community members to build, manage and scan their container images.",
+        link: "https://quay.io/",
+    },
 ];
 
 export default { projects, registries };
