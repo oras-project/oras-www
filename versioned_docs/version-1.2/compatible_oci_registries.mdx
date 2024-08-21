@@ -21,6 +21,7 @@ We're happy to promote all usage, as well as provide feedback.*
 - [GitHub Packages container registry](#github-packages-container-registry-ghcr)
 - [Docker Hub](#docker-hub)
 - [Zot Registry](#zot-registry)
+- [Red Hat Quay](#red-hat-quay)
 
 ### CNCF Distribution
 
@@ -300,9 +301,6 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
   oras pull docker.io/${DH_USER}/artifact:1.0
   ```
 
-[artifacts]:            https://github.com/opencontainers/artifacts
-[distribution-spec]:    https://github.com/opencontainers/distribution-spec/
-
 ### [Zot Registry](https://zotregistry.dev)
 
 - [Authenticating with Zot Registry](https://zotregistry.dev/user-guides/user-guide-datapath/#authentication_2)
@@ -324,6 +322,26 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
   ```
   oras pull --plain-http <registry-ip>:5000/hello-artifact:v2 -d -v
   ```
+
+### [Red Hat Quay](https://quay.io/)
+
+- Authenticating to quay.io using a Robot Account and Token
+
+```
+echo $TOKEN | oras login -u $ROBOT_ACCOUNT --password-stdin quay.io
+```
+
+- Pushing an artifact to quay.io
+
+```
+oras push quay.io/$USER/$REPOSITORY/myartifact:v1 --artifact-type application/text ./myartifact.txt
+```
+
+- Pulling an artifact from quay.io
+
+```
+oras pull quay.io/$USER/$REPOSITORY/myartifact:v1
+```
 
 [artifacts]:            https://github.com/opencontainers/artifacts
 [distribution-spec]:    https://github.com/opencontainers/distribution-spec/
