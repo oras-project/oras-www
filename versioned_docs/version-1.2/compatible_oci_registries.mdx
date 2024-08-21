@@ -331,7 +331,7 @@ ACR Artifact Documentation: [aka.ms/acr/artifacts](https://aka.ms/acr/artifacts)
 echo $TOKEN | oras login -u $ROBOT_ACCOUNT --password-stdin quay.io
 ```
 
-- Pusing an artifact to quay.io
+- Pushing an artifact to quay.io
 
 ```
 oras push quay.io/$USER/$REPOSITORY/myartifact:v1 --artifact-type application/text ./myartifact.txt
