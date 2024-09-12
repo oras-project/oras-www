@@ -15,7 +15,7 @@ What if I told you there was a lightweight alternative?
 ## Everything Should Be a File
 
 One of the great Unix philosophies is the concept of making everything a file.
-Modems, keyboards, printers, disk drives, serial interfaces, configuration, kernel parameteres, IPC, everything and anything is a file that you can `read()` and/or `write()`.
+Modems, keyboards, printers, disk drives, serial interfaces, configuration, kernel parameters, IPC, everything and anything is a file that you can `read()` and/or `write()`.
 
 In a nutshell, this separates a many concerns to the file system layer instead of your program.  
 It allows, among other things, plugging stuff into any program without writing special integration code.
@@ -67,7 +67,7 @@ Now that we have the all the parts, it's just a matter of combining them!
 
 ### Creating some test artifacts
 
-Lets's first create some artifacts!  
+Let us first create some artifacts!  
 ```sh
 echo "Hello World!" > hello.txt
 echo "Goodbye World!" > goodbye.txt
@@ -112,7 +112,7 @@ cat goodbye.txt
 
 Currently[^1] you can't delete your local `oci-layout` artifacts with `oras manifest delete` or `oras blob delete`
 
-Normally it is the registry's responsibility to garbage collect blobs without any references, but in this case the cli does not have the fucntionality (yet).
+Normally it is the registry's responsibility to garbage collect blobs without any references, but in this case the cli does not have the functionality (yet).
 
 It is still possible to just do `rm -rf s3/my-repo`, but that is probably not what you want to do.
 
