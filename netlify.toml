@@ -12,3 +12,8 @@
     paths = [
       "node_modules/.cache",
     ]
+
+[[redirects]]
+  from = "/docs/community/*"
+  to = "/community/:splat"
+  status = 301
