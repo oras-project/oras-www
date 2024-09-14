@@ -22,6 +22,7 @@ We're happy to promote all usage, as well as provide feedback.*
 - [Docker Hub](#docker-hub)
 - [Zot Registry](#zot-registry)
 - [Red Hat Quay](#red-hat-quay)
+- [Artifactory](#)
 
 ### CNCF Distribution
 
@@ -341,6 +342,26 @@ oras push quay.io/$USER/$REPOSITORY/myartifact:v1 --artifact-type application/te
 
 ```
 oras pull quay.io/$USER/$REPOSITORY/myartifact:v1
+```
+
+### [Artifactory](https://jfrog.com/artifactory/)
+
+- [Authenticating with Artifactory](https://jfrog.com/help/r/jfrog-platform-administration-documentation/access-tokens)
+
+```
+echo $ARTIFACTORY_PAT | oras login artifactory.your-company.com -u ARTIFACTORY_USERNAME --password-stdin
+```
+
+- Pushing an artifact to Artifactory
+
+```
+oras push artifactory.your-company.com/$ARTIFACTORY_OCI_REPOSITORY/myartifact:v1 --artifact-type application/text ./myartifact.txt
+```
+
+- Pulling an artifact from Artifactory
+
+```
+oras pull artifactory.your-company.com/$ARTIFACTORY_OCI_REPOSITORY/myartifact:v1
 ```
 
 [artifacts]:            https://github.com/opencontainers/artifacts
