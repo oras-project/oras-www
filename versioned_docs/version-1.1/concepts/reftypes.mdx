@@ -27,7 +27,7 @@ A reference type enables an OCI artifact to refer to another, creating a defined
 link or association between them. This association can be for various purposes,
 such as versioning, supply chain artifacts (signatures, SBOM, etc.), and dependencies.
 
-![OCI artifact with refererrs pointing to the artifact](/img/concepts/reftypes.png)
+![OCI artifact with referrers pointing to the artifact](/img/concepts/reftypes.png)
 
 ## Creating a Reference Artifact
 
@@ -63,7 +63,7 @@ The association is now established in the registry.
 
 :::tip NOTE
 The specification does allow  pushing the reference artifact **without** requiring 
-the presense of the the `subject` in the target registry or OCI-Layout. 
+the presence of the `subject` in the target registry or OCI-Layout. 
 :::
 
 The following example shows the manifest of Artifact B with a reference to Artifact A 
@@ -134,8 +134,8 @@ of a certain media type from the registry, which then responds with the filtered
 The response will include the `OCI-Filters-Applied: artifactType` header to indicate
 that the response is filtered by the `artifactType` query parameter.
 
-The artifact type is determied by the same rules as per 
-[OCI artifacts guidlines](artifact.mdx#determining-the-artifact-type).
+The artifact type is determined by the same rules as per 
+[OCI artifacts guidelines](artifact.mdx#determining-the-artifact-type).
 
 ```mermaid
 sequenceDiagram
