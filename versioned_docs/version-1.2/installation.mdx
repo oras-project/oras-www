@@ -95,6 +95,19 @@ The default WORKDIR in the image is `/workspace`.
 
 :::
 
+You can use the Docker image locally instead of installing a binary.
+For example create an alias:
+
+```
+alias doras='docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.2.0'
+```
+
+Run ORAS commands:
+
+```
+doras pull ghcr.io/$GH_USER/oras:darwin-amd64 --username $GH_USER --password $GHCR_TOKEN -o ./download
+```
+
 ## Nix
 
 Nix is a tool that takes a unique approach to package management and system configuration.
