@@ -1,0 +1,17 @@
+name: vale
+on: [pull_request]
+
+jobs:
+  vale:
+    name: runner / vale
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: errata-ai/vale-action@v2
+        with:
+          files: '["community", "versioned_docs"]'
+          debug: true
+          fail_on_error: true
+          reporter: github-pr-check
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
