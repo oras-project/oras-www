@@ -7,6 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      # create venv workaround for https://github.com/errata-ai/vale-action/issues/128
+      - run: |
+          venv="$HOME/.local/share/venv"
+          python3 -m venv "$venv"
+          echo "$venv/bin" >> $GITHUB_PATH
       - uses: errata-ai/vale-action@v2
         with:
           files: '["community", "versioned_docs"]'
