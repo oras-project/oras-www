@@ -71,6 +71,14 @@ use:
 npm run serve
 ```
 
+## Generated Command Pages
+
+Do not manually modify files in `versioned_docs` directory because they are generated from the command help text.
+If there are changes needed in the command documentation, make fixes to the command help text.
+When you run the build, `npm run refresh-commands` is run to update the files.
+If any of the files are out of date, they will show up as modified.
+See the comments in `tools/refresh-commands.sh` for more details.
+
 ## Code of Conduct
 
 This project has adopted the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/master/code-of-conduct.md). See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for further details.
