@@ -66,8 +66,8 @@ const projects = [
         title: "Score",
         light: "img/adopters/score.svg",
         dark: "img/adopters/score.svg",
-        description: "score-go is a reference library in Go containing common types and functions for building Score implementations (e.g. score-compose and score-k8s).",
-        link: "https://github.com/score-spec/score-go",
+        description: "Score is a developer-centric and platform-agnostic workload specification. It ensures consistent configuration between local and remote environments.",
+        link: "https://score.dev",
     },
 ];
 
