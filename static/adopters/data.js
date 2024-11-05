@@ -62,6 +62,13 @@ const projects = [
         description: "A little helper that pushes Helm Charts and images to your registries, easily configured with a declarative spec.",
         link: "https://github.com/christoffernissen/helmper",
     },
+    {
+        title: "Score",
+        light: "img/adopters/score.svg",
+        dark: "img/adopters/score.svg",
+        description: "Score is a developer-centric and platform-agnostic workload specification. It ensures consistent configuration between local and remote environments.",
+        link: "https://score.dev",
+    },
 ];
 
 const registries = [
