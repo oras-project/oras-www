@@ -1,30 +1,37 @@
 .logo {
+    width: 100%;
     display: flex;
-    align-content: center;
     flex-direction: column;
-}
-
-.logo div {
-    margin: 0 1rem 0 1rem;
-    display: flex;
-    justify-content: center;
     align-items: center;
 }
 
-.ind_logo {
-    display: flex;
-    padding: 0 1rem 0 1rem;
+.section_padding {
+    padding: 2rem 0;
 }
 
 .community_title {
     padding-bottom: 2rem;
     text-align: center;
+    margin-bottom: 2rem;
 }
 
-.section_padding {
-    padding: 4rem 6rem;
+.logo_image {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    padding: 0 2rem;
+}
+.ind_logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: max-content;
 }
 
+.ind_logo img {
+    height: auto;
+    object-fit: contain;
+}
 @media screen and (max-width: 650px) {
     .section_padding {
         padding: 2rem;
