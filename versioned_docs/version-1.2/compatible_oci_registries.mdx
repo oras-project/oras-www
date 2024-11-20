@@ -370,7 +370,7 @@ oras pull artifactory.your-company.com/$ARTIFACTORY_OCI_REPOSITORY/myartifact:v1
 - [Authenticating with Harbor](https://goharbor.io/docs/2.0.0/administration/configure-authentication/)
 
   ```
-  echo $ZR_PASSWORD | oras login <registry-ip>:5000 -u $HARBOR_USER --password-stdin 
+  echo $HARBOR_PASSWORD | oras login <registry-ip>:5000 -u $HARBOR_USER --password-stdin 
   ```
 
 - Pushing Artifacts to Harbor registry
