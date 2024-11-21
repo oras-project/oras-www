@@ -8,8 +8,8 @@ sidebar_position: 70
 This page contains a list of projects leveraging ORAS, as well as
 registries that are known to support [OCI Artifacts][artifacts].
 
-*Would like your registry and/or project listed here?
-Please [submit an issue](https://github.com/oras-project/oras-www/issues/new?assignees=&labels=adopter&template=submit_adopter.yml&title=%5BAdd+adopter%5D%3A).
+*Note that this list is not comprehensive. Would like your registry and/or project listed here?
+Please [submit an issue](https://github.com/oras-project/oras-www/issues/new?assignees=&labels=adopter&template=submit_adopter.yml&title=%5BAdd+adopter%5D%3A) or raise a PR directly.
 We're happy to promote all usage, as well as provide feedback.*
 
 ## Registries supporting OCI Artifacts
@@ -23,6 +23,7 @@ We're happy to promote all usage, as well as provide feedback.*
 - [Zot Registry](#zot-registry)
 - [Red Hat Quay](#red-hat-quay)
 - [Artifactory](#artifactory)
+- [Harbor](#harbor)
 
 ### CNCF Distribution
 
@@ -363,6 +364,27 @@ oras push artifactory.your-company.com/$ARTIFACTORY_OCI_REPOSITORY/myartifact:v1
 ```
 oras pull artifactory.your-company.com/$ARTIFACTORY_OCI_REPOSITORY/myartifact:v1
 ```
+
+### [Harbor](https://goharbor.io/)
+
+- [Authenticating with Harbor](https://goharbor.io/docs/2.0.0/administration/configure-authentication/)
+
+  ```
+  echo $HARBOR_PASSWORD | oras login <registry-ip>:5000 -u $HARBOR_USER --password-stdin 
+  ```
+
+- Pushing Artifacts to Harbor registry
+
+  ```
+  oras push --plain-http <registry-ip>:5000/hello-artifact:v2 \
+        artifact.txt:text/plain
+  ```
+
+- Pulling Artifacts from Harbor registry
+
+  ```
+  oras pull --plain-http <registry-ip>:5000/hello-artifact:v2
+  ```
 
 [artifacts]:            https://github.com/opencontainers/artifacts
 [distribution-spec]:    https://github.com/opencontainers/distribution-spec/
