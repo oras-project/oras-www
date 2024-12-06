@@ -21,7 +21,7 @@
         "@docusaurus/preset-classic": "",
         "@docusaurus/theme-common": "^3.6.1",
         "@docusaurus/theme-mermaid": "",
-        "@docusaurus/types": "^3.6.1",
+        "@docusaurus/types": "^3.6.3",
         "@fortawesome/fontawesome-free": "^6.7.1",
         "@mdx-js/react": "^3.1.0",
         "clsx": "^2.1.1",
