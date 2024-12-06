@@ -17,7 +17,7 @@
     },
     "//": "preset-classic and theme-mermaid require exact core version match",
     "dependencies": {
-        "@docusaurus/core": "^3.6.1",
+        "@docusaurus/core": "^3.6.3",
         "@docusaurus/preset-classic": "",
         "@docusaurus/theme-common": "^3.6.1",
         "@docusaurus/theme-mermaid": "",
