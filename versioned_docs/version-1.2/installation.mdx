@@ -60,6 +60,7 @@ rm -rf oras_${VERSION}_*.tar.gz oras-install/
 :::note
 
 If you want to install ORAS on an Intel-based Mac, you can download it from `https://github.com/oras-project/oras/releases/download/v1.2.1/oras_1.2.1_darwin_amd64.tar.gz`.
+ORAS on Homebrew is not maintained by the ORAS community, so it may not be the latest version.
 
 :::
 
@@ -128,6 +129,12 @@ You can use ORAS CLI on these two operating system out of the box:
 - [Ubuntu 20.04](https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2004-Readme.md#cli-tools)  
 - [Ubuntu 22.04](https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md#cli-tools)
 
+:::note
+
+ORAS on runner images is not maintained by the ORAS community, so it may not be the latest version.
+
+:::
+
 ## Nix
 
 Nix is a tool that takes a unique approach to package management and system configuration.
@@ -147,6 +154,12 @@ You can install oras using the following command:
 ```bash
 nix-env -iA nixpkgs.oras
 ```
+
+:::note
+
+ORAS on Nix is not maintained by the ORAS community, so it may not be the latest version.
+
+:::
 
 ## Verify
 
