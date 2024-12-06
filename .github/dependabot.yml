@@ -17,6 +17,21 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      docusaurs-version:
+        applies-to: version-updates
+        patterns:
+        - "@docusaurus*"
+        update-types:
+        - "minor"
+        - "patch"
+      docusaurs-security:
+        applies-to: security-updates
+        patterns:
+        - "@docusaurus*"
+        update-types:
+        - "minor"
+        - "patch"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
