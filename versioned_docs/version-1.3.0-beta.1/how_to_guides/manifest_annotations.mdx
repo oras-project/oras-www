@@ -1,0 +1,127 @@
+---
+title: Manifest Annotations
+sidebar_position: 5
+---
+
+# Manifest Annotations
+
+[Annotations](https://github.com/opencontainers/image-spec/blob/main/annotations.md), which are supported by [OCI Image Manifest](https://github.com/opencontainers/image-spec/blob/main/manifest.md#image-manifest) and [OCI Content Descriptors](https://github.com/opencontainers/image-spec/blob/main/descriptor.md), are also supported by `oras`.
+
+## By Adding a Key-Value Pair
+
+### Pushing with Annotation
+
+```
+oras push --annotation "key=val" localhost:5000/hello:v1 artifact.txt
+```
+
+Expected Output:
+
+```
+Uploading a948904f2f0f artifact.txt
+Uploaded  a948904f2f0f artifact.txt
+Pushed [registry] localhost:5000/hello:v1
+Digest: sha256:6a1df0710d2fbd3179202ff70f40c28bfa9c7ec3b9d6fc282609a904d13b86e9
+```
+
+### Attaching with Annotations
+
+```
+oras attach --artifact-type doc/example --annotation "key1=val1" --annotation "key2=val2" localhost:5000/hello:v1 attach.txt
+```
+
+Expected Output:
+```
+Uploading 56f86ed6584a attach.txt
+Uploaded  56f86ed6584a attach.txt
+Attached to [registry] localhost:5000/hello@sha256:00d4dc3c98f5060b2fd751bc77e415e995ece8d6d2e8d630bbd6de371f44fc3a
+Digest: sha256:fae55c9d8640525a49d7ac18a36390e2cdc2742c68d68487882703f22df69ae7
+```
+
+## Using a JSON File
+
+### Make Annotations File
+
+Users can make annotations to the manifest, the config, and individual files (i.e. layers) by the `--annotation-file file` option if they would like to do so using a `.json` file.
+
+The annotations file is a JSON file with the following format:
+
+```json
+{
+  "<filename>": {
+    "<annotation_key>": "annotation_value"
+  }
+}
+```
+
+There are two special filenames / entries:
+- `$config` is reserved for the annotation of the manifest config.
+- `$manifest` is reserved for the annotation of the manifest itself.
+
+For instance, the following annotation file `annotations.json`:
+
+```json
+{
+  "$config": {
+    "hello": "world"
+  },
+  "$manifest": {
+    "foo": "bar"
+  },
+  "cake.txt": {
+    "fun": "more cream"
+  }
+}
+```
+
+### Pushing the File With Annotations
+
+In order to add annotations using the `annotations.json`, you may run the following command:
+
+```
+oras push --annotation-file annotations.json localhost:5000/club:party cake.txt juice.txt
+```
+
+The push command would upload the blob and put a manifest. Running the following command to output the manifest:
+
+```
+oras manifest fetch localhost:5000/club:party --pretty
+```
+
+Expected Output:
+
+```json
+{
+  "schemaVersion": 2,
+  "config": {
+    "mediaType": "application/vnd.oci.image.config.v1+json",
+    "digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "size": 2,
+    "annotations": {
+      "hello": "world"
+    }
+  },
+  "layers": [
+    {
+      "mediaType": "application/vnd.oci.image.layer.v1.tar",
+      "digest": "sha256:22af0898315a239117308d39acd80636326c4987510b0ec6848e58eb584ba82e",
+      "size": 6,
+      "annotations": {
+        "fun": "more cream",
+        "org.opencontainers.image.title": "cake.txt"
+      }
+    },
+    {
+      "mediaType": "application/vnd.oci.image.layer.v1.tar",
+      "digest": "sha256:be6fe11876282442bead98e8b24aca07f8972a763cd366c56b4b5f7bcdd23eac",
+      "size": 7,
+      "annotations": {
+        "org.opencontainers.image.title": "juice.txt"
+      }
+    }
+  ],
+  "annotations": {
+    "foo": "bar"
+  }
+}
+```

@@ -1,0 +1,160 @@
+---
+title: oras push
+sidebar_position: 160
+warning: Do NOT modify this generated file
+---
+
+# oras push
+
+Push files to a registry or an OCI image layout
+
+```bash
+oras push [flags] <name>[:<tag>[,<tag>][...]] <file>[:<type>] [...]
+```
+
+## Examples
+
+Push file "hi.txt" with media type "application/vnd.oci.image.layer.v1.tar" (default):
+
+```bash
+oras push localhost:5000/hello:v1 hi.txt
+```
+
+Push file "hi.txt" and export the pushed manifest to a specified path:
+
+```bash
+oras push --export-manifest manifest.json localhost:5000/hello:v1 hi.txt
+```
+
+Push file "hi.txt" with the custom media type "application/vnd.me.hi":
+
+```bash
+oras push localhost:5000/hello:v1 hi.txt:application/vnd.me.hi
+```
+
+Push multiple files with different media types:
+
+```bash
+oras push localhost:5000/hello:v1 hi.txt:application/vnd.me.hi bye.txt:application/vnd.me.bye
+```
+
+Push file with colon in name "hi:txt" with the default media type:
+
+```bash
+oras push localhost:5000/hello:v1 hi:txt:
+```
+
+Push file "hi.txt" with artifact type "application/vnd.example+type":
+
+```bash
+oras push --artifact-type application/vnd.example+type localhost:5000/hello:v1 hi.txt
+```
+
+Push file "hi.txt" with config type "application/vnd.me.config":
+
+```bash
+oras push --image-spec v1.0 --artifact-type application/vnd.me.config localhost:5000/hello:v1 hi.txt
+```
+
+Push file "hi.txt" with the custom manifest config "config.json" of the custom media type "application/vnd.me.config":
+
+```bash
+oras push --config config.json:application/vnd.me.config localhost:5000/hello:v1 hi.txt
+```
+
+[Experimental] Push file "hi.txt" and format output in JSON:
+
+```bash
+oras push localhost:5000/hello:v1 hi.txt --format json
+```
+
+[Experimental] Push file "hi.txt" and format output with Go template:
+
+```bash
+oras push localhost:5000/hello:v1 hi.txt --format go-template="{{.digest}}"
+```
+
+Push file to the insecure registry:
+
+```bash
+oras push --insecure localhost:5000/hello:v1 hi.txt
+```
+
+Push file to the HTTP registry:
+
+```bash
+oras push --plain-http localhost:5000/hello:v1 hi.txt
+```
+
+Push repository with manifest annotations:
+
+```bash
+oras push --annotation "key=val" localhost:5000/hello:v1
+```
+
+Push repository with manifest annotation file:
+
+```bash
+oras push --annotation-file annotation.json localhost:5000/hello:v1
+```
+
+[Experimental] Push artifact to repository with platform:
+
+```bash
+oras push --artifact-platform linux/arm/v5 localhost:5000/hello:v1
+```
+
+Push file "hi.txt" with multiple tags:
+
+```bash
+oras push localhost:5000/hello:tag1,tag2,tag3 hi.txt
+```
+
+Push file "hi.txt" with multiple tags and concurrency level tuned:
+
+```bash
+oras push --concurrency 6 localhost:5000/hello:tag1,tag2,tag3 hi.txt
+```
+
+Push file "hi.txt" into an OCI image layout folder 'layout-dir' with tag 'test':
+
+```bash
+oras push --oci-layout layout-dir:test hi.txt
+```
+
+## Options
+
+```
+  -a, --annotation stringArray                               manifest annotations
+      --annotation-file string                               path of the annotation file
+      --artifact-platform os[/arch][/variant][:os_version]   [Experimental] set artifact platform in the form of os[/arch][/variant][:os_version]
+      --artifact-type string                                 artifact type
+      --ca-file string                                       server certificate authority file for the remote registry
+      --cert-file string                                     client certificate file for the remote registry
+      --concurrency int                                      concurrency level (default 5)
+      --config path                                          path of image config file
+  -d, --debug                                                output debug logs (implies --no-tty)
+      --disable-path-validation                              skip path validation
+      --export-manifest path                                 path of the pushed manifest
+      --format string                                        [Experimental] Format output using a custom template:
+                                                             'json':         Print in JSON format
+                                                             'go-template':  Print output using the given Go template
+                                                             'text':         Print in text format (default "text")
+  -H, --header stringArray                                   add custom headers to requests
+  -h, --help                                                 help for push
+      --identity-token string                                registry identity token
+      --identity-token-stdin                                 read identity token from stdin
+      --image-spec string                                    [Preview] specify manifest type for building artifact. Options: v1.1, v1.0 (default v1.1, overridden to v1.0 if --config is used without --artifact-type)
+      --insecure                                             allow connections to SSL registry without certs
+      --key-file string                                      client private key file for the remote registry
+      --no-tty                                               [Preview] do not show progress output
+      --oci-layout                                           set target as an OCI image layout
+      --oci-layout-path string                               set the path for the OCI image layout target
+  -p, --password string                                      registry password or identity token
+      --password-stdin                                       read password from stdin
+      --plain-http                                           allow insecure connections to registry without SSL check
+      --registry-config path                                 path of the authentication file for registry
+      --resolve host:port:address[:address_port]             customized DNS for registry, formatted in host:port:address[:address_port]
+      --template string                                      [Experimental] Template string used to format output
+  -u, --username string                                      registry username
+```

@@ -1,0 +1,120 @@
+---
+title: Distributing OCI Layouts
+sidebar_position: 6
+---
+
+# Distributing OCI Layouts
+
+The directory structure for OCI content-addressable blobs and location-addressable references (refs) is called the [OCI Image Layout](https://github.com/opencontainers/image-spec/blob/main/image-layout.md). An OCI Image needs to include:
+
+- `blobs` directory: Each hash algorithm's directory and its children, which make up the object names in the blobs subdirectories, will hold the real content.
+
+- `oci-layout` file: This JSON object indicates the base of an Open Container Image Layout and provides information about the current image-layout version.
+
+- `index.json` file: The image index is a multi-descriptor entry point.
+
+## Creating an OCI Image 
+
+### Step 1: Writing in the Dockerfile
+
+Put the following commands in the `Dockerfile` in order to run an image of Alpine Linux.
+
+```
+FROM alpine
+CMD echo 'hello world!'
+```
+
+Our image is based on alpine and runs the command `echo hello world!`.
+
+### Step 2: Building the image using docker
+
+```
+docker buildx create —use
+```
+
+This command is used to create a new instance of a builder with a single node based on the current configuration.
+
+
+```
+docker buildx build . -f Dockerfile -o type=oci,dest=hello-world.tar -t hello-world:v1
+```
+
+Expected output:
+```
+[+] Building 7.0s (7/7) FINISHED                 docker-container:hungry_wilson
+ => [internal] booting buildkit                                            3.0s
+ => => pulling image moby/buildkit:buildx-stable-1                         2.5s
+ => => creating container buildx_buildkit_hungry_wilson0                   0.5s
+
+<!—truncate—>
+
+ => => exporting manifest sha256:3fd491e6dc3ce66cae989d23b3f3d5752314cd17  0.0s
+ => => exporting config sha256:5e9872dc690060c52e4ea6e9357aaebb9d9187b44a  0.0s
+ => => sending tarball                                                     0.0s
+```
+
+This command has multiple parts to break down:
+
+`build` is needed to build the OCI Image based on the Dockerfile we provide.
+hello-world:v1 is the name and tag associated with the image built.
+
+| Flag         | Description                                          |
+|--------------|------------------------------------------------------|
+| file or -f   | Name of the Dockerfile (default: PATH/Dockerfile)    |
+| output or -o | Output destination (format: type=local,dest=path)    |
+
+### Step 3: View the OCI Image
+
+If you would like to view the image, you will need to extract the `.tar` file first.
+
+```
+mkdir hello-world
+tar -xf ./hello-world.tar -C hello-world
+```
+
+## Push the OCI Image to a Repository
+
+You may use [`oras copy`](../commands/oras_cp.mdx) to push the OCI Image from your local disk to a repository.
+
+In the following example, we are pushing the image to a local registry like zot:
+
+```
+oras cp --from-oci-layout ./hello-world.tar:v1 localhost:5000/hello-artifact:v1
+``` 
+
+Expected output:
+
+```
+Copied [oci-layout] ./hello-world.tar:v1 => [registry] localhost:5000/hello-artifact:v1
+Digest: sha256:3fd491e6dc3ce66cae989d23b3f3d5752314cd1793d0c580d3fd8bb280d07809
+```
+
+## Pull the OCI Image from a Repository
+
+You can pull the OCI image using the [`oras pull`](../commands/oras_pull.mdx) command.
+
+```
+oras pull localhost:5000/hello-artifact:v1
+```
+
+Expected Output:
+
+```
+Downloaded empty artifact
+Pulled [registry] localhost:5000/hello-artifact:v1
+Digest: sha256:3fd491e6dc3ce66cae989d23b3f3d5752314cd1793d0c580d3fd8bb280d07809
+```
+
+If you would like to access the artifact files from the OCI layout archive, you may run:
+
+```
+oras pull --oci-layout hello-world.tar:v1
+```
+
+Expected Output:
+
+```
+Downloaded empty artifact
+Pulled [oci-layout] hello-world.tar:v1
+Digest: sha256:3fd491e6dc3ce66cae989d23b3f3d5752314cd1793d0c580d3fd8bb280d07809
+```
