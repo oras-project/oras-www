@@ -56,8 +56,10 @@ VERSIONS=$(tr '[]",' ' ' <versions.json)
 for VERSION
 in ${VERSIONS}
 do
+        set -x
     LATEST_VERSION=$(map_version $VERSION)
     ORAS_COMMAND=$(./tools/install.sh ${LATEST_VERSION} ${TEMPDIR})
+        set +x
     WEIGHT=10
     VERSIONED_DOCS=versioned_docs/version-${VERSION}/commands
     ${ORAS_COMMAND} help | ./tools/parse_main.sh >"${VERSIONED_DOCS}/use_oras_cli.mdx"

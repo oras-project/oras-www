@@ -1,0 +1,120 @@
+---
+title: Distributing Artifacts with Remote Registries
+sidebar_position: 8
+---
+
+# Distributing OCI Artifacts to Remote Registries
+
+Remote OCI registries allow you to share container images and other artifacts.
+There are many public and private remote registries available,
+but this example uses [GitHub Container Registry (GHCR)](https://ghcr.io/).
+This document covers the steps you need to preform to share artifacts on a remote registry.
+You may also experiment with ORAS using a [local container registry](/quickstart.mdx) on your computer.
+
+## Authentication
+
+Most remote registry will require you to authenticate before you can push or pull artifacts.
+The [`oras login`](/commands/oras_login.mdx) command is used for authentication.
+
+On GHCR, you can get an authentication token by going to user Settings, Developer Settings,
+Personal Access Tokens, and Tokens (classic).
+GHCR currently only supports classic tokens for authentication.
+Click on Generate New Token (classic) and allow read, write and delete packages.
+Copy the generated token and set it to an environment variable.
+The URL for GHCR is `ghcr.io`.
+
+```bash
+GHCR_USER='my_github_username'
+GHCR_TOKEN='ghp_MYTOKEN'
+echo "${GHCR_TOKEN}" | oras login --username "${GHCR_USER}" --password-stdin ghcr.io
+```
+
+## Create an artifact
+
+An artifact shared on a registry could be a container image, helm chart or just a simple file.
+This example will use a simple file:
+
+```bash
+echo "hello world" > artifact.txt
+```
+
+## Push the artifact
+
+The [`oras push`](/commands/oras_push.mdx) is used to push artifacts to registries.
+
+```bash
+oras push ghcr.io/${GHCR_USER}/my-repository:v1 artifact.txt
+```
+
+The output will look something like this:
+```
+✓ Uploaded  application/vnd.oci.empty.v1+json                                                                2/2  B 100.00%  913ms
+  └─ sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+✓ Uploaded  artifact.txt                                                                                   12/12  B 100.00%  912ms
+  └─ sha256:a948904f2f0f479b8f8197694b30184b0d2ed1c1cd2a1ec0fb85d299a192a447
+✓ Uploaded  application/vnd.oci.image.manifest.v1+json                                                   591/591  B 100.00%  717ms
+  └─ sha256:b557297d52ec1bee854717827994fb616bffe936c583c7ce66fb21eb0c557df6
+Pushed [registry] ghcr.io/my_github_username/my-repository:v1
+ArtifactType: application/vnd.unknown.artifact.v1
+Digest: sha256:b557297d52ec1bee854717827994fb616bffe936c583c7ce66fb21eb0c557df6
+```
+
+## Pull the artifact
+
+Use the [`oras pull`](/commands/oras_pull.mdx) command to download the artifact.
+
+```bash
+oras pull ghcr.io/${GHCR_USER}/my-repository:v1
+```
+
+The output will look something like this:
+```
+✓ Pulled      artifact.txt                                                                                 12/12  B 100.00%    2ms
+  └─ sha256:a948904f2f0f479b8f8197694b30184b0d2ed1c1cd2a1ec0fb85d299a192a447
+✓ Pulled      application/vnd.oci.image.manifest.v1+json                                                 591/591  B 100.00%  329µs
+  └─ sha256:b557297d52ec1bee854717827994fb616bffe936c583c7ce66fb21eb0c557df6
+Pulled [registry] ghcr.io/my_github_username/my-repository:v1
+Digest: sha256:b557297d52ec1bee854717827994fb616bffe936c583c7ce66fb21eb0c557df6
+```
+
+The file will be recreated if you deleted it:
+```bash
+% cat artifact.txt 
+hello world
+% 
+```
+
+## Referencing an artifact
+
+Use the [`oras attach`](/commands/oras_attach.mdx) command to add a reference to another artifact.
+
+```bash
+oras attach ghcr.io/${GHCR_USER}/my-repository:v1 --artifact-type 'doc/example' --annotation 'key=val' ref-artifact.txt 
+```
+
+The output will look something like this:
+```
+✓ Uploaded  ref-artifact.txt                                                                                           13/13  B 100.00%  490ms
+  └─ sha256:9e820c753b29c9ea7b85a7d1b9d88107330d625546c216facba451effe1b8dbd
+✓ Exists    application/vnd.oci.empty.v1+json                                                                            2/2  B 100.00%     0s
+  └─ sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+✓ Uploaded  application/vnd.oci.image.manifest.v1+json                                                               746/746  B 100.00%  930ms
+  └─ sha256:a461956f5500056ca03ee325c4c607ef421dfff6ad1902eeb2da67686c62004b
+Attached to [registry] ghcr.io/my_github_username/my-repository@sha256:b557297d52ec1bee854717827994fb616bffe936c583c7ce66fb21eb0c557df6
+Digest: sha256:a461956f5500056ca03ee325c4c607ef421dfff6ad1902eeb2da67686c62004b
+```
+
+## View referrers 
+
+Use [`oras discover`](/commands/oras_discover.mdx) to view referrers.
+
+```bash
+oras discover ghcr.io/${GHCR_USER}/my-repository:v1
+```
+
+The output will look something like this:
+```
+ghcr.io/my_github_username/my-repository@sha256:b557297d52ec1bee854717827994fb616bffe936c583c7ce66fb21eb0c557df6
+└── doc/example
+    └── sha256:a461956f5500056ca03ee325c4c607ef421dfff6ad1902eeb2da67686c62004b
+```

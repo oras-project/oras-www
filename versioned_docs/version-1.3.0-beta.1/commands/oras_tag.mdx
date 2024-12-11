@@ -1,0 +1,69 @@
+---
+title: oras tag
+sidebar_position: 200
+warning: Do NOT modify this generated file
+---
+
+# oras tag
+
+Tag a manifest in a registry or an OCI image layout
+
+```bash
+oras tag [flags] <name>{:<tag>|@<digest>} <new_tag> [...]
+```
+
+## Examples
+
+Tag the manifest 'v1.0.1' in 'localhost:5000/hello' to 'v1.0.2':
+
+```bash
+oras tag localhost:5000/hello:v1.0.1 v1.0.2
+```
+
+Tag the manifest with digest sha256:9463e0d192846bc994279417b50114606712d516aab45f4d8b31cbc6e46aad71 to 'v1.0.2'
+
+```bash
+oras tag localhost:5000/hello@sha256:9463e0d192846bc994279417b50114606712d516aab45f4d8b31cbc6e46aad71 v1.0.2
+```
+
+Tag the manifest 'v1.0.1' in 'localhost:5000/hello' to 'v1.0.2', 'latest'
+
+```bash
+oras tag localhost:5000/hello:v1.0.1 v1.0.2 latest
+```
+
+Tag the manifest 'v1.0.1' in 'localhost:5000/hello' to 'v1.0.1', 'v1.0.2', 'latest' with concurrency level tuned:
+
+```bash
+oras tag --concurrency 1 localhost:5000/hello:v1.0.1 v1.0.2 latest
+```
+
+Tag the manifest 'v1.0.1' to 'v1.0.2' in an OCI image layout folder 'layout-dir':
+
+```bash
+oras tag --oci-layout layout-dir:v1.0.1 v1.0.2
+```
+
+## Options
+
+```
+      --ca-file string                             server certificate authority file for the remote registry
+      --cert-file string                           client certificate file for the remote registry
+      --concurrency int                            concurrency level (default 5)
+  -d, --debug                                      output debug logs (implies --no-tty)
+  -H, --header stringArray                         add custom headers to requests
+  -h, --help                                       help for tag
+      --identity-token string                      registry identity token
+      --identity-token-stdin                       read identity token from stdin
+      --insecure                                   allow connections to SSL registry without certs
+      --key-file string                            client private key file for the remote registry
+      --no-tty                                     [Preview] do not show progress output
+      --oci-layout                                 set target as an OCI image layout
+      --oci-layout-path string                     set the path for the OCI image layout target
+  -p, --password string                            registry password or identity token
+      --password-stdin                             read password from stdin
+      --plain-http                                 allow insecure connections to registry without SSL check
+      --registry-config path                       path of the authentication file for registry
+      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]
+  -u, --username string                            registry username
+```

@@ -1,0 +1,98 @@
+---
+title: oras manifest push
+sidebar_position: 140
+warning: Do NOT modify this generated file
+---
+
+# oras manifest push
+
+Push a manifest to a registry or an OCI image layout
+
+```bash
+oras manifest push [flags] <name>[:<tag>[,<tag>][...]|@<digest>] <file>
+```
+
+## Examples
+
+Push a manifest to repository 'localhost:5000/hello' and tag with 'v1':
+
+```bash
+oras manifest push localhost:5000/hello:v1 manifest.json
+```
+
+Push a manifest using a specific method for the Referrers API:
+
+```bash
+oras manifest push --distribution-spec v1.1-referrers-api localhost:5000/hello:v1 manifest.json
+oras manifest push --distribution-spec v1.1-referrers-tag localhost:5000/hello:v1 manifest.json
+```
+
+Push a manifest with content read from stdin:
+
+```bash
+oras manifest push localhost:5000/hello:v1 -
+```
+
+Push a manifest and output its descriptor:
+
+```bash
+oras manifest push --descriptor localhost:5000/hello:v1 manifest.json
+```
+
+Push a manifest to repository 'localhost:5000/hello' and output the prettified descriptor:
+
+```bash
+oras manifest push --descriptor --pretty localhost:5000/hello manifest.json
+```
+
+Push a manifest with specified media type to repository 'localhost:5000/hello' and tag with 'v1':
+
+```bash
+oras manifest push --media-type application/vnd.cncf.oras.artifact.manifest.v1+json localhost:5000/hello:v1 oras_manifest.json
+```
+
+Push a manifest to repository 'localhost:5000/hello' and tag with 'tag1', 'tag2', 'tag3':
+
+```bash
+oras manifest push localhost:5000/hello:tag1,tag2,tag3 manifest.json
+```
+
+Push a manifest to repository 'localhost:5000/hello' and tag with 'tag1', 'tag2', 'tag3' and concurrency level tuned:
+
+```bash
+oras manifest push --concurrency 6 localhost:5000/hello:tag1,tag2,tag3 manifest.json
+```
+
+Push a manifest to an OCI image layout folder 'layout-dir' and tag with 'v1':
+
+```bash
+oras manifest push --oci-layout layout-dir:v1 manifest.json
+```
+
+## Options
+
+```
+      --ca-file string                             server certificate authority file for the remote registry
+      --cert-file string                           client certificate file for the remote registry
+      --concurrency int                            concurrency level (default 5)
+  -d, --debug                                      output debug logs (implies --no-tty)
+      --descriptor                                 output the descriptor
+      --distribution-spec string                   [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api
+  -H, --header stringArray                         add custom headers to requests
+  -h, --help                                       help for push
+      --identity-token string                      registry identity token
+      --identity-token-stdin                       read identity token from stdin
+      --insecure                                   allow connections to SSL registry without certs
+      --key-file string                            client private key file for the remote registry
+      --media-type string                          media type of manifest
+      --no-tty                                     [Preview] do not show progress output
+      --oci-layout                                 set target as an OCI image layout
+      --oci-layout-path string                     set the path for the OCI image layout target
+  -p, --password string                            registry password or identity token
+      --password-stdin                             read password from stdin
+      --plain-http                                 allow insecure connections to registry without SSL check
+      --pretty                                     prettify JSON objects printed to stdout
+      --registry-config path                       path of the authentication file for registry
+      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]
+  -u, --username string                            registry username
+```
