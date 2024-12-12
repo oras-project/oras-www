@@ -21,78 +21,15 @@ map_version() {
     grep "^$1" versions-latest || echo "$1.0"
 }
 
-list_commands() {
-    STATE='Usage'
-    IFS=''
-    ${ORAS_COMMAND} help ${1} | grep -v '^  completion'| while read LINE
-    do
-        [[ "${LINE}" == "" ]] && continue
-
-        case "${STATE}" in
-        Usage)
-            if [[ "${LINE}" == Available* ]]
-            then
-                STATE='Commands'
-                continue
-            fi
-            ;;
-        Commands)
-            if [[ "${LINE}" == Flags* ]]
-            then
-                STATE='Flags'
-                continue
-            fi
-            COMMAND=$(echo "${LINE}" | sed -e 's/^[[:space:]]*//' | sed -e 's/[[:space:]].*//')
-            echo ${COMMAND}
-            ;;
-        Flags)
-            ;;
-        esac
-    done
-}
-
-DIFFS=false
 VERSIONS=$(tr '[]",' ' ' <versions.json)
 for VERSION
 in ${VERSIONS}
 do
-        set -x
     LATEST_VERSION=$(map_version $VERSION)
-    ORAS_COMMAND=$(./tools/install.sh ${LATEST_VERSION} ${TEMPDIR})
-        set +x
-    WEIGHT=10
+    ./tools/install.sh ${LATEST_VERSION} ${TEMPDIR}
+    export PATH=${TEMPDIR}:${PATH}
     VERSIONED_DOCS=versioned_docs/version-${VERSION}/commands
-    ${ORAS_COMMAND} help | ./tools/parse_main.sh >"${VERSIONED_DOCS}/use_oras_cli.mdx"
-    list_commands >"${TEMPDIR}/commands"
-    while read COMMAND
-    do
-        list_commands "${COMMAND}" >"${TEMPDIR}/subcommands"
-        if [ ! -s "${TEMPDIR}/subcommands" ]
-        then
-            FILE="${VERSIONED_DOCS}/oras_${COMMAND}.mdx"
-            ./tools/parse.sh ${TEMPDIR} "${COMMAND}" $WEIGHT >"${FILE}"
-            if git diff "${FILE}" >/dev/null
-            then
-                DIFFS=true
-            fi
-            WEIGHT=$(expr $WEIGHT + 10)
-        else
-            while read SUBCOMMAND
-            do
-                FILE="${VERSIONED_DOCS}/oras_${COMMAND}_${SUBCOMMAND}.mdx"
-                ./tools/parse.sh ${TEMPDIR} "${COMMAND} ${SUBCOMMAND}" $WEIGHT >"${FILE}"
-                if git diff "${FILE}" >/dev/null
-                then
-                    DIFFS=true
-                fi
-                WEIGHT=$(expr $WEIGHT + 10)
-            done <"${TEMPDIR}/subcommands"
-        fi
-    done <"${TEMPDIR}/commands"
+    which oras
+    oras help | ./tools/parse_main.sh >"${VERSIONED_DOCS}/use_oras_cli.mdx"
+    ./tools/subcommands.sh "" "${VERSIONED_DOCS}"
 done
-if $DIFFS
-then
-    echo
-    echo '** Command generator made updates **'
-    echo
-fi
