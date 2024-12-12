@@ -5,7 +5,7 @@ sidebar_position: 15
 
 # Installation
 
-This guide demonstrates the installation steps of ORAS CLI on different platforms.
+This guide demonstrates the installation steps of ORAS CLI `v1.2.1` on different platforms.
 
 ## Homebrew
 
@@ -32,7 +32,7 @@ Install ORAS from the latest [release artifacts](https://github.com/oras-project
 If you want to install ORAS on an AMD64-based Linux machine, run the following command:
 
 ```bash
-VERSION="1.2.0"
+VERSION="1.2.1"
 curl -LO "https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_linux_amd64.tar.gz"
 mkdir -p oras-install/
 tar -zxf oras_${VERSION}_*.tar.gz -C oras-install/
@@ -41,7 +41,7 @@ rm -rf oras_${VERSION}_*.tar.gz oras-install/
 ```
 :::note
 
-If you want to install ORAS on an ARM64-based Linux machine, you can download it from `https://github.com/oras-project/oras/releases/download/v1.2.0/oras_1.2.0_linux_arm64.tar.gz`.
+If you want to install ORAS on an ARM64-based Linux machine, you can download it from `https://github.com/oras-project/oras/releases/download/v1.2.1/oras_1.2.1_linux_arm64.tar.gz`.
 
 :::
 
@@ -50,7 +50,7 @@ If you want to install ORAS on an ARM64-based Linux machine, you can download it
 If you want to install ORAS on a Mac computer with Apple silicon, run the following command:
 
 ```bash
-VERSION="1.2.0"
+VERSION="1.2.1"
 curl -LO "https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_darwin_arm64.tar.gz"
 mkdir -p oras-install/
 tar -zxf oras_${VERSION}_*.tar.gz -C oras-install/
@@ -59,7 +59,8 @@ rm -rf oras_${VERSION}_*.tar.gz oras-install/
 ```
 :::note
 
-If you want to install ORAS on an Intel-based Mac, you can download it from `https://github.com/oras-project/oras/releases/download/v1.2.0/oras_1.2.0_darwin_amd64.tar.gz`.
+If you want to install ORAS on an Intel-based Mac, you can download it from `https://github.com/oras-project/oras/releases/download/v1.2.1/oras_1.2.1_darwin_amd64.tar.gz`.
+ORAS on Homebrew is not maintained by the ORAS community, so it may not be the latest version.
 
 :::
 
@@ -68,13 +69,13 @@ If you want to install ORAS on an Intel-based Mac, you can download it from `htt
 - You can install ORAS CLI on Windows using [WinGet (Windows Package Manager)](https://github.com/microsoft/winget-pkgs):
 
 ```bash
-winget install oras --version 1.2.0
+winget install oras --version 1.2.1
 ```
 
 - Alternatively, you can install ORAS CLI using `.exe` installer. Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
 
 ```cmd
-set VERSION="1.2.0"
+set VERSION="1.2.1"
 curl.exe -sLO  "https://github.com/oras-project/oras/releases/download/v%VERSION%/oras_%VERSION%_windows_amd64.zip"
 tar.exe -xvzf oras_%VERSION%_windows_amd64.zip
 mkdir -p %USERPROFILE%\bin\
@@ -87,7 +88,7 @@ set PATH=%USERPROFILE%\bin\;%PATH%
 A public Docker image containing the CLI is available on [GitHub Container Registry](https://github.com/orgs/oras-project/packages/container/package/oras):
 
 ```
-docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.2.0 help
+docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.2.1 help
 ```
 :::note
 
@@ -99,7 +100,7 @@ You can use the Docker image locally instead of installing a binary.
 For example create an alias:
 
 ```
-alias doras='docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.2.0'
+alias doras='docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.2.1'
 ```
 
 Run ORAS commands:
@@ -107,6 +108,32 @@ Run ORAS commands:
 ```
 doras pull ghcr.io/$GH_USER/oras:darwin-amd64 --username $GH_USER --password $GHCR_TOKEN -o ./download
 ```
+
+## GitHub Actions
+
+Use the `oras` CLI of the default version in GitHub Actions workflow using [setup-oras](https://github.com/oras-project/setup-oras):
+
+```
+steps:
+  - uses: oras-project/setup-oras@v1
+  - run: oras version
+```
+
+Reference the [Advanced Usage](https://github.com/oras-project/setup-oras?tab=readme-ov-file#advanced-usage) to learn more. 
+
+## Runner machine of Azure DevOps and GitHub Actions
+
+ORAS CLI is also a built-in tool in some VM images for GitHub-hosted runners used for GitHub Actions, as well as for Microsoft-hosted agents used for Azure Pipelines. 
+You can use ORAS CLI on these two operating system out of the box:
+
+- [Ubuntu 20.04](https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2004-Readme.md#cli-tools)  
+- [Ubuntu 22.04](https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md#cli-tools)
+
+:::note
+
+ORAS on runner images is not maintained by the ORAS community, so it may not be the latest version.
+
+:::
 
 ## Nix
 
@@ -128,13 +155,19 @@ You can install oras using the following command:
 nix-env -iA nixpkgs.oras
 ```
 
+:::note
+
+ORAS on Nix is not maintained by the ORAS community, so it may not be the latest version.
+
+:::
+
 ## Verify
 
 ```shell
 $ oras version
-Version:        1.2.0
-Go version:     go1.22.3
-Git commit:     dcef719e208a9b226b15bc6512ad729a7dd93270
+Version:        1.2.1
+Go version:     go1.23.4
+Git commit:     a0228556766b6276010d8feb937af512e8a50808
 Git tree state: clean
 ```
 
