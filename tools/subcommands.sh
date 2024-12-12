@@ -18,9 +18,9 @@ then
     WEIGHT=$(cat $WEIGHT_FILE)
     FILE="${DESTINATION}/oras_$(echo ${COMMAND} | sed -e 's/ /_/g').mdx"
     ./tools/parse.sh "${COMMAND}" "$WEIGHT" >"${FILE}"
-    if git diff "${FILE}" >/dev/null
+    if ! git diff --quiet "${FILE}"
     then
-        echo '** Command generator made updates **'
+        echo "** Updated ${FILE} **"
     fi
     echo $(expr $WEIGHT + 10) >${WEIGHT_FILE}
     exit 0
