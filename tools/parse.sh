@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-TEMPDIR="${1?First argument is temporary directory}"
-COMMAND="${2?Second argument is command to run}"
-WEIGHT="${3?Third argument is weight}"
-ORAS="${TEMPDIR}/oras"
+COMMAND="${1?First argument is command to run}"
+WEIGHT="${2?Second argument is weight}"
+
+TEMPDIR=$(mktemp -d)
+trap 'rm -rf "$TEMPDIR"' EXIT
 
 echo '---'
 echo "title: oras ${COMMAND}"
@@ -20,7 +21,7 @@ echo
 TEMPFILE="${TEMPDIR}/help"
 EXAMPLES_FILE="${TEMPDIR}/examples"
 trap 'rm -f "$TEMPFILE" "$EXAMPLES_FILE"' EXIT
-${ORAS} help ${COMMAND} >${TEMPFILE}
+oras help ${COMMAND} >${TEMPFILE}
 
 IFS=''
 STATE=Introduction
