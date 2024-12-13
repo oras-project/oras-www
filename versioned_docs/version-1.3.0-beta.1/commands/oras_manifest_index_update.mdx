@@ -1,0 +1,81 @@
+---
+title: oras manifest index update
+sidebar_position: 140
+warning: Do NOT modify this generated file
+---
+
+# oras manifest index update
+
+[Experimental] Update and push an image index. All manifests should be in the same repository
+		
+
+```bash
+oras manifest index update <name>{:<tag>|@<digest>} [{--add|--merge|--remove} {<tag>|<digest>}] [...] [flags]
+```
+
+## Examples
+
+Remove a manifest and add two manifests from an index tagged 'v1'. The tag will point to the updated index:
+
+```bash
+oras manifest index update localhost:5000/hello:v1 --add linux-amd64 --add linux-arm64 --remove sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9
+```
+
+Create a new index by updating an existing index specified by its digest:
+
+```bash
+oras manifest index update localhost:5000/hello@sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9 --add linux-amd64 --remove sha256:fd6ed2f36b5465244d5dc86cb4e7df0ab8a9d24adc57825099f522fe009a22bb
+```
+
+Merge manifests from the index 'v2-windows' to the index 'v2':
+
+```bash
+oras manifest index update localhost:5000/hello:v2 --merge v2-windows
+```
+
+Update an index and tag the updated index as 'v2.1.0' and 'v2':
+
+```bash
+oras manifest index update localhost:5000/hello@sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9 --add linux-amd64 --tag "v2.1.0" --tag "v2"
+```
+
+Update an index and save it locally to index.json, auto push will be disabled:
+
+```bash
+oras manifest index update --output index.json localhost:5000/hello:v2 --add v2-linux-amd64
+```
+
+Update an index and output the index to stdout, auto push will be disabled:
+
+```bash
+oras manifest index update --output - --pretty localhost:5000/hello:v2 --remove sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9
+```
+
+## Options
+
+```
+      --add stringArray                            manifests to add to the index
+      --ca-file string                             server certificate authority file for the remote registry
+      --cert-file string                           client certificate file for the remote registry
+  -d, --debug                                      output debug logs (implies --no-tty)
+  -H, --header stringArray                         add custom headers to requests
+  -h, --help                                       help for update
+      --identity-token string                      registry identity token
+      --identity-token-stdin                       read identity token from stdin
+      --insecure                                   allow connections to SSL registry without certs
+      --key-file string                            client private key file for the remote registry
+      --merge stringArray                          indexes to be merged into the index
+      --no-tty                                     [Preview] do not show progress output
+      --oci-layout                                 set target as an OCI image layout
+      --oci-layout-path string                     set the path for the OCI image layout target
+  -o, --output path                                file path to write the created index to, use - for stdout
+  -p, --password string                            registry password or identity token
+      --password-stdin                             read password from stdin
+      --plain-http                                 allow insecure connections to registry without SSL check
+      --pretty                                     prettify JSON objects printed to stdout
+      --registry-config path                       path of the authentication file for registry
+      --remove stringArray                         manifests to remove from the index, must be digests
+      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]
+      --tag stringArray                            extra tags for the updated index
+  -u, --username string                            registry username
+```
