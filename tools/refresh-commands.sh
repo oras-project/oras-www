@@ -29,7 +29,6 @@ do
     ./tools/install.sh ${LATEST_VERSION} ${TEMPDIR}
     export PATH=${TEMPDIR}:${PATH}
     VERSIONED_DOCS=versioned_docs/version-${VERSION}/commands
-    which oras
     oras help | ./tools/parse_main.sh >"${VERSIONED_DOCS}/use_oras_cli.mdx"
     ./tools/subcommands.sh "" "${VERSIONED_DOCS}"
 done
