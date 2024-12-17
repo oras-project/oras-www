@@ -1,0 +1,89 @@
+---
+title: oras manifest index create
+sidebar_position: 130
+warning: Do NOT modify this generated file
+---
+
+# oras manifest index create
+
+[Experimental] Create and push an index from provided manifests. All manifests should be in the same repository
+
+```bash
+oras manifest index create [flags] <name>[:<tag[,<tag>][...]] [{<tag>|<digest>}...]
+```
+
+## Examples
+
+Create an index from source manifests tagged 'linux-amd64' and 'linux-arm64', and push without tagging:
+
+```bash
+oras manifest index create localhost:5000/hello linux-amd64 linux-arm64
+```
+
+Create an index from source manifests tagged 'linux-amd64' and 'linux-arm64', and push with the tag 'v1':
+
+```bash
+oras manifest index create localhost:5000/hello:v1 linux-amd64 linux-arm64
+```
+
+Create an index from source manifests using both tags and digests, and push with tag 'v1':
+
+```bash
+oras manifest index create localhost:5000/hello:v1 linux-amd64 sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9
+```
+
+Create an index and push it with multiple tags:
+
+```bash
+oras manifest index create localhost:5000/hello:tag1,tag2,tag3 linux-amd64 linux-arm64 sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9
+```
+
+Create and push an index with annotations:
+
+```bash
+oras manifest index create localhost:5000/hello:v1 linux-amd64 --annotation "key=val"
+```
+
+Create an index and push to an OCI image layout folder 'layout-dir' and tag with 'v1':
+
+```bash
+oras manifest index create layout-dir:v1 linux-amd64 sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9
+```
+
+Create an index and save it locally to index.json, auto push will be disabled:
+
+```bash
+oras manifest index create --output index.json localhost:5000/hello linux-amd64 linux-arm64
+```
+
+Create an index and output the index to stdout, auto push will be disabled:
+
+```bash
+oras manifest index create localhost:5000/hello linux-arm64 --output - --pretty
+```
+
+## Options
+
+```
+  -a, --annotation stringArray                     manifest annotations
+      --ca-file string                             server certificate authority file for the remote registry
+      --cert-file string                           client certificate file for the remote registry
+  -d, --debug                                      output debug logs (implies --no-tty)
+  -H, --header stringArray                         add custom headers to requests
+  -h, --help                                       help for create
+      --identity-token string                      registry identity token
+      --identity-token-stdin                       read identity token from stdin
+      --insecure                                   allow connections to SSL registry without certs
+      --key-file string                            client private key file for the remote registry
+      --no-tty                                     [Preview] do not show progress output
+      --oci-layout                                 set target as an OCI image layout
+      --oci-layout-path string                     set the path for the OCI image layout target
+  -o, --output path                                file path to write the created index to, use - for stdout
+  -p, --password string                            registry password or identity token
+      --password-stdin                             read password from stdin
+      --plain-http                                 allow insecure connections to registry without SSL check
+      --pretty                                     prettify JSON objects printed to stdout
+      --registry-config path                       path of the authentication file for registry
+      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]
+  -u, --username string                            registry username
+```

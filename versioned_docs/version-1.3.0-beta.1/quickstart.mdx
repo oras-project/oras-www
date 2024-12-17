@@ -1,0 +1,127 @@
+---
+title: Quick Start 
+sidebar_position: 14 
+---
+
+# Distributing OCI artifacts using ORAS
+
+To distribute OCI artifacts, we need to understand OCI registries. 
+These registries store container images and other artifacts for easy access. 
+Distributing OCI artifacts means pushing them to these registries so others can pull them for use. 
+
+We will be using [zot registry](https://zotregistry.dev/) in this guide. 
+Zot registry is an OCI-native container registry for distributing container images and OCI artifacts.
+This guide uses Zot as a local registry on your computer.
+There is another guide for distributing artifacts with a [remote registry](/how_to_guides/remote_registries.mdx).
+
+In order to follow the steps given, you would be required to install the ORAS CLI.
+You can follow the [installation guide](./installation.mdx) to do so. 
+
+## Install zot registry 
+
+We will be running zot using docker. However, you can refer to their [installation guide](https://zotregistry.dev/install-guides/install-guide-linux/) to find more ways to install the registry.
+
+**Prerequisites**
+- [Docker](https://www.docker.com/) 
+
+```
+docker run -d -p 5000:5000 --name oras-quickstart ghcr.io/project-zot/zot-linux-amd64:latest
+```
+
+## Distribution of OCI artifacts
+
+Let's push an OCI artifact to the registry using the ORAS CLI. 
+
+### Step 1: Create a sample file
+
+```
+echo "hello world" > artifact.txt
+```
+
+### Step 2: Push an artifact
+
+```bash
+oras push --plain-http localhost:5000/hello-artifact:v1 \
+    --artifact-type application/vnd.acme.rocket.config \
+    artifact.txt:text/plain
+```
+
+```
+Uploading a948904f2f0f artifact.txt
+Uploaded  a948904f2f0f artifact.txt
+Pushed [registry] localhost:5000/hello-artifact:v1
+Digest: sha256:bcdd6799fed0fca0eaedfc1c642f3d1dd7b8e78b43986a89935d6fe217a09cee
+```
+
+After pushing the artifact, it can be seen in the zot user interface at [http://localhost:5000/](http://localhost:5000/)
+
+![Screenshot of how the interface should look on pushing](/img/introduction-to-registries-tutorial-zot.png) 
+
+### Step 3: Pull the artifact
+
+Let's now pull the artifact we have pushed in the pervious step.
+
+```
+oras pull localhost:5000/hello-artifact:v1
+```
+
+```
+Downloading a948904f2f0f artifact.txt
+Downloaded  a948904f2f0f artifact.txt
+Pulled [registry] localhost:5000/hello-artifact:v1
+Digest: sha256:19e1b5170646a1500a1ac56bad28675ab72dc49038e69ba56eb7556ec478859f
+```
+
+## Attach an artifact
+
+First, let's create another sample file to attach to the previously uploaded artifact. 
+
+### Step 1: Create a sample file
+
+```
+echo "hello world" > hi.txt
+```
+
+### Step 2: Attach the file
+
+You can use the command below to attach `hi.txt` to the artifact we pushed above:
+
+```
+oras attach --artifact-type doc/example localhost:5000/hello-artifact:v1 hi.txt
+```
+
+```
+Exists    a948904f2f0f hi.txt
+Attached to [registry] localhost:5000/hello-artifact@sha256:327db68f73d0ed53d528d927a6703c00739d7c1076e50762c3f6641b51b76fdc
+Digest: sha256:bcdd6799fed0fca0eaedfc1c642f3d1dd7b8e78b43986a89935d6fe217a09cee
+```
+
+### Step 3: View referrers 
+
+```
+oras discover localhost:5000/hello-artifact:v1
+```
+
+```
+Discovered 1 artifact referencing v1
+Digest: sha256:327db68f73d0ed53d528d927a6703c00739d7c1076e50762c3f6641b51b76fdc
+
+Artifact Type   Digest
+doc/example     sha256:bcdd6799fed0fca0eaedfc1c642f3d1dd7b8e78b43986a89935d6fe217a09cee
+```
+
+**Note:** For settings up a registry with TLS follow [these steps](https://github.com/project-zot/zot/blob/main/examples/README.md#network).
+
+## Clean up
+
+Stop and remove the running quick start registry and the uploaded content. 
+
+```
+docker rm $(docker stop oras-quickstart)
+```
+
+## Conclusion
+
+You can now successfully push OCI artifacts to your zot registry! 
+
+As OCI registries are used to securely store and share container images, they greatly help with collaboration and code sharing. They enable teams to acquire and use images and artifacts through a standardized artifact interface. This is why it is considered to play a crucial role in maintaining consistency among teams.

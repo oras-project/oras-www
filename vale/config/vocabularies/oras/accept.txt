@@ -33,6 +33,7 @@ signoff
 [Ss]kippable
 Snapcraft
 stdin
+stdout
 [Ss]ubproject
 subprojects
 unencrypted
