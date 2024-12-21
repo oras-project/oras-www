@@ -1,0 +1,130 @@
+---
+title: Multiple Architecture Image Support
+sidebar_position: 110
+---
+
+# Multiple Architecture Image/Artifact Support with ORAS
+
+ORAS can help you manage multiple architecture artifacts such as configurations, executables, and container images.
+This example shows how you can use ORAS to manage executables for different operating systems and architectures.
+
+## Pushing the artifacts
+The first step is to push the artifacts to your container registry.
+
+First we push a Linux ARM64 executable:
+```shell
+% oras push --plain-http localhost:15000/oras:linux,arm64  --artifact-platform linux/arm64 --artifact-type 'application/vnd.oci.image.config.v1+json'  bin/linux/arm64/oras:application/octet-stream
+✓ Uploaded  bin/linux/arm64/oras                                                                                                     10.5/10.5 MB 100.00%   36ms
+  └─ sha256:32374a656f830f5d7504ad06c3c7be025fb38257d6793d8e70fed6f2b753c7ab
+✓ Exists    application/vnd.unknown.config.v1+json                                                                                       37/37  B 100.00%     0s
+  └─ sha256:d6f56bc20064075ce319ac2e6fcef5de9ea21773b0a8a4398c4405222971f9c0
+✓ Uploaded  application/vnd.oci.image.manifest.v1+json                                                                                 581/581  B 100.00%     0s
+  └─ sha256:302df4334cffe5132b6b81c06742be8ab3345bff3ce922662bc8674e79113bfd
+Pushed [registry] localhost:15000/oras:linux
+Tagged arm64
+ArtifactType: application/vnd.oci.image.config.v1+json
+Digest: sha256:302df4334cffe5132b6b81c06742be8ab3345bff3ce922662bc8674e79113bfd
+```
+
+Next, we push a Linux AMD64 executable:
+```shell
+% oras push --plain-http localhost:15000/oras:linux,amd64  --artifact-platform linux/amd64 --artifact-type 'application/vnd.oci.image.config.v1+json'  bin/linux/amd64/oras:application/octet-stream
+✓ Uploaded  bin/linux/amd64/oras                                                                                                         11/11 MB 100.00%     0s
+  └─ sha256:4640fefdb4e22eb1308e40d5fac9fd9d16e17dfbc20202bb3ed42033d01d823e
+✓ Exists    application/vnd.unknown.config.v1+json                                                                                       37/37  B 100.00%     0s
+  └─ sha256:9d99a75171aea000c711b34c0e5e3f28d3d537dd99d110eafbfbc2bd8e52c2bf
+✓ Uploaded  application/vnd.oci.image.manifest.v1+json                                                                                 581/581  B 100.00%     0s
+  └─ sha256:e5b0ffe309a91893d4423f09e82410364607fd749ea2f93dd1c286d718d9c1e4
+Pushed [registry] localhost:15000/oras:linux
+Tagged amd64
+ArtifactType: application/vnd.oci.image.config.v1+json
+Digest: sha256:e5b0ffe309a91893d4423f09e82410364607fd749ea2f93dd1c286d718d9c1e4
+```
+This example pushes the executable for two architectures, but you could also push artifacts with a different operating system or other platform attribute.
+
+## Create a multiple architecture manifest
+
+After you have pushed all your platform specific artifacts, create a manifest referencing them:
+```shell
+% oras manifest index create localhost:15000/oras:v1 sha256:302df4334cffe5132b6b81c06742be8ab3345bff3ce922662bc8674e79113bfd sha256:e5b0ffe309a91893d4423f09e82410364607fd749ea2f93dd1c286d718d9c1e4
+Fetching  sha256:302df4334cffe5132b6b81c06742be8ab3345bff3ce922662bc8674e79113bfd
+Fetched   sha256:302df4334cffe5132b6b81c06742be8ab3345bff3ce922662bc8674e79113bfd
+Fetching  sha256:e5b0ffe309a91893d4423f09e82410364607fd749ea2f93dd1c286d718d9c1e4
+Fetched   sha256:e5b0ffe309a91893d4423f09e82410364607fd749ea2f93dd1c286d718d9c1e4
+Packed    0fd4ac889c6f application/vnd.oci.image.index.v1+json
+Pushed    [registry] localhost:15000/oras:v1
+Digest: sha256:0fd4ac889c6f1f3e4fbb1c88b0cc18b97176bf7fd0841ac9c5264d20dd54e2d8
+```
+
+## Download your platform specific artifact
+
+Pull the artifact to that directory:
+```shell
+% oras pull --plain-http localhost:15000/oras:v1 --platform linux/amd64 -o ./download
+✓ Skipped     application/vnd.unknown.config.v1+json                                                                                    37/37  B 100.00%     0s
+  └─ sha256:9d99a75171aea000c711b34c0e5e3f28d3d537dd99d110eafbfbc2bd8e52c2bf
+✓ Pulled      bin/linux/amd64/oras                                                                                                      11/11 MB 100.00%   19ms
+  └─ sha256:4640fefdb4e22eb1308e40d5fac9fd9d16e17dfbc20202bb3ed42033d01d823e
+✓ Pulled      application/vnd.oci.image.manifest.v1+json                                                                              581/581  B 100.00%   81µs
+  └─ sha256:e5b0ffe309a91893d4423f09e82410364607fd749ea2f93dd1c286d718d9c1e4
+Skipped pulling layers without file name in "org.opencontainers.image.title"
+Use 'oras copy localhost:15000/oras:v1 --to-oci-layout <layout-dir>' to pull all layers.
+```
+
+Validate your download
+```shell
+% file download/bin/linux/amd64/oras
+download/bin/linux/amd64/oras: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, Go BuildID=g5htPJf4jOBYObk8HPGK/C_STgrrtpidMtnOXIshh/AwKGiCqqgvmy7kvjXixL/hvqsAg3dicj7a6T6waJe, not stripped
+% sha256sum ./download/bin/linux/amd64/oras
+4640fefdb4e22eb1308e40d5fac9fd9d16e17dfbc20202bb3ed42033d01d823e  ./download/bin/linux/amd64/oras
+```
+
+## Update your multiple architecture manifest
+
+You can also update your manifest if you want to add a new artifact.
+For example, say you created an executable for Darwin, push the executable:
+```shell
+% oras push --plain-http localhost:15000/oras:darwin,amd64  --artifact-platform darwin/amd64 --artifact-type 'application/vnd.oci.image.config.v1+json'  bin/darwin/amd64/oras:application/octet-stream
+✓ Exists    bin/darwin/amd64/oras                                                                                                    11.1/11.1 MB 100.00%     0s
+  └─ sha256:a839f5d9cd3502b87b8d8edca31cd9f6f66c4835364e73b87a1645353631590f
+✓ Exists    application/vnd.unknown.config.v1+json                                                                                       38/38  B 100.00%     0s
+  └─ sha256:e9302bbb2fb8f6c2df866d3c4e41917849442f89a575f36f43366a7279804f70
+✓ Uploaded  application/vnd.oci.image.manifest.v1+json                                                                                 589/589  B 100.00%     0s
+  └─ sha256:f5758b75ebc4d82280078afb9ebeb859f91a481667c018c9edf91a432518cb20
+Pushed [registry] localhost:15000/oras:darwin
+Tagged amd64
+ArtifactType: application/vnd.oci.image.config.v1+json
+Digest: sha256:f5758b75ebc4d82280078afb9ebeb859f91a481667c018c9edf91a432518cb20
+````
+
+Add it to your manifest:
+```shell
+% oras manifest index update --plain-http localhost:15000/oras:v1 --add sha256:f5758b75ebc4d82280078afb9ebeb859f91a481667c018c9edf91a432518cb20
+Fetching  v1
+Fetched   sha256:0fd4ac889c6f1f3e4fbb1c88b0cc18b97176bf7fd0841ac9c5264d20dd54e2d8 v1
+Fetching  sha256:f5758b75ebc4d82280078afb9ebeb859f91a481667c018c9edf91a432518cb20
+Fetched   sha256:f5758b75ebc4d82280078afb9ebeb859f91a481667c018c9edf91a432518cb20
+Added     sha256:f5758b75ebc4d82280078afb9ebeb859f91a481667c018c9edf91a432518cb20
+Updated   sha256:a694281dcf1248049c3d43e55d88ad1276c90b2b92f9b7d964fcc18e1fab7eb7
+Pushed    [registry] localhost:15000/oras:v1
+Digest: sha256:a694281dcf1248049c3d43e55d88ad1276c90b2b92f9b7d964fcc18e1fab7eb7
+```
+
+Download your new referenced executable:
+```shell
+% oras pull --plain-http localhost:15000/oras:v1 --platform darwin/amd64 -o ./download
+✓ Skipped     application/vnd.unknown.config.v1+json                                                                                    38/38  B 100.00%     0s
+  └─ sha256:e9302bbb2fb8f6c2df866d3c4e41917849442f89a575f36f43366a7279804f70
+✓ Pulled      bin/darwin/amd64/oras                                                                                                 11.1/11.1 MB 100.00%   30ms
+  └─ sha256:a839f5d9cd3502b87b8d8edca31cd9f6f66c4835364e73b87a1645353631590f
+✓ Pulled      application/vnd.oci.image.manifest.v1+json                                                                              589/589  B 100.00%  132µs
+  └─ sha256:f5758b75ebc4d82280078afb9ebeb859f91a481667c018c9edf91a432518cb20
+Skipped pulling layers without file name in "org.opencontainers.image.title"
+Use 'oras copy localhost:15000/oras:v1 --to-oci-layout <layout-dir>' to pull all layers.
+```
+
+Validate the executable:
+```shell
+% file download/bin/darwin/amd64/oras
+download/bin/darwin/amd64/oras: Mach-O 64-bit executable x86_64
+```
