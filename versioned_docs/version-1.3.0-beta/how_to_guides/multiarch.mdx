@@ -13,7 +13,7 @@ The first step is to push the artifact with platform information to your contain
 
 First we push a Linux ARM64 executable:
 ```console
-% oras push --plain-http localhost:15000/oras:linux,arm64  --artifact-platform linux/arm64 --artifact-type 'application/vnd.oci.image.config.v1+json'  bin/linux/arm64/oras:application/octet-stream
+% oras push --plain-http localhost:15000/oras:linux,arm64 --artifact-platform linux/arm64 --artifact-type 'application/vnd.oci.image.config.v1+json'  bin/linux/arm64/oras:application/octet-stream
 ✓ Uploaded  bin/linux/arm64/oras                                                                                                     10.5/10.5 MB 100.00%   36ms
   └─ sha256:32374a656f830f5d7504ad06c3c7be025fb38257d6793d8e70fed6f2b753c7ab
 ✓ Exists    application/vnd.unknown.config.v1+json                                                                                       37/37  B 100.00%     0s
