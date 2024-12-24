@@ -27,7 +27,7 @@ Digest: sha256:302df4334cffe5132b6b81c06742be8ab3345bff3ce922662bc8674e79113bfd
 ```
 
 Next, we push a Linux AMD64 executable:
-```shell
+```console
 % oras push --plain-http localhost:15000/oras:linux,amd64  --artifact-platform linux/amd64 --artifact-type 'application/vnd.oci.image.config.v1+json'  bin/linux/amd64/oras:application/octet-stream
 ✓ Uploaded  bin/linux/amd64/oras                                                                                                         11/11 MB 100.00%     0s
   └─ sha256:4640fefdb4e22eb1308e40d5fac9fd9d16e17dfbc20202bb3ed42033d01d823e
@@ -45,7 +45,7 @@ This example pushes the executable for two architectures, but you could also pus
 ## Create a multiple architecture manifest
 
 After you have pushed all your platform specific artifacts, create a manifest referencing them using the OCI image index format:
-```shell
+```console
 % oras manifest index create localhost:15000/oras:v1 sha256:302df4334cffe5132b6b81c06742be8ab3345bff3ce922662bc8674e79113bfd sha256:e5b0ffe309a91893d4423f09e82410364607fd749ea2f93dd1c286d718d9c1e4
 Fetching  sha256:302df4334cffe5132b6b81c06742be8ab3345bff3ce922662bc8674e79113bfd
 Fetched   sha256:302df4334cffe5132b6b81c06742be8ab3345bff3ce922662bc8674e79113bfd
@@ -59,7 +59,7 @@ Digest: sha256:0fd4ac889c6f1f3e4fbb1c88b0cc18b97176bf7fd0841ac9c5264d20dd54e2d8
 ## Download your platform specific artifact
 
 Pull the artifact to that directory:
-```shell
+```console
 % oras pull --plain-http localhost:15000/oras:v1 --platform linux/amd64 -o ./download
 ✓ Skipped     application/vnd.unknown.config.v1+json                                                                                    37/37  B 100.00%     0s
   └─ sha256:9d99a75171aea000c711b34c0e5e3f28d3d537dd99d110eafbfbc2bd8e52c2bf
@@ -72,7 +72,7 @@ Use 'oras copy localhost:15000/oras:v1 --to-oci-layout <layout-dir>' to pull all
 ```
 
 Validate your download
-```shell
+```console
 % file download/bin/linux/amd64/oras
 download/bin/linux/amd64/oras: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, Go BuildID=g5htPJf4jOBYObk8HPGK/C_STgrrtpidMtnOXIshh/AwKGiCqqgvmy7kvjXixL/hvqsAg3dicj7a6T6waJe, not stripped
 % sha256sum ./download/bin/linux/amd64/oras
@@ -83,7 +83,7 @@ download/bin/linux/amd64/oras: ELF 64-bit LSB executable, x86-64, version 1 (SYS
 
 You can also update your manifest if you want to add a new artifact.
 For example, say you created an executable for Darwin, push the executable:
-```shell
+```console
 % oras push --plain-http localhost:15000/oras:darwin,amd64  --artifact-platform darwin/amd64 --artifact-type 'application/vnd.oci.image.config.v1+json'  bin/darwin/amd64/oras:application/octet-stream
 ✓ Exists    bin/darwin/amd64/oras                                                                                                    11.1/11.1 MB 100.00%     0s
   └─ sha256:a839f5d9cd3502b87b8d8edca31cd9f6f66c4835364e73b87a1645353631590f
@@ -98,7 +98,7 @@ Digest: sha256:f5758b75ebc4d82280078afb9ebeb859f91a481667c018c9edf91a432518cb20
 ````
 
 Add it to your manifest:
-```shell
+```console
 % oras manifest index update --plain-http localhost:15000/oras:v1 --add sha256:f5758b75ebc4d82280078afb9ebeb859f91a481667c018c9edf91a432518cb20
 Fetching  v1
 Fetched   sha256:0fd4ac889c6f1f3e4fbb1c88b0cc18b97176bf7fd0841ac9c5264d20dd54e2d8 v1
@@ -111,7 +111,7 @@ Digest: sha256:a694281dcf1248049c3d43e55d88ad1276c90b2b92f9b7d964fcc18e1fab7eb7
 ```
 
 Download your new referenced executable:
-```shell
+```console
 % oras pull --plain-http localhost:15000/oras:v1 --platform darwin/amd64 -o ./download
 ✓ Skipped     application/vnd.unknown.config.v1+json                                                                                    38/38  B 100.00%     0s
   └─ sha256:e9302bbb2fb8f6c2df866d3c4e41917849442f89a575f36f43366a7279804f70
@@ -124,7 +124,7 @@ Use 'oras copy localhost:15000/oras:v1 --to-oci-layout <layout-dir>' to pull all
 ```
 
 Validate the executable:
-```shell
+```console
 % file download/bin/darwin/amd64/oras
 download/bin/darwin/amd64/oras: Mach-O 64-bit executable x86_64
 ```
