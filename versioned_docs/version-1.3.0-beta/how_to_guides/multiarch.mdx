@@ -56,6 +56,48 @@ Pushed    [registry] localhost:15000/oras:v1
 Digest: sha256:0fd4ac889c6f1f3e4fbb1c88b0cc18b97176bf7fd0841ac9c5264d20dd54e2d8
 ```
 
+You may also create a multi-architecture manifest with tags:
+```console
+$ oras manifest index create localhost:15000/oras:v1 linux_arm64 linux_amd64
+Fetching  linux_arm64
+Fetched   sha256:302df4334cffe5132b6b81c06742be8ab3345bff3ce922662bc8674e79113bfd linux_arm64
+Fetching  linux_amd64
+Fetched   sha256:e5b0ffe309a91893d4423f09e82410364607fd749ea2f93dd1c286d718d9c1e4 linux_amd64
+Packed    0fd4ac889c6f application/vnd.oci.image.index.v1+json
+Pushed    [registry] localhost:15000/oras:v1
+Digest: sha256:0fd4ac889c6f1f3e4fbb1c88b0cc18b97176bf7fd0841ac9c5264d20dd54e2d8
+```
+
+## View the multi-architecture manifest
+
+View the generated manifest:
+```console
+$ oras manifest fetch localhost:15000/oras:v1 --pretty
+{
+  "schemaVersion": 2,
+  "mediaType": "application/vnd.oci.image.index.v1+json",
+  "manifests": [
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:302df4334cffe5132b6b81c06742be8ab3345bff3ce922662bc8674e79113bfd",
+      "size": 590,
+      "platform": {
+        "architecture": "arm64",
+        "os": "linux"
+      }
+    },
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:e5b0ffe309a91893d4423f09e82410364607fd749ea2f93dd1c286d718d9c1e4",
+      "size": 590,
+      "platform": {
+        "architecture": "amd64",
+        "os": "linux"
+      }
+    }
+  ]
+}
+```
 ## Download your platform specific artifact
 
 Pull the artifact to that directory:
