@@ -10,7 +10,8 @@ Dockerfile
 facto
 filetype
 gcloud
-[Gg]ithub
+github
+GitHub
 [Gg]olang
 (?i)http
 https
