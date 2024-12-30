@@ -86,10 +86,11 @@ To login to the registry without a certificate, a self-signed certificate, or an
 - Generate your self-signed certificates:
 
   ```
-  $ mkdir -p certs
-  $ openssl req \
-    -newkey rsa:4096 -nodes -sha256 -keyout certs/domain.key \
-    -x509 -days 365 -out certs/domain.crt
+  mkdir -p certs && \
+  openssl req \
+  -newkey rsa:4096 -nodes -sha256 \
+  -keyout certs/domain.key \
+  -x509 -days 365 -out certs/domain.crt
   ```
 
 - Start a registry using that file for auth and listen the `0.0.0.0` address:
