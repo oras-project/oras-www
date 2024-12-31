@@ -12,23 +12,26 @@ The following commands can be used to verify the ORAS CLI binaries using GPG:
 
 ### Step 1: 
 
-First, we import the releaser's GPG Key which can be used for verification (here we have imported [Billy Zha](https://github.com/qweeah)'s key):
+First, we import the releasers' GPG Keys which can be used for verification:
 
 ```
-$ curl -sSL https://github.com/qweeah.gpg | gpg --import -
+$ curl -sSL https://raw.githubusercontent.com/oras-project/oras/refs/heads/main/KEYS | gpg --import -
 ```
 
-You can find the [GPG keys](https://github.com/oras-project/oras/blob/main/KEYS) which have been used for ORAS releases.
+The [GPG keys file](https://github.com/oras-project/oras/blob/main/KEYS) contains the keys which have been used for ORAS releases.
 
 ### Step 2: 
 
-You can run the following command to check if the key has been imported:
+You can run the following command to check if the key has been imported. Your output will look something like:
 
 ```
 $ gpg --list-keys
 pub   rsa4096 2023-02-28 [SC] [expires: 2024-02-28]
       BE6FA8DDA48D4C230091A0A9276D8A724CE1C704
 uid           [ unknown] Billy Zha <jinzha1@microsoft.com>
+pub   rsa4096 2024-12-04 [SC] [expires: 2025-12-04]
+      73C7F42E8F0B4493115ABED64F723223E9DF0185
+uid           [ unknown] Shiwei Zhang <shizh@microsoft.com>
 ```
 
 ### Step 3: 
