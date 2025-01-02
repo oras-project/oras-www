@@ -12,13 +12,13 @@ The following commands can be used to verify the ORAS CLI binaries using GPG:
 
 ### Step 1: 
 
-First, we import the releaser's GPG Key which can be used for verification (here we have imported [Billy Zha](https://github.com/qweeah)'s key):
+First, we import the releasers' GPG Keys which can be used for verification:
 
 ```
-$ curl -sSL https://github.com/qweeah.gpg | gpg --import -
+$ curl -sSL https://raw.githubusercontent.com/oras-project/oras/refs/heads/main/KEYS | gpg --import -
 ```
 
-You can find the [GPG keys](https://github.com/oras-project/oras/blob/main/KEYS) which have been used for ORAS releases.
+The [GPG keys file](https://github.com/oras-project/oras/blob/main/KEYS) contains the keys which have been used for ORAS releases.
 
 ### Step 2: 
 
