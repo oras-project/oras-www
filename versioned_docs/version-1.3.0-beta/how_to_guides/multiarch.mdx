@@ -46,7 +46,9 @@ This example pushes the executable for two architectures, but you could also pus
 
 After you have pushed all your platform specific artifacts, create a manifest referencing them using the OCI image index format:
 ```console
-$ oras manifest index create localhost:15000/oras:v1 sha256:302df4334cffe5132b6b81c06742be8ab3345bff3ce922662bc8674e79113bfd sha256:e5b0ffe309a91893d4423f09e82410364607fd749ea2f93dd1c286d718d9c1e4
+$ LINUX_ARM64_SHA=sha256:302df4334cffe5132b6b81c06742be8ab3345bff3ce922662bc8674e79113bfd
+$ LINUX_AMD64_SHA=sha256:e5b0ffe309a91893d4423f09e82410364607fd749ea2f93dd1c286d718d9c1e4
+$ oras manifest index create localhost:15000/oras:v1 ${LINUX_ARM64_SHA} ${LINUX_AMD64_SHA}
 Fetching  sha256:302df4334cffe5132b6b81c06742be8ab3345bff3ce922662bc8674e79113bfd
 Fetched   sha256:302df4334cffe5132b6b81c06742be8ab3345bff3ce922662bc8674e79113bfd
 Fetching  sha256:e5b0ffe309a91893d4423f09e82410364607fd749ea2f93dd1c286d718d9c1e4
