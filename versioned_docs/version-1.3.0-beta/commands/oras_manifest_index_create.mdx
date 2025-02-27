@@ -47,7 +47,7 @@ oras manifest index create localhost:5000/hello:v1 linux-amd64 --annotation "key
 Create an index and push to an OCI image layout folder 'layout-dir' and tag with 'v1':
 
 ```bash
-oras manifest index create layout-dir:v1 linux-amd64 sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9
+oras manifest index create --oci-layout layout-dir:v1 linux-amd64 sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9
 ```
 
 Create an index and save it locally to index.json, auto push will be disabled:
@@ -77,7 +77,7 @@ oras manifest index create localhost:5000/hello linux-arm64 --output - --pretty
       --key-file string                            client private key file for the remote registry
       --no-tty                                     [Preview] do not show progress output
       --oci-layout                                 set target as an OCI image layout
-      --oci-layout-path string                     set the path for the OCI image layout target
+      --oci-layout-path string                     [Experimental] set the path for the OCI image layout target
   -o, --output path                                file path to write the created index to, use - for stdout
   -p, --password string                            registry password or identity token
       --password-stdin                             read password from stdin

@@ -90,7 +90,7 @@ oras pull --oci-layout layout.tar:v1
       --concurrency int                             concurrency level (default 3)
       --config string                               output manifest config file
   -d, --debug                                       output debug logs (implies --no-tty)
-      --format string                               [Experimental] Format output using a custom template:
+      --format string                               [Experimental] format output using a custom template:
                                                     'json':         Print in JSON format
                                                     'go-template':  Print output using the given Go template
                                                     'text':         Print in text format (default "text")
@@ -104,7 +104,7 @@ oras pull --oci-layout layout.tar:v1
       --key-file string                             client private key file for the remote registry
       --no-tty                                      [Preview] do not show progress output
       --oci-layout                                  set target as an OCI image layout
-      --oci-layout-path string                      set the path for the OCI image layout target
+      --oci-layout-path string                      [Experimental] set the path for the OCI image layout target
   -o, --output string                               output directory (default ".")
   -p, --password string                             registry password or identity token
       --password-stdin                              read password from stdin
@@ -112,6 +112,6 @@ oras pull --oci-layout layout.tar:v1
       --platform os[/arch][/variant][:os_version]   request platform in the form of os[/arch][/variant][:os_version]
       --registry-config path                        path of the authentication file for registry
       --resolve host:port:address[:address_port]    customized DNS for registry, formatted in host:port:address[:address_port]
-      --template string                             [Experimental] Template string used to format output
+      --template string                             [Experimental] template string used to format output
   -u, --username string                             registry username
 ```
