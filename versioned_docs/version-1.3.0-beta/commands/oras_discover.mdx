@@ -71,7 +71,7 @@ oras discover --oci-layout layout-dir:v1
       --cert-file string                            client certificate file for the remote registry
   -d, --debug                                       output debug logs (implies --no-tty)
       --distribution-spec string                    [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api
-      --format string                               [Experimental] Format output using a custom template:
+      --format string                               [Experimental] format output using a custom template:
                                                     'table':        Get direct referrers and output in table format
                                                     'json':         Get direct referrers and output in JSON format
                                                     'go-template':  Print direct referrers using the given Go template
@@ -84,7 +84,7 @@ oras discover --oci-layout layout-dir:v1
       --key-file string                             client private key file for the remote registry
       --no-tty                                      [Preview] do not show progress output
       --oci-layout                                  set target as an OCI image layout
-      --oci-layout-path string                      set the path for the OCI image layout target
+      --oci-layout-path string                      [Experimental] set the path for the OCI image layout target
   -o, --output string                               [Deprecated] format in which to display referrers (table, json, or tree). tree format will also show indirect referrers (default "tree")
   -p, --password string                             registry password or identity token
       --password-stdin                              read password from stdin
@@ -92,7 +92,7 @@ oras discover --oci-layout layout-dir:v1
       --platform os[/arch][/variant][:os_version]   request platform in the form of os[/arch][/variant][:os_version]
       --registry-config path                        path of the authentication file for registry
       --resolve host:port:address[:address_port]    customized DNS for registry, formatted in host:port:address[:address_port]
-      --template string                             [Experimental] Template string used to format output
+      --template string                             [Experimental] template string used to format output
   -u, --username string                             registry username
   -v, --verbose                                     display full metadata of referrers
 ```

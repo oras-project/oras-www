@@ -136,7 +136,7 @@ oras push --oci-layout layout-dir:test hi.txt
   -d, --debug                                                output debug logs (implies --no-tty)
       --disable-path-validation                              skip path validation
       --export-manifest path                                 path of the pushed manifest
-      --format string                                        [Experimental] Format output using a custom template:
+      --format string                                        [Experimental] format output using a custom template:
                                                              'json':         Print in JSON format
                                                              'go-template':  Print output using the given Go template
                                                              'text':         Print in text format (default "text")
@@ -149,12 +149,12 @@ oras push --oci-layout layout-dir:test hi.txt
       --key-file string                                      client private key file for the remote registry
       --no-tty                                               [Preview] do not show progress output
       --oci-layout                                           set target as an OCI image layout
-      --oci-layout-path string                               set the path for the OCI image layout target
+      --oci-layout-path string                               [Experimental] set the path for the OCI image layout target
   -p, --password string                                      registry password or identity token
       --password-stdin                                       read password from stdin
       --plain-http                                           allow insecure connections to registry without SSL check
       --registry-config path                                 path of the authentication file for registry
       --resolve host:port:address[:address_port]             customized DNS for registry, formatted in host:port:address[:address_port]
-      --template string                                      [Experimental] Template string used to format output
+      --template string                                      [Experimental] template string used to format output
   -u, --username string                                      registry username
 ```
