@@ -69,6 +69,13 @@ const projects = [
         description: "Score is a developer-centric and platform-agnostic workload specification. It ensures consistent configuration between local and remote environments.",
         link: "https://score.dev",
     },
+    {
+        title: "OCM",
+        light: "img/adopters/ocm-logo.svg",
+        dark: "img/adopters/ocm-logo.svg",
+        description: "OCM is an open standard for describing software artifacts and lifecycle metadata. It is a technology-agnostic format for software artifacts that need to be delivered securely across boundaries.",
+        link: "https://ocm.software",
+    },
 ];
 
 const registries = [
