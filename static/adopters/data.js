@@ -70,7 +70,7 @@ const projects = [
         link: "https://score.dev",
     },
     {
-        title: "OCM",
+        title: "Open Component Model",
         light: "img/adopters/ocm-logo.svg",
         dark: "img/adopters/ocm-logo.svg",
         description: "OCM is an open standard for describing software artifacts and lifecycle metadata. It is a technology-agnostic format for software artifacts that need to be delivered securely across boundaries.",
