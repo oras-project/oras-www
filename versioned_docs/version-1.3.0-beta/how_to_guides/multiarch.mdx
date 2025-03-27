@@ -147,7 +147,8 @@ Digest: sha256:f5758b75ebc4d82280078afb9ebeb859f91a481667c018c9edf91a432518cb20
 
 Add it to your manifest:
 ```console
-$ oras manifest index update localhost:15000/oras:v1 --add sha256:f5758b75ebc4d82280078afb9ebeb859f91a481667c018c9edf91a432518cb20
+$ LINUX_AMD64_SHA=sha256:f5758b75ebc4d82280078afb9ebeb859f91a481667c018c9edf91a432518cb20
+$ oras manifest index update localhost:15000/oras:v1 --add ${LINUX_AMD64_SHA}
 Fetching  v1
 Fetched   sha256:0fd4ac889c6f1f3e4fbb1c88b0cc18b97176bf7fd0841ac9c5264d20dd54e2d8 v1
 Fetching  sha256:f5758b75ebc4d82280078afb9ebeb859f91a481667c018c9edf91a432518cb20
