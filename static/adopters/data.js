@@ -76,6 +76,13 @@ const projects = [
         description: "OCM is an open standard for describing software artifacts and lifecycle metadata. It is a technology-agnostic format for software artifacts that need to be delivered securely across boundaries.",
         link: "https://ocm.software",
     },
+    {
+      title: "Zarf",
+      light: "img/adopters/zarf.svg",
+      dark: "img/adopters/zarf.svg",
+      description: "Zarf eliminates the complexity of airgap software delivery for Kubernetes clusters and cloud-native workloads using a declarative packaging strategy.",
+      link: "https://github.com/zarf-dev/zarf",
+  },    
 ];
 
 const registries = [
