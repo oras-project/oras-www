@@ -10,7 +10,7 @@ Source code: [github.com/oras-project/oras-go](https://github.com/oras-project/o
 ## Introduction
 
 The ORAS Go client library provides the ability to replicate artifacts between different [Targets](./overview.mdx#target).  
-Furthermore, the version `v2` is a registry client conforming [image-spec v1.1.0-rc6](https://github.com/opencontainers/image-spec/releases/tag/v1.1.0-rc6) and [distribution-spec v1.1.0-rc4](https://github.com/opencontainers/distribution-spec/releases/tag/v1.1.0-rc4).
+Furthermore, the version `v2` is a registry client conforming [image-spec 1.1.1](https://github.com/opencontainers/image-spec/releases/tag/v1.1.1) and [distribution-spec v1.1.1](https://github.com/opencontainers/distribution-spec/releases/tag/v1.1.1).
 
 Using the ORAS Go client library, you can develop your own registry client:
 
@@ -18,38 +18,29 @@ Using the ORAS Go client library, you can develop your own registry client:
 myclient push artifacts.example.com/myartifact:1.0 ./mything.thang
 ```
 
-## Usage
+## Getting Started
 
-The package `oras.land/oras-go/v2` can quickly be imported in other Go-based tools that
-wish to benefit from the ability to store arbitrary content in container registries.
+### Concepts
 
-1. Get the  `oras.land/oras-go/v2` package
-```sh
-go get oras.land/oras-go/v2
-```
+Gain insights into the fundamental concepts:
 
-2. Import and use the `v2` package
-```go
-import "oras.land/oras-go/v2"
-```
+- [Modeling Artifacts](docs/Modeling-Artifacts.md)
+- [Targets and Content Stores](docs/Targets.md)
 
-3. Run
-```sh
-go mod tidy
-```
+### Quickstart
 
-**The API documentation and examples are available at [pkg.go.dev](https://pkg.go.dev/oras.land/oras-go/v2).**
+Follow the step-by-step tutorial to use `oras-go` v2:
 
-## Quick Start
+- [Quickstart: Managing OCI Artifacts with `oras-go` v2](docs/tutorial/quickstart.md)
 
-### Push files to a remote repository
-See [this example](https://pkg.go.dev/oras.land/oras-go/v2#example-package-PushFilesToRemoteRepository).
+### Examples
 
-### Pull files from a remote repository
-See [this example](https://pkg.go.dev/oras.land/oras-go/v2#example-package-PullFilesFromRemoteRepository).
+Check out sample code for common use cases:
 
-### Pull a docker or OCI image from a remote repository
-See [this example](https://pkg.go.dev/oras.land/oras-go/v2#example-package-PullImageFromRemoteRepository).
+- [Artifact copying](https://pkg.go.dev/oras.land/oras-go/v2#pkg-examples)
+- [Registry operations](https://pkg.go.dev/oras.land/oras-go/v2/registry#pkg-examples)
+- [Repository operations](https://pkg.go.dev/oras.land/oras-go/v2/registry/remote#pkg-examples)
+- [Authentication](https://pkg.go.dev/oras.land/oras-go/v2/registry/remote/auth#pkg-examples)
+- [Credentials management](https://pkg.go.dev/oras.land/oras-go/v2/registry/remote/credentials#pkg-examples)
 
-### Pull an Image using the Docker credential store
-See [this example](https://pkg.go.dev/oras.land/oras-go/v2#example-package-PullImageUsingDockerCredentials).
+Find more API examples at [pkg.go.dev](https://pkg.go.dev/oras.land/oras-go/v2).
