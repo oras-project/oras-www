@@ -43,7 +43,7 @@ export default function Community() {
                         <Link
                             class="button button--secondary button--lg"
                             target="_blank"
-                            href="https://hackmd.io/P-O6n222TcSMoJgHmTTduw"
+                            href="https://hackmd.io/5jBuSmL1QjG-_C1PUNonCQ?view"
                         >
                             Add to Calendar
                         </Link>
