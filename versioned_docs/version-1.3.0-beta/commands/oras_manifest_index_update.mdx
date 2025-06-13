@@ -10,7 +10,7 @@ warning: Do NOT modify this generated file
 		
 
 ```bash
-oras manifest index update <name>{:<tag>|@<digest>} [{--add|--merge|--remove} {<tag>|<digest>}] [...] [flags]
+oras manifest index update <index>{:<tag>|@<digest>} [{--add|--merge|--remove} <manifest>{<tag>|<digest>}] [...] [flags]
 ```
 
 ## Examples
@@ -42,19 +42,19 @@ oras manifest index update localhost:5000/hello@sha256:99e4703fbf30916f549cd6bfa
 Update an index and push to an OCI image layout folder 'layout-dir' and tag with 'v2':
 
 ```bash
-oras manifest index update --oci-layout layout-dir@99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9 --add linux-arm64 --tag "v2"
+oras manifest index update layout-dir@99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9 --add linux-arm64 --tag "v2" --oci-layout
 ```
 
 Update an index and save it locally to index.json, auto push will be disabled:
 
 ```bash
-oras manifest index update --output index.json localhost:5000/hello:v2 --add v2-linux-amd64
+oras manifest index update localhost:5000/hello:v2 --add v2-linux-amd64 --output index.json
 ```
 
 Update an index and output the index to stdout, auto push will be disabled:
 
 ```bash
-oras manifest index update --output - --pretty localhost:5000/hello:v2 --remove sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9
+oras manifest index update localhost:5000/hello:v2 --remove sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9 --output - --pretty
 ```
 
 ## Options
@@ -71,7 +71,6 @@ oras manifest index update --output - --pretty localhost:5000/hello:v2 --remove 
       --insecure                                   allow connections to SSL registry without certs
       --key-file string                            client private key file for the remote registry
       --merge stringArray                          indexes to be merged into the index
-      --no-tty                                     [Preview] do not show progress output
       --oci-layout                                 set target as an OCI image layout
       --oci-layout-path string                     [Experimental] set the path for the OCI image layout target
   -o, --output path                                file path to write the created index to, use - for stdout

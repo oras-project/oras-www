@@ -42,7 +42,13 @@ oras discover localhost:5000/hello:v1 --format table
 [Experimental] Discover referrers and format output with Go template:
 
 ```bash
-oras discover localhost:5000/hello:v1 --format go-template --template "{{.manifests}}"
+oras discover localhost:5000/hello:v1 --format go-template --template "{{.referrers}}"
+```
+
+[Experimental] Discover only direct referrers, displayed in json view:
+
+```bash
+oras discover localhost:5000/hello:v1 --format json --depth 1
 ```
 
 Discover all the referrers of manifest with annotations, displayed in a tree view:
@@ -70,22 +76,23 @@ oras discover --oci-layout layout-dir:v1
       --ca-file string                              server certificate authority file for the remote registry
       --cert-file string                            client certificate file for the remote registry
   -d, --debug                                       output debug logs (implies --no-tty)
+      --depth int                                   [Experimental] level of referrers to display, if unused shows referrers of all levels
       --distribution-spec string                    [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api
       --format string                               [Experimental] format output using a custom template:
-                                                    'table':        Get direct referrers and output in table format
-                                                    'json':         Get direct referrers and output in JSON format
-                                                    'go-template':  Print direct referrers using the given Go template
-                                                    'tree':         Get referrers recursively and print in tree format (default "tree")
+                                                    'table':        [Deprecated] Get referrers and output in table format
+                                                    'json':         Get referrers and output in JSON format
+                                                    'go-template':  Print referrers using the given Go template
+                                                    'tree':         Get referrers and print in tree format (default "tree")
   -H, --header stringArray                          add custom headers to requests
   -h, --help                                        help for discover
       --identity-token string                       registry identity token
       --identity-token-stdin                        read identity token from stdin
       --insecure                                    allow connections to SSL registry without certs
       --key-file string                             client private key file for the remote registry
-      --no-tty                                      [Preview] do not show progress output
+      --no-tty                                      [Preview] disable colors
       --oci-layout                                  set target as an OCI image layout
       --oci-layout-path string                      [Experimental] set the path for the OCI image layout target
-  -o, --output string                               [Deprecated] format in which to display referrers (table, json, or tree). tree format will also show indirect referrers (default "tree")
+  -o, --output string                               [Deprecated] format in which to display referrers (table, json, or tree). (default "tree")
   -p, --password string                             registry password or identity token
       --password-stdin                              read password from stdin
       --plain-http                                  allow insecure connections to registry without SSL check
@@ -94,5 +101,4 @@ oras discover --oci-layout layout-dir:v1
       --resolve host:port:address[:address_port]    customized DNS for registry, formatted in host:port:address[:address_port]
       --template string                             [Experimental] template string used to format output
   -u, --username string                             registry username
-  -v, --verbose                                     display full metadata of referrers
 ```
