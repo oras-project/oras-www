@@ -19,7 +19,7 @@ You can take periodic snapshots of repositories and store them off-site. In case
 
 ### Registry Migration
 
-When moving from one container registry provider to another, the pair of commands enables full an entire repository export and rehydration, preserving tags, manifests, layers, and referrers.
+When moving from one container registry provider to another, the pair of commands enables a full repository export and rehydration, preserving tags, manifests, layers, and referrers.
 
 ### Compliance and supply chain security guarantee
 
@@ -74,7 +74,7 @@ ghcr.io/chocolate-labs/oras-cli@sha256:7ab47454c95a177cbbccea9569abde6ccfd6b1367
 Backup all tags and referrers from the sample repository and save it as a tarball using OCI image layout format:
 
 ```bash
-oras backup ghcr.io/chocolate-labs/oras-cli --output oras-cli.tar
+oras backup ghcr.io/chocolate-labs/oras-cli --include-referrers --output oras-cli.tar
 ```
 
 ```console
