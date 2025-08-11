@@ -118,14 +118,14 @@ oras-cli.tar@sha256:7ab47454c95a177cbbccea9569abde6ccfd6b1367bc6407032fe78224cac
 
 ## Restore the repository to another registry
 
-Restore all tags and referrers from the tarball to a sample registry. Make sure you have logged in to the registry using `oras login` or `docker login`.
+Restore all tags and referrers from the tarball to a sample registry. Make sure you have logged in to the target registry using `oras login` or `docker login`.
 
 :::note
-If you want to test restoring content without pushing to the registry, use `--dry-run` to simulate the restore process without actually uploading any artifacts
+If you want to test restoring content without pushing to the registry, use `--dry-run` to simulate the restore process without actually uploading any artifacts.
 :::
 
 ```bash
-oras restore docker.io/feynmanzhou/oras-cli --input oras-cli.tar
+oras restore docker.io/myorg/oras-cli --input oras-cli.tar
 ```
 
 ```console
@@ -133,17 +133,17 @@ Loaded backup archive: oras-cli.tar (32.2 MB)
 Found 3 tag(s) in the backup: sha256-7ab47454c95a177cbbccea9569abde6ccfd6b1367bc6407032fe78224cacc86e, v1.2.3, v1.2.3-2
 ...
 Pushed tag v1.2.3-2 with 5 referrer(s)
-Successfully restored 3 tag(s) to "docker.io/feynmanzhou/oras-cli" in 31s
+Successfully restored 3 tag(s) to "docker.io/myorg/oras-cli" in 31s
 ```
 
 List the image and its referrers in the registry to check its completeness: 
 
 ```bash
-oras discover docker.io/feynmanzhou/oras-cli:v1.2.3
+oras discover docker.io/myorg/oras-cli:v1.2.3
 ```
 
 ```console
-docker.io/feynmanzhou/oras-cli@sha256:7ab47454c95a177cbbccea9569abde6ccfd6b1367bc6407032fe78224cacc86e
+docker.io/myorg/oras-cli@sha256:7ab47454c95a177cbbccea9569abde6ccfd6b1367bc6407032fe78224cacc86e
 ├── application/vnd.cncf.notary.signature
 │   └── sha256:cb90b160364b291474fc44249e59b01fd626bb25b2d8842b3345b9f3c06ea4ba
 │       └── [annotations]
@@ -173,7 +173,7 @@ docker.io/feynmanzhou/oras-cli@sha256:7ab47454c95a177cbbccea9569abde6ccfd6b1367b
 
 For feedback and issues, visit: [github.com/oras-project/oras](https://github.com/oras-project/oras).
 
-For more context, see:
+For additional details, see:
 
 * [User Scenarios](https://github.com/oras-project/oras/blob/main/docs/proposals/backup-restore-scenarios.md)
 * [Backup/Restore Proposal](https://github.com/oras-project/oras/blob/main/docs/proposals/backup-restore.md)
