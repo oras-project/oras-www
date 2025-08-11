@@ -120,6 +120,10 @@ oras-cli.tar@sha256:7ab47454c95a177cbbccea9569abde6ccfd6b1367bc6407032fe78224cac
 
 Restore all tags and referrers from the tarball to a sample registry. Make sure you have logged in to the registry using `oras login` or `docker login`.
 
+:::note
+If you want to test restoring content without pushing to the registry, use `--dry-run` to simulate the restore process without actually uploading any artifacts
+:::
+
 ```bash
 oras restore docker.io/feynmanzhou/oras-cli --input oras-cli.tar
 ```
