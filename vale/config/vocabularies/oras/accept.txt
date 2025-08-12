@@ -6,12 +6,12 @@ changesets
 codebase
 [Cc]onfig
 deliverables
+dev
 Dockerfile
 facto
 filetype
 gcloud
 github
-GitHub
 [Gg]olang
 (?i)http
 https
@@ -30,6 +30,7 @@ pullable
 releaser
 repo
 SBOM
+SBOMs
 semver
 signoff
 [Ss]kippable
