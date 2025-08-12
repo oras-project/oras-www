@@ -1,0 +1,183 @@
+---
+title: Backup and Restore of OCI Artifacts, Images, and Repositories
+sidebar_position: 85
+---
+
+## Overview
+
+The `oras backup` and `oras restore` commands together form an end-to-end solution for exporting and importing OCI artifacts between registries or into portable archives. These features are designed to support modern DevOps, security, and compliance workflows that require complete control over registry content in connected and disconnected environments.
+
+These features are useful in the following scenarios:
+
+### Air-Gapped Environments
+
+Organizations operating in isolated or high-security environments can use `oras backup` to export artifacts from a registry to local filesystem, and use `oras restore` to import them into an internal registry with no internet access.
+
+### Disaster Recovery and Audit Archival
+
+You can take periodic snapshots of repositories and store them off-site. In case of accidental deletions, outages, and long-term storage to support regulatory audits, `oras restore` can be used to quickly recover full registry content.
+
+### Registry Migration
+
+When moving from one container registry provider to another, the pair of commands enables a full repository export, preserving tags, manifests, layers, and referrers.
+
+### Compliance and supply chain security guarantee
+
+Backup and restore the images along with their supply chain artifacts, such as SBOMs, signatures, vulnerability scanning reports.
+
+### Repository Duplication or Promotion
+
+Move artifacts from dev to staging to prod registries reliably using an intermediate backup file.
+
+## Backup an entire repository to local
+
+List all tags in the sample repository `ghcr.io/chocolate-labs/oras-cli`:
+
+```bash
+oras repo tags ghcr.io/chocolate-labs/oras-cli
+```
+
+```console 
+v1.2.3
+v1.2.3-2
+```
+
+List the referrers of the tag:
+
+```bash
+oras discover ghcr.io/chocolate-labs/oras-cli:v1.2.3
+```
+
+```console
+ghcr.io/chocolate-labs/oras-cli@sha256:7ab47454c95a177cbbccea9569abde6ccfd6b1367bc6407032fe78224cacc86e
+├── application/vnd.cncf.notary.signature
+│   └── sha256:cb90b160364b291474fc44249e59b01fd626bb25b2d8842b3345b9f3c06ea4ba
+│       └── [annotations]
+│           ├── io.cncf.notary.x509chain.thumbprint#S256: '[c788b80157a0cee4f7e9fb60fd533a7079181f4d74a2b62881dfbe320ccb13f9,9b1894f223d934cbd6575af3c6e1f6096b9221a7da132185f5a5cdc92235b5dc,23ffe2b8bdb9a1711515d4cffda04bc7f793d513c76c243f1020507d8669b7db]'
+│           └── org.opencontainers.image.created: "2025-06-23T22:43:51Z"
+├── application/vnd.in-toto+json
+│   ├── sha256:b8387e1905107f771adbc5900d0d4d85ebf5c943dd83e28181acf9f1e50344a6
+│   │   └── [annotations]
+│   │       └── org.opencontainers.image.created: "2025-06-23T22:43:57Z"
+│   └── sha256:eb87c8b2e8c24470e5c3125d60ae32071db9b89e544f6e572d42e5ede3f16a0e
+│       └── [annotations]
+│           └── org.opencontainers.image.created: "2025-06-23T22:44:02Z"
+└── application/spdx+json
+    ├── sha256:900d08c004d48ab1f792c05b69d7cbfd7c9430ba5b2712f0e5b6a4aa6893abcb
+    │   └── [annotations]
+    │       └── org.opencontainers.image.created: "2025-06-23T22:43:58Z"
+    └── sha256:7fdcd4dce4449b9dddbaefa1bc02ba408d119c5d50227eb36ba730b3980d5e26
+        └── [annotations]
+            └── org.opencontainers.image.created: "2025-06-23T22:43:52Z"
+```
+
+Backup all tags and referrers from the sample repository and save it as a tarball using OCI image layout format:
+
+```bash
+oras backup ghcr.io/chocolate-labs/oras-cli --include-referrers --output oras-cli.tar
+```
+
+```console
+Found 3 tag(s) in ghcr.io/chocolate-labs/oras-cli: sha256-7ab47454c95a177cbbccea9569abde6ccfd6b1367bc6407032fe78224cacc86e, v1.2.3, v1.2.3-2
+...
+Pulled tag v1.2.3-2 with 5 referrer(s)
+Exporting to oras-cli.tar
+Exported to oras-cli.tar (32.2 MB)
+Successfully backed up 3 tag(s) from "ghcr.io/chocolate-labs/oras-cli" to "oras-cli.tar" in 8s.
+```
+
+List the image and its referrers in the tarball to check its completeness: 
+
+```bash
+oras discover --oci-layout oras-cli.tar:v1.2.3
+```
+
+```console
+oras-cli.tar@sha256:7ab47454c95a177cbbccea9569abde6ccfd6b1367bc6407032fe78224cacc86e
+├── application/spdx+json
+│   ├── sha256:7fdcd4dce4449b9dddbaefa1bc02ba408d119c5d50227eb36ba730b3980d5e26
+│   │   └── [annotations]
+│   │       └── org.opencontainers.image.created: "2025-06-23T22:43:52Z"
+│   └── sha256:900d08c004d48ab1f792c05b69d7cbfd7c9430ba5b2712f0e5b6a4aa6893abcb
+│       └── [annotations]
+│           └── org.opencontainers.image.created: "2025-06-23T22:43:58Z"
+├── application/vnd.in-toto+json
+│   ├── sha256:b8387e1905107f771adbc5900d0d4d85ebf5c943dd83e28181acf9f1e50344a6
+│   │   └── [annotations]
+│   │       └── org.opencontainers.image.created: "2025-06-23T22:43:57Z"
+│   └── sha256:eb87c8b2e8c24470e5c3125d60ae32071db9b89e544f6e572d42e5ede3f16a0e
+│       └── [annotations]
+│           └── org.opencontainers.image.created: "2025-06-23T22:44:02Z"
+└── application/vnd.cncf.notary.signature
+    └── sha256:cb90b160364b291474fc44249e59b01fd626bb25b2d8842b3345b9f3c06ea4ba
+        └── [annotations]
+            ├── io.cncf.notary.x509chain.thumbprint#S256: '[c788b80157a0cee4f7e9fb60fd533a7079181f4d74a2b62881dfbe320ccb13f9,9b1894f223d934cbd6575af3c6e1f6096b9221a7da132185f5a5cdc92235b5dc,23ffe2b8bdb9a1711515d4cffda04bc7f793d513c76c243f1020507d8669b7db]'
+            └── org.opencontainers.image.created: "2025-06-23T22:43:51Z"
+```
+
+
+## Restore the repository to another registry
+
+Restore all tags and referrers from the tarball to a sample registry. Make sure you have logged in to the target registry using `oras login` or `docker login`.
+
+:::note
+If you want to test restoring content without pushing to the registry, use `--dry-run` to simulate the restore process without actually uploading any artifacts.
+:::
+
+```bash
+oras restore docker.io/myorg/oras-cli --input oras-cli.tar
+```
+
+```console
+Loaded backup archive: oras-cli.tar (32.2 MB)
+Found 3 tag(s) in the backup: sha256-7ab47454c95a177cbbccea9569abde6ccfd6b1367bc6407032fe78224cacc86e, v1.2.3, v1.2.3-2
+...
+Pushed tag v1.2.3-2 with 5 referrer(s)
+Successfully restored 3 tag(s) to "docker.io/myorg/oras-cli" in 31s
+```
+
+List the image and its referrers in the registry to check its completeness: 
+
+```bash
+oras discover docker.io/myorg/oras-cli:v1.2.3
+```
+
+```console
+docker.io/myorg/oras-cli@sha256:7ab47454c95a177cbbccea9569abde6ccfd6b1367bc6407032fe78224cacc86e
+├── application/vnd.cncf.notary.signature
+│   └── sha256:cb90b160364b291474fc44249e59b01fd626bb25b2d8842b3345b9f3c06ea4ba
+│       └── [annotations]
+│           ├── io.cncf.notary.x509chain.thumbprint#S256: '[c788b80157a0cee4f7e9fb60fd533a7079181f4d74a2b62881dfbe320ccb13f9,9b1894f223d934cbd6575af3c6e1f6096b9221a7da132185f5a5cdc92235b5dc,23ffe2b8bdb9a1711515d4cffda04bc7f793d513c76c243f1020507d8669b7db]'
+│           └── org.opencontainers.image.created: "2025-06-23T22:43:51Z"
+├── application/vnd.in-toto+json
+│   ├── sha256:b8387e1905107f771adbc5900d0d4d85ebf5c943dd83e28181acf9f1e50344a6
+│   │   └── [annotations]
+│   │       └── org.opencontainers.image.created: "2025-06-23T22:43:57Z"
+│   └── sha256:eb87c8b2e8c24470e5c3125d60ae32071db9b89e544f6e572d42e5ede3f16a0e
+│       └── [annotations]
+│           └── org.opencontainers.image.created: "2025-06-23T22:44:02Z"
+└── application/spdx+json
+    ├── sha256:900d08c004d48ab1f792c05b69d7cbfd7c9430ba5b2712f0e5b6a4aa6893abcb
+    │   └── [annotations]
+    │       └── org.opencontainers.image.created: "2025-06-23T22:43:58Z"
+    └── sha256:7fdcd4dce4449b9dddbaefa1bc02ba408d119c5d50227eb36ba730b3980d5e26
+        └── [annotations]
+            └── org.opencontainers.image.created: "2025-06-23T22:43:52Z"
+```
+
+## Best Practices
+
+* Always use `--include-referrers` when supply chain artifacts exist.
+* Store backup files in versioned archives (e.g., `backup-2025-08-01.tar`).
+* Use `oras discover` before and after to validate referrer inclusion.
+
+For feedback and issues, visit: [github.com/oras-project/oras](https://github.com/oras-project/oras).
+
+For additional details, see:
+
+* [User Scenarios](https://github.com/oras-project/oras/blob/main/docs/proposals/backup-restore-scenarios.md)
+* [Backup/Restore Proposal](https://github.com/oras-project/oras/blob/main/docs/proposals/backup-restore.md)
+
+
+
+
