@@ -41,7 +41,7 @@ oras tag --concurrency 1 localhost:5000/hello:v1.0.1 v1.0.2 latest
 Tag the manifest 'v1.0.1' to 'v1.0.2' in an OCI image layout folder 'layout-dir':
 
 ```bash
-oras tag layout-dir:v1.0.1 v1.0.2
+oras tag --oci-layout layout-dir:v1.0.1 v1.0.2
 ```
 
 ## Options

@@ -15,7 +15,7 @@ oras attach [flags] --artifact-type=<type> <name>{:<tag>|@<digest>} <file>[:<lay
 
 ## Examples
 
-Attach file 'hi.txt' with aritifact type 'doc/example' to manifest 'hello:v1' in registry 'localhost:5000':
+Attach file 'hi.txt' with artifact type 'doc/example' to manifest 'hello:v1' in registry 'localhost:5000':
 
 ```bash
 oras attach --artifact-type doc/example localhost:5000/hello:v1 hi.txt
@@ -56,6 +56,18 @@ Attach file 'hi.txt' and add manifest annotations:
 
 ```bash
 oras attach --artifact-type doc/example --annotation "key=val" localhost:5000/hello:v1 hi.txt
+```
+
+[Experimental] Attach file 'hi.txt' and format output in JSON:
+
+```bash
+oras attach --artifact-type doc/example localhost:5000/hello:v1 hi.txt --format json
+```
+
+[Experimental] Attach file 'hi.txt' and format output with Go template:
+
+```bash
+oras attach --artifact-type doc/example localhost:5000/hello:v1 hi.txt --format go-template --template "{{.digest}}"
 ```
 
 Attach file 'hi.txt' and export the pushed manifest to 'manifest.json':

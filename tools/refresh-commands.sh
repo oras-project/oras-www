@@ -8,17 +8,19 @@ trap 'rm -rf "$TEMPDIR"' EXIT
 # and parsing the help text to generate documentation. It iterates over the
 # `versions.json` file to determine the releases that are currently supported.
 #
-# If there is a fix to the help documentation in a patch version, use the
-# `versions-latest` file to specify the patch release for document generation.
-#
+# There should always be an entry in the `versions-map` file to to map the
+# version from the `versions.json` file with the actual latest release to use.
 # For example, If you are generating documentation for `1.2` and you want to
-# use `1.2.2` to generate the documentation, put a line in the `versions-latest`
-# file `1.2.2`.  If there is no line in the `versions-latest` that matches
-# the major and minor release `1.2`, then `1.2.0` will be used to generate
-# the documentation.
+# use `1.2.2` to generate the documentation, put a line in the `versions-map`
+# file `1.2 1.2.2`.
 #
 map_version() {
-    grep "^$1" versions-latest || echo "$1.0"
+    if ! grep "^$1" versions-map >/dev/null
+    then
+        echo "Version $1 missing from versions-map file" >&2
+        exit 1
+    fi
+    grep "^$1" versions-map | cut -d ' ' -f 2
 }
 
 VERSIONS=$(tr '[]",' ' ' <versions.json)
