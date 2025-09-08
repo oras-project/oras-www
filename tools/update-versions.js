@@ -212,7 +212,10 @@ function readVersionsMap() {
  * Write the updated versions-map file
  */
 function writeVersionsMap(entries) {
-    const content = entries.map(entry => `${entry.displayName} ${entry.currentVersion}`).join('\n') + '\n';
+    const content = entries.map(entry => {
+        const version = entry.currentVersion.startsWith('v') ? entry.currentVersion.slice(1) : entry.currentVersion;
+        return `${entry.displayName} ${version}`;
+    }).join('\n') + '\n';
     fs.writeFileSync(VERSIONS_MAP_FILE, content, 'utf8');
 }
 
