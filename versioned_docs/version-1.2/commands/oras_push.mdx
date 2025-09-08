@@ -38,6 +38,12 @@ Push multiple files with different media types:
 oras push localhost:5000/hello:v1 hi.txt:application/vnd.me.hi bye.txt:application/vnd.me.bye
 ```
 
+Push file with colon in name "hi:txt" with the default media type:
+
+```bash
+oras push localhost:5000/hello:v1 hi:txt:
+```
+
 Push file "hi.txt" with artifact type "application/vnd.example+type":
 
 ```bash
@@ -54,6 +60,18 @@ Push file "hi.txt" with the custom manifest config "config.json" of the custom m
 
 ```bash
 oras push --config config.json:application/vnd.me.config localhost:5000/hello:v1 hi.txt
+```
+
+[Experimental] Push file "hi.txt" and format output in JSON:
+
+```bash
+oras push localhost:5000/hello:v1 hi.txt --format json
+```
+
+[Experimental] Push file "hi.txt" and format output with Go template:
+
+```bash
+oras push localhost:5000/hello:v1 hi.txt --format go-template="{{.digest}}"
 ```
 
 Push file to the insecure registry:

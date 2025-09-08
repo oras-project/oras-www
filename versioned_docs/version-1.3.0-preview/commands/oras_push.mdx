@@ -1,6 +1,6 @@
 ---
 title: oras push
-sidebar_position: 170
+sidebar_position: 180
 warning: Do NOT modify this generated file
 ---
 
@@ -120,6 +120,12 @@ Push file "hi.txt" into an OCI image layout folder 'layout-dir' with tag 'test':
 
 ```bash
 oras push --oci-layout layout-dir:test hi.txt
+```
+
+Push file "hi.txt" into an OCI image layout folder 'layout-dir' with tag 'example.com:test':
+
+```bash
+oras push example.com:test hi.txt --oci-layout-path layout-dir
 ```
 
 ## Options

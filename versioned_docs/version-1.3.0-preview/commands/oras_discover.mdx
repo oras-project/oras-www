@@ -1,6 +1,6 @@
 ---
 title: oras discover
-sidebar_position: 60
+sidebar_position: 70
 warning: Do NOT modify this generated file
 ---
 
@@ -51,12 +51,6 @@ oras discover localhost:5000/hello:v1 --format go-template --template "{{.referr
 oras discover localhost:5000/hello:v1 --format json --depth 1
 ```
 
-Discover all the referrers of manifest with annotations, displayed in a tree view:
-
-```bash
-oras discover -v localhost:5000/hello:v1
-```
-
 Discover referrers with type 'test-artifact' of manifest 'hello:v1' in registry 'localhost:5000':
 
 ```bash
@@ -67,6 +61,12 @@ Discover referrers of the manifest tagged 'v1' in an OCI image layout folder 'la
 
 ```bash
 oras discover --oci-layout layout-dir:v1
+```
+
+Discover referrers of the manifest tagged 'example.com:v1' in an OCI image layout folder 'layout-dir':
+
+```bash
+oras discover example.com:v1 --oci-layout-path layout-dir
 ```
 
 ## Options

@@ -1,6 +1,6 @@
 ---
 title: oras manifest fetch
-sidebar_position: 110
+sidebar_position: 120
 warning: Do NOT modify this generated file
 ---
 
@@ -66,6 +66,12 @@ Fetch raw manifest from an OCI layout archive file 'layout.tar':
 
 ```bash
 oras manifest fetch --oci-layout layout.tar:v1
+```
+
+Fetch raw manifest tagged 'example.com:v1' from an OCI image layout folder 'layout-dir':
+
+```bash
+oras manifest fetch example.com:v1 --oci-layout-path layout-dir
 ```
 
 ## Options

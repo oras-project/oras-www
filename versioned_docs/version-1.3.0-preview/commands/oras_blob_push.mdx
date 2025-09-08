@@ -1,41 +1,65 @@
 ---
-title: oras manifest delete
-sidebar_position: 100
+title: oras blob push
+sidebar_position: 50
 warning: Do NOT modify this generated file
 ---
 
-# oras manifest delete
+# oras blob push
 
-Delete a manifest from remote registry
+Push a blob to a registry or an OCI image layout
 
 ```bash
-oras manifest delete [flags] <name>{:<tag>|@<digest>}
+oras blob push [flags] <name>[@digest] <file>
 ```
 
 ## Examples
 
-Delete a manifest tagged with 'v1' from repository 'localhost:5000/hello':
+Push blob 'hi.txt' to a registry:
 
 ```bash
-oras manifest delete localhost:5000/hello:v1
+oras blob push localhost:5000/hello hi.txt
 ```
 
-Delete a manifest without prompting confirmation:
+Push blob 'hi.txt' with the specific digest:
 
 ```bash
-oras manifest delete --force localhost:5000/hello:v1
+oras blob push localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5 hi.txt
 ```
 
-Delete a manifest and print its descriptor:
+Push blob from stdin with blob size and digest:
 
 ```bash
-oras manifest delete --descriptor localhost:5000/hello:v1
+oras blob push --size 12 localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5 -
 ```
 
-Delete a manifest by digest 'sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9' from repository 'localhost:5000/hello':
+Push blob 'hi.txt' and output the descriptor:
 
 ```bash
-oras manifest delete localhost:5000/hello@sha:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9
+oras blob push --descriptor localhost:5000/hello hi.txt
+```
+
+Push blob 'hi.txt' with the specific returned media type in the descriptor:
+
+```bash
+oras blob push --media-type application/vnd.oci.image.config.v1+json --descriptor localhost:5000/hello hi.txt
+```
+
+Push blob 'hi.txt' and output the prettified descriptor:
+
+```bash
+oras blob push --descriptor --pretty localhost:5000/hello hi.txt
+```
+
+Push blob without TLS:
+
+```bash
+oras blob push --insecure localhost:5000/hello hi.txt
+```
+
+Push blob 'hi.txt' into an OCI image layout folder 'layout-dir':
+
+```bash
+oras blob push --oci-layout layout-dir hi.txt
 ```
 
 ## Options
@@ -45,14 +69,14 @@ oras manifest delete localhost:5000/hello@sha:99e4703fbf30916f549cd6bfa9cdbab614
       --cert-file string                           client certificate file for the remote registry
   -d, --debug                                      output debug logs (implies --no-tty)
       --descriptor                                 output the descriptor
-      --distribution-spec string                   [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api
-  -f, --force                                      ignore nonexistent references, never prompt
   -H, --header stringArray                         add custom headers to requests
-  -h, --help                                       help for delete
+  -h, --help                                       help for push
       --identity-token string                      registry identity token
       --identity-token-stdin                       read identity token from stdin
       --insecure                                   allow connections to SSL registry without certs
       --key-file string                            client private key file for the remote registry
+      --media-type string                          specify the returned media type in the descriptor if --descriptor is used (default "application/vnd.oci.image.layer.v1.tar")
+      --no-tty                                     [Preview] disable progress bars
       --oci-layout                                 set target as an OCI image layout
       --oci-layout-path string                     [Experimental] set the path for the OCI image layout target
   -p, --password string                            registry password or identity token
@@ -61,5 +85,6 @@ oras manifest delete localhost:5000/hello@sha:99e4703fbf30916f549cd6bfa9cdbab614
       --pretty                                     prettify JSON objects printed to stdout
       --registry-config path                       path of the authentication file for registry
       --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]
+      --size int                                   provide the blob size (default -1)
   -u, --username string                            registry username
 ```

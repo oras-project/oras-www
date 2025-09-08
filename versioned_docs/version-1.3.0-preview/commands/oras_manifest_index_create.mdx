@@ -1,6 +1,6 @@
 ---
 title: oras manifest index create
-sidebar_position: 130
+sidebar_position: 140
 warning: Do NOT modify this generated file
 ---
 
@@ -44,6 +44,12 @@ Create and push an index with annotations:
 oras manifest index create localhost:5000/hello:v1 linux-amd64 --annotation "key=val"
 ```
 
+Create an index with a specified artifact type:
+
+```bash
+oras manifest index create --artifact-type="application/vnd.example+type" localhost:5000/hello linux-amd64
+```
+
 Create an index and push to an OCI image layout folder 'layout-dir' and tag with 'v1':
 
 ```bash
@@ -67,6 +73,7 @@ oras manifest index create localhost:5000/hello linux-arm64 --output - --pretty
 
 ```
   -a, --annotation stringArray                     manifest annotations
+      --artifact-type string                       artifact type for overall index
       --ca-file string                             server certificate authority file for the remote registry
       --cert-file string                           client certificate file for the remote registry
   -d, --debug                                      output debug logs (implies --no-tty)

@@ -15,34 +15,40 @@ oras discover [flags] <name>{:<tag>|@<digest>}
 
 ## Examples
 
-Discover direct referrers of manifest 'hello:v1' in registry 'localhost:5000':
+Discover referrers of manifest 'hello:v1' in registry 'localhost:5000', displayed in a tree view:
 
 ```bash
 oras discover localhost:5000/hello:v1
 ```
 
-Discover direct referrers via referrers API:
+Discover referrers via referrers API:
 
 ```bash
 oras discover --distribution-spec v1.1-referrers-api localhost:5000/hello:v1
 ```
 
-Discover direct referrers via tag scheme:
+Discover referrers via tag scheme:
 
 ```bash
 oras discover --distribution-spec v1.1-referrers-tag localhost:5000/hello:v1
 ```
 
-Discover all the referrers of manifest 'hello:v1' in registry 'localhost:5000', displayed in a tree view:
+[Experimental] Discover referrers and display in a table view:
 
 ```bash
-oras discover -o tree localhost:5000/hello:v1
+oras discover localhost:5000/hello:v1 --format table
+```
+
+[Experimental] Discover referrers and format output with Go template:
+
+```bash
+oras discover localhost:5000/hello:v1 --format go-template --template "{{.manifests}}"
 ```
 
 Discover all the referrers of manifest with annotations, displayed in a tree view:
 
 ```bash
-oras discover -v -o tree localhost:5000/hello:v1
+oras discover -v localhost:5000/hello:v1
 ```
 
 Discover referrers with type 'test-artifact' of manifest 'hello:v1' in registry 'localhost:5000':
@@ -55,7 +61,6 @@ Discover referrers of the manifest tagged 'v1' in an OCI image layout folder 'la
 
 ```bash
 oras discover --oci-layout layout-dir:v1
-oras discover --oci-layout -v -o tree layout-dir:v1
 ```
 
 ## Options

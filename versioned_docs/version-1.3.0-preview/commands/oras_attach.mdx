@@ -6,8 +6,7 @@ warning: Do NOT modify this generated file
 
 # oras attach
 
-[Preview] Attach files to an existing artifact
-** This command is in preview and under development. **
+Attach files to an existing artifact
 
 ```bash
 oras attach [flags] --artifact-type=<type> <name>{:<tag>|@<digest>} {<file>[:<layer_media_type>]|--annotation <key>=<value>} [...]
@@ -82,6 +81,12 @@ Attach file to the manifest tagged 'v1' in an OCI image layout folder 'layout-di
 oras attach --oci-layout --artifact-type doc/example layout-dir:v1 hi.txt
 ```
 
+Attach file to the manifest tagged 'example.com:v1' in an OCI image layout folder 'layout-dir':
+
+```bash
+oras attach --artifact-type doc/example --oci-layout-path layout-dir example.com:v1 hi.txt
+```
+
 ## Options
 
 ```
@@ -111,7 +116,7 @@ oras attach --oci-layout --artifact-type doc/example layout-dir:v1 hi.txt
   -p, --password string                             registry password or identity token
       --password-stdin                              read password from stdin
       --plain-http                                  allow insecure connections to registry without SSL check
-      --platform os[/arch][/variant][:os_version]   [Preview] attach to an arch-specific subject in the form of os[/arch][/variant][:os_version]
+      --platform os[/arch][/variant][:os_version]   attach to an arch-specific subject in the form of os[/arch][/variant][:os_version]
       --registry-config path                        path of the authentication file for registry
       --resolve host:port:address[:address_port]    customized DNS for registry, formatted in host:port:address[:address_port]
       --template string                             [Experimental] template string used to format output
