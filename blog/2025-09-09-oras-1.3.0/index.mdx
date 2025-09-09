@@ -25,13 +25,15 @@ Use cases include:
 - **Compliance and supply chain security guarantee**: Backup and restore the images along with their supply chain artifacts, such as SBOMs, signatures, vulnerability scanning reports.
 - **Repository Duplication or Promotion**: Move artifacts from dev to staging to prod registries reliably using an intermediate backup file.
 
+Check out the user guidance [Backup and Restore of OCI Artifacts, Images, and Repositories](/docs/how_to_guides/backup-restore) for details.
+
 ![Portable Backup & Restore](./img/oras-backup-restore.svg)
 
 ## Multi-platform Image and Artifact Management
 
 Multi-platform images are commonly used in IoT and Edge computing, particularly heterogeneous deployments, as well as cross-platform environments.
 
-With `oras manifest index create`, `oras manifest index update`, you can easily assemble, update, distribute, and annotate multi-architecture images and artifacts across local environments and registries.
+With `oras manifest index create`, `oras manifest index update`, you can easily assemble, update, distribute, and annotate multi-architecture images and artifacts across local environments and registries. Check out the user guidance [Create and Manage Multi-architecture Artifacts](/docs/how_to_guides/multiarch) for details.
 
 ![Multi-platform Image and Artifact Management](./img/create-multi-arch.svg)
 
@@ -44,7 +46,7 @@ Since this release, ORAS enables users to use the `--format` flag to format meta
 - Use `--format <DATA_FORMAT>` to format metadata output of ORAS commands into different formats including prettified JSON, tree, table view, and Go template, i.e. `--format json|tree|table|go-template=GO_TEMPLATE`. 
 - Use `--template GO_TEMPLATE` to compute and manipulate the output data using Go template based on the chosen data format. 
 
-Formatted output transforms ORAS from a simple terminal user tool to a **DevOps-friendly, integrable** developer tool.
+Formatted output transforms ORAS from a simple terminal user tool to a **DevOps-friendly, integrable** developer tool. Check out the user guidance [Formatted output](/docs/how_to_guides/format_output) for details.
 
 ## Stability & User Experience Polish
 
