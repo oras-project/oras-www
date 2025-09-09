@@ -5,6 +5,8 @@ authors: oras
 tags: [oci, artifact]
 ---
 
+import Link from '@docusaurus/Link';
+
 The ORAS community is thrilled to announce the ORAS CLI v1.3.0, a release packed with stability upgrades and pioneering capabilities. Beyond strengthening existing core functionality, this version introduces three major new features designed to elevate your artifact and registry management workflows:
 
 1. **Portable backup & restore repositories and artifacts**
@@ -25,7 +27,7 @@ Use cases include:
 - **Compliance and supply chain security guarantee**: Backup and restore the images along with their supply chain artifacts, such as SBOMs, signatures, vulnerability scanning reports.
 - **Repository Duplication or Promotion**: Move artifacts from dev to staging to prod registries reliably using an intermediate backup file.
 
-Check out the user guidance [Backup and Restore of OCI Artifacts, Images, and Repositories](/docs/how_to_guides/backup-restore) for details.
+Check out the user guidance <Link to="/docs/how_to_guides/backup-restore">Backup and Restore of OCI Artifacts, Images, and Repositories</Link> for details.
 
 ![Portable Backup & Restore](./img/oras-backup-restore.svg)
 
@@ -33,7 +35,7 @@ Check out the user guidance [Backup and Restore of OCI Artifacts, Images, and Re
 
 Multi-platform images are commonly used in IoT and Edge computing, particularly heterogeneous deployments, as well as cross-platform environments.
 
-With `oras manifest index create`, `oras manifest index update`, you can easily assemble, update, distribute, and annotate multi-architecture images and artifacts across local environments and registries. Check out the user guidance [Create and Manage Multi-architecture Artifacts](/docs/how_to_guides/multiarch) for details.
+With `oras manifest index create`, `oras manifest index update`, you can easily assemble, update, distribute, and annotate multi-architecture images and artifacts across local environments and registries. Check out the user guidance <Link to="/docs/how_to_guides/multiarch">Create and Manage Multi-architecture Artifacts</Link> for details.
 
 ![Multi-platform Image and Artifact Management](./img/create-multi-arch.svg)
 
@@ -46,7 +48,7 @@ Since this release, ORAS enables users to use the `--format` flag to format meta
 - Use `--format <DATA_FORMAT>` to format metadata output of ORAS commands into different formats including prettified JSON, tree, table view, and Go template, i.e. `--format json|tree|table|go-template=GO_TEMPLATE`. 
 - Use `--template GO_TEMPLATE` to compute and manipulate the output data using Go template based on the chosen data format. 
 
-Formatted output transforms ORAS from a simple terminal user tool to a **DevOps-friendly, integrable** developer tool. Check out the user guidance [Formatted output](/docs/how_to_guides/format_output) for details.
+Formatted output transforms ORAS from a simple terminal user tool to a **DevOps-friendly, integrable** developer tool. Check out the user guidance <Link to="/docs/how_to_guides/format_output">Formatted output</Link> for details.
 
 ## Stability & User Experience Polish
 
@@ -68,7 +70,7 @@ There are a few bug fixes and a deprecated feature in this release. For a concre
 
 ## Thanks to All Contributors
 
-Thanks to our existing maintainers [@Wwwsylvia](https://github.com/Wwwsylvia), [@TerryHowe](https://github.com/TerryHowe), [@FeynmanZhou](https://github.com/FeynmanZhou), [@shizhMSFT](https://github.com/shizhMSFT), [@sabre1041](https://github.com/sabre1041), [@sajayantony](https://github.com/sajayantony), [@qweeah](https://github.com/qweeah) who contributed to ORAS v1.3.0 and new contributors 🎉 [@bcho](https://github.com/bcho), [@njucjc](https://github.com/njucjc), [@nmiyake](https://github.com/nmiyake), [@mauriciovasquezbernal](https://github.com/mauriciovasquezbernal), [@Horiodino](https://github.com/Horiodino), [@chrisguitarguy](https://github.com/chrisguitarguy), [@kysucix](https://github.com/kysucix), [@RohanMishra315](https://github.com/RohanMishra315), [@apparentlymart](https://github.com/apparentlymart), [@Copilot](https://github.com/Copilot), [@tanyabhatnagar](https://github.com/tanyabhatnagar), [@amazingfate](https://github.com/amazingfate) 🚀.
+Thanks to our existing maintainers [@Wwwsylvia](https://github.com/Wwwsylvia), [@TerryHowe](https://github.com/TerryHowe), [@FeynmanZhou](https://github.com/FeynmanZhou), [@shizhMSFT](https://github.com/shizhMSFT), [@sabre1041](https://github.com/sabre1041), [@sajayantony](https://github.com/sajayantony), [@qweeah](https://github.com/qweeah) who contributed to ORAS v1.3.0 and new contributors 🎉 [@bcho](https://github.com/bcho), [@njucjc](https://github.com/njucjc), [@nmiyake](https://github.com/nmiyake), [@mauriciovasquezbernal](https://github.com/mauriciovasquezbernal), [@Horiodino](https://github.com/Horiodino), [@chrisguitarguy](https://github.com/chrisguitarguy), [@kysucix](https://github.com/kysucix), [@RohanMishra315](https://github.com/RohanMishra315), [@apparentlymart](https://github.com/apparentlymart), [@tanyabhatnagar](https://github.com/tanyabhatnagar), [@amazingfate](https://github.com/amazingfate) 🚀.
 
 You can follow this [installation guidance](https://oras.land/docs/1.3.0/installation) to install ORAS v1.3.0 and have a try.
 Feedback is crucial at this stage. If you run into issues or have suggestions, please open an issue. [Join the Slack channel in CNCF](https://slack.cncf.io/) and find us at **oras** channel.
