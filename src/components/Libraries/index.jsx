@@ -24,6 +24,20 @@ const LibraryList = [
         link: 'https://github.com/oras-project/oras-dotnet',
         width: 100,
     },
+    {
+        title: 'Java Logo',
+        alt: 'Java Logo',
+        Svg: require('@site/static/img/libraries/duke.svg').default,
+        link: 'https://github.com/oras-project/oras-java',
+        width: 50,
+    },
+    {
+        title: 'Quarkus Logo',
+        alt: 'Quarkus Logo',
+        Svg: require('@site/static/img/libraries/quarkus.svg').default,
+        link: 'https://github.com/quarkiverse/quarkus-oras',
+        width: 80,
+    },
 ];
 
 function Logo({ title, alt, Svg, width, link }) {
