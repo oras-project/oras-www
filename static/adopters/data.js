@@ -82,7 +82,14 @@ const projects = [
       dark: "img/adopters/zarf.svg",
       description: "Zarf eliminates the complexity of airgap software delivery for Kubernetes clusters and cloud-native workloads using a declarative packaging strategy.",
       link: "https://github.com/zarf-dev/zarf",
-  },    
+    },
+    {
+      title: "Jenkins",
+      light: "img/adopters/jenkins.svg",
+      dark: "img/adopters/jenkins.svg",
+      description: "The leading open source automation server. OCI storage can be enabled via plugins.",
+      link: "https://www.jenkins.io",
+    },
 ];
 
 const registries = [
