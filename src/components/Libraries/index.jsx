@@ -24,6 +24,13 @@ const LibraryList = [
         link: 'https://github.com/oras-project/oras-dotnet',
         width: 100,
     },
+    {
+        title: 'Rust Logo',
+        alt: 'Rust Logo',
+        Svg: require('@site/static/img/libraries/rust-logo.svg').default,
+        link: 'https://github.com/oras-project/rust-oci-client',
+        width: 100,
+    }
 ];
 
 function Logo({ title, alt, Svg, width, link }) {
