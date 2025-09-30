@@ -25,6 +25,20 @@ const LibraryList = [
         width: 100,
     },
     {
+        title: 'Java Logo',
+        alt: 'Java Logo',
+        Svg: require('@site/static/img/libraries/duke.svg').default,
+        link: 'https://github.com/oras-project/oras-java',
+        width: 50,
+    },
+    {
+        title: 'Quarkus Logo',
+        alt: 'Quarkus Logo',
+        Svg: require('@site/static/img/libraries/quarkus.svg').default,
+        link: 'https://github.com/quarkiverse/quarkus-oras',
+        width: 80,
+    },
+    {
         title: 'Rust Logo',
         alt: 'Rust Logo',
         Svg: require('@site/static/img/libraries/rust-logo.svg').default,
