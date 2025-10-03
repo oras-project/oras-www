@@ -170,6 +170,13 @@ const registries = [
         description: "Quay is used by tens of thousands of Red Hat customers and open source community members to build, manage and scan their container images.",
         link: "https://quay.io/",
     },
+    {
+        title: "OVHcloud Managed Private Registry (MPR)",
+        light: "img/adopters/ovhcloud_mpr.svg",
+        dark: "img/adopters/ovhcloud_mpr.svg",
+        description: "Managed private registry for OCI artifacts, built on the CNCF Harbor open source project and powered by OVHcloud, giving users access to all Harbor features for security, compliance and automation.",
+        link: "https://www.ovhcloud.com/en/public-cloud/managed-private-registry/",
+    },
 ];
 
 export default { projects, registries };
