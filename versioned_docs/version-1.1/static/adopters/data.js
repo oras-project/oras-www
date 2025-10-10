@@ -60,8 +60,8 @@ const projects = [
 const registries = [
     {
         title: "CNCF Distribution",
-        light: "img/adopters/cncf.svg",
-        dark: "img/adopters/cncf.svg",
+        light: "img/adopters/cncf-distribution.svg",
+        dark: "img/adopters/cncf-distribution.svg",
         description: "The toolkit to pack, ship, store, and deliver container content.",
         link: "https://github.com/distribution/distribution",
     },
