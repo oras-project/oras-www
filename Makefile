@@ -30,3 +30,14 @@ server:
 .PHONY: clean
 clean:
 	npm run clear
+
+.PHONY: update-docs
+update-docs:
+	@echo "Checking for ORAS version updates..."
+	node tools/update-versions.js
+	@if [ $$? -eq 0 ]; then \
+		echo "Updates found, rebuilding documentation..."; \
+		npm run build; \
+	else \
+		echo "No updates found."; \
+	fi
