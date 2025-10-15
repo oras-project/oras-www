@@ -12,7 +12,7 @@ The following languages are currently supported:
 - [Go](./go.mdx)
 - [Python](https://oras-project.github.io/oras-py/getting_started/user-guide.html) 
 - [Rust](./rust.mdx) (in progress)
-- [C#](https://oras-project.github.io/oras-dotnet/api)
+- [C#](https://oras-project.github.io/oras-dotnet/api) (in progress)
 - [Java](./java.mdx) (in progress)
 
 ## Unified Experience
@@ -127,3 +127,46 @@ The following is a rough method signature based on the Go version:
 ```go
 func ExtendedCopy(from Target, fromRef string, to Target, toRef string) Descriptor
 ```
+
+## SDK Features
+
+As a tool to manage OCI artifacts, an ORAS library is expected to support the following functionalities:
+
+### Must Have (Core Features)
+
+An ORAS library must support the full set of registry APIs to enable interaction with OCI-compliant registires.
+To enable artifact management, support of packaging and extraction of arbitrary files are necessary.
+
+- **OCI Registry Client (Remote Artifact Store)**
+   - Implement the APIs defined in the latest [OCI Distribution Spec](https://github.com/opencontainers/distribution-spec/blob/v1.1.1/spec.md).
+   - Ensure compliance with the latest [OCI Image Spec](https://github.com/opencontainers/image-spec/blob/v1.1.1/spec.md).
+   - Provide an authentication module that supports both basic and bearer authentication.
+- **Artifact Packaging and Extraction**
+   - Pack arbitrary files from the local file system into OCI artifacts.
+   - Extract files from OCI artifacts to the local file system.
+
+### Should Have (Recommended Features)
+
+To be able to replicate artifacts, an ORAS library should support copy operations, including standard copy and extended copy.
+It is also recommended to support widely recognized APIs defined in [Docker Registry HTTP API V2](https://distribution.github.io/distribution/spec/api/) but not in [OCI Distribution Spec](https://github.com/opencontainers/distribution-spec/blob/v1.1.1/spec.md), such as the [catalog API](https://distribution.github.io/distribution/spec/api/#listing-repositories).
+In addition, it is recommended to support [OCI Image Layout](https://github.com/opencontainers/image-spec/blob/v1.1.1/image-layout.md) as a local artifact store. This is to enable importing/exporting of artifacts between remote registries and the local environment.
+
+- **Copy Operations**
+   - Standard copy: Copy artifacts to and from registries.
+   - Extended copy: Copy artifacts along with their referrers to and from registries.
+- **Extended Registry Client**
+   - Support widely recognized APIs, such as the [Docker Registry HTTP API V2](https://distribution.github.io/distribution/spec/api/).
+- **OCI Image Layout Support (Local Artifact Store)**
+   - Read artifacts from an OCI Image Layout.
+   - Write artifacts to an OCI Image Layout.
+
+### May Have (Optional Enhancements)
+
+As docker is the most commonly used tool and docker credentials are widely recognized by various clients, it is helpful to support credential management thorugh docker config files and credential helpers.
+
+- **Credential Management**
+   - Leverage Docker config files and Docker credential helpers.
+
+### Check list
+
+TODO: table of check list for features implemented in each language
