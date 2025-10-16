@@ -152,7 +152,7 @@ Recommended features enable richer distribution scenarios: copying artifacts (an
    - Standard copy: Copy artifacts to and from registries.
    - Extended copy: Copy artifacts along with their referrers to and from registries.
 - **Extended Registry Client**
-   - Support widely recognized APIs defined in [Docker Registry HTTP API V2](https://distribution.github.io/distribution/spec/api/) that are not part of the OCI Distribution Spec (e.g., repository catalog).
+   - Support widely recognized APIs, such as APIs defined in [Docker Registry HTTP API V2](https://distribution.github.io/distribution/spec/api/) but are not part of the OCI Distribution Spec (e.g., repository catalog).
 - **OCI Image Layout Support (Local Artifact Store)**
    - Read artifacts from an OCI Image Layout.
    - Write artifacts to an OCI Image Layout.
@@ -168,7 +168,11 @@ Optional features enhance usability and integration with existing Docker credent
 
 The following matrix tracks implementation status across language SDKs.
 
-Legend: ✅ Supported | ❌ Not Yet Supported | ❔ Not Evaluated
+| Symbol | Meaning |
+|--------|---------|
+| ✅ | Supported |
+| ❌ | Not Yet Supported |
+| ❔ | Not Evaluated |
 
 > [!IMPORTANT]  
 > Update this table whenever a feature is implemented or documented; leave ❔ where a language hasn’t been evaluated yet.
