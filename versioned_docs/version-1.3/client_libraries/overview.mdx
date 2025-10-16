@@ -168,32 +168,31 @@ Optional features enhance usability and integration with existing Docker credent
 
 The following matrix tracks implementation status across language SDKs.
 
-Legend: ✅ Supported · ❌ Not Supported · ❓ Not Assessed
+Legend: ✅ Supported | ❌ Not Yet Supported | ❔ Not Evaluated
+
+> [!IMPORTANT]  
+> Update this table whenever a feature is implemented or documented; leave ❔ where a language hasn’t been evaluated yet.
 
 #### Core (Must Have)
 
-| Feature | Go | Python | Rust | C# | Java |
-|---------|:--:|:------:|:----:|:--:|:----:|
-| OCI Registry Client | ✅ | ❓ | ❓ | ❓ | ❓ |
-| OCI Image Spec Compliance | ✅ | ❓ | ❓ | ❓ | ❓ |
-| Authentication (Basic/Bearer) | ✅ | ❓ | ❓ | ❓ | ❓ |
-| Artifact Packaging | ✅ | ❓ | ❓ | ❓ | ❓ |
-| Artifact Extraction | ✅ | ❓ | ❓ | ❓ | ❓ |
+| Feature                           |  Go   | Python | Rust  |  C#   | Java  |
+| --------------------------------- | :---: | :----: | :---: | :---: | :---: |
+| OCI Distribution Spec Compliance  |   ✅   |   ❔    |   ❔   |   ✅   |   ❔   |
+| OCI Image Spec Compliance         |   ✅   |   ❔    |   ❔   |   ✅   |   ❔   |
+| Authentication (Basic and Bearer) |   ✅   |   ❔    |   ❔   |   ✅   |   ❔   |
+| Artifact Packaging and Extraction |   ✅   |   ❔    |   ❔   |   ❌   |   ❔   |
 
 #### Recommended (Should Have)
 
-| Feature | Go | Python | Rust | C# | Java |
-|---------|:--:|:------:|:----:|:--:|:----:|
-| Standard Copy | ✅ | ❓ | ❓ | ❓ | ❓ |
-| Extended Copy (Referrers) | ✅ | ❓ | ❓ | ❓ | ❓ |
-| Extended Registry APIs (Catalog) | ✅ | ❓ | ❓ | ❓ | ❓ |
-| OCI Image Layout: Read | ✅ | ❓ | ❓ | ❓ | ❓ |
-| OCI Image Layout: Write | ✅ | ❓ | ❓ | ❓ | ❓ |
+| Feature                        |  Go   | Python | Rust  |  C#   | Java  |
+| ------------------------------ | :---: | :----: | :---: | :---: | :---: |
+| Standard Copy                  |   ✅   |   ❔    |   ❔   |   ✅   |   ❔   |
+| Extended Copy (with Referrers) |   ✅   |   ❔    |   ❔   |   ❌   |   ❔   |
+| Extended Registry APIs         |   ✅   |   ❔    |   ❔   |   ✅   |   ❔   |
+| OCI Image Layout Support       |   ✅   |   ❔    |   ❔   |   ❌   |   ❔   |
 
 #### Optional (May Have)
 
-| Feature | Go | Python | Rust | C# | Java |
-|---------|:--:|:------:|:----:|:--:|:----:|
-| Docker Credential Integration | ✅ | ❓ | ❓ | ❓ | ❓ |
-
-Updates to this table should accompany the implementation or documentation of the corresponding capability. Where a feature is not yet evaluated for a language, it remains marked ❓.
+| Feature                       |  Go   | Python | Rust  |  C#   | Java  |
+| ----------------------------- | :---: | :----: | :---: | :---: | :---: |
+| Docker Credential Integration |   ✅   |   ❔    |   ❔   |   ❌   |   ❔   |
