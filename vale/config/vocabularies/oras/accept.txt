@@ -1,4 +1,5 @@
 API
+APIs
 backport
 bcrypt
 CAS
@@ -31,6 +32,8 @@ releaser
 repo
 SBOM
 SBOMs
+SDK
+SDKs
 semver
 signoff
 [Ss]kippable

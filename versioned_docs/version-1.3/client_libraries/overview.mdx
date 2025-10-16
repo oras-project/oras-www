@@ -130,7 +130,7 @@ func ExtendedCopy(from Target, fromRef string, to Target, toRef string) Descript
 
 ## SDK Features
 
-This section defines a shared goals and roadmap framework for all ORAS SDKs, grouping features into Core, Recommended, and Optional to align implementation priorities and user expectations.
+This section defines the shared goals and roadmap for all ORAS SDKs, grouping features into Core, Recommended, and Optional to align implementation priorities and user expectations.
 
 ### Core Features
 
@@ -152,7 +152,7 @@ Recommended features enable richer distribution scenarios: copying artifacts (an
    - Standard copy: Copy artifacts to and from registries.
    - Extended copy: Copy artifacts along with their referrers to and from registries.
 - **Extended Registry Client**
-   - Support widely recognized APIs, such as APIs defined in [Docker Registry HTTP API V2](https://distribution.github.io/distribution/spec/api/) but are not part of the OCI Distribution Spec (e.g., repository catalog).
+   - Support widely recognized APIs, such as APIs defined in [Docker Registry HTTP API V2](https://distribution.github.io/distribution/spec/api/) which are not part of the OCI Distribution Spec (e.g., repository catalog).
 - **OCI Image Layout Support (Local Artifact Store)**
    - Read artifacts from an OCI Image Layout.
    - Write artifacts to an OCI Image Layout.
