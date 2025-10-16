@@ -130,11 +130,11 @@ func ExtendedCopy(from Target, fromRef string, to Target, toRef string) Descript
 
 ## SDK Features
 
-This section defines a capability baseline for ORAS client libraries. Features are grouped by priority: Core (Must), Recommended (Should), and Optional (May). The intent is to set clear expectations for interoperability, artifact management, and ecosystem alignment. This baseline helps authors prioritize implementation (Core first) and helps users set expectations when selecting a library.
+This section defines a shared goals and roadmap framework for all ORAS SDKs, grouping features into Core (Must), Recommended (Should), and Optional (May) to align implementation priorities and user expectations.
 
 ### Must Have (Core Features)
 
-Core features are required for a library to be considered a compliant ORAS SDK. They enable essential interaction with OCI-compliant registries and basic artifact lifecycle operations.
+Core features are the minimum required for ORAS SDK compliance. An ORAS SDK must provide OCI‑compliant registry interaction and support packaging and extracting arbitrary files as OCI artifacts.
 
 - **OCI Registry Client (Remote Artifact Store)**
    - Implement the APIs defined in the latest [OCI Distribution Spec](https://github.com/opencontainers/distribution-spec/blob/v1.1.1/spec.md).
@@ -146,7 +146,7 @@ Core features are required for a library to be considered a compliant ORAS SDK. 
 
 ### Should Have (Recommended Features)
 
-Recommended features improve portability, reproducibility, and multi-registry workflows.
+Recommended features enable richer distribution scenarios: copying artifacts (and their referrers), using extended registry APIs, and reading and writing OCI Image Layouts for broader portability.
 
 - **Copy Operations**
    - Standard copy: Copy artifacts to and from registries.
@@ -159,7 +159,7 @@ Recommended features improve portability, reproducibility, and multi-registry wo
 
 ### May Have (Optional Enhancements)
 
-Optional features enhance usability and integration with existing container tooling.
+Optional features enhance usability and integration with existing Docker credentials.
 
 - **Credential Management**
    - Leverage Docker config files and Docker credential helpers.
