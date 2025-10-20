@@ -90,6 +90,13 @@ const projects = [
       description: "The leading open source automation server. OCI storage can be enabled via plugins.",
       link: "https://www.jenkins.io",
     },
+    {
+      title: "Inspektor Gadget",
+      light: "img/adopters/inspektor_gadget.svg",
+      dark: "img/adopters/inspektor_gadget.svg",
+      description: "A set of tools and a framework for data collection and system inspection on Kubernetes clusters and Linux hosts using eBPF, packaged as OCI images called gadgets",
+      link: "https://github.com/inspektor-gadget/inspektor-gadget",
+    },
 ];
 
 const registries = [
