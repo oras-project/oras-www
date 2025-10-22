@@ -12,8 +12,10 @@ The following languages are currently supported:
 - [Go](./go.mdx)
 - [Python](https://oras-project.github.io/oras-py/getting_started/user-guide.html) 
 - [Rust](./rust.mdx) (in progress)
-- [C#](https://oras-project.github.io/oras-dotnet/api)
+- [C#](https://oras-project.github.io/oras-dotnet/api) (in progress)
 - [Java](./java.mdx) (in progress)
+
+See the [SDK Feature Checklist](#feature-checklist) below for current feature support across languages.
 
 ## Unified Experience
 
@@ -127,3 +129,74 @@ The following is a rough method signature based on the Go version:
 ```go
 func ExtendedCopy(from Target, fromRef string, to Target, toRef string) Descriptor
 ```
+
+## SDK Features
+
+This section defines the shared goals and roadmap for all ORAS SDKs, grouping features into Core, Recommended, and Optional to align implementation priorities and user expectations.
+
+### Core Features
+
+Core features are the minimum required for ORAS SDK compliance. An ORAS SDK must provide OCI‑compliant registry interaction and support packaging and extracting arbitrary files as OCI artifacts.
+
+- **OCI Registry Client (Remote Artifact Store)**
+   - Implement the APIs defined in the latest [OCI Distribution Spec](https://github.com/opencontainers/distribution-spec/blob/v1.1.1/spec.md).
+   - Ensure compliance with the latest [OCI Image Spec](https://github.com/opencontainers/image-spec/blob/v1.1.1/spec.md).
+   - Provide authentication supporting both Basic and Bearer token flows.
+- **Artifact Packaging and Extraction**
+   - Pack arbitrary files from the local file system into OCI artifacts (manifest + config + layers).
+   - Extract files from OCI artifacts to the local file system.
+
+### Recommended Features
+
+Recommended features enable richer distribution scenarios: copying artifacts (and their referrers), using extended registry APIs, and reading and writing OCI Image Layouts for broader portability.
+
+- **Copy Operations**
+   - Standard copy: Copy artifacts to and from registries.
+   - Extended copy: Copy artifacts along with their referrers to and from registries.
+- **Extended Registry Client**
+   - Support widely recognized APIs, such as APIs defined in [Docker Registry HTTP API V2](https://distribution.github.io/distribution/spec/api/) which are not part of the OCI Distribution Spec (e.g., repository catalog).
+- **OCI Image Layout Support (Local Artifact Store)**
+   - Read artifacts from an OCI Image Layout.
+   - Write artifacts to an OCI Image Layout.
+
+### Optional Enhancements
+
+Optional features enhance usability and integration with existing Docker credentials.
+
+- **Credential Management**
+   - Leverage Docker config files and Docker credential helpers.
+
+### Feature Checklist
+
+The following matrix tracks implementation status across language SDKs.  
+Update these tables whenever a feature is implemented or documented; leave ❔ where a language hasn’t been evaluated yet.
+
+| Symbol | Meaning |
+|--------|---------|
+| ✅ | Supported |
+| ❌ | Not Yet Supported |
+| ❔ | Not Evaluated |
+
+#### Core
+
+| Feature                           |  Go   | Python | Rust  |  C#   | Java  |
+| --------------------------------- | :---: | :----: | :---: | :---: | :---: |
+| OCI Distribution Spec Compliance  |   ✅   |   ❔    |   ❔   |   ✅   |   ❔   |
+| OCI Image Spec Compliance         |   ✅   |   ❔    |   ❔   |   ✅   |   ❔   |
+| Authentication (Basic and Bearer) |   ✅   |   ❔    |   ❔   |   ✅   |   ❔   |
+| Artifact Packaging and Extraction |   ✅   |   ❔    |   ❔   |   ❌   |   ❔   |
+
+#### Recommended
+
+| Feature                        |  Go   | Python | Rust  |  C#   | Java  |
+| ------------------------------ | :---: | :----: | :---: | :---: | :---: |
+| Standard Copy                  |   ✅   |   ❔    |   ❔   |   ✅   |   ❔   |
+| Extended Copy (with Referrers) |   ✅   |   ❔    |   ❔   |   ❌   |   ❔   |
+| Extended Registry APIs         |   ✅   |   ❔    |   ❔   |   ✅   |   ❔   |
+| OCI Image Layout Support       |   ✅   |   ❔    |   ❔   |   ❌   |   ❔   |
+
+#### Optional
+
+| Feature                       |  Go   | Python | Rust  |  C#   | Java  |
+| ----------------------------- | :---: | :----: | :---: | :---: | :---: |
+| Docker Credential Integration |   ✅   |   ❔    |   ❔   |   ❌   |   ❔   |
