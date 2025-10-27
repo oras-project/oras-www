@@ -1,0 +1,92 @@
+---
+name: Update ORAS Documentation
+
+'on':
+  schedule:
+    # Run daily at 2 AM Pacific Time
+    # Pacific Time is UTC-8 (PST) or UTC-7 (PDT)
+    # 2 AM PST = 10 AM UTC, 2 AM PDT = 9 AM UTC
+    # Using 10 AM UTC to cover PST, adjust manually for PDT if needed
+    - cron: '0 10 * * *'
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: 'package.json'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run update-docs target
+        id: update
+        run: |
+          echo "Running make update-docs..."
+          if make update-docs; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+            echo "Updates were made"
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+            echo "No updates needed"
+          fi
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code versions-map || \
+            echo "versions_changed=true" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        if: steps.git-check.outputs.versions_changed == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'docs: update ORAS versions'
+          title: 'Automated ORAS version update'
+          body: |
+            This is an automated pull request to update ORAS versions in the
+            documentation.
+
+            ## Changes
+            - Updated `versions-map` file with latest ORAS releases
+            - Rebuilt documentation to reflect version changes
+
+            ## Details
+            This PR was created by the automated update job that runs daily at
+            2 AM Pacific Time. The job checks for new ORAS releases and updates
+            the version mappings according to the following rules:
+
+            - For entries ending in "-preview": Updates to the latest prerelease
+              version
+            - For other entries: Updates to the latest stable release within the
+              same major.minor version
+
+            Please review the changes and merge if they look correct.
+          branch: automated-version-update
+          delete-branch: true
+          labels: |
+            documentation
+            automated
+          reviewers: |
+            oras-project/oras-maintainers
+          draft: false
+
+      - name: Summary
+        run: |
+          if [ "${{ steps.git-check.outputs.versions_changed }}" = "true" ];
+          then
+            echo "✓ Version updates found and PR created"
+          else
+            echo "✓ No version updates needed"
+          fi
