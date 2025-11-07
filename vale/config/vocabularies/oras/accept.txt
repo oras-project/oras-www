@@ -12,7 +12,7 @@ Dockerfile
 facto
 filetype
 gcloud
-github
+[Gg]it[Hh]ub
 [Gg]olang
 (?i)http
 https
@@ -20,6 +20,7 @@ htpasswd
 inviter
 ip
 (?i)json
+Makefile
 mediaType
 namespace
 (?i)oras
