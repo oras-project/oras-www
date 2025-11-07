@@ -23,6 +23,7 @@ htpasswd
 inviter
 ip
 (?i)json
+Makefile
 mediaType
 mediaTypes
 namespace
