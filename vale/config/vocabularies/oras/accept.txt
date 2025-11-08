@@ -22,11 +22,13 @@ https
 htpasswd
 inviter
 ip
+JFrog
 (?i)json
 mediaType
 mediaTypes
 namespace
 Nixpkgs
+OVHcloud
 (?i)oras
 polytree
 (?i)powershell
