@@ -52,6 +52,7 @@ const config = {
                     // Remove this to remove the "edit this page" links.
                     editUrl:
                         "https://github.com/oras-project/oras-www/tree/main/",
+                    onUntruncatedBlogPosts: "throw",
                 },
                 theme: {
                     customCss: require.resolve("./src/css/custom.css"),
