@@ -1,4 +1,4 @@
-# GitHub Copilot Instructions for ORAS Documentation Website
+# GitHub AI Agent Instructions for ORAS Documentation Website
 
 This repository contains the documentation website for ORAS (OCI Registry As Storage), built with Docusaurus 2.
 
