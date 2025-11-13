@@ -37,18 +37,8 @@ vale:
 
 .PHONY: vale-accept
 vale-accept:
-	@echo "Extracting misspellings from Vale output..."
-	@vale --config .vale.ini versioned_docs community 2>&1 | \
-		grep "Did you really mean" | \
-		sed "s/.*'\(.*\)'.*/\1/" | \
-		sort -u > /tmp/vale-words.txt
-	@if [ -s /tmp/vale-words.txt ]; then \
-		cat /tmp/vale-words.txt >> vale/config/vocabularies/oras/accept.txt; \
-		sort -u vale/config/vocabularies/oras/accept.txt -o vale/config/vocabularies/oras/accept.txt; \
-		echo "Added the following words to accept.txt:"; \
-		cat /tmp/vale-words.txt; \
-		rm /tmp/vale-words.txt; \
-	else \
-		echo "No spelling errors found to add."; \
-		rm -f /tmp/vale-words.txt; \
-	fi
+	./scripts/vale-accept.sh
+
+.PHONY: vale-accept-dry
+vale-accept-dry:
+	./scripts/vale-accept.sh --dry-run
