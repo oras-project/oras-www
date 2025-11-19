@@ -97,6 +97,13 @@ const projects = [
       description: "A set of tools and a framework for data collection and system inspection on Kubernetes clusters and Linux hosts using eBPF, packaged as OCI images called gadgets",
       link: "https://github.com/inspektor-gadget/inspektor-gadget",
     },
+    {
+      title: "OpenTofu",
+      light: "img/adopters/opentofu-light.svg",
+      dark: "img/adopters/opentofu-dark.svg",
+      description: "OpenTofu is an Infrastructure-as-Code tool. It uses a declarative configuration language to manage thousands of cloud and on-prem resources in shareable, reusable, readable files.",
+      link: "https://opentofu.org/",
+    },
 ];
 
 const registries = [
