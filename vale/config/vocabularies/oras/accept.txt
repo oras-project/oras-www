@@ -24,6 +24,7 @@ inviter
 ip
 JFrog
 (?i)json
+Makefile
 mediaType
 mediaTypes
 namespace
