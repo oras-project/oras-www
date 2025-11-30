@@ -84,13 +84,6 @@ const config = {
                 indexName: "oras",
                 contextualSearch: true,
             },
-            announcementBar: {
-                id: "announcement_bar",
-                content: `⭐ If you like ORAS Project, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/oras-project/oras">GitHub</a> and follow us on <a target="_blank" rel="noopener noreferrer" href="https://x.com/orasproject">${TwitterSvg}</a>`,
-                backgroundColor: "var(--theme-card)",
-                textColor: "var(--ifm-color-primary)",
-                isCloseable: true,
-            },
             image: "img/oras_social_card.png",
             navbar: {
                 logo: {
