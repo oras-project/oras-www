@@ -25,21 +25,19 @@ Source for ORAS website and documentation
 
 # Development
 
-## Online one-click setup
+## Development Setup
 
-You can use Gitpod (a free, online, VS Code-like IDE) for contributing. With a single click, it will launch a workspace (for Docusaurus 2) automatically:
+You can use your favorite IDE or cloud development environment (CDE) for contributing. Simply:
 
--   clone the docusaurus repo.
--   install the dependencies.
--   run `npm start`
+- clone the repository
+- install the dependencies
+- run `npm start`
 
-So that you can start contributing straight away.
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/oras-project/oras-www)
+Then you can start contributing straight away.
 
 ## System Requirements
 
--   [Node.js v18.x](https://nodejs.org/en/download/) and above
+- [Node.js v24.x](https://nodejs.org/en/download/) and above
 
 ## Installation
 
