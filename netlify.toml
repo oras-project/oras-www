@@ -4,7 +4,7 @@
   publish = "build"
 
 [build.environment]
-  NODE_VERSION = "21"
+  NODE_VERSION = "24"
 
 [[plugins]]
   package = "netlify-plugin-cache"
