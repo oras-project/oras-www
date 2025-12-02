@@ -20,10 +20,25 @@ git clone git@github.com:${MY_GITHUB_NAME}/oras.git
 cd oras
 ```
 
-## Building the Binary
+## Running Tests
 
-To compile and run the tests, just run the `make` command.
-Use `make build` to build all platform binaries to the `bin/` directory.
+The default Makefile target will run the tests and build the architecture appropriate binary.
+
+```bash
+make
+```
+
+This command will:
+- Run `go mod tidy` to ensure dependencies are up to date
+- Run `go mod vendor` to vendor dependencies
+- Check file encoding
+- Execute all unit tests with race detection and generate a coverage report
+- Build the binary for the current architecture
+
+## Building the Binaries
+
+Running `make build` will build all platform binaries to the `bin/` directory.
+To compile and run the tests in one step, just run the `make` command.
 
 Mac:
 
@@ -45,8 +60,8 @@ Linux:
 ```bash
 # builds to
 # - bin/linux/arm64/oras
-# - bin/linux/amd64/ora
-# - bin/linux/arm/v7/orass
+# - bin/linux/amd64/oras
+# - bin/linux/arm/v7/oras
 make build-linux
 
 # builds to bin/linux/arm64/oras
@@ -68,7 +83,7 @@ make build-windows
 
 ## Cleaning Your Workspace
 
-To remove all files not manged by git, run `make clean` (be careful!)
+To remove all files not managed by git, run `make clean` (be careful!)
 
 ## Managing Dependencies
 
