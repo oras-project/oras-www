@@ -29,15 +29,15 @@ Source for ORAS website and documentation
 
 You can use your favorite IDE or cloud development environment (CDE) for contributing. Simply:
 
--   clone the repository
--   install the dependencies
--   run `npm start`
+- clone the repository
+- install the dependencies
+- run `npm start`
 
 Then you can start contributing straight away.
 
 ## System Requirements
 
--   [Node.js v18.x](https://nodejs.org/en/download/) and above
+- [Node.js v24.x](https://nodejs.org/en/download/) and above
 
 ## Installation
 

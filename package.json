@@ -5,7 +5,7 @@
     "scripts": {
         "docusaurus": "docusaurus",
         "start": "npm run refresh-commands && npm run check-links && docusaurus start",
-        "build": "npm run refresh-commands && npm run check-links && docusaurus build",
+        "build": "npm run refresh-commands && npm run check-links && NODE_OPTIONS='--localstorage-file=/tmp/docusaurus-localstorage' docusaurus build",
         "swizzle": "docusaurus swizzle",
         "deploy": "docusaurus deploy",
         "clear": "docusaurus clear",
@@ -50,6 +50,6 @@
         ]
     },
     "engines": {
-        "node": ">=18.0"
+        "node": ">=24.0"
     }
 }
