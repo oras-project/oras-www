@@ -11,6 +11,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+.PHONY: all
+all: install test build
+
 .PHONY: build
 build: install
 	npm run build
@@ -18,6 +21,10 @@ build: install
 .PHONY: install
 install:
 	npm install
+
+.PHONY: test
+test: install
+	npm test
 
 .PHONY: serve
 serve: build
@@ -41,3 +48,15 @@ update-docs:
 	else \
 		echo "No updates found."; \
 	fi
+
+.PHONY: vale
+vale:
+	vale --config .vale.ini versioned_docs community
+
+.PHONY: vale-accept
+vale-accept:
+	./scripts/vale-accept.sh
+
+.PHONY: vale-accept-dry
+vale-accept-dry:
+	./scripts/vale-accept.sh --dry-run
