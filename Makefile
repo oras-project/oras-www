@@ -37,3 +37,15 @@ server:
 .PHONY: clean
 clean:
 	npm run clear
+
+.PHONY: vale
+vale:
+	vale --config .vale.ini versioned_docs community
+
+.PHONY: vale-accept
+vale-accept:
+	./scripts/vale-accept.sh
+
+.PHONY: vale-accept-dry
+vale-accept-dry:
+	./scripts/vale-accept.sh --dry-run
