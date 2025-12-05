@@ -6,10 +6,10 @@ Owners:
   - Feynman Zhou (@FeynmanZhou)
   - Sajay Antony (@sajayantony)
   - Shiwei Zhang (@shizhMSFT)
-  - Vanessasaurus (@vsoch)
   - Terry Howe (@TerryHowe)
 
 Emeritus:
   - Avi Deitcher (@deitch)
   - Josh Dolitsky (@jdolitsky)
+  - Vanessasaurus (@vsoch)
   - Steve Lasker (@stevelasker)
