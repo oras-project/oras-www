@@ -24,6 +24,7 @@ We're happy to promote all usage, as well as provide feedback.*
 - [Red Hat Quay](#red-hat-quay)
 - [Artifactory](#artifactory)
 - [Harbor](#harbor)
+- [DigitalOcean Container Registry](#docr)
 
 ### CNCF Distribution
 
@@ -384,6 +385,27 @@ oras pull artifactory.your-company.com/$ARTIFACTORY_OCI_REPOSITORY/myartifact:v1
 
   ```
   oras pull --plain-http <registry-ip>:5000/hello-artifact:v2
+  ```
+
+### [DigitalOcean Container Registry (DOCR)](https://docs.digitalocean.com/products/container-registry/)
+
+- Login to your registry
+  - [Install doctl and authenticate it with an API token](https://docs.digitalocean.com/reference/doctl/how-to/install/)
+  - Do registry login
+
+    ```shell
+    doctl registry login
+    ```
+- Pushing artifacts to DOCR:
+
+  ```shell
+  oras push registry.digitalocean.com/coolreg-simple/plain-artifact:v1 artifact.txt:text/plain
+  ```
+
+- Pulling artifacts from DOCR:
+
+  ```shell
+  oras pull registry.digitalocean.com/coolreg-simple/plain-artifact:v1
   ```
 
 [artifacts]:            https://github.com/opencontainers/artifacts
