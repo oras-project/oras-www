@@ -74,6 +74,16 @@ copy oras.exe %USERPROFILE%\bin\
 set PATH=%USERPROFILE%\bin\;%PATH%
 ```
 
+## Go Install
+
+If you have [Go](https://go.dev/) 1.24 or later installed, you can install ORAS CLI using `go install`:
+
+```bash
+go install oras.land/oras/cmd/oras@v1.3.0
+```
+
+The `oras` binary will be installed in the directory specified by the `GOBIN` environment variable, which defaults to `$GOPATH/bin` or `$HOME/go/bin` if the `GOPATH` environment variable is not set. You may need to add this directory to your `PATH` environment variable to run `oras` from any location.
+
 ## Docker Image
 
 A public Docker image containing the CLI is available on [GitHub Container Registry](https://github.com/orgs/oras-project/packages/container/package/oras):
