@@ -22,6 +22,7 @@ configs
 deliverables
 dev
 Dockerfile
+doctl
 facto
 filetype
 gcloud
