@@ -264,11 +264,12 @@ oras discover $REGISTRY/$REPO:$TAG --format tree
 ```
 
 ```console
-$REGISTRY/$REPO@sha256:a3785f78ab8547ae2710c89e627783cfa7ee7824d3468cae6835c9f4eae23ff7
-├── application/vnd.cncf.notary.signature
-│   └── sha256:8dee8cb9a1334595545e3baf15c3eeed13c4b35ae08e3ab32e1df31fb152dc1d
+$REGISTRY/$REPO@sha256:84b639892598fb3c92e4511e9d0ecf348b9ece28bef3f40ca25fc0d002867be6
 └── sbom/example
     └── sha256:50fd0dc107d84b5e7b402688000a7ed3aaf8a2692d5cb74da5277fa3c4cecf15
+        └── [annotations]
+            └── org.opencontainers.image.created: "2025-09-10T18:40:31Z"
+
 ```
 
 View an artifact's referrers manifest in pretty JSON output. The following fields should be outputted:
@@ -289,28 +290,23 @@ oras discover $REGISTRY/$REPO:v1 --format json
 
 ```json
 {
-  "manifests": [
-    {
-      "reference": "$REGISTRY/$REPO@sha256:8dee8cb9a1334595545e3baf15c3eeed13c4b35ae08e3ab32e1df31fb152dc1d",
-      "mediaType": "application/vnd.oci.image.manifest.v1+json",
-      "digest": "sha256:8dee8cb9a1334595545e3baf15c3eeed13c4b35ae08e3ab32e1df31fb152dc1d",
-      "size": 739,
-      "annotations": {
-        "io.cncf.notary.x509chain.thumbprint#S256": "[\"79e91aa1e109a16df87d200e493fd3d33c67253f76d41334d7f7c29c00ba55b3\"]",
-        "org.opencontainers.image.created": "2024-01-01T10:32:55Z"
-      },
-      "artifactType": "application/vnd.cncf.notary.signature"
-    },
+  "reference": "$REGISTRY/$REPO@sha256:8dee8cb9a1334595545e3baf15c3eeed13c4b35ae08e3ab32e1df31fb152dc1d",
+  "mediaType": "application/vnd.oci.image.manifest.v1+json",
+  "digest": "sha256:8dee8cb9a1334595545e3baf15c3eeed13c4b35ae08e3ab32e1df31fb152dc1d",
+  "size": 739,
+  "referrers": [
     {
       "reference": "$REGISTRY/$REPO@sha256:50fd0dc107d84b5e7b402688000a7ed3aaf8a2692d5cb74da5277fa3c4cecf15",
       "mediaType": "application/vnd.oci.image.manifest.v1+json",
       "digest": "sha256:50fd0dc107d84b5e7b402688000a7ed3aaf8a2692d5cb74da5277fa3c4cecf15",
       "size": 739,
       "annotations": {
-        "org.opencontainers.image.created": "2024-01-01T07:57:10Z"
+        "org.opencontainers.image.created": "2025-09-10T18:40:31Z"
       },
-      "artifactType": "sbom/example"
+      "artifactType": "sbom/example",
+      "referrers": []
     }
   ]
 }
+
 ```
