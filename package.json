@@ -35,7 +35,7 @@
         "remark-parse": "^11.0.0"
     },
     "devDependencies": {
-        "@babel/preset-env": "^7.28.6",
+        "@babel/preset-env": "^7.29.0",
         "@babel/preset-react": "^7.28.5",
         "@docusaurus/module-type-aliases": "^3.8.1",
         "@testing-library/jest-dom": "^6.6.3",
