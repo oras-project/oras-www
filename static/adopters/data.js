@@ -104,6 +104,13 @@ const projects = [
       description: "OpenTofu is an Infrastructure-as-Code tool. It uses a declarative configuration language to manage thousands of cloud and on-prem resources in shareable, reusable, readable files.",
       link: "https://opentofu.org/",
     },
+    {
+      title: "Updatecli",
+      light: "img/adopters/updatecli.svg",
+      dark: "img/adopters/updatecli.svg",
+      description: "Continuously update everything.",
+      link: "https://updatecli.io",
+    },
 ];
 
 const registries = [
