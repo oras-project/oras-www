@@ -7,6 +7,20 @@ sidebar_position: 15
 
 This guide demonstrates the installation steps of ORAS CLI on different platforms.
 
+## Snap
+
+Install `oras` using [Snap](https://snapcraft.io/oras) on Linux:
+
+```bash
+snap install oras --classic
+```
+
+:::note
+
+The `--classic` flag is required because ORAS uses classic confinement to access files outside the snap sandbox.
+
+:::
+
 ## Release artifacts
 
 Install ORAS from the latest [release artifacts](https://github.com/oras-project/oras/releases):
@@ -116,7 +130,7 @@ Git tree state: clean
 
 :::note
 
-ORAS on other package managers such as Homebrew, WinGet, Nix will be updated after the stable release.
+ORAS on other package managers such as Snap, Homebrew, WinGet, Nix will be updated after the stable release.
 
 :::
 
