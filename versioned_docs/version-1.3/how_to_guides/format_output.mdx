@@ -269,17 +269,24 @@ $REGISTRY/$REPO@sha256:a3785f78ab8547ae2710c89e627783cfa7ee7824d3468cae6835c9f4e
 │   └── sha256:8dee8cb9a1334595545e3baf15c3eeed13c4b35ae08e3ab32e1df31fb152dc1d
 └── sbom/example
     └── sha256:50fd0dc107d84b5e7b402688000a7ed3aaf8a2692d5cb74da5277fa3c4cecf15
+        └── [annotations]
+            └── org.opencontainers.image.created: "2024-01-01T07:57:10Z"
 ```
 
 View an artifact's referrers manifest in pretty JSON output. The following fields should be outputted:
 
-- `manifests`: the list of referrers
+- `reference`: full reference by digest of the subject manifest
+- `mediaType`: media type of the subject manifest
+- `digest`: digest of the subject manifest
+- `size`: subject manifest file size in bytes
+- `referrers`: the list of artifacts that reference the subject
   - `reference`: full reference by digest of the referrer
   - `mediaType`: media type of the referrer
-  - `size`: referrer file size in bytes
   - `digest`: digest of the referrer
-  - `artifactType`: artifact type of a referrer
-  - `annotations`: contains arbitrary metadata in a referrer
+  - `size`: referrer file size in bytes
+  - `artifactType`: artifact type of the referrer
+  - `annotations`: arbitrary metadata attached to the referrer
+  - `referrers`: referrers of the referrer (empty array if none)
 
 See an example:
 
@@ -289,7 +296,11 @@ oras discover $REGISTRY/$REPO:v1 --format json
 
 ```json
 {
-  "manifests": [
+  "reference": "$REGISTRY/$REPO@sha256:a3785f78ab8547ae2710c89e627783cfa7ee7824d3468cae6835c9f4eae23ff7",
+  "mediaType": "application/vnd.oci.image.manifest.v1+json",
+  "digest": "sha256:a3785f78ab8547ae2710c89e627783cfa7ee7824d3468cae6835c9f4eae23ff7",
+  "size": 528,
+  "referrers": [
     {
       "reference": "$REGISTRY/$REPO@sha256:8dee8cb9a1334595545e3baf15c3eeed13c4b35ae08e3ab32e1df31fb152dc1d",
       "mediaType": "application/vnd.oci.image.manifest.v1+json",
@@ -299,7 +310,8 @@ oras discover $REGISTRY/$REPO:v1 --format json
         "io.cncf.notary.x509chain.thumbprint#S256": "[\"79e91aa1e109a16df87d200e493fd3d33c67253f76d41334d7f7c29c00ba55b3\"]",
         "org.opencontainers.image.created": "2024-01-01T10:32:55Z"
       },
-      "artifactType": "application/vnd.cncf.notary.signature"
+      "artifactType": "application/vnd.cncf.notary.signature",
+      "referrers": []
     },
     {
       "reference": "$REGISTRY/$REPO@sha256:50fd0dc107d84b5e7b402688000a7ed3aaf8a2692d5cb74da5277fa3c4cecf15",
@@ -309,7 +321,8 @@ oras discover $REGISTRY/$REPO:v1 --format json
       "annotations": {
         "org.opencontainers.image.created": "2024-01-01T07:57:10Z"
       },
-      "artifactType": "sbom/example"
+      "artifactType": "sbom/example",
+      "referrers": []
     }
   ]
 }
