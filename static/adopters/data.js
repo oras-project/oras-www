@@ -111,6 +111,13 @@ const projects = [
       description: "Continuously update everything.",
       link: "https://updatecli.io",
     },
+    {
+      title: "ocx",
+      light: "img/adopters/ocx.svg",
+      dark: "img/adopters/ocx.svg",
+      description: "A package manager that turns any OCI registry into content-addressed, cross-platform infrastructure for distributing pre-built binaries.",
+      link: "https://ocx.sh",
+    },
 ];
 
 const registries = [
