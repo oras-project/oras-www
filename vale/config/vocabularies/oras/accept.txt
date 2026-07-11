@@ -39,6 +39,7 @@ namespace
 Nixpkgs
 OVHcloud
 (?i)oras
+Passcode
 polytree
 pullable
 releaser
