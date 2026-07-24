@@ -1,0 +1,5 @@
+Contact: mailto:cncf-oras-security@lists.cncf.io
+Expires: 2027-07-01T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://oras.land/.well-known/security.txt
+Policy: https://oras.land/community/reporting_security_concerns
