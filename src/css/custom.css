@@ -148,3 +148,7 @@ html[data-theme='dark'] .navbar__github, .navbar__twitter, .navbar__slack {
 .navbar__github:hover, .navbar__twitter:hover, .navbar__slack:hover {
   background: var(--ifm-color-primary);
 }
+
+/* Explicit font-family mappings for Font Awesome 7 to ensure webfonts and @font-face rules are retained */
+.fab, .fa-brands { font-family: "Font Awesome 7 Brands"; }
+.fas, .fa-solid, .far, .fa-regular { font-family: "Font Awesome 7 Free"; }
