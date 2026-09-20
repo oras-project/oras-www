@@ -43,7 +43,7 @@ const config = {
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     editUrl:
-                        "https://github.com/oras-project/oras-www/tree/main/",
+                        "https://github.com/oras-project/oras-www/edit/main/",
                     includeCurrentVersion: false,
                 },
                 blog: {
@@ -51,7 +51,7 @@ const config = {
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     editUrl:
-                        "https://github.com/oras-project/oras-www/tree/main/",
+                        "https://github.com/oras-project/oras-www/edit/main/",
                     onUntruncatedBlogPosts: "throw",
                 },
                 theme: {
@@ -69,6 +69,7 @@ const config = {
             path: 'community',
             routeBasePath: 'community',
             sidebarPath: require.resolve("./community/sidebars.js"),
+            editUrl: "https://github.com/oras-project/oras-www/edit/main/",
             editCurrentVersion: true,
             showLastUpdateAuthor: true,
             showLastUpdateTime: true,
