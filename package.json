@@ -41,7 +41,7 @@
         "@docusaurus/module-type-aliases": "^3.8.1",
         "@testing-library/jest-dom": "^6.6.3",
         "@testing-library/react": "^16.3.3",
-        "babel-jest": "^30.0.0",
+        "babel-jest": "^30.5.2",
         "identity-obj-proxy": "^3.0.0",
         "jest": "^30.0.0",
         "jest-environment-jsdom": "^30.0.0",
