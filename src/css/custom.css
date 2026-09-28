@@ -148,3 +148,11 @@ html[data-theme='dark'] .navbar__github, .navbar__twitter, .navbar__slack {
 .navbar__github:hover, .navbar__twitter:hover, .navbar__slack:hover {
   background: var(--ifm-color-primary);
 }
+
+/* FA 7 resolves font-family through CSS custom properties, which cssnano's
+   discardUnused can't statically link — it drops the @font-face rules from the
+   production build. These literal references keep them. See #581.
+   NOTE: the "7" must be bumped on every Font Awesome major upgrade, or icons
+   silently fall back to tofu. */
+.fab, .fa-brands { font-family: "Font Awesome 7 Brands"; }
+.fas, .fa-solid, .far, .fa-regular { font-family: "Font Awesome 7 Free"; }
