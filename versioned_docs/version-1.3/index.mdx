@@ -14,39 +14,35 @@ push and pull OCI Artifacts to and from OCI Registries.
 Users seeking a generic registry client can benefit from the [ORAS CLI](./installation.mdx), while
 developers can build their own clients on top of one of the [ORAS client libraries](./client_libraries/overview.mdx).
 
-## What are OCI Registries?
+## Use cases
 
-The [Open Container Initiative](https://opencontainers.org/) (OCI)
-defines the specifications and standards for container technologies.
-This includes the API for working with container registries, known
-formally as the [OCI Distribution Specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md).
-(a.k.a. the "distribution-spec").
+It is not just managing container images that ORAS can do, it can treat OCI registries as a generic artifact store. Some of the most common use cases include:
 
-The distribution-spec was written based on an open-source registry server originally
-released by the company [Docker](http://docker.com/), which lives on
-GitHub at [distribution/distribution](https://github.com/distribution/distribution)
-(now a [CNCF](https://www.cncf.io/) project).
+### Artifact Distribution
 
-There are now a number of other open-source and commercial distribution-spec
-implementations, a list of which can be found [here](https://github.com/opencontainers/oci-conformance/tree/main/distribution-spec).
-Registries that implement the distribution-spec are referred to herein as **OCI Registries**.
+- Push and pull non-container artifacts (e.g., Helm charts, WASM modules, policy bundles, AI/ML models) using the same infrastructure as container images.
+- Simplify artifact versioning, discovery, and retrieval across environments (dev, test, prod) using standard image tags.
 
-## What are OCI Artifacts?
+### Manage ML/AI Models as OCI Artifacts
 
-For a long time (pretty much since the beginning), people have been using/abusing OCI Registries
-to store non-container things. For example, you could upload a video to Docker Hub
-by just stuffing the video file into a layer in a Docker image (don't do this).
+Package and distribute machine learning models, datasets, or inference pipelines alongside your containers across local filesystem (via OCI layout) and OCI registries.
 
-The [OCI Artifacts](https://github.com/opencontainers/artifacts) project is an attempt to
-define an opinionated way to leverage OCI Registries for arbitrary artifacts without masquerading
-them as container images.
+### Supply Chain Security
 
-Specifically, [OCI Image Manifests](https://github.com/opencontainers/image-spec/blob/main/manifest.md)
-have a required field known as `config.mediaType`. According to the
-[guidelines](https://github.com/opencontainers/artifacts/blob/main/artifact-authors.md)
-provided by OCI Artifacts, this field provides the ability to differentiate between various types of artifacts.
+- Attach security metadata (e.g., SBOMs, signatures, attestations) to container images using oras attach, following the OCI Reference Types.
+- Enable secure CI/CD pipelines by distributing and verifying trusted artifacts across OCI-compliant registries.
 
-Artifacts stored in an OCI Registry using this method are referred to herein as **OCI Artifacts**.
+### Backup & Restore of repositories and artifacts
+
+- **Air-Gapped Environments**: Organizations operating in isolated or high-security environments can use `oras backup` to export artifacts from a registry to local filesystem, and use `oras restore` to import them into an internal registry with restricted access.
+- **Disaster Recovery and Audit Archival**: Take periodic snapshots of repositories and store them off-site. In case of accidental deletions, outages, and long-term storage to support regulatory audits, `oras restore` can be used to quickly recover full registry content.
+- **Registry Migration**: When moving from one container registry provider to another, the pair of commands enables a full repository export, preserving tags, manifests, layers, and referrers.
+- **Compliance and supply chain security guarantee**: Backup and restore the images along with their supply chain artifacts, such as SBOMs, signatures, vulnerability scanning reports.
+- **Repository Duplication or Promotion**: Move artifacts from dev to staging to prod registries reliably using an intermediate backup file.
+
+### Multi-platform Image and Artifact Management
+
+Assemble, update, distribute, and annotate multi-architecture images and artifacts across local environments and registries.
 
 ## How ORAS works
 
@@ -70,3 +66,20 @@ their artifact, which their custom client(s) know how to operate on.
 If you wish to start publishing OCI Artifacts right away, take a look at the [ORAS CLI](./installation.mdx).
 Developers who wish to provide their own user experience should use one of the
 [ORAS client libraries](./client_libraries/overview.mdx).
+
+## ORAS works with any OCI Registries 
+
+Here’s the list of OCI Registries that support ORAS:
+
+* CNCF Distribution
+* Amazon Elastic Container Registry (ECR)
+* Azure Container Registry (ACR)
+* Google Artifact Registry
+* GitHub Packages Container Registry
+* GitLab Container Registry
+* JFrog Artifactory
+* Docker Hub
+* Zot Registry
+* Harbor
+* Red Hat Quay
+* OVHcloud Managed Private Registry (MPR)
