@@ -14,10 +14,16 @@ oras logout [flags] <registry>
 
 ## Examples
 
-Logout:
+Log out from a registry:
 
 ```bash
 oras logout localhost:5000
+```
+
+Log out from a registry with a custom auth config path:
+
+```bash
+oras logout --registry-config ~/.config/oras/auth.json localhost:5000
 ```
 
 ## Options

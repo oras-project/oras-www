@@ -6,7 +6,7 @@ warning: Do NOT modify this generated file
 
 # oras restore
 
-[Experimental] Restore artifacts to a registry from an OCI image layout, which can be either a directory or a tar archive. 
+[Experimental] Restore artifacts to a registry from an OCI image layout, which can be either a directory or a tar archive.
 
 ```bash
 oras restore [flags] --input <path> <registry>/<repository>[:<ref1>[,<ref2>...]]
@@ -87,7 +87,7 @@ oras restore --input hello --concurrency 6 localhost:5000/hello:v1
       --cert-file string                           client certificate file for the remote registry
       --concurrency int                            concurrency level (default 5)
   -d, --debug                                      output debug logs (implies --no-tty)
-      --distribution-spec string                   [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api
+      --distribution-spec string                   [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api (default "unknown")
       --dry-run                                    simulate the restore process without actually uploading any artifacts
       --exclude-referrers                          restore artifacts excluding their referrers
   -H, --header stringArray                         add custom headers to requests
