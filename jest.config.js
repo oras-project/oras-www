@@ -1,6 +1,6 @@
 module.exports = {
   testEnvironment: 'jsdom',
-  roots: ['<rootDir>/src'],
+  roots: ['<rootDir>/src', '<rootDir>/tools'],
   testMatch: ['**/__tests__/**/*.{js,jsx}', '**/?(*.)+(spec|test).{js,jsx}'],
   moduleNameMapper: {
     '^@docusaurus/useDocusaurusContext$': '<rootDir>/__mocks__/@docusaurus/useDocusaurusContext.js',
