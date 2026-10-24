@@ -142,6 +142,7 @@ oras push example.com:test hi.txt --oci-layout-path layout-dir
   -d, --debug                                                output debug logs (implies --no-tty)
       --disable-path-validation                              skip path validation
       --export-manifest path                                 path of the pushed manifest
+      --force                                                force a deep traversal of the destination graph before tagging the root; useful when the destination is partially populated (e.g. by a registry cache)
       --format string                                        [Experimental] format output using a custom template:
                                                              'json':         Print in JSON format
                                                              'go-template':  Print output using the given Go template

@@ -87,6 +87,12 @@ Attach file to the manifest tagged 'example.com:v1' in an OCI image layout folde
 oras attach --artifact-type doc/example --oci-layout-path layout-dir example.com:v1 hi.txt
 ```
 
+Attach file 'hi.txt' with the custom manifest config "config.json" of the custom media type "application/vnd.me.config":
+
+```bash
+oras attach --artifact-type doc/example --config config.json:application/vnd.me.config localhost:5000/hello:v1 hi.txt
+```
+
 ## Options
 
 ```
@@ -96,9 +102,10 @@ oras attach --artifact-type doc/example --oci-layout-path layout-dir example.com
       --ca-file string                              server certificate authority file for the remote registry
       --cert-file string                            client certificate file for the remote registry
       --concurrency int                             concurrency level (default 5)
+      --config path                                 path of image config file
   -d, --debug                                       output debug logs (implies --no-tty)
       --disable-path-validation                     skip path validation
-      --distribution-spec string                    [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api
+      --distribution-spec string                    [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api (default "unknown")
       --export-manifest path                        path of the pushed manifest
       --format string                               [Experimental] format output using a custom template:
                                                     'json':         Print in JSON format

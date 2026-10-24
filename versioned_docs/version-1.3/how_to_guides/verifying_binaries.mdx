@@ -17,7 +17,7 @@ Newer releases are signed automatically by the release workflow with the
 manually with the key of an individual maintainer. All of these keys are listed in
 the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file.
 
-The following steps use `v1.3.4` on `linux_amd64` as an example. Replace the
+The following steps use `v1.3.5` on `linux_amd64` as an example. Replace the
 version and platform with the ones you downloaded.
 
 ### Step 1: Import the release keys
@@ -46,11 +46,11 @@ Some maintainer keys in the file have expired. See
 
 ### Step 3: Verify the checksums file
 
-Download `oras_1.3.4_checksums.txt` and `oras_1.3.4_checksums.txt.asc` from the
+Download `oras_1.3.5_checksums.txt` and `oras_1.3.5_checksums.txt.asc` from the
 release, then run:
 
 ```
-$ gpg --verify oras_1.3.4_checksums.txt.asc oras_1.3.4_checksums.txt
+$ gpg --verify oras_1.3.5_checksums.txt.asc oras_1.3.5_checksums.txt
 gpg: Signature made Thu Aug 27 19:35:31 2026 UTC
 gpg:                using EDDSA key C6FC42F0DE84A345FAADB742F44418110791EF37
 gpg: Good signature from "ORAS Project Release Signing <cncf-oras-maintainers@lists.cncf.io>" [unknown]
@@ -68,11 +68,11 @@ local keyring; they do not mean that verification failed.
 Put the archive you downloaded in the same directory and run:
 
 ```
-$ sha256sum --ignore-missing -c oras_1.3.4_checksums.txt
-oras_1.3.4_linux_amd64.tar.gz: OK
+$ sha256sum --ignore-missing -c oras_1.3.5_checksums.txt
+oras_1.3.5_linux_amd64.tar.gz: OK
 ```
 
-On macOS, use `shasum -a 256 --ignore-missing -c oras_1.3.4_checksums.txt`.
+On macOS, use `shasum -a 256 --ignore-missing -c oras_1.3.5_checksums.txt`.
 
 ### Verifying a single artifact
 
@@ -80,7 +80,7 @@ Each archive and each SBOM (`.sbom.json`) in a release also has its own `.asc`
 signature. You can verify one directly:
 
 ```
-$ gpg --verify oras_1.3.4_linux_amd64.tar.gz.asc oras_1.3.4_linux_amd64.tar.gz
+$ gpg --verify oras_1.3.5_linux_amd64.tar.gz.asc oras_1.3.5_linux_amd64.tar.gz
 ```
 
 ### Expired keys
