@@ -31,7 +31,7 @@ describe('Redirect Pages', () => {
       expect(goSource).toBeInTheDocument();
       expect(goSource).toHaveAttribute(
         'content',
-        'oras.land/oras-go/v2 git https://github.com/oras-project/oras-go https://github.com/oras-project/oras-go/tree/main{/dir} https://github.com/oras-project/oras-go/blob/main{/dir}/{file}#L{line}'
+        'oras.land/oras-go/v2 git https://github.com/oras-project/oras-go https://github.com/oras-project/oras-go/tree/v2{/dir} https://github.com/oras-project/oras-go/blob/v2{/dir}/{file}#L{line}'
       );
     });
 
@@ -67,7 +67,7 @@ describe('Redirect Pages', () => {
       expect(goSource).toBeInTheDocument();
       expect(goSource).toHaveAttribute(
         'content',
-        'oras.land/oras-go git https://github.com/oras-project/oras-go https://github.com/oras-project/oras-go/tree/main{/dir} https://github.com/oras-project/oras-go/blob/main{/dir}/{file}#L{line}'
+        'oras.land/oras-go git https://github.com/oras-project/oras-go https://github.com/oras-project/oras-go/tree/v1{/dir} https://github.com/oras-project/oras-go/blob/v1{/dir}/{file}#L{line}'
       );
     });
 
