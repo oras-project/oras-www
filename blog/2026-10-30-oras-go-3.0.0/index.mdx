@@ -1,0 +1,121 @@
+---
+slug: oras-go-v3.0.0
+title: Announcing ORAS Go v3.0.0 - unified registry configuration, mirrors, policy, and more
+authors: oras
+tags: [oras, oci, artifact]
+---
+
+The ORAS community is excited to announce [ORAS Go v3.0.0](https://github.com/oras-project/oras-go/releases/tag/v3.0.0), the next major release of the Go library for working with OCI artifacts and registries. v3 makes the library understand the same configuration files that container tools such as Podman, Buildah, and Skopeo already use, so your Go application can share registry settings, credentials, mirrors, and trust policy with the rest of your toolchain.
+
+This post walks through what is new in v3, what changes when you upgrade from v2, and what happens to v2 from here.
+
+<!-- truncate -->
+
+## Getting started
+
+v3 is published under a new module path, `github.com/oras-project/oras-go/v3`, replacing `oras.land/oras-go/v2`:
+
+```bash
+go get github.com/oras-project/oras-go/v3
+```
+
+v3 requires Go 1.26 or later.
+
+The v2 and v3 module paths are distinct, so both can be imported by the same application while you migrate package by package. Values from the two major versions are distinct Go types, so don't pass them between versions without converting them explicitly.
+
+## What's new in v3
+
+### Unified configuration
+
+The new `registry/remote/config` package loads the configuration files the container ecosystem already uses, in one call:
+
+- Docker credentials (`~/.docker/config.json`) and containers `auth.json`
+- `registries.conf` for registry aliases, mirrors, and blocked or insecure registries
+- `policy.json` for allow and deny trust policy
+- `registries.d` for signature lookaside storage
+- Certificate directories (`certs.d`)
+
+The default search paths follow [containers/image](https://github.com/containers/image), so a host that is already set up for Podman works with ORAS Go without any further configuration.
+
+### Configured clients with `ClientBuilder`
+
+`remote.ClientBuilder` turns that configuration into ready-to-use clients, registries, and repositories, applying TLS, retries, credentials, token flow, logging, policy, and mirror settings in one place:
+
+```go
+cfg, err := config.LoadConfigs()
+if err != nil {
+	return err
+}
+props, err := cfg.RegistryProperties("registry.example.com/team/app")
+if err != nil {
+	return err
+}
+store, err := cfg.CredentialStore(credentials.StoreOptions{})
+if err != nil {
+	return err
+}
+
+builder := remote.NewClientBuilder()
+builder.CredentialStore = store
+repo, err := builder.NewRepository(props)
+if err != nil {
+	return err
+}
+
+desc, err := oras.Copy(ctx, repo, "v1", memory.New(), "v1", oras.DefaultCopyOptions)
+```
+
+### Registry mirrors
+
+Repositories created from registry properties try any applicable mirrors from `registries.conf` for read operations, and fall back to the primary registry. Writes always go to the primary.
+
+### Policy and signature verification
+
+The `registry/remote/policy` package enforces `policy.json` allow and deny rules. The `registry/remote/signature` package verifies OpenPGP simple signatures stored in `registries.d` lookaside storage.
+
+### And more
+
+- **Content caching:** `content/cache.CacheReadOnlyTarget` wraps a read-only target with a local content store, and `content/cache.NewFromEnv` enables it from the `ORAS_CACHE` environment variable.
+- **Hierarchical credential matching:** credentials can be matched by the longest namespace prefix, as with `auth.json` in Podman and Buildah.
+- **HTTP diagnostics:** `remote.NewLoggingTransport` adds `slog`-based debug logging that redacts sensitive headers.
+- **Tag deletion:** `remote.Repository.Untag` deletes a tag without deleting the manifest it points to.
+- **Better copy errors:** `oras.CopyError.Descriptor` identifies the content that failed to copy.
+- **Smarter retries:** the default retry policy now honors the `Retry-After` header on retryable responses such as 429 and 503.
+
+## Upgrading from v2
+
+v3 is a major release, and existing v2 code needs changes to compile. The most common ones are:
+
+- **Registry owns shared settings.** A `remote.Repository` now points to its parent `remote.Registry`, which holds the HTTP client, the plain-HTTP setting, the warning handler, and the metadata limit. For example, `repo.Client` becomes `repo.Registry.Client` and `repo.PlainHTTP` becomes `repo.Registry.PlainHTTP`. `repo.Reference` becomes the read-only `repo.Reference()`.
+- **Credentials have their own package.** Credential types and helpers moved from `registry/remote/auth` to `registry/remote/credentials`. For example, `auth.Credential` becomes `credentials.Credential`, and `auth.Client.Credential` becomes `auth.Client.CredentialFunc`.
+- **Typed scopes.** Authentication scopes are `auth.Scope` values instead of strings, and scope hints are keyed by resource rather than by host.
+- **Token flow.** `ForceAttemptOAuth2` was replaced by a pluggable `auth.Client.TokenFetcher`. With a username and password, v3 tries the OAuth2 password grant first and falls back to the distribution-spec token flow when the token server doesn't support it.
+- **References.** New code should use `properties.Reference`. `registry.Reference` now keeps the tag and the digest separately, and is deprecated.
+- **File store.** `file.NewWithFallbackLimit` and `file.NewWithFallbackStorage` are replaced by `file.NewWithOptions`.
+
+Some behavior changes even when your code compiles unchanged:
+
+- `remote.NewRepository` rejects a reference that includes a tag or digest, such as `localhost:5000/example:v1`.
+- The file store writes directory annotations under the project-owned `land.oras.content` keys as well as the legacy `io.deis.oras.content` keys. v2 and the ORAS CLI can still unpack directories pushed by v3, but **manifest digests for artifacts containing a directory differ between v2 and v3**.
+- Native credential stores are detected by default.
+- `oras.ExtendedCopy` looks up predecessors concurrently.
+- `oci.Store.GC` keeps unreachable blobs that were modified within the last hour.
+
+The [migration guide](https://github.com/oras-project/oras-go/blob/main/MIGRATION_GUIDE.md) covers every change, with before-and-after code and the steps to restore v2 behavior where that is possible. Read it before you upgrade.
+
+## What about v2?
+
+{/* TODO(maintainers): confirm the v2 support statement and timeline before publishing. */}
+
+ORAS Go v2 is not going away. The `v2` branch continues to receive security fixes and important bug fixes. It follows [Go's security policy](https://github.com/golang/go/security/policy), supporting the two latest Go releases. New features land in v3 only. We encourage new projects to start on v3 and existing projects to plan their migration.
+
+## Learn more
+
+- [ORAS Go v3.0.0 release notes](https://github.com/oras-project/oras-go/releases/tag/v3.0.0)
+- [Migration guide](https://github.com/oras-project/oras-go/blob/main/MIGRATION_GUIDE.md)
+- [API documentation on pkg.go.dev](https://pkg.go.dev/github.com/oras-project/oras-go/v3)
+- [ORAS Go repository](https://github.com/oras-project/oras-go)
+
+## Thank you
+
+Thank you to everyone who contributed code, reviews, bug reports, and feedback through the v3 release candidates. Questions and feedback are welcome on the [CNCF Slack #oras channel](https://cloud-native.slack.com/archives/CJ1KHJM5Z) and in [GitHub Discussions](https://github.com/oras-project/oras-go/discussions).
