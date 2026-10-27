@@ -5,42 +5,13 @@ sidebar_position: 1
 
 # Go
 
-Source code: [github.com/oras-project/oras-go](https://github.com/oras-project/oras-go)
+The ORAS Go client library is maintained in the [oras-go repository](https://github.com/oras-project/oras-go). Its guides and API references are maintained alongside the source code.
 
-## Introduction
+| Version | Module | Status | Guides | API reference |
+| --- | --- | --- | --- | --- |
+| v3 | `github.com/oras-project/oras-go/v3` | Release candidate | [v3 documentation](https://github.com/oras-project/oras-go/tree/main/docs) | [v3 API](https://pkg.go.dev/github.com/oras-project/oras-go/v3) |
+| v2 | `oras.land/oras-go/v2` | Maintenance | [v2 documentation](https://github.com/oras-project/oras-go/tree/v2/docs) | [v2 API](https://pkg.go.dev/oras.land/oras-go/v2) |
 
-The ORAS Go client library provides the ability to replicate artifacts between different [Targets](./overview.mdx#target).  
-Furthermore, the version `v2` is a registry client conforming [image-spec 1.1.1](https://github.com/opencontainers/image-spec/releases/tag/v1.1.1) and [distribution-spec v1.1.1](https://github.com/opencontainers/distribution-spec/releases/tag/v1.1.1).
+Migrating from v2? See the [v3 migration guide](https://github.com/oras-project/oras-go/blob/main/MIGRATION_GUIDE.md).
 
-Using the ORAS Go client library, you can develop your own registry client:
-
-```sh
-myclient push artifacts.example.com/myartifact:1.0 ./mything.thang
-```
-
-## Getting Started
-
-### Concepts
-
-Gain insights into the fundamental concepts:
-
-- [Modeling Artifacts](https://github.com/oras-project/oras-go/blob/v2.6.0/docs/Modeling-Artifacts.md)
-- [Targets and Content Stores](https://github.com/oras-project/oras-go/blob/v2.6.0/docs/Targets.md)
-
-### Quickstart
-
-Follow the step-by-step tutorial to use `oras-go` v2:
-
-- [Quickstart: Managing OCI Artifacts with `oras-go` v2](https://github.com/oras-project/oras-go/blob/v2.6.0/docs/tutorial/quickstart.md)
-
-### Examples
-
-Check out sample code for common use cases:
-
-- [Artifact copying](https://pkg.go.dev/oras.land/oras-go/v2#pkg-examples)
-- [Registry operations](https://pkg.go.dev/oras.land/oras-go/v2/registry#pkg-examples)
-- [Repository operations](https://pkg.go.dev/oras.land/oras-go/v2/registry/remote#pkg-examples)
-- [Authentication](https://pkg.go.dev/oras.land/oras-go/v2/registry/remote/auth#pkg-examples)
-- [Credentials management](https://pkg.go.dev/oras.land/oras-go/v2/registry/remote/credentials#pkg-examples)
-
-Find more API examples at [pkg.go.dev](https://pkg.go.dev/oras.land/oras-go/v2).
+For runnable examples, see the [v3 package examples](https://pkg.go.dev/github.com/oras-project/oras-go/v3#pkg-examples) or the [v2 package examples](https://pkg.go.dev/oras.land/oras-go/v2#pkg-examples).
