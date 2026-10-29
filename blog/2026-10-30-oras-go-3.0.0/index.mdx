@@ -7,7 +7,7 @@ tags: [oras, oci, artifact]
 
 The ORAS community is excited to announce [ORAS Go v3.0.0](https://github.com/oras-project/oras-go/releases/tag/v3.0.0), the next major release of the Go library for working with OCI artifacts and registries. v3 makes the library understand the same configuration files that container tools such as Podman, Buildah, and Skopeo already use, so your Go application can share registry settings, credentials, mirrors, and trust policy with the rest of your toolchain.
 
-This post walks through what is new in v3, what changes when you upgrade from v2, and what happens to v2 from here.
+This post walks through what is new in v3, the breaking changes to expect when you upgrade from v2, and what happens to v2 from here.
 
 <!-- truncate -->
 
@@ -82,7 +82,7 @@ The `registry/remote/policy` package enforces `policy.json` allow and deny rules
 - **Better copy errors:** `oras.CopyError.Descriptor` identifies the content that failed to copy.
 - **Smarter retries:** the default retry policy now honors the `Retry-After` header on retryable responses such as 429 and 503.
 
-## Upgrading from v2
+## Breaking changes and upgrading from v2
 
 v3 is a major release, and existing v2 code needs changes to compile. The most common ones are:
 
