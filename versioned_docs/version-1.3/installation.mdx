@@ -69,14 +69,14 @@ rm -rf oras_${VERSION}_darwin_${ARCH}.tar.gz oras-install/
 
 ### Windows
 
-You can install ORAS CLI using `.exe` installer. Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
+You can install ORAS CLI from the `.zip` release archive. Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
 
 ```cmd
-set VERSION="1.3.5"
+set "VERSION=1.3.5"
 curl.exe -fLO "https://github.com/oras-project/oras/releases/download/v%VERSION%/oras_%VERSION%_windows_amd64.zip"
 tar.exe -xvzf oras_%VERSION%_windows_amd64.zip
-mkdir -p %USERPROFILE%\bin\
-copy oras.exe %USERPROFILE%\bin\
+if not exist "%USERPROFILE%\bin" mkdir "%USERPROFILE%\bin"
+copy /Y oras.exe "%USERPROFILE%\bin\oras.exe"
 set PATH=%USERPROFILE%\bin\;%PATH%
 ```
 

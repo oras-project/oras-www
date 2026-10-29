@@ -69,14 +69,14 @@ ORAS on Homebrew is not maintained by the ORAS community, so it may not be the l
 winget install oras --version 1.2.2
 ```
 
-- Alternatively, you can install ORAS CLI using `.exe` installer. Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
+- Alternatively, you can install ORAS CLI from the `.zip` release archive. Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
 
 ```cmd
-set VERSION="1.2.2"
+set "VERSION=1.2.2"
 curl.exe -fLO "https://github.com/oras-project/oras/releases/download/v%VERSION%/oras_%VERSION%_windows_amd64.zip"
 tar.exe -xvzf oras_%VERSION%_windows_amd64.zip
-mkdir -p %USERPROFILE%\bin\
-copy oras.exe %USERPROFILE%\bin\
+if not exist "%USERPROFILE%\bin" mkdir "%USERPROFILE%\bin"
+copy /Y oras.exe "%USERPROFILE%\bin\oras.exe"
 set PATH=%USERPROFILE%\bin\;%PATH%
 ```
 
