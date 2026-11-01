@@ -73,14 +73,25 @@ Repositories created from registry properties try any applicable mirrors from `r
 
 The `registry/remote/policy` package enforces `policy.json` allow and deny rules. The `registry/remote/signature` package verifies OpenPGP simple signatures stored in `registries.d` lookaside storage.
 
+### Content verification
+
+`content.Verify`, `oras.Verify`, `oras.VerifyGraph`, and `oras.ExtendedVerify` check content integrity without writing it anywhere, and collect per-node results in a report. `oci.Verify` sweeps an OCI image layout and reports missing, unreferenced, and leftover blobs, as well as invalid `oci-layout` or `index.json` files.
+
+### New ways to push
+
+- **Unsafe push:** the `content.UnsafePusher` interface pushes content whose digest or size isn't known up front, such as a stream or a tar built on the fly, and computes both while writing. It is bounded by `MaxUnsafePushBytes`, 4 GiB by default.
+- **Chunked and single-request uploads:** `MaxChunkSize` enables OCI chunked uploads, and `SingleRequestPushThreshold` pushes small blobs in a single `POST`. Both are opt-in.
+- **Configurable digest algorithms:** `PackManifest`, `PushBytes`, `TagBytesN`, and the file store can produce SHA-384 or SHA-512 digests.
+
 ### And more
 
+- **Faster copies:** the default copy concurrency rises from 3 to 8, and the opt-in `SkipExistsCheckBelowSize` skips the destination existence check for small blobs.
 - **Content caching:** `content/cache.CacheReadOnlyTarget` wraps a read-only target with a local content store, and `content/cache.NewFromEnv` enables it from the `ORAS_CACHE` environment variable.
 - **Hierarchical credential matching:** credentials can be matched by the longest namespace prefix, as with `auth.json` in Podman and Buildah.
 - **HTTP diagnostics:** `remote.NewLoggingTransport` adds `slog`-based debug logging that redacts sensitive headers.
 - **Tag deletion:** `remote.Repository.Untag` deletes a tag without deleting the manifest it points to.
 - **Better copy errors:** `oras.CopyError.Descriptor` identifies the content that failed to copy.
-- **Smarter retries:** the default retry policy now honors the `Retry-After` header on retryable responses such as 429 and 503.
+- **Smarter retries:** the default retry policy now honors the `Retry-After` header on retryable responses such as 429 and 503, and retries connection resets.
 
 ## Breaking changes and upgrading from v2
 
@@ -95,13 +106,14 @@ v3 is a major release, and existing v2 code needs changes to compile. The most c
 
 Some behavior changes even when your code compiles unchanged:
 
+- Retries wait longer. The maximum backoff rises from 3 to 10 seconds, and `Retry-After` is honored for up to 60 seconds, so without a context deadline the worst-case wait rises from about 7 seconds to about 5 minutes. To fail fast, set `ClientBuilder.RetryPolicy` or the transport's `Policy`.
 - `remote.NewRepository` rejects a reference that includes a tag or digest, such as `localhost:5000/example:v1`.
 - The file store writes directory annotations under the project-owned `land.oras.content` keys as well as the legacy `io.deis.oras.content` keys. v2 and the ORAS CLI can still unpack directories pushed by v3, but **manifest digests for artifacts containing a directory differ between v2 and v3**.
 - Native credential stores are detected by default.
 - `oras.ExtendedCopy` looks up predecessors concurrently.
 - `oci.Store.GC` keeps unreachable blobs that were modified within the last hour.
 
-The [migration guide](https://github.com/oras-project/oras-go/blob/main/MIGRATION_GUIDE.md) covers every change, with before-and-after code and the steps to restore v2 behavior where that is possible. Read it before you upgrade.
+The [migration guide](https://github.com/oras-project/oras-go/blob/v3.0.0/MIGRATION_GUIDE.md) covers every change, with before-and-after code and the steps to restore v2 behavior where that is possible. Read it before you upgrade.
 
 ## What about v2?
 
@@ -112,7 +124,7 @@ With the v3.0.0 release, ORAS Go v1 has reached end of life and no longer receiv
 ## Learn more
 
 - [ORAS Go v3.0.0 release notes](https://github.com/oras-project/oras-go/releases/tag/v3.0.0)
-- [Migration guide](https://github.com/oras-project/oras-go/blob/main/MIGRATION_GUIDE.md)
+- [Migration guide](https://github.com/oras-project/oras-go/blob/v3.0.0/MIGRATION_GUIDE.md)
 - [API documentation on pkg.go.dev](https://pkg.go.dev/github.com/oras-project/oras-go/v3)
 - [ORAS Go repository](https://github.com/oras-project/oras-go)
 
