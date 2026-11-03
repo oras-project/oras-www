@@ -26,7 +26,7 @@ You can either make use of [`oras login`](../commands/oras_login.mdx) or provide
 ```
 oras pull -u username -p password myregistry.io/myimage:latest
 ```
-However, you will get a warning message stating that the credentials will be stored unencrypted in the `config` file.
+These credentials are only used for that command and are not saved. ORAS warns that passing `--password` on the command line is insecure; use `--password-stdin` to read the password from standard input instead.
 
 ### Method 2: Authentication Using Docker Credential Helper
 
@@ -49,12 +49,12 @@ Configure the credential store in the `~/.docker/config.json` file. Your file sh
 ```
 {
   ...
-  "credStore": "pass"
+  "credsStore": "pass"
   ...
 }
 ```
 
-**Note**: Please replace pass with the credential helper you want to use. 
+**Note**: The key is `credsStore`. Please replace `pass` with the credential helper you want to use, without the `docker-credential-` prefix of its program name (for example, `osxkeychain`, `wincred`, `secretservice` or `pass`). If the key is misspelled, ORAS ignores it and stores the credentials in `~/.docker/config.json`.
 
 **Step 2**
 
@@ -67,9 +67,4 @@ Password:
 Login Succeeded
 ```
 
-Your credential helper has been set up, the next time you run `oras login`, you should see an output like this:
-
-```
-Authenticating with existing credentials...
-Login Succeeded
-```
+Your credential helper has been set up. ORAS now saves the credentials in the credential store instead of `~/.docker/config.json`, which does not get an `auths` entry for the registry. Other commands, such as `oras push` and `oras pull`, read the credentials from the credential store.
