@@ -29,7 +29,7 @@ Our image is based on alpine and runs the command `echo hello world!`.
 ### Step 2: Building the image using docker
 
 ```
-docker buildx create —use
+docker buildx create --use
 ```
 
 This command is used to create a new instance of a builder with a single node based on the current configuration.
@@ -46,7 +46,7 @@ Expected output:
  => => pulling image moby/buildkit:buildx-stable-1                         2.5s
  => => creating container buildx_buildkit_hungry_wilson0                   0.5s
 
-<!—truncate—>
+...
 
  => => exporting manifest sha256:3fd491e6dc3ce66cae989d23b3f3d5752314cd17  0.0s
  => => exporting config sha256:5e9872dc690060c52e4ea6e9357aaebb9d9187b44a  0.0s
@@ -100,12 +100,15 @@ oras pull localhost:5000/hello-artifact:v1
 Expected Output:
 
 ```
-Downloaded empty artifact
-Pulled [registry] localhost:5000/hello-artifact:v1
-Digest: sha256:3fd491e6dc3ce66cae989d23b3f3d5752314cd1793d0c580d3fd8bb280d07809
+Skipped pulling layers without file name in "org.opencontainers.image.title"
+Use 'oras copy localhost:5000/hello-artifact:v1 --to-oci-layout <layout-dir>' to pull all layers.
 ```
 
-If you would like to access the artifact files from the OCI layout archive, you may run:
+`oras pull` only downloads layers that have a file name in the `org.opencontainers.image.title` annotation.
+The layers of a container image have no such annotation, so no files are written.
+To download all layers of the image, use [`oras cp`](../commands/oras_cp.mdx) with `--to-oci-layout` as suggested in the output.
+
+Pulling from the OCI layout archive with `--oci-layout` behaves the same way:
 
 ```
 oras pull --oci-layout hello-world.tar:v1
@@ -114,7 +117,6 @@ oras pull --oci-layout hello-world.tar:v1
 Expected Output:
 
 ```
-Downloaded empty artifact
-Pulled [oci-layout] hello-world.tar:v1
-Digest: sha256:3fd491e6dc3ce66cae989d23b3f3d5752314cd1793d0c580d3fd8bb280d07809
+Skipped pulling layers without file name in "org.opencontainers.image.title"
+Use 'oras copy hello-world.tar:v1 --to-oci-layout <layout-dir>' to pull all layers.
 ```

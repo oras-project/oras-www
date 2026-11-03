@@ -29,7 +29,7 @@ Our image is based on alpine and runs the command `echo hello world!`.
 ### Step 2: Building the image using docker
 
 ```
-docker buildx create —use
+docker buildx create --use
 ```
 
 This command is used to create a new instance of a builder with a single node based on the current configuration.
@@ -46,7 +46,7 @@ Expected output:
  => => pulling image moby/buildkit:buildx-stable-1                         2.5s
  => => creating container buildx_buildkit_hungry_wilson0                   0.5s
 
-<!—truncate—>
+...
 
  => => exporting manifest sha256:3fd491e6dc3ce66cae989d23b3f3d5752314cd17  0.0s
  => => exporting config sha256:5e9872dc690060c52e4ea6e9357aaebb9d9187b44a  0.0s
