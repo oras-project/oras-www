@@ -20,7 +20,7 @@ const os = [
     {
         label: 'Linux',
         value: 'linux',
-        content: 'VERSION=\"1.3.5\"\ncurl -LO \"https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_linux_amd64.tar.gz\"\nmkdir -p oras-install/\ntar -zxf oras_${VERSION}_*.tar.gz -C oras-install/\nsudo mv oras-install/oras /usr/local/bin/\nrm -rf oras_${VERSION}_*.tar.gz oras-install/',
+        content: 'ARCH=$(uname -m | sed -e \'s/x86_64/amd64/\' -e \'s/aarch64/arm64/\' -e \'s/armv7l/armv7/\' -e \'s/loongarch64/loong64/\')\nVERSION=\"1.3.5\"\ncurl -fLO \"https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_linux_${ARCH}.tar.gz\"\nmkdir -p oras-install/\ntar -zxf oras_${VERSION}_linux_${ARCH}.tar.gz -C oras-install/\nsudo mv oras-install/oras /usr/local/bin/\nrm -rf oras_${VERSION}_linux_${ARCH}.tar.gz oras-install/',
     },
 ];
 
