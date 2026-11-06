@@ -54,17 +54,25 @@
 # Notes:
 #   - A secure temp directory is created via `mktemp -d` and cleaned on exit.
 #   - PATH is temporarily extended to prefer the freshly installed oras binary.
+#   - The script stops at the first version it cannot resolve, install or run,
+#     before changing any of that version's docs, so the build fails instead of
+#     publishing pages generated from a missing or wrong binary.
+
+set -euo pipefail
 
 TEMPDIR=$(mktemp -d)
 trap 'rm -rf "$TEMPDIR"' EXIT
 
 # Map a short version (e.g., 1.2 or 1.4-preview) to an exact release (e.g., 1.2.2 or 1.4.0-beta.1).
 map_version() {
-    if ! grep "^$1" versions-map >/dev/null; then
+    local exact_version
+    # Appending "" forces a string comparison; awk would treat 1.1 and 1.10 as equal numbers.
+    exact_version=$(awk -v version="$1" '$1 "" == version "" { print $2; exit }' versions-map)
+    if [[ -z "${exact_version}" ]]; then
         echo "Version $1 missing from versions-map file" >&2
         exit 1
     fi
-    grep "^$1" versions-map | cut -d ' ' -f 2
+    echo "${exact_version}"
 }
 
 # Extract versions from versions.json by stripping JSON punctuation.
@@ -78,8 +86,10 @@ for VERSION in ${VERSIONS}; do
 
     VERSIONED_DOCS="versioned_docs/version-${VERSION}/commands"
 
-    # Main CLI doc (root help)
-    oras help | ./tools/parse_main.sh >"${VERSIONED_DOCS}/use_oras_cli.mdx"
+    # Main CLI doc (root help). Generate it in TEMPDIR first because a redirect to
+    # the page would empty it before oras runs.
+    oras help | ./tools/parse_main.sh >"${TEMPDIR}/use_oras_cli.mdx"
+    mv "${TEMPDIR}/use_oras_cli.mdx" "${VERSIONED_DOCS}/use_oras_cli.mdx"
 
     # Per-subcommand docs
     ./tools/subcommands.sh "" "${VERSIONED_DOCS}"
