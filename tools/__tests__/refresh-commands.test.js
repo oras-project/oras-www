@@ -162,6 +162,7 @@ describe('tools/refresh-commands.sh', () => {
 
     expect(result.status).not.toBe(0);
     expect(existsSync(path.join(commandsDirectory(root, '1.3'), 'oras_.mdx'))).toBe(false);
+    expect(readFileSync(path.join(commandsDirectory(root, '1.3'), 'use_oras_cli.mdx'), 'utf8')).toBe(originalPage);
   });
 
   it('stops when a version is missing from versions-map', () => {

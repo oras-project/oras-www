@@ -54,8 +54,8 @@
 # Notes:
 #   - A secure temp directory is created via `mktemp -d` and cleaned on exit.
 #   - PATH is temporarily extended to prefer the freshly installed oras binary.
-#   - The script stops at the first version it cannot resolve or install, before
-#     generating any of that version's docs, so the build fails instead of
+#   - The script stops at the first version it cannot resolve, install or run,
+#     before changing any of that version's docs, so the build fails instead of
 #     publishing pages generated from a missing or wrong binary.
 
 set -euo pipefail
@@ -86,8 +86,10 @@ for VERSION in ${VERSIONS}; do
 
     VERSIONED_DOCS="versioned_docs/version-${VERSION}/commands"
 
-    # Main CLI doc (root help)
-    oras help | ./tools/parse_main.sh >"${VERSIONED_DOCS}/use_oras_cli.mdx"
+    # Main CLI doc (root help). Generate it in TEMPDIR first because a redirect to
+    # the page would empty it before oras runs.
+    oras help | ./tools/parse_main.sh >"${TEMPDIR}/use_oras_cli.mdx"
+    mv "${TEMPDIR}/use_oras_cli.mdx" "${VERSIONED_DOCS}/use_oras_cli.mdx"
 
     # Per-subcommand docs
     ./tools/subcommands.sh "" "${VERSIONED_DOCS}"
