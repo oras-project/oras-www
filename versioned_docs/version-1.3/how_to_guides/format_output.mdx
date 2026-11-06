@@ -26,8 +26,8 @@ For example, when using `oras manifest fetch` with the flag `--format`, the foll
 - `mediaType`: media type of the image manifest
 - `digest`: digest of the image manifest
 - `size`: manifest file size in bytes
-- `artifactType`: the type of an artifact when the manifest is used for an artifact
 - `content`: content object includes prettified manifest output
+  - `artifactType`: the type of an artifact when the manifest is used for an artifact
   - `config`: a content descriptor describes the disposition of the targeted content
   - `layers`:  array of objects, each object in the array MUST be a descriptor
 
@@ -61,38 +61,41 @@ oras manifest fetch $REGISTRY/$REPO:$TAG --format json
 
 ```json
 {
-  "reference": " $REGISTRY/$REPO@sha256:8be4c36a29979c72fdd225654498791fb381a7dd8332ade1981274a16220fe1c",
-  "schemaVersion": 2,
+  "reference": "$REGISTRY/$REPO@sha256:8be4c36a29979c72fdd225654498791fb381a7dd8332ade1981274a16220fe1c",
   "mediaType": "application/vnd.oci.image.manifest.v1+json",
   "digest": "sha256:8be4c36a29979c72fdd225654498791fb381a7dd8332ade1981274a16220fe1c",
-  "artifactType": "application/vnd.unknown.artifact.v1",
+  "size": 820,
   "content": {
+    "annotations": {
+      "org.opencontainers.image.created": "2023-12-15T09:41:54Z"
+    },
+    "artifactType": "application/vnd.unknown.artifact.v1",
     "config": {
-      "mediaType": "application/vnd.oci.empty.v1+json",
+      "data": "e30=",
       "digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "mediaType": "application/vnd.oci.empty.v1+json",
       "size": 2
     },
     "layers": [
       {
-        "mediaType": "application/vnd.oci.image.layer.v1.tar",
-        "digest": "sha256:6cb759c4296e67e35b0367f3c0f51dfdb776a0c99a45f39d0476e43d82696d65",
-        "size": 14477,
         "annotations": {
           "org.opencontainers.image.title": "sbom.spdx"
-        }
+        },
+        "digest": "sha256:6cb759c4296e67e35b0367f3c0f51dfdb776a0c99a45f39d0476e43d82696d65",
+        "mediaType": "application/vnd.oci.image.layer.v1.tar",
+        "size": 14477
       },
       {
-        "mediaType": "application/vnd.oci.image.layer.v1.tar",
-        "digest": "sha256:54c0e84503c8790e03afe34bfc05a5ce45c933430cfd9c5f8a99d2c89f1f1b69",
-        "size": 6639,
         "annotations": {
           "org.opencontainers.image.title": "scan-test-verify-image.json"
-        }
+        },
+        "digest": "sha256:54c0e84503c8790e03afe34bfc05a5ce45c933430cfd9c5f8a99d2c89f1f1b69",
+        "mediaType": "application/vnd.oci.image.layer.v1.tar",
+        "size": 6639
       }
     ],
-    "annotations": {
-      "org.opencontainers.image.created": "2023-12-15T09:41:54Z"
-    }
+    "mediaType": "application/vnd.oci.image.manifest.v1+json",
+    "schemaVersion": 2
   }
 }
 ```
@@ -127,7 +130,7 @@ When using `oras pull` with the flag `--format`, the following fields should be 
 For example, pull an artifact that contains multiple layers (files) and show their descriptor metadata as pretty JSON in standard output:
 
 ```bash
-oras pull $REGISTRY/$REPO:$TAG --artifact-type example/sbom sbom.spdx  --artifact-type example/vul-scan vul-scan.json --format json
+oras pull $REGISTRY/$REPO:$TAG --format json
 ```
 
 ```json
@@ -137,7 +140,7 @@ oras pull $REGISTRY/$REPO:$TAG --artifact-type example/sbom sbom.spdx  --artifac
     {
       "path": "/home/user/oras-install/sbom.spdx",
       "reference": "localhost:5000/oras@sha256:7414904f07f515f48fe4afeaf876e3151039a81e7177b9c66e9e7ed6dd186222",
-      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "mediaType": "application/vnd.oci.image.layer.v1.tar",
       "digest": "sha256:7414904f07f515f48fe4afeaf876e3151039a81e7177b9c66e9e7ed6dd186222",
       "size": 820,
       "annotations": {
@@ -147,7 +150,7 @@ oras pull $REGISTRY/$REPO:$TAG --artifact-type example/sbom sbom.spdx  --artifac
     {
       "path": "/home/user/oras-install/vul-scan.json",
       "reference": "localhost:5000/oras@sha256:7414904f07f515f48fe4afeaf876e3151039a81e7177b9c66e9e7ed6dd18669b",
-      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "mediaType": "application/vnd.oci.image.layer.v1.tar",
       "digest": "sha256:7414904f07f515f48fe4afeaf876e3151039a81e7177b9c66e9e7ed6dd18669b",
       "size": 820,
       "annotations": {
@@ -171,7 +174,7 @@ oras pull $REGISTRY/$REPO:$TAG --format go-template='{{toRawJson .}}'
 ```
 
 ```
-{"reference":"localhost:5000/oras@sha256:7414904f07f515f48fe4afeaf876e3151039a81e7177b9c66e9e7ed6dd186111","files":[{"path":"/home/user/oras-install/sbom.spdx","reference":"localhost:5000/oras@sha256:7414904f07f515f48fe4afeaf876e3151039a81e7177b9c66e9e7ed6dd186222","mediaType":"application/vnd.oci.image.manifest.v1+json","digest":"sha256:7414904f07f515f48fe4afeaf876e3151039a81e7177b9c66e9e7ed6dd186222","size":820},{"path":"/home/user/oras-install/vul-scan.json","reference":"localhost:5000/oras@sha256:7414904f07f515f48fe4afeaf876e3151039a81e7177b9c66e9e7ed6dd18669b","mediaType":"application/vnd.oci.image.manifest.v1+json","digest":"sha256:7414904f07f515f48fe4afeaf876e3151039a81e7177b9c66e9e7ed6dd18669b","size":820}]}
+{"files":[{"annotations":{"org.opencontainers.image.title":"sbom.spdx"},"digest":"sha256:7414904f07f515f48fe4afeaf876e3151039a81e7177b9c66e9e7ed6dd186222","mediaType":"application/vnd.oci.image.layer.v1.tar","path":"/home/user/oras-install/sbom.spdx","reference":"localhost:5000/oras@sha256:7414904f07f515f48fe4afeaf876e3151039a81e7177b9c66e9e7ed6dd186222","size":820},{"annotations":{"org.opencontainers.image.title":"vul-scan.json"},"digest":"sha256:7414904f07f515f48fe4afeaf876e3151039a81e7177b9c66e9e7ed6dd18669b","mediaType":"application/vnd.oci.image.layer.v1.tar","path":"/home/user/oras-install/vul-scan.json","reference":"localhost:5000/oras@sha256:7414904f07f515f48fe4afeaf876e3151039a81e7177b9c66e9e7ed6dd18669b","size":820}],"reference":"localhost:5000/oras@sha256:7414904f07f515f48fe4afeaf876e3151039a81e7177b9c66e9e7ed6dd186111"}
 ```
 
 ### oras push
@@ -179,14 +182,14 @@ oras pull $REGISTRY/$REPO:$TAG --format go-template='{{toRawJson .}}'
 When using `oras push` with the flag `--format`, the following fields should be formatted into JSON output:
 
 - `reference`: full artifact reference by digest, e.g, `$REGISTRY/$REPO@$DIGEST`
-- `referenceByTags`: array, pushed tags by reference, e.g. `$REGISTRY/$REPO@TAG1`
-- `mediaType`: media type of the pushed file (layer)
-- `digest`: digest of the pushed file (layer)
-- `size`: file size in bytes
-- `artifactType`: artifact type of the pushed file
+- `referenceAsTags`: array, pushed tags by reference, e.g. `$REGISTRY/$REPO:$TAG1`
+- `mediaType`: media type of the pushed manifest
+- `digest`: digest of the pushed manifest
+- `size`: manifest file size in bytes
+- `artifactType`: artifact type of the pushed manifest
 - `annotations`: contains arbitrary metadata for the image manifest
 
-For example, push a file and two tags to a repository and show the descriptor of the image manifest in pretty JSON format.
+For example, push two files and two tags to a repository and show the descriptor of the image manifest in pretty JSON format.
 
 ```bash
 oras push $REGISTRY/$REPO:$TAG1,$TAG2 sbom.spdx vul-scan.json --format json 
@@ -201,8 +204,8 @@ oras push $REGISTRY/$REPO:$TAG1,$TAG2 sbom.spdx vul-scan.json --format json
   "annotations": {
     "org.opencontainers.image.created": "2023-12-15T09:41:54Z"
   },
-  "artifactType": "json/example",
-  "referenceByTags": [
+  "artifactType": "application/vnd.unknown.artifact.v1",
+  "referenceAsTags": [
     "$REGISTRY/$REPO:$TAG1",
     "$REGISTRY/$REPO:$TAG2"
   ]
