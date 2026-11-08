@@ -25,6 +25,7 @@ We're happy to promote all usage, as well as provide feedback.*
 - [Artifactory](#artifactory)
 - [Harbor](#harbor)
 - [DigitalOcean Container Registry](#digitalocean-container-registry-docr)
+- [summ](#summ)
 
 ### CNCF Distribution
 
@@ -406,6 +407,36 @@ oras pull artifactory.your-company.com/$ARTIFACTORY_OCI_REPOSITORY/myartifact:v1
 
   ```shell
   oras pull registry.digitalocean.com/coolreg-simple/plain-artifact:v1
+  ```
+
+### [summ](https://github.com/summcr/summ)
+
+summ is an open source OCI registry in a single binary, with a built-in web UI. It supports the referrers API, so `oras attach` and `oras discover` work against it.
+
+- Run a local registry
+
+  ```shell
+  docker run -d -p 3110:3110 summcr/summ
+  ```
+
+- [Authenticating with summ](https://github.com/summcr/summ/blob/main/docs/auth.md), needed only when the registry runs with `--auth-mode public-pull` or `--auth-mode private`. The API key is the password, and the username is ignored.
+
+  ```shell
+  echo $SUMM_API_KEY | oras login --plain-http localhost:3110 -u summ --password-stdin
+  ```
+
+- Pushing artifacts to summ
+
+  ```shell
+  oras push --plain-http localhost:3110/hello-artifact:v1 \
+    --config config.json:application/vnd.acme.rocket.config.v1+json \
+    artifact.txt:text/plain
+  ```
+
+- Pulling artifacts from summ
+
+  ```shell
+  oras pull --plain-http localhost:3110/hello-artifact:v1
   ```
 
 [artifacts]:            https://github.com/opencontainers/artifacts

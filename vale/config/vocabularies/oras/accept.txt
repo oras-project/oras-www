@@ -53,6 +53,7 @@ Snapcraft
 stdin
 stdout
 subprojects
+summ
 unencrypted
 Zha
 zsh
