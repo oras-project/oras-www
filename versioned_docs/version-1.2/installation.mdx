@@ -5,7 +5,7 @@ sidebar_position: 15
 
 # Installation
 
-This guide demonstrates the installation steps of ORAS CLI `v1.2.2` on different platforms.
+This guide demonstrates the installation steps of ORAS CLI `v1.2.3` on different platforms.
 
 ## Homebrew
 
@@ -33,7 +33,7 @@ To install ORAS on Linux, run the following command:
 
 ```bash
 ARCH=$(uname -m | sed -e 's/x86_64/amd64/' -e 's/aarch64/arm64/' -e 's/armv7l/armv7/')
-VERSION="1.2.2"
+VERSION="1.2.3"
 curl -fLO "https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_linux_${ARCH}.tar.gz"
 mkdir -p oras-install/
 tar -zxf oras_${VERSION}_linux_${ARCH}.tar.gz -C oras-install/
@@ -47,7 +47,7 @@ To install ORAS on a Mac computer, run the following command:
 
 ```bash
 ARCH=$(uname -m | sed -e 's/x86_64/amd64/')
-VERSION="1.2.2"
+VERSION="1.2.3"
 curl -fLO "https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_darwin_${ARCH}.tar.gz"
 mkdir -p oras-install/
 tar -zxf oras_${VERSION}_darwin_${ARCH}.tar.gz -C oras-install/
@@ -66,13 +66,13 @@ ORAS on Homebrew is not maintained by the ORAS community, so it may not be the l
 - You can install ORAS CLI on Windows using [WinGet (Windows Package Manager)](https://github.com/microsoft/winget-pkgs):
 
 ```bash
-winget install oras --version 1.2.2
+winget install oras --version 1.2.3
 ```
 
 - Alternatively, you can install ORAS CLI from the `.zip` release archive. Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
 
 ```cmd
-set "VERSION=1.2.2"
+set "VERSION=1.2.3"
 curl.exe -fLO "https://github.com/oras-project/oras/releases/download/v%VERSION%/oras_%VERSION%_windows_amd64.zip"
 tar.exe -xvzf oras_%VERSION%_windows_amd64.zip
 if not exist "%USERPROFILE%\bin" mkdir "%USERPROFILE%\bin"
@@ -85,7 +85,7 @@ set PATH=%USERPROFILE%\bin\;%PATH%
 A public Docker image containing the CLI is available on [GitHub Container Registry](https://github.com/orgs/oras-project/packages/container/package/oras):
 
 ```
-docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.2.2 help
+docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.2.3 help
 ```
 :::note
 
@@ -97,7 +97,7 @@ You can use the Docker image locally instead of installing a binary.
 For example create an alias:
 
 ```
-alias doras='docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.2.2'
+alias doras='docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.2.3'
 ```
 
 Run ORAS commands:
@@ -162,9 +162,9 @@ ORAS on Nix is not maintained by the ORAS community, so it may not be the latest
 
 ```shell
 $ oras version
-Version:        1.2.2
-Go version:     go1.23.4
-Git commit:     677529b4e7c38e3295e0883a2ee8a536e3a860f4
+Version:        1.2.3
+Go version:     go1.24.2
+Git commit:     10fb4e54ba99e8df2ec29a0f14eb12e4058bb500
 Git tree state: clean
 ```
 
