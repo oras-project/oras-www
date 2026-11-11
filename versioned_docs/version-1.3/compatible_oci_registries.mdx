@@ -26,6 +26,7 @@ We're happy to promote all usage, as well as provide feedback.*
 - [Harbor](#harbor)
 - [DigitalOcean Container Registry](#digitalocean-container-registry-docr)
 - [summ](#summ)
+- [Hippius Hub](#hippius-hub)
 
 ### CNCF Distribution
 
@@ -437,6 +438,29 @@ summ is an open source OCI registry in a single binary, with a built-in web UI. 
 
   ```shell
   oras pull --plain-http localhost:3110/hello-artifact:v1
+  ```
+
+### [Hippius Hub](https://docs.hippius.com/registry/push)
+
+Hippius Hub is a hosted OCI registry at `registry.hippius.com`. Repositories live under a namespace, which has to be [provisioned](https://docs.hippius.com/registry/push#provision-a-namespace) before the first push.
+
+- [Authenticating with Hippius Hub](https://docs.hippius.com/use/console/hub#your-login-for-pushing) using the username and token of the namespace
+
+  ```shell
+  echo $HIPPIUS_TOKEN | oras login registry.hippius.com -u $HIPPIUS_USERNAME --password-stdin
+  ```
+
+- Pushing artifacts to Hippius Hub
+
+  ```shell
+  oras push registry.hippius.com/${NAMESPACE}/hello-artifact:v1 \
+    artifact.txt:text/plain
+  ```
+
+- Pulling artifacts from Hippius Hub
+
+  ```shell
+  oras pull registry.hippius.com/${NAMESPACE}/hello-artifact:v1
   ```
 
 [artifacts]:            https://github.com/opencontainers/artifacts
