@@ -26,6 +26,7 @@ doctl
 facto
 filetype
 gcloud
+Hippius
 htpasswd
 https
 inviter
