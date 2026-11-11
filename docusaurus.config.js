@@ -4,6 +4,18 @@
 const lightCodeTheme = require("prism-react-renderer").themes.github;
 const darkCodeTheme = require("prism-react-renderer").themes.dracula;
 
+const docVersions = require("./versions.json");
+
+// Docusaurus shows the "unmaintained" banner on every version listed after the
+// latest one in versions.json. Preview versions (see tools/refresh-commands.sh)
+// are appended there too, but are newer than the latest release, so show the
+// "unreleased" banner on them instead.
+const previewVersions = Object.fromEntries(
+    docVersions
+        .filter((version) => version.endsWith("-preview"))
+        .map((version) => [version, { banner: "unreleased" }]),
+);
+
 const TwitterSvg =
     '<svg style="fill: #000000; vertical-align: middle; margin-left: 3px;" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>';
 
@@ -45,6 +57,7 @@ const config = {
                     editUrl:
                         "https://github.com/oras-project/oras-www/edit/main/",
                     includeCurrentVersion: false,
+                    versions: previewVersions,
                 },
                 blog: {
                     showReadingTime: true,
