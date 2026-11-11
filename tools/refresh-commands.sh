@@ -36,6 +36,8 @@
 #   - Create the `versioned_docs/version-1.4-preview` directory
 #   - Create a `versioned_sidebars/version-1.4-preview-sidebars.json` file.
 #   - Run `make build` to generate the documentation.
+#   - Pages of a `-preview` version get the "unreleased" banner from
+#     `docusaurus.config.js`; no other change is needed for it.
 #
 # Promotion to GA (general availability):
 #   - In `versions.json`, remove `-preview` and move the version to the top.
