@@ -7,6 +7,20 @@ sidebar_position: 15
 
 This guide demonstrates the installation steps of ORAS CLI on different platforms.
 
+## Homebrew
+
+Install `oras` using [Homebrew](https://brew.sh/) on macOS and Linux:
+
+```bash
+brew install oras
+```
+
+:::note
+
+ORAS on Homebrew is not maintained by the ORAS community, so it may not be the latest version.
+
+:::
+
 ## Snap
 
 Install `oras` using [Snap](https://snapcraft.io/oras) on Linux:
@@ -69,7 +83,13 @@ rm -rf oras_${VERSION}_darwin_${ARCH}.tar.gz oras-install/
 
 ### Windows
 
-You can install ORAS CLI from the `.zip` release archive. Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
+You can install ORAS CLI on Windows using [WinGet (Windows Package Manager)](https://github.com/microsoft/winget-pkgs):
+
+```cmd
+winget install oras --version 1.3.6
+```
+
+Alternatively, you can install ORAS CLI from the `.zip` release archive. Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
 
 ```cmd
 set "VERSION=1.3.6"
@@ -116,6 +136,46 @@ Run ORAS commands:
 doras pull ghcr.io/$GH_USER/oras:darwin-amd64 --username $GH_USER --password $GHCR_TOKEN -o ./download
 ```
 
+## GitHub Actions
+
+Install ORAS CLI in a GitHub Actions workflow using [setup-oras](https://github.com/oras-project/setup-oras):
+
+```yaml
+steps:
+  - uses: oras-project/setup-oras@v2
+    with:
+      version: 1.3.6
+  - run: oras version
+```
+
+If you omit `version`, the action installs its default ORAS CLI version.
+Reference the [Advanced Usage](https://github.com/oras-project/setup-oras?tab=readme-ov-file#advanced-usage) to learn how to install from a custom URL.
+
+## Runner images for GitHub Actions and Azure Pipelines
+
+ORAS CLI is also a built-in tool in the [Ubuntu 22.04](https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md#cli-tools) VM image for GitHub-hosted runners used for GitHub Actions, as well as for Microsoft-hosted agents used for Azure Pipelines.
+
+:::note
+
+ORAS on runner images is not maintained by the ORAS community, so it may not be the latest version.
+
+:::
+
+## Nix
+
+ORAS CLI is available as a [Nix package](https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/or/oras/package.nix) in the Nix Packages collection ([Nixpkgs](https://github.com/NixOS/nixpkgs)).
+After you [install Nix](https://nixos.org/download/), install `oras` using the following command:
+
+```bash
+nix-env -iA nixpkgs.oras
+```
+
+:::note
+
+ORAS on Nix is not maintained by the ORAS community, so it may not be the latest version.
+
+:::
+
 ## Verify
 
 Your Go version, OS/Arch and Git commit may vary depending on what you have downloaded:
@@ -129,11 +189,5 @@ OS/Arch:        linux/amd64
 Git commit:     9b1fc815f6b7fba743f08b9b5c5846639cc11d3c
 Git tree state: clean
 ```
-
-:::note
-
-ORAS on other package managers such as Snap, Homebrew, WinGet, Nix will be updated after the stable release.
-
-:::
 
 You can check out our [how-to guide](./how_to_guides/verifying_binaries.mdx) if you would like to verify ORAS CLI Binaries.
