@@ -12,6 +12,8 @@ The ORAS command allows users to format the metadata output and perform computat
 
 Both `--format` and `--template` are marked as "Experimental" in its first iteration v1.2.0.
 
+`oras repo ls` and `oras repo tags` support `--format` and `--template` since v1.3.0, also as "Experimental".
+
 :::
 
 ## How to format output in ORAS commands
@@ -329,4 +331,76 @@ oras discover $REGISTRY/$REPO:v1 --format json
     }
   ]
 }
+```
+
+### oras repo ls
+
+When using `oras repo ls` with the flag `--format`, the following fields should be formatted into JSON output:
+
+- `registry`: the registry that was listed
+- `repositories`: the list of repository names under the registry or namespace
+
+See an example:
+
+```bash
+oras repo ls $REGISTRY --format json
+```
+
+```json
+{
+  "registry": "localhost:5000",
+  "repositories": [
+    "demo/app",
+    "demo/tools",
+    "hello",
+    "hello-world"
+  ]
+}
+```
+
+When listing the repositories under a namespace, for example `oras repo ls $REGISTRY/demo`, the default text output omits the namespace prefix and shows `app` and `tools`. The `json` and `go-template` formats always show the full repository names, for example `demo/app` and `demo/tools`, so they can be combined with `registry` into references that other ORAS commands accept.
+
+For example, print a reference to the `latest` tag of each repository in the registry:
+
+```bash
+oras repo ls $REGISTRY --format go-template --template '{{range .repositories}}{{println (print $.registry "/" . ":latest")}}{{end}}'
+```
+
+```
+localhost:5000/demo/app:latest
+localhost:5000/demo/tools:latest
+localhost:5000/hello:latest
+localhost:5000/hello-world:latest
+```
+
+### oras repo tags
+
+When using `oras repo tags` with the flag `--format`, the following fields should be formatted into JSON output:
+
+- `tags`: the list of tags in the repository
+
+See an example:
+
+```bash
+oras repo tags $REGISTRY/$REPO --format json
+```
+
+```json
+{
+  "tags": [
+    "v1",
+    "v2",
+    "latest"
+  ]
+}
+```
+
+For example, show the tags of a repository as a comma-separated list:
+
+```bash
+oras repo tags $REGISTRY/$REPO --format go-template='{{join "," .tags}}'
+```
+
+```
+v1,v2,latest
 ```
