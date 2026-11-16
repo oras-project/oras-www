@@ -7,6 +7,8 @@ sidebar_position: 1
 
 There are two ways we will be covering in this guide to authenticate with OCI Registries.
 
+If the registry only serves plain HTTP, has a certificate issued by a private certificate authority, or requires a client certificate, see [Connecting to Registries](./registry_connections.mdx) for the flags that `oras login` and other commands need.
+
 ### Method 1: Authentication Using the `config` File
 
 This method is straightforward but insecure. It may be used for testing purposes. In this method, the command will store the credentials in `~/.docker/config.json` which is the same file used as the docker client. 

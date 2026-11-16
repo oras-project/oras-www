@@ -30,9 +30,9 @@ gcloud
 Grype
 Hippius
 htpasswd
-https
+(?i)https
 inviter
-ip
+(?i)ip
 JFrog
 (?i)json
 loopback
