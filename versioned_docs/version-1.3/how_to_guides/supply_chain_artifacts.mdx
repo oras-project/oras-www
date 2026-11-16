@@ -1,0 +1,324 @@
+---
+title: Attaching Supply Chain Artifacts
+sidebar_position: 9
+---
+
+# Attaching Supply Chain Artifacts
+
+A container image usually comes with other files that describe it, such as a software bill of materials (SBOM), a vulnerability scan report, signatures or build provenance.
+With [`oras attach`](../commands/oras_attach.mdx), you can store these files in the same repository as the image and link them to it, without changing the image or its digest.
+Each attached file is pushed as an OCI artifact whose `subject` field points to the image.
+Such an artifact is called a referrer of the image.
+See [Attached Artifacts](../concepts/reftypes.mdx) for how the registry stores and lists referrers.
+
+This guide uses an Alpine Linux image as an example. It shows how to:
+
+- choose an artifact type
+- attach an SBOM and a vulnerability report to the image
+- attach an artifact to another attached artifact
+- find attached artifacts with [`oras discover`](../commands/oras_discover.mdx)
+- pull an attached artifact
+- copy an image together with its attached artifacts
+- delete an attached artifact
+
+## Prerequisites
+
+- [ORAS CLI](../installation.mdx) v1.3.0 or later.
+- A registry that you can push to.
+  ORAS uses the referrers API if the registry supports it, and falls back to the [referrers tag schema](https://github.com/opencontainers/distribution-spec/blob/v1.1.0/spec.md#referrers-tag-schema) if it doesn't.
+  To follow along locally, run a [CNCF Distribution](https://distribution.github.io/distribution/) registry.
+  `REGISTRY_STORAGE_DELETE_ENABLED` is only needed for the [last section](#delete-an-attached-artifact).
+
+  ```bash
+  docker run -d -p 5000:5000 -e REGISTRY_STORAGE_DELETE_ENABLED=true --name oras-registry registry:3
+  ```
+
+- [Syft](https://github.com/anchore/syft) to generate the SBOM, or any other tool that writes SPDX JSON.
+
+Set the variables used in this guide, and copy the `linux/amd64` image of `alpine:3.22` from Docker Hub to the registry:
+
+```bash
+REGISTRY=localhost:5000
+REPO=alpine
+TAG=3.22
+IMAGE=$REGISTRY/$REPO:$TAG
+oras cp --platform linux/amd64 docker.io/library/alpine:3.22 $IMAGE
+```
+
+```console
+Copying 710f3da1112f application/vnd.oci.image.layer.v1.tar+gzip
+Copying 812e99317af7 application/vnd.oci.image.config.v1+json
+Copied  812e99317af7 application/vnd.oci.image.config.v1+json
+Copied  710f3da1112f application/vnd.oci.image.layer.v1.tar+gzip
+Copying 9db293488671 application/vnd.oci.image.manifest.v1+json
+Copied  9db293488671 application/vnd.oci.image.manifest.v1+json
+Copied [registry] docker.io/library/alpine:3.22 => [registry] localhost:5000/alpine:3.22
+Digest: sha256:9db2934886712d877c932e07249c75a59e6ca27adfbccc05261987a17bef2d63
+```
+
+The output in this guide is what ORAS prints when its output isn't a terminal.
+In a terminal, ORAS shows progress bars instead.
+
+## Choose an artifact type
+
+`oras attach` requires `--artifact-type`.
+The artifact type tells tools what an attached artifact contains.
+`oras discover --artifact-type` and the registry also use it to filter referrers.
+If a media type exists for the format of your file, use it as the artifact type:
+
+| Content                | Artifact type                    |
+|------------------------|----------------------------------|
+| SPDX SBOM in JSON      | `application/spdx+json`          |
+| CycloneDX SBOM in JSON | `application/vnd.cyclonedx+json` |
+| SARIF report           | `application/sarif+json`         |
+| in-toto statement      | `application/vnd.in-toto+json`   |
+
+For your own content, define a type in the `application/vnd.<vendor>.<type>` form, for example `application/vnd.example.license-review+json`.
+See [Determining the artifact type](../concepts/artifact.mdx#determining-the-artifact-type) for the rules that apply.
+
+Also set the media type of each file by appending it to the file name, in the `<file>:<media type>` form.
+Without it, ORAS uses `application/vnd.oci.image.layer.v1.tar`, and tools that pull the artifact can't tell what format the file is in.
+
+## Attach an SBOM
+
+Generate an SPDX SBOM of the image:
+
+```bash
+syft $IMAGE -o spdx-json=sbom.spdx.json
+```
+
+Attach it to the image.
+The `--annotation` flag adds an annotation to the manifest of the attached artifact, which `oras discover` shows later in this guide.
+
+```bash
+oras attach --artifact-type application/spdx+json \
+  --annotation "org.opencontainers.image.description=SPDX SBOM of alpine:3.22" \
+  $IMAGE sbom.spdx.json:application/spdx+json
+```
+
+```console
+Preparing sbom.spdx.json
+Uploading 44136fa355b3 application/vnd.oci.empty.v1+json
+Uploading 9893f113b8ff sbom.spdx.json
+Uploaded  44136fa355b3 application/vnd.oci.empty.v1+json
+Uploaded  9893f113b8ff sbom.spdx.json
+Uploading cdfe2cbd359a application/vnd.oci.image.manifest.v1+json
+Uploaded  cdfe2cbd359a application/vnd.oci.image.manifest.v1+json
+Attached to [registry] localhost:5000/alpine@sha256:9db2934886712d877c932e07249c75a59e6ca27adfbccc05261987a17bef2d63
+Digest: sha256:cdfe2cbd359a10a911138fefb70082eab1bd5a27b854a7f52d5dc1397e6e4d59
+```
+
+The digest in the `Attached to` line is still the digest of the image, because attaching an artifact doesn't change the image.
+The `Digest` line is the digest of the new SBOM artifact.
+
+:::note
+If the image is a multi-architecture image index, `oras attach` attaches to the index.
+To attach to the image of one platform instead, add `--platform`, for example `--platform linux/amd64`.
+Use the same flag with `oras discover` to see the artifacts attached to that platform's image.
+:::
+
+## Attach a vulnerability report
+
+Scan the image with a scanner that writes [SARIF](https://docs.oasis-open.org/sarif/sarif/v2.1.0/sarif-v2.1.0.html) output, such as Trivy or Grype, and save the report as `scan.sarif.json`.
+Attach it the same way:
+
+```bash
+oras attach --artifact-type application/sarif+json $IMAGE scan.sarif.json:application/sarif+json
+```
+
+```console
+Preparing scan.sarif.json
+Exists    44136fa355b3 application/vnd.oci.empty.v1+json
+Uploading c19b80f036c9 scan.sarif.json
+Uploaded  c19b80f036c9 scan.sarif.json
+Uploading 4255c90f0d27 application/vnd.oci.image.manifest.v1+json
+Uploaded  4255c90f0d27 application/vnd.oci.image.manifest.v1+json
+Attached to [registry] localhost:5000/alpine@sha256:9db2934886712d877c932e07249c75a59e6ca27adfbccc05261987a17bef2d63
+Digest: sha256:4255c90f0d27d6e2d8d597fd60f370b02e89a2bee9489eb850559e21b06c0e6c
+```
+
+## Attach an artifact to an attached artifact
+
+An attached artifact can have its own referrers.
+For example, signing tools such as [Notation](https://notaryproject.dev/) attach a signature to the artifact they sign, and that artifact can be an SBOM.
+To attach to an attached artifact, reference it by digest.
+
+The following command uses a Go template to get the digest of the SBOM attached to the image.
+The `--format` and `--template` flags of `oras discover` are experimental in ORAS CLI v1.3.
+
+```bash
+SBOM_DIGEST=$(oras discover $IMAGE --artifact-type application/spdx+json --format go-template --template '{{range .referrers}}{{println .digest}}{{end}}')
+echo $SBOM_DIGEST
+```
+
+```console
+sha256:cdfe2cbd359a10a911138fefb70082eab1bd5a27b854a7f52d5dc1397e6e4d59
+```
+
+If more than one SBOM is attached to the image, the template prints one digest per line.
+In that case, set `SBOM_DIGEST` to the one you want to use.
+
+Save the result of a license review of the SBOM, and attach it to the SBOM with a custom artifact type:
+
+```bash
+echo '{"reviewer":"legal","result":"approved"}' > license-review.json
+oras attach --artifact-type application/vnd.example.license-review+json \
+  $REGISTRY/$REPO@$SBOM_DIGEST license-review.json:application/vnd.example.license-review+json
+```
+
+```console
+Preparing license-review.json
+Exists    44136fa355b3 application/vnd.oci.empty.v1+json
+Uploading e4c1353bad0a license-review.json
+Uploaded  e4c1353bad0a license-review.json
+Uploading 44ce9b56c41f application/vnd.oci.image.manifest.v1+json
+Uploaded  44ce9b56c41f application/vnd.oci.image.manifest.v1+json
+Attached to [registry] localhost:5000/alpine@sha256:cdfe2cbd359a10a911138fefb70082eab1bd5a27b854a7f52d5dc1397e6e4d59
+Digest: sha256:44ce9b56c41fa7690ce9881ad1faa276db18f90cde9c1a3b887b1c3f3e26c619
+```
+
+## Discover attached artifacts
+
+`oras discover` shows the referrers of the image as a tree, grouped by artifact type.
+The tree includes the annotations of each referrer, and the referrers of referrers:
+
+```bash
+oras discover $IMAGE
+```
+
+```console
+localhost:5000/alpine@sha256:9db2934886712d877c932e07249c75a59e6ca27adfbccc05261987a17bef2d63
+├── application/spdx+json
+│   └── sha256:cdfe2cbd359a10a911138fefb70082eab1bd5a27b854a7f52d5dc1397e6e4d59
+│       ├── [annotations]
+│       │   ├── org.opencontainers.image.created: "2026-11-16T01:20:07Z"
+│       │   └── org.opencontainers.image.description: SPDX SBOM of alpine:3.22
+│       └── application/vnd.example.license-review+json
+│           └── sha256:44ce9b56c41fa7690ce9881ad1faa276db18f90cde9c1a3b887b1c3f3e26c619
+│               └── [annotations]
+│                   └── org.opencontainers.image.created: "2026-11-16T01:20:07Z"
+└── application/sarif+json
+    └── sha256:4255c90f0d27d6e2d8d597fd60f370b02e89a2bee9489eb850559e21b06c0e6c
+        └── [annotations]
+            └── org.opencontainers.image.created: "2026-11-16T01:20:07Z"
+```
+
+To show only the artifacts attached directly to the image, use the experimental `--depth` flag:
+
+```bash
+oras discover $IMAGE --depth 1
+```
+
+```console
+localhost:5000/alpine@sha256:9db2934886712d877c932e07249c75a59e6ca27adfbccc05261987a17bef2d63
+├── application/spdx+json
+│   └── sha256:cdfe2cbd359a10a911138fefb70082eab1bd5a27b854a7f52d5dc1397e6e4d59
+│       └── [annotations]
+│           ├── org.opencontainers.image.created: "2026-11-16T01:20:07Z"
+│           └── org.opencontainers.image.description: SPDX SBOM of alpine:3.22
+└── application/sarif+json
+    └── sha256:4255c90f0d27d6e2d8d597fd60f370b02e89a2bee9489eb850559e21b06c0e6c
+        └── [annotations]
+            └── org.opencontainers.image.created: "2026-11-16T01:20:07Z"
+```
+
+To show only the attached artifacts of one type, use `--artifact-type`:
+
+```bash
+oras discover $IMAGE --artifact-type application/sarif+json
+```
+
+```console
+localhost:5000/alpine@sha256:9db2934886712d877c932e07249c75a59e6ca27adfbccc05261987a17bef2d63
+└── application/sarif+json
+    └── sha256:4255c90f0d27d6e2d8d597fd60f370b02e89a2bee9489eb850559e21b06c0e6c
+        └── [annotations]
+            └── org.opencontainers.image.created: "2026-11-16T01:20:07Z"
+```
+
+To use the result in a script, print it as JSON or with a Go template, as in the previous section.
+See [Formatted output](./format_output.mdx#oras-discover) for the available fields.
+
+## Pull an attached artifact
+
+Pull an attached artifact by its digest, the same way as any other artifact.
+The following command downloads the SBOM to the `sbom` directory:
+
+```bash
+oras pull $REGISTRY/$REPO@$SBOM_DIGEST -o sbom
+```
+
+```console
+Downloading cdfe2cbd359a application/vnd.oci.image.manifest.v1+json
+Processing  cdfe2cbd359a application/vnd.oci.image.manifest.v1+json
+Downloading 9893f113b8ff sbom.spdx.json
+Downloaded  9893f113b8ff sbom.spdx.json
+Downloaded  cdfe2cbd359a application/vnd.oci.image.manifest.v1+json
+Pulled [registry] localhost:5000/alpine@sha256:cdfe2cbd359a10a911138fefb70082eab1bd5a27b854a7f52d5dc1397e6e4d59
+Digest: sha256:cdfe2cbd359a10a911138fefb70082eab1bd5a27b854a7f52d5dc1397e6e4d59
+```
+
+Only `sbom/sbom.spdx.json` is downloaded, not the image that the SBOM is attached to.
+
+## Copy an image with its attached artifacts
+
+By default, [`oras cp`](../commands/oras_cp.mdx) copies only the image, without its referrers.
+To also copy the artifacts attached to it, including referrers of referrers, add `-r`:
+
+```bash
+oras cp -r $IMAGE $REGISTRY/mirror/alpine:3.22
+```
+
+```console
+Mounted 44136fa355b3 application/vnd.oci.empty.v1+json
+Mounted e4c1353bad0a license-review.json
+Mounted c19b80f036c9 scan.sarif.json
+Mounted 812e99317af7 application/vnd.oci.image.config.v1+json
+Mounted 9893f113b8ff sbom.spdx.json
+Mounted 710f3da1112f application/vnd.oci.image.layer.v1.tar+gzip
+Copying 9db293488671 application/vnd.oci.image.manifest.v1+json
+Copied  9db293488671 application/vnd.oci.image.manifest.v1+json
+Copying 4255c90f0d27 application/vnd.oci.image.manifest.v1+json
+Copying cdfe2cbd359a application/vnd.oci.image.manifest.v1+json
+Copied  4255c90f0d27 application/vnd.oci.image.manifest.v1+json
+Copied  cdfe2cbd359a application/vnd.oci.image.manifest.v1+json
+Copying 44ce9b56c41f application/vnd.oci.image.manifest.v1+json
+Copied  44ce9b56c41f application/vnd.oci.image.manifest.v1+json
+Copied [registry] localhost:5000/alpine:3.22 => [registry] localhost:5000/mirror/alpine:3.22
+Digest: sha256:9db2934886712d877c932e07249c75a59e6ca27adfbccc05261987a17bef2d63
+```
+
+The source and the destination are in the same registry here, so the blobs are mounted instead of uploaded again.
+`oras discover $REGISTRY/mirror/alpine:3.22` now shows the same attached artifacts as the original image.
+To save an image and its attached artifacts to a local directory or archive instead, see [Backup and Restore](./backup-restore.mdx).
+
+## Delete an attached artifact
+
+To delete an attached artifact, such as an outdated vulnerability report, get its digest and delete its manifest with [`oras manifest delete`](../commands/oras_manifest_delete.mdx):
+
+```bash
+SCAN_DIGEST=$(oras discover $IMAGE --artifact-type application/sarif+json --format go-template --template '{{range .referrers}}{{println .digest}}{{end}}')
+oras manifest delete --force $REGISTRY/$REPO@$SCAN_DIGEST
+```
+
+```console
+Deleted [registry] localhost:5000/alpine@sha256:4255c90f0d27d6e2d8d597fd60f370b02e89a2bee9489eb850559e21b06c0e6c
+```
+
+The report no longer appears in the referrers of the image:
+
+```bash
+oras discover $IMAGE --depth 1
+```
+
+```console
+localhost:5000/alpine@sha256:9db2934886712d877c932e07249c75a59e6ca27adfbccc05261987a17bef2d63
+└── application/spdx+json
+    └── sha256:cdfe2cbd359a10a911138fefb70082eab1bd5a27b854a7f52d5dc1397e6e4d59
+        └── [annotations]
+            ├── org.opencontainers.image.created: "2026-11-16T01:20:07Z"
+            └── org.opencontainers.image.description: SPDX SBOM of alpine:3.22
+```
+
+Some registries, including CNCF Distribution, keep the attached artifacts when you delete the image they are attached to.
+To remove an image together with its attached artifacts on such a registry, delete the attached artifacts first, starting from the deepest level.
