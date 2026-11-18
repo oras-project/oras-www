@@ -6,7 +6,7 @@ tags: [oras, oci, artifact]
 ---
 
 The ORAS community is happy to announce [ORAS CLI v1.4.0](https://github.com/oras-project/oras/releases/tag/v1.4.0), released on November 17, 2026.
-This release moves the CLI to ORAS Go v3, fixes two long-standing authentication problems, and adds experimental support for the container ecosystem's configuration files.
+This release moves the CLI to ORAS Go v3, lets `oras copy` use separate credentials for the source and destination on the same registry, and adds experimental support for the container ecosystem's configuration files.
 
 <!-- truncate -->
 
@@ -16,7 +16,7 @@ ORAS CLI v1.4.0 now uses [`github.com/oras-project/oras-go/v3`](https://github.c
 ORAS Go v3 brings unified registry configuration, registry mirrors, trust policy, content verification, and more.
 Read the [ORAS Go v3.0.0 announcement](../2026-11-01-oras-go-3.0.0/index.mdx) for the full story.
 
-For most CLI users the upgrade is invisible, but it fixes two problems that users reported.
+For most CLI users the upgrade is invisible, but two authentication changes are worth knowing about.
 
 ### Separate credentials for source and destination on the same registry
 
@@ -37,8 +37,7 @@ See [oras#1892](https://github.com/oras-project/oras/issues/1892) for the origin
 
 Some registries, such as a self-hosted GitLab, send clients to a token server on another host in a private network.
 ORAS v1.3.5 refused that token server, so `oras login` failed for these registries ([oras#2260](https://github.com/oras-project/oras/issues/2260)).
-With v1.4.0, login works again.
-Loopback, link-local, unspecified, and cloud metadata addresses are still blocked by default.
+ORAS v1.3.6 fixed this, and v1.4.0 keeps the fix on ORAS Go v3.
 
 ## Experimental: containers configuration support
 
@@ -56,7 +55,7 @@ When it is on, ORAS reads these files from their default locations:
 
 - `registries.conf`: aliases, blocked registries, location rewrites, mirrors, and insecure registries
 - `certs.d`: per-registry CA and client certificates
-- `auth.json`: credentials, used after the ORAS credential store
+- `auth.json`: credentials, used after the ORAS credential store and skipped when `--registry-config` is given
 - `policy.json` and `registries.d`: pull policy and signature verification
 
 Command line flags take precedence over the files.
@@ -65,21 +64,21 @@ We would love your feedback.
 
 ## Behavior changes
 
-Two commands are now stricter.
+Two behaviors are now stricter.
 Check your scripts before you upgrade.
 
 - **`oras blob fetch` and `oras blob delete` require a digest.**
   A blob is addressed by its digest, so these commands now reject tags ([oras#2304](https://github.com/oras-project/oras/pull/2304)).
   Use a reference such as `registry.example.com/repo@sha256:...`.
 - **Custom header flags are rejected for OCI image layout targets.**
-  HTTP headers mean nothing for a local OCI image layout, so header flags such as `--header` now fail with an error when used with `--oci-layout-path` ([oras#2299](https://github.com/oras-project/oras/pull/2299)).
+  HTTP headers mean nothing for a local OCI image layout, so header flags such as `--header` now fail with an error when used with `--oci-layout-path`, `--from-oci-layout-path`, or `--to-oci-layout-path` ([oras#2299](https://github.com/oras-project/oras/pull/2299)).
 
-Also, an untagged push no longer reports an empty tag in `referenceAsTags` in formatted output.
+Also, for an untagged push, `oras push --format json` no longer reports an empty tag in `referenceAsTags` ([oras#2328](https://github.com/oras-project/oras/pull/2328)).
 
 ## Supply chain improvements
 
 - **OCI image labels**: the `ghcr.io/oras-project/oras` container image now carries standard `org.opencontainers.image.*` labels, such as source, version, revision, and license ([oras#2300](https://github.com/oras-project/oras/pull/2300)).
-- **Build provenance attestations**: the release archives and checksum files come with build provenance attestations, so you can check where a download was built.
+- **Build provenance attestations**: since v1.3.6, the release archives and checksum files come with build provenance attestations, so you can check where a download was built.
   For example, with the GitHub CLI:
 
   ```bash
