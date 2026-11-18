@@ -1,0 +1,112 @@
+---
+slug: oras-v1.4.0
+title: 🚀 Announcing ORAS CLI v1.4.0 - powered by ORAS Go v3
+authors: oras
+tags: [oras, oci, artifact]
+---
+
+The ORAS community is happy to announce [ORAS CLI v1.4.0](https://github.com/oras-project/oras/releases/tag/v1.4.0), released on November 17, 2026.
+This release moves the CLI to ORAS Go v3, fixes two long-standing authentication problems, and adds experimental support for the container ecosystem's configuration files.
+
+<!-- truncate -->
+
+## Built on ORAS Go v3
+
+ORAS CLI v1.4.0 now uses [`github.com/oras-project/oras-go/v3`](https://github.com/oras-project/oras-go/releases/tag/v3.0.0) v3.0.0 instead of `oras.land/oras-go/v2`.
+ORAS Go v3 brings unified registry configuration, registry mirrors, trust policy, content verification, and more.
+Read the [ORAS Go v3.0.0 announcement](../2026-11-01-oras-go-3.0.0/index.mdx) for the full story.
+
+For most CLI users the upgrade is invisible, but it fixes two problems that users reported.
+
+### Separate credentials for source and destination on the same registry
+
+`oras copy` can now use different credentials for the source and the destination, even when both are on the same registry.
+Authentication is cached per repository, so the `--from-*` credentials are used for the source repository and the `--to-*` credentials for the destination repository.
+
+```bash
+oras copy \
+  --from-username reader --from-password "$READ_TOKEN" \
+  --to-username writer --to-password "$WRITE_TOKEN" \
+  registry.example.com/team-a/app:v1 \
+  registry.example.com/team-b/app:v1
+```
+
+See [oras#1892](https://github.com/oras-project/oras/issues/1892) for the original report.
+
+### Login works again for self-hosted GitLab and similar registries
+
+Some registries, such as a self-hosted GitLab, send clients to a token server on another host in a private network.
+ORAS v1.3.5 refused that token server, so `oras login` failed for these registries ([oras#2260](https://github.com/oras-project/oras/issues/2260)).
+With v1.4.0, login works again.
+Loopback, link-local, unspecified, and cloud metadata addresses are still blocked by default.
+
+## Experimental: containers configuration support
+
+Podman, Buildah, and Skopeo read registry settings from a common set of files.
+ORAS CLI v1.4.0 can now read the same files.
+This mode is experimental and off by default.
+Turn it on by setting `ORAS_EXPERIMENTAL_CONTAINERS_CONFIG`:
+
+```bash
+export ORAS_EXPERIMENTAL_CONTAINERS_CONFIG=1
+oras pull registry.example.com/team/app:v1
+```
+
+When it is on, ORAS reads these files from their default locations:
+
+- `registries.conf`: aliases, blocked registries, location rewrites, mirrors, and insecure registries
+- `certs.d`: per-registry CA and client certificates
+- `auth.json`: credentials, used after the ORAS credential store
+- `policy.json` and `registries.d`: pull policy and signature verification
+
+Command line flags take precedence over the files.
+Because the feature is experimental, its behavior may change in future releases.
+We would love your feedback.
+
+## Behavior changes
+
+Two commands are now stricter.
+Check your scripts before you upgrade.
+
+- **`oras blob fetch` and `oras blob delete` require a digest.**
+  A blob is addressed by its digest, so these commands now reject tags ([oras#2304](https://github.com/oras-project/oras/pull/2304)).
+  Use a reference such as `registry.example.com/repo@sha256:...`.
+- **Custom header flags are rejected for OCI image layout targets.**
+  HTTP headers mean nothing for a local OCI image layout, so header flags such as `--header` now fail with an error when used with `--oci-layout-path` ([oras#2299](https://github.com/oras-project/oras/pull/2299)).
+
+Also, an untagged push no longer reports an empty tag in `referenceAsTags` in formatted output.
+
+## Supply chain improvements
+
+- **OCI image labels**: the `ghcr.io/oras-project/oras` container image now carries standard `org.opencontainers.image.*` labels, such as source, version, revision, and license ([oras#2300](https://github.com/oras-project/oras/pull/2300)).
+- **Build provenance attestations**: the release archives and checksum files come with build provenance attestations, so you can check where a download was built.
+  For example, with the GitHub CLI:
+
+  ```bash
+  gh attestation verify oras_1.4.0_linux_amd64.tar.gz --repo oras-project/oras
+  ```
+
+## Bug fixes
+
+This release also fixes several bugs, including `oras manifest fetch-config --output` with special files, the `ORAS_CACHE` backing store, warnings for secret flags, and a panic in TTY progress output.
+For the complete list of changes, see the [ORAS CLI v1.4.0 release notes](https://github.com/oras-project/oras/releases/tag/v1.4.0).
+
+## Thanks to all contributors
+
+Thanks to everyone who contributed to ORAS CLI v1.4.0:
+[@TerryHowe](https://github.com/TerryHowe),
+[@TanvirTian](https://github.com/TanvirTian),
+[@ogulcanaydogan](https://github.com/ogulcanaydogan),
+[@Hrushikesh-ramilla](https://github.com/Hrushikesh-ramilla),
+[@MaxFreedomPollard](https://github.com/MaxFreedomPollard),
+[@MindTooth](https://github.com/MindTooth),
+[@havinash-007](https://github.com/havinash-007),
+[@orshih6](https://github.com/orshih6),
+[@sarankumar1325](https://github.com/sarankumar1325),
+and [@vmvarela](https://github.com/vmvarela) 🎉
+
+## Try it out
+
+Follow the [installation guide](https://oras.land/docs/installation) to install ORAS CLI v1.4.0.
+If you run into a problem or have a suggestion, please [open an issue](https://github.com/oras-project/oras/issues).
+To talk with the community, [join the CNCF Slack](https://slack.cncf.io/) and find us in the **#oras** channel.
