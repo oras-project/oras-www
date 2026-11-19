@@ -1,0 +1,193 @@
+---
+title: Installation
+sidebar_position: 15
+---
+
+# Installation
+
+This guide demonstrates the installation steps of ORAS CLI on different platforms.
+
+## Homebrew
+
+Install `oras` using [Homebrew](https://brew.sh/) on macOS and Linux:
+
+```bash
+brew install oras
+```
+
+:::note
+
+ORAS on Homebrew is not maintained by the ORAS community, so it may not be the latest version.
+
+:::
+
+## Snap
+
+Install `oras` using [Snap](https://snapcraft.io/oras) on Linux:
+
+```bash
+snap install oras --classic
+```
+
+:::note
+
+The `--classic` flag is required because ORAS uses classic confinement to access files outside the snap sandbox.
+
+:::
+
+## Release artifacts
+
+Install ORAS from the latest [release artifacts](https://github.com/oras-project/oras/releases):
+
+For macOS and Linux type operating systems, you can determine operating system and architecture using `uname`:
+
+```bash
+OS="$(uname -s | tr A-Z a-z)"
+ARCH=$(uname -m | sed -e 's/x86_64/amd64/' -e 's/aarch64/arm64/' -e 's/armv7l/armv7/' -e 's/loongarch64/loong64/')
+VERSION="1.4.0"
+curl -fLO "https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_${OS}_${ARCH}.tar.gz"
+mkdir -p oras-install/
+tar -zxf oras_${VERSION}_${OS}_${ARCH}.tar.gz -C oras-install/
+sudo chown root:0 oras-install/oras
+sudo mv oras-install/oras /usr/local/bin/
+rm -rf oras_${VERSION}_${OS}_${ARCH}.tar.gz oras-install/
+```
+
+### Linux
+
+To install ORAS on Linux, run the following command:
+
+```bash
+ARCH=$(uname -m | sed -e 's/x86_64/amd64/' -e 's/aarch64/arm64/' -e 's/armv7l/armv7/' -e 's/loongarch64/loong64/')
+VERSION="1.4.0"
+curl -fLO "https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_linux_${ARCH}.tar.gz"
+mkdir -p oras-install/
+tar -zxf oras_${VERSION}_linux_${ARCH}.tar.gz -C oras-install/
+sudo mv oras-install/oras /usr/local/bin/
+rm -rf oras_${VERSION}_linux_${ARCH}.tar.gz oras-install/
+```
+
+### macOS
+
+To install ORAS on a Mac computer, run the following command:
+
+```bash
+ARCH=$(uname -m | sed -e 's/x86_64/amd64/')
+VERSION="1.4.0"
+curl -fLO "https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_darwin_${ARCH}.tar.gz"
+mkdir -p oras-install/
+tar -zxf oras_${VERSION}_darwin_${ARCH}.tar.gz -C oras-install/
+sudo mv oras-install/oras /usr/local/bin/
+rm -rf oras_${VERSION}_darwin_${ARCH}.tar.gz oras-install/
+```
+
+### Windows
+
+You can install ORAS CLI on Windows using [WinGet (Windows Package Manager)](https://github.com/microsoft/winget-pkgs):
+
+```cmd
+winget install oras --version 1.4.0
+```
+
+Alternatively, you can install ORAS CLI from the `.zip` release archive. Add `%USERPROFILE%\bin\` to your `PATH` environment variable so that `oras.exe` can be found.
+
+```cmd
+set "VERSION=1.4.0"
+curl.exe -fLO "https://github.com/oras-project/oras/releases/download/v%VERSION%/oras_%VERSION%_windows_amd64.zip"
+tar.exe -xvzf oras_%VERSION%_windows_amd64.zip
+if not exist "%USERPROFILE%\bin" mkdir "%USERPROFILE%\bin"
+copy /Y oras.exe "%USERPROFILE%\bin\oras.exe"
+set PATH=%USERPROFILE%\bin\;%PATH%
+```
+
+## Go Install
+
+If you have [Go](https://go.dev/) 1.26.7 or later installed, you can install ORAS CLI using `go install`:
+
+```bash
+go install oras.land/oras/cmd/oras@v1.4.0
+```
+
+The `oras` binary will be installed in the directory specified by the `GOBIN` environment variable, which defaults to `$GOPATH/bin` or `$HOME/go/bin` if the `GOPATH` environment variable is not set. You may need to add this directory to your `PATH` environment variable to run `oras` from any location.
+
+## Docker Image
+
+A public Docker image containing the CLI is available on [GitHub Container Registry](https://github.com/orgs/oras-project/packages/container/package/oras):
+
+```
+docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.4.0 help
+```
+:::note
+
+The default WORKDIR in the image is `/workspace`.
+
+:::
+
+You can use the Docker image locally instead of installing a binary.
+For example create an alias:
+
+```
+alias doras='docker run -it --rm -v $(pwd):/workspace ghcr.io/oras-project/oras:v1.4.0'
+```
+
+Run ORAS commands:
+
+```
+doras pull ghcr.io/$GH_USER/oras:darwin-amd64 --username $GH_USER --password $GHCR_TOKEN -o ./download
+```
+
+## GitHub Actions
+
+Install ORAS CLI in a GitHub Actions workflow using [setup-oras](https://github.com/oras-project/setup-oras):
+
+```yaml
+steps:
+  - uses: oras-project/setup-oras@v2
+    with:
+      version: 1.4.0
+  - run: oras version
+```
+
+If you omit `version`, the action installs its default ORAS CLI version.
+Reference the [Advanced Usage](https://github.com/oras-project/setup-oras?tab=readme-ov-file#advanced-usage) to learn how to install from a custom URL.
+
+## Runner images for GitHub Actions and Azure Pipelines
+
+ORAS CLI is also a built-in tool in the [Ubuntu 22.04](https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md#cli-tools) VM image for GitHub-hosted runners used for GitHub Actions, as well as for Microsoft-hosted agents used for Azure Pipelines.
+
+:::note
+
+ORAS on runner images is not maintained by the ORAS community, so it may not be the latest version.
+
+:::
+
+## Nix
+
+ORAS CLI is available as a [Nix package](https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/or/oras/package.nix) in the Nix Packages collection ([Nixpkgs](https://github.com/NixOS/nixpkgs)).
+After you [install Nix](https://nixos.org/download/), install `oras` using the following command:
+
+```bash
+nix-env -iA nixpkgs.oras
+```
+
+:::note
+
+ORAS on Nix is not maintained by the ORAS community, so it may not be the latest version.
+
+:::
+
+## Verify
+
+Your Go version, OS/Arch and Git commit may vary depending on what you have downloaded:
+
+```shell
+$ oras version
+
+Version:        1.4.0
+Go version:     go1.26.11
+OS/Arch:        darwin/arm64
+Git commit:     fdeb304ddeeb29f6cc9200457b8775908471c3ad
+Git tree state: clean
+```
+
+You can check out our [how-to guide](./how_to_guides/verifying_binaries.mdx) if you would like to verify ORAS CLI Binaries.
