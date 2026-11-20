@@ -18,11 +18,12 @@ This guide shows how to connect to registries that don't fit these defaults. It 
 
 Every ORAS command that connects to a registry accepts the flags in this guide, including [`oras login`](../commands/oras_login.mdx).
 `oras cp` has a source and a destination version of each flag, as described in [Copy between registries with different settings](#copy-between-registries-with-different-settings).
-ORAS doesn't save them: `oras login` stores the credentials, but you need to pass the connection flags again on every command.
+By default, ORAS doesn't save them: `oras login` stores the credentials, but you need to pass the connection flags again on every command.
+To keep these settings in configuration files instead, see [Use configuration files instead of flags](#use-configuration-files-instead-of-flags).
 
 ## Prerequisites
 
-- [ORAS CLI](../installation.mdx) v1.3.0 or later.
+- [ORAS CLI](../installation.mdx) v1.4.0 or later.
 - [Docker](https://docs.docker.com/get-docker/) to run the example registries.
 - [OpenSSL](https://www.openssl.org/) to create the example certificates.
 
@@ -179,7 +180,7 @@ ArtifactType: application/vnd.unknown.artifact.v1
 Digest: sha256:771a60339ff87727ca29dea75bb11f633f1a600196b032ab408598307cf9c92d
 ```
 
-With `--ca-file`, ORAS trusts only the certificates in that file, not the trust store of the operating system.
+With `--ca-file`, ORAS trusts only the certificates in that file and any CA certificates from `certs.d`, not the trust store of the operating system.
 Only pass it to commands for registries whose certificates are issued by that CA.
 To trust the CA without passing `--ca-file`, add it to the trust store of the operating system instead.
 
@@ -361,9 +362,21 @@ oras repo tags --debug localhost:5000/hello
 > Request URL: "http://localhost:5000/v2/hello/tags/list"
 > Request method: "GET"
 > Request headers:
-   "User-Agent": "oras/1.3.6"
+   "User-Agent": "oras/1.4.0"
 ...
 ```
+
+## Use configuration files instead of flags
+
+With the experimental `ORAS_EXPERIMENTAL_CONTAINERS_CONFIG` environment variable set, ORAS can read some of these settings from the containers configuration files that Podman, Buildah and Skopeo use:
+
+- CA certificates and client certificates from `certs.d`
+- `insecure` from `registries.conf`
+
+Then you don't need to pass `--ca-file`, `--cert-file`, `--key-file` or `--insecure` on every command.
+ORAS doesn't read a plain HTTP setting from these files, so you still need `--plain-http` for a registry that only serves plain HTTP.
+Command line flags take precedence: a client certificate from `--cert-file` and `--key-file` replaces one from `certs.d`.
+For more information, see [Using Containers Configuration Files](./containers_config.mdx).
 
 ## Clean up
 
