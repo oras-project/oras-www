@@ -1,0 +1,388 @@
+---
+title: Connecting to Registries
+sidebar_position: 7
+---
+
+# Connecting to Registries
+
+By default, ORAS connects to a registry over HTTPS and checks the registry certificate against the trust store of the operating system.
+Registries on `localhost` are the exception: ORAS connects to them over plain HTTP.
+
+This guide shows how to connect to registries that don't fit these defaults. It covers:
+
+- registries that only serve plain HTTP
+- registries with a certificate issued by a private certificate authority (CA)
+- registries that require a client certificate (mutual TLS)
+- registries whose name you need to resolve to a different address
+- copying between registries that need different settings
+
+Every ORAS command that connects to a registry accepts the flags in this guide, including [`oras login`](../commands/oras_login.mdx).
+`oras cp` has a source and a destination version of each flag, as described in [Copy between registries with different settings](#copy-between-registries-with-different-settings).
+By default, ORAS doesn't save them: `oras login` stores the credentials, but you need to pass the connection flags again on every command.
+To keep these settings in configuration files instead, see [Use configuration files instead of flags](#use-configuration-files-instead-of-flags).
+
+## Prerequisites
+
+- [ORAS CLI](../installation.mdx) v1.4.0 or later.
+- [Docker](https://docs.docker.com/get-docker/) to run the example registries.
+- [OpenSSL](https://www.openssl.org/) to create the example certificates.
+
+The examples use three local [CNCF Distribution](https://distribution.github.io/distribution/) registries:
+
+| Registry     | Address          | Connection                                      |
+|--------------|------------------|-------------------------------------------------|
+| `oras-plain` | `127.0.0.1:5000` | plain HTTP                                      |
+| `oras-tls`   | `127.0.0.1:5443` | HTTPS with a certificate issued by a private CA |
+| `oras-mtls`  | `127.0.0.1:6443` | HTTPS that also requires a client certificate   |
+
+Create a private CA, a server certificate for the registries, and a client certificate.
+The server certificate is valid for `registry.example.internal`, `localhost` and `127.0.0.1`.
+
+```bash
+mkdir certs
+openssl req -x509 -newkey rsa:4096 -nodes -days 30 -subj "/CN=Example Registry CA" \
+  -keyout certs/ca.key -out certs/ca.crt
+openssl req -newkey rsa:4096 -nodes -subj "/CN=registry.example.internal" \
+  -keyout certs/registry.key -out certs/registry.csr
+openssl x509 -req -days 30 -in certs/registry.csr -CA certs/ca.crt -CAkey certs/ca.key -CAcreateserial \
+  -extfile <(printf "subjectAltName=DNS:registry.example.internal,DNS:localhost,IP:127.0.0.1") \
+  -out certs/registry.crt
+openssl req -newkey rsa:4096 -nodes -subj "/CN=oras-client" \
+  -keyout certs/client.key -out certs/client.csr
+openssl x509 -req -days 30 -in certs/client.csr -CA certs/ca.crt -CAkey certs/ca.key -CAcreateserial \
+  -extfile <(printf "extendedKeyUsage=clientAuth") \
+  -out certs/client.crt
+```
+
+Create a configuration file for the registry that requires client certificates.
+`clientcas` lists the certificate authorities whose client certificates the registry accepts.
+
+```bash
+cat > mtls-config.yml <<'EOF'
+version: 0.1
+storage:
+  filesystem:
+    rootdirectory: /var/lib/registry
+http:
+  addr: :5000
+  tls:
+    certificate: /certs/registry.crt
+    key: /certs/registry.key
+    clientcas:
+      - /certs/ca.crt
+EOF
+```
+
+Start the registries:
+
+```bash
+docker run -d -p 5000:5000 --name oras-plain registry:3
+docker run -d -p 5443:5000 --name oras-tls \
+  -v "$PWD/certs:/certs:ro" \
+  -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/registry.crt \
+  -e REGISTRY_HTTP_TLS_KEY=/certs/registry.key \
+  registry:3
+docker run -d -p 6443:5000 --name oras-mtls \
+  -v "$PWD/certs:/certs:ro" \
+  -v "$PWD/mtls-config.yml:/etc/distribution/config.yml:ro" \
+  registry:3
+```
+
+Create a file to push:
+
+```bash
+echo "hello world" > hello.txt
+```
+
+The output in this guide is what ORAS prints when its output isn't a terminal.
+In a terminal, ORAS shows progress bars instead.
+
+## Plain HTTP registries
+
+ORAS connects to registries on `localhost` over plain HTTP, so no flag is needed:
+
+```bash
+oras push localhost:5000/hello:v1 hello.txt
+```
+
+```console
+Preparing hello.txt
+Uploading a948904f2f0f hello.txt
+Uploading 44136fa355b3 application/vnd.oci.empty.v1+json
+Uploaded  a948904f2f0f hello.txt
+Uploaded  44136fa355b3 application/vnd.oci.empty.v1+json
+Uploading 771a60339ff8 application/vnd.oci.image.manifest.v1+json
+Uploaded  771a60339ff8 application/vnd.oci.image.manifest.v1+json
+Pushed [registry] localhost:5000/hello:v1
+ArtifactType: application/vnd.unknown.artifact.v1
+Digest: sha256:771a60339ff87727ca29dea75bb11f633f1a600196b032ab408598307cf9c92d
+```
+
+For any other host, including `127.0.0.1` and other machines on your network, ORAS uses HTTPS and fails if the registry only serves plain HTTP:
+
+```bash
+oras push 127.0.0.1:5000/hello:v1 hello.txt
+```
+
+```console
+Preparing hello.txt
+Error: Head "https://127.0.0.1:5000/v2/hello/manifests/sha256:771a60339ff87727ca29dea75bb11f633f1a600196b032ab408598307cf9c92d": http: server gave HTTP response to HTTPS client
+```
+
+Add `--plain-http` to connect over plain HTTP:
+
+```bash
+oras push --plain-http 127.0.0.1:5000/hello:v1 hello.txt
+```
+
+```console
+Preparing hello.txt
+Pushed [registry] 127.0.0.1:5000/hello:v1
+ArtifactType: application/vnd.unknown.artifact.v1
+Digest: sha256:771a60339ff87727ca29dea75bb11f633f1a600196b032ab408598307cf9c92d
+```
+
+`--insecure` doesn't work here.
+It only turns off certificate verification, and ORAS still connects over HTTPS.
+
+Plain HTTP sends credentials and content unencrypted.
+Only use it for registries on your own computer or on a network that you trust.
+
+## Registries with a private certificate authority
+
+The `oras-tls` registry has a certificate issued by the private CA, which the operating system doesn't trust:
+
+```bash
+oras push 127.0.0.1:5443/hello:v1 hello.txt
+```
+
+```console
+Preparing hello.txt
+Error: Head "https://127.0.0.1:5443/v2/hello/manifests/sha256:771a60339ff87727ca29dea75bb11f633f1a600196b032ab408598307cf9c92d": tls: failed to verify certificate: x509: certificate signed by unknown authority
+```
+
+Pass the CA certificate in PEM format with `--ca-file`:
+
+```bash
+oras push --ca-file certs/ca.crt 127.0.0.1:5443/hello:v1 hello.txt
+```
+
+```console
+Preparing hello.txt
+Uploading a948904f2f0f hello.txt
+Uploading 44136fa355b3 application/vnd.oci.empty.v1+json
+Uploaded  a948904f2f0f hello.txt
+Uploaded  44136fa355b3 application/vnd.oci.empty.v1+json
+Uploading 771a60339ff8 application/vnd.oci.image.manifest.v1+json
+Uploaded  771a60339ff8 application/vnd.oci.image.manifest.v1+json
+Pushed [registry] 127.0.0.1:5443/hello:v1
+ArtifactType: application/vnd.unknown.artifact.v1
+Digest: sha256:771a60339ff87727ca29dea75bb11f633f1a600196b032ab408598307cf9c92d
+```
+
+With `--ca-file`, ORAS trusts only the certificates in that file and any CA certificates from `certs.d`, not the trust store of the operating system.
+Only pass it to commands for registries whose certificates are issued by that CA.
+To trust the CA without passing `--ca-file`, add it to the trust store of the operating system instead.
+
+### Skip certificate verification
+
+`--insecure` connects over HTTPS without checking the registry certificate:
+
+```bash
+oras repo tags --insecure 127.0.0.1:5443/hello
+```
+
+```console
+v1
+```
+
+Without verification, ORAS can't tell whether it is talking to the real registry.
+Use `--insecure` only for testing, and use `--ca-file` for everything else.
+
+### HTTPS registries on localhost
+
+Because ORAS uses plain HTTP for `localhost`, it sends plain HTTP requests to a registry on `localhost` that serves HTTPS.
+CNCF Distribution answers them with `400 Bad Request`:
+
+```bash
+oras repo tags localhost:5443/hello
+```
+
+```console
+Error response from registry: GET "http://localhost:5443/v2/hello/tags/list": response status code 400: Bad Request
+```
+
+Set `--plain-http=false` to connect over HTTPS:
+
+```bash
+oras repo tags --plain-http=false --ca-file certs/ca.crt localhost:5443/hello
+```
+
+```console
+v1
+```
+
+## Registries that require a client certificate
+
+The `oras-mtls` registry only accepts connections from clients that present a certificate issued by the private CA.
+Without one, the TLS handshake fails:
+
+```bash
+oras push --ca-file certs/ca.crt 127.0.0.1:6443/hello:v1 hello.txt
+```
+
+```console
+Preparing hello.txt
+Error: Head "https://127.0.0.1:6443/v2/hello/manifests/sha256:771a60339ff87727ca29dea75bb11f633f1a600196b032ab408598307cf9c92d": remote error: tls: certificate required
+```
+
+Pass the client certificate with `--cert-file` and its private key with `--key-file`.
+Both files must be in PEM format, and the two flags must be used together:
+
+```bash
+oras push --ca-file certs/ca.crt --cert-file certs/client.crt 127.0.0.1:6443/hello:v1 hello.txt
+```
+
+```console
+Error: --cert-file must be used in conjunction with --key-file
+```
+
+```bash
+oras push --ca-file certs/ca.crt --cert-file certs/client.crt --key-file certs/client.key 127.0.0.1:6443/hello:v1 hello.txt
+```
+
+```console
+Preparing hello.txt
+Uploading a948904f2f0f hello.txt
+Uploading 44136fa355b3 application/vnd.oci.empty.v1+json
+Uploaded  44136fa355b3 application/vnd.oci.empty.v1+json
+Uploaded  a948904f2f0f hello.txt
+Uploading 771a60339ff8 application/vnd.oci.image.manifest.v1+json
+Uploaded  771a60339ff8 application/vnd.oci.image.manifest.v1+json
+Pushed [registry] 127.0.0.1:6443/hello:v1
+ArtifactType: application/vnd.unknown.artifact.v1
+Digest: sha256:771a60339ff87727ca29dea75bb11f633f1a600196b032ab408598307cf9c92d
+```
+
+Other commands take the same flags:
+
+```bash
+oras pull --ca-file certs/ca.crt --cert-file certs/client.crt --key-file certs/client.key -o downloads 127.0.0.1:6443/hello:v1
+```
+
+```console
+Downloading 771a60339ff8 application/vnd.oci.image.manifest.v1+json
+Processing  771a60339ff8 application/vnd.oci.image.manifest.v1+json
+Downloading a948904f2f0f hello.txt
+Downloaded  a948904f2f0f hello.txt
+Downloaded  771a60339ff8 application/vnd.oci.image.manifest.v1+json
+Pulled [registry] 127.0.0.1:6443/hello:v1
+Digest: sha256:771a60339ff87727ca29dea75bb11f633f1a600196b032ab408598307cf9c92d
+```
+
+## Resolve a registry name to a different address
+
+`--resolve` makes ORAS connect to a registry name at an address that you choose, instead of looking the name up in DNS.
+It works like the `--resolve` option of curl.
+This is useful when a registry name isn't in DNS yet, or when you want to test a new registry instance before you move the name to it.
+
+The `oras-tls` registry has a certificate for `registry.example.internal`, but the name doesn't exist in DNS:
+
+```bash
+oras repo tags --ca-file certs/ca.crt registry.example.internal:5443/hello
+```
+
+```console
+Error: Get "https://registry.example.internal:5443/v2/hello/tags/list": dial tcp: lookup registry.example.internal: no such host
+```
+
+The format of the flag is `host:port:address[:address_port]`.
+ORAS connects to `address` when it connects to `host` on `port`:
+
+```bash
+oras repo tags --resolve registry.example.internal:5443:127.0.0.1 --ca-file certs/ca.crt registry.example.internal:5443/hello
+```
+
+```console
+v1
+```
+
+ORAS still uses the registry name in the reference to check the certificate, so the certificate must be valid for that name.
+
+Add `address_port` to also connect to a different port.
+A reference without a port uses port 443 for HTTPS, so this command connects to `registry.example.internal` on `127.0.0.1:5443`:
+
+```bash
+oras repo tags --resolve registry.example.internal:443:127.0.0.1:5443 --ca-file certs/ca.crt registry.example.internal/hello
+```
+
+```console
+v1
+```
+
+The `address` must be an IP address.
+Repeat `--resolve` to set more than one rule.
+
+## Copy between registries with different settings
+
+[`oras cp`](../commands/oras_cp.mdx) connects to two registries, so it has separate flags for each:
+`--from-` flags, such as `--from-ca-file` and `--from-plain-http`, apply to the source registry, and `--to-` flags apply to the destination registry.
+For `--resolve`, `oras cp` has `--from-resolve` and `--to-resolve` as well as a plain `--resolve`, which sets rules for both registries.
+
+Copy the artifact from the registry that requires a client certificate to the plain HTTP registry:
+
+```bash
+oras cp --from-ca-file certs/ca.crt --from-cert-file certs/client.crt --from-key-file certs/client.key \
+  --to-plain-http 127.0.0.1:6443/hello:v1 127.0.0.1:5000/hello-copy:v1
+```
+
+```console
+Copying a948904f2f0f hello.txt
+Copying 44136fa355b3 application/vnd.oci.empty.v1+json
+Copied  44136fa355b3 application/vnd.oci.empty.v1+json
+Copied  a948904f2f0f hello.txt
+Copying 771a60339ff8 application/vnd.oci.image.manifest.v1+json
+Copied  771a60339ff8 application/vnd.oci.image.manifest.v1+json
+Copied [registry] 127.0.0.1:6443/hello:v1 => [registry] 127.0.0.1:5000/hello-copy:v1
+Digest: sha256:771a60339ff87727ca29dea75bb11f633f1a600196b032ab408598307cf9c92d
+```
+
+## Check the requests that ORAS sends
+
+If a connection doesn't work as you expect, add `--debug` to print every HTTP request and response.
+The request URLs show whether ORAS uses HTTP or HTTPS and which host and port it connects to.
+ORAS replaces the values of headers that can contain credentials, such as `Authorization`, with `*****`.
+
+```bash
+oras repo tags --debug localhost:5000/hello
+```
+
+```console
+[2026-11-16T19:51:40.799236Z][DEBUG]: --> Request #0
+> Request URL: "http://localhost:5000/v2/hello/tags/list"
+> Request method: "GET"
+> Request headers:
+   "User-Agent": "oras/1.4.0"
+...
+```
+
+## Use configuration files instead of flags
+
+With the experimental `ORAS_EXPERIMENTAL_CONTAINERS_CONFIG` environment variable set, ORAS can read some of these settings from the containers configuration files that Podman, Buildah and Skopeo use:
+
+- CA certificates and client certificates from `certs.d`
+- `insecure` from `registries.conf`
+
+Then you don't need to pass `--ca-file`, `--cert-file`, `--key-file` or `--insecure` on every command.
+ORAS doesn't read a plain HTTP setting from these files, so you still need `--plain-http` for a registry that only serves plain HTTP.
+Command line flags take precedence: a client certificate from `--cert-file` and `--key-file` replaces one from `certs.d`.
+For more information, see [Using Containers Configuration Files](./containers_config.mdx).
+
+## Clean up
+
+Remove the registries and the files that you created:
+
+```bash
+docker rm -f oras-plain oras-tls oras-mtls
+rm -rf certs downloads mtls-config.yml hello.txt
+```
