@@ -1,0 +1,274 @@
+---
+title: Using Containers Configuration Files
+sidebar_position: 11
+---
+
+# Using Containers Configuration Files
+
+:::warning
+
+Support for containers configuration files is experimental in ORAS CLI v1.4.
+It is off by default, and it may change in future releases.
+
+:::
+
+Podman, Buildah and Skopeo read their registry settings from a shared set of configuration files, such as `registries.conf`, `certs.d` and `auth.json`.
+Starting with v1.4.0, ORAS can read the same files.
+If a host is already set up for these tools, ORAS can use the same mirrors, certificates, credentials and trust policy without extra command line flags.
+
+This guide shows how to:
+
+- turn on the containers configuration support
+- find the files that ORAS reads
+- pull through a registry mirror
+- trust a private certificate authority (CA) with `certs.d`
+- redirect and block registries
+- use credentials from `auth.json`
+- restrict access with `policy.json`
+- set ORAS-specific registry options
+- combine the files with command line flags
+- log in to a redirected registry
+
+## Prerequisites
+
+- [ORAS CLI](../installation.mdx) v1.4.0 or later.
+
+## Turn on the containers configuration support
+
+Set the `ORAS_EXPERIMENTAL_CONTAINERS_CONFIG` environment variable to a true value, such as `1` or `true`:
+
+```bash
+export ORAS_EXPERIMENTAL_CONTAINERS_CONFIG=1
+```
+
+ORAS reads the files when a command connects to a registry.
+Without the variable, ORAS ignores these files.
+
+## Configuration files
+
+ORAS looks for the files in the default locations that Podman and Buildah use.
+Missing files are skipped.
+
+| File | Locations | What ORAS uses |
+| --- | --- | --- |
+| `registries.conf` | `/etc/containers/registries.conf`, `/etc/containers/registries.conf.d/*.conf`, `$HOME/.config/containers/registries.conf` and `$HOME/.config/containers/registries.conf.d/*.conf` | Location rewrites, blocked registries, `insecure`, mirrors, and the ORAS-specific keys described in [ORAS-specific settings](#oras-specific-settings) |
+| `certs.d` | `/etc/containers/certs.d/<host>/` and `$HOME/.config/containers/certs.d/<host>/` | CA certificates (`*.crt`) and client certificates (`*.cert` with a matching `*.key`) for a registry |
+| `auth.json` | `$XDG_RUNTIME_DIR/containers/auth.json` on Linux, otherwise `$HOME/.config/containers/auth.json` | Registry credentials |
+| `policy.json` | `$HOME/.config/containers/policy.json`, otherwise `/etc/containers/policy.json` | Which registries and repositories ORAS can access |
+| `registries.d` | `/etc/containers/registries.d/` and `$HOME/.config/containers/registries.d/` | Where to find signatures for `signedBy` requirements in `policy.json` |
+
+ORAS merges the `registries.conf` files in the order listed.
+If more than one file has a `[[registry]]` table with the same `prefix`, the last one wins.
+On Windows, ORAS only reads the files under `$HOME/.config/containers`.
+
+ORAS uses the `[[registry]]` tables of `registries.conf`.
+Short-name aliases and unqualified search registries don't apply, because every ORAS reference must include a registry.
+
+For the format of each file, see [containers-registries.conf](https://github.com/containers/image/blob/main/docs/containers-registries.conf.5.md), [containers-certs.d](https://github.com/containers/image/blob/main/docs/containers-certs.d.5.md), [containers-auth.json](https://github.com/containers/image/blob/main/docs/containers-auth.json.5.md), [containers-policy.json](https://github.com/containers/image/blob/main/docs/containers-policy.json.5.md) and [containers-registries.d](https://github.com/containers/image/blob/main/docs/containers-registries.d.5.md).
+
+## Pull through a mirror
+
+The following `registries.conf` adds a mirror for `registry.example.com`:
+
+```toml
+[[registry]]
+location = "registry.example.com"
+
+[[registry.mirror]]
+location = "mirror.example.com"
+```
+
+When ORAS resolves a tag or fetches a manifest or blob from `registry.example.com`, it tries `mirror.example.com` first, using the same repository name.
+If the mirror returns an error, for example because it doesn't have the content, ORAS falls back to `registry.example.com`.
+With more than one mirror, ORAS tries them in the order they are listed.
+
+```bash
+oras pull registry.example.com/hello:v1
+```
+
+The output shows `registry.example.com`, even when the content came from the mirror.
+Commands that write to the registry, such as `oras push` and `oras tag`, and commands that list content, such as `oras repo tags`, always go to `registry.example.com`.
+
+To use a mirror only for some references, set `pull-from-mirror` on it:
+
+- `all`: tags and digests (the default).
+- `digest-only`: only references by digest, such as `registry.example.com/hello@sha256:...`.
+  Use this setting if the mirror might have out-of-date tags.
+- `tag-only`: only references by tag.
+
+```toml
+[[registry]]
+location = "registry.example.com"
+
+[[registry.mirror]]
+location = "mirror.example.com"
+pull-from-mirror = "digest-only"
+```
+
+ORAS connects to mirrors with TLS and checks their certificates against the trust store of the operating system.
+Certificates in `certs.d` don't apply to mirrors.
+Set `insecure = true` on a `[[registry.mirror]]` table to skip certificate verification for that mirror.
+ORAS doesn't send the credentials of the registry to a mirror.
+It looks up credentials for the mirror under the host name of the mirror.
+
+## Trust a private CA with certs.d
+
+If a registry has a certificate issued by a private CA, put the CA certificate in a `certs.d` directory named after the registry host.
+Include the port if the registry doesn't use the default port 443:
+
+```bash
+mkdir -p ~/.config/containers/certs.d/registry.example.com:5000
+cp ca.crt ~/.config/containers/certs.d/registry.example.com:5000/ca.crt
+```
+
+ORAS then trusts the CA for that registry, and you don't need `--ca-file`:
+
+```bash
+oras repo ls registry.example.com:5000
+```
+
+Every `*.crt` file in the directory is trusted, in addition to the trust store of the operating system.
+For a registry that requires a client certificate, add the certificate and its key as `client.cert` and `client.key`, or any other `<name>.cert` and `<name>.key` pair.
+
+To skip certificate verification for a registry instead, set `insecure = true` in its `[[registry]]` table in `registries.conf`.
+This has the same effect as `--insecure`.
+Unlike other tools that read `registries.conf`, ORAS doesn't fall back to plain HTTP for an `insecure` registry.
+To connect to a registry that only serves plain HTTP, pass `--plain-http`.
+
+## Redirect and block registries
+
+A `[[registry]]` table with a `prefix` and a different `location` redirects every reference that starts with the prefix:
+
+```toml
+[[registry]]
+prefix = "registry.example.com/team"
+location = "registry.internal.example.com/mirror/team"
+```
+
+With this file, `oras pull registry.example.com/team/app:v1` pulls `registry.internal.example.com/mirror/team/app:v1`.
+The redirect applies to all commands, including `oras push`.
+
+The settings of a `[[registry]]` table, such as `insecure` and its mirrors, apply to the references that match its `prefix`.
+A `prefix` can also start with a wildcard, such as `*.example.com`.
+When several prefixes match a reference, ORAS uses the longest one.
+
+To stop ORAS from connecting to a registry, set `blocked = true`:
+
+```toml
+[[registry]]
+location = "untrusted.example.com"
+blocked = true
+```
+
+Commands that use the registry then fail:
+
+```console
+$ oras pull untrusted.example.com/hello:v1
+Error: registry is blocked: untrusted.example.com/hello
+```
+
+## Use credentials from auth.json
+
+ORAS looks for credentials in its own credential store first.
+By default, this is `~/.docker/config.json` and the credential helpers that it configures.
+If ORAS doesn't find credentials there, it looks in `auth.json`.
+For example, after `podman login registry.example.com`, ORAS can pull from `registry.example.com` without `oras login`.
+
+`auth.json` can also have credentials for a repository namespace, such as `registry.example.com/team`.
+ORAS uses the entry with the longest matching name.
+
+ORAS doesn't read `auth.json` when `--registry-config` is given.
+`oras login` still saves credentials to the ORAS credential store, not to `auth.json`.
+
+## Restrict access with policy.json
+
+`policy.json` controls which registries and repositories ORAS can access.
+The following policy rejects every registry except `registry.example.com`:
+
+```json
+{
+  "default": [{ "type": "reject" }],
+  "transports": {
+    "docker": {
+      "registry.example.com": [{ "type": "insecureAcceptAnything" }]
+    }
+  }
+}
+```
+
+With this policy, commands that access a repository on any other registry fail:
+
+```console
+$ oras pull other.example.com/hello:v1
+Error: access denied by policy for other.example.com/hello:v1: access denied by policy
+```
+
+ORAS checks the policy for commands that read from a repository, and also for `oras push` and `oras repo tags`.
+ORAS also supports `signedBy` requirements, and reads the signatures from the locations that `registries.d` configures.
+
+:::note
+
+Podman and Buildah also read `policy.json`, and `/etc/containers/policy.json` often exists on hosts where they are installed.
+If ORAS fails with `access denied by policy`, check the policy in that file.
+
+:::
+
+## ORAS-specific settings
+
+A `[[registry]]` table can have these keys, which only ORAS uses.
+Other tools that read `registries.conf` may ignore them.
+
+| Key | Values | Description |
+| --- | --- | --- |
+| `token-flow` | `oauth2` or `distribution` | How ORAS gets a bearer token for a username and password. Without the key, ORAS uses the distribution token flow, the same as without the containers configuration. `oauth2` uses only the OAuth2 password grant. |
+| `referrers-api` | `supported` or `unsupported` | Whether the registry supports the [referrers API](https://github.com/opencontainers/distribution-spec/blob/v1.1.0/spec.md#listing-referrers). Without the key, ORAS detects it. `--distribution-spec` takes precedence. |
+| `blocked-realm-prefixes` | List of CIDR prefixes, single addresses, `default`, `private` or `none` | Addresses that ORAS refuses to request a bearer token from. Without the key, ORAS uses the `default` list: loopback, link-local and cloud metadata addresses. `private` stands for private network ranges, so `["default", "private"]` blocks both. `none`, or an empty list, blocks nothing. |
+
+For example, the following file tells ORAS that `registry.example.com` doesn't support the referrers API:
+
+```toml
+[[registry]]
+location = "registry.example.com"
+referrers-api = "unsupported"
+```
+
+## Command line flags and the configuration files
+
+Command line flags take precedence over the configuration files:
+
+- `--cert-file` and `--key-file` replace the client certificate from `certs.d`.
+- `--ca-file` adds a CA certificate, which ORAS trusts together with the CA certificates in `certs.d`.
+- `--insecure` skips certificate verification even if `insecure` isn't set.
+- `--plain-http` connects over plain HTTP.
+- `--distribution-spec` replaces `referrers-api`.
+- `--username`, `--password` and `--identity-token` replace credentials from the credential store and `auth.json`.
+
+## Log in to a registry
+
+`oras login` and `oras repo ls` connect to a registry, not to a repository.
+They use the `blocked`, `insecure` and `token-flow` settings of the matching `[[registry]]` table and the certificates in `certs.d`.
+They don't use location rewrites, so `oras login` saves credentials under the registry name you typed.
+
+When a `[[registry]]` table redirects a registry, ORAS looks up credentials under the host name in its `location`.
+Log in to that host:
+
+```bash
+oras login registry.internal.example.com
+```
+
+## Troubleshooting
+
+If the variable is set and one of the files exists but can't be parsed, commands that connect to a registry fail with an error such as:
+
+```console
+$ oras pull registry.example.com/hello:v1
+Error: failed to load containers configuration (ORAS_EXPERIMENTAL_CONTAINERS_CONFIG is set): failed to parse policy file /home/user/.config/containers/policy.json: unexpected end of JSON input
+```
+
+With the variable set, ORAS also reads `~/.docker/config.json` when it loads the files, so a malformed `~/.docker/config.json` causes the same error.
+In ORAS CLI v1.4.0, `$HOME/.config/containers/registries.conf` is an exception: if ORAS can't parse it, ORAS skips the file without an error.
+To check whether a problem comes from the configuration files, run the command again without the variable:
+
+```bash
+ORAS_EXPERIMENTAL_CONTAINERS_CONFIG= oras pull registry.example.com/hello:v1
+```

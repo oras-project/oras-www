@@ -14,6 +14,7 @@ APIs
 Artifactory
 backport
 bcrypt
+Buildah
 CAS
 CASs
 changesets
@@ -34,6 +35,7 @@ inviter
 ip
 JFrog
 (?i)json
+loopback
 Makefile
 mediaType
 mediaTypes
@@ -42,6 +44,7 @@ Nixpkgs
 OVHcloud
 (?i)oras
 Passcode
+Podman
 polytree
 pullable
 releaser
@@ -51,6 +54,7 @@ SDK
 SDKs
 semver
 signoff
+Skopeo
 Snapcraft
 stdin
 stdout
