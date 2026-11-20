@@ -1,0 +1,144 @@
+---
+title: Validating ORAS CLI Binaries
+sidebar_position: 10
+---
+
+# Validating ORAS CLI Binaries
+
+Every [ORAS release](https://github.com/oras-project/oras/releases) ships a
+checksums file, `oras_<version>_checksums.txt`, together with a detached GPG
+signature, `oras_<version>_checksums.txt.asc`. To validate a binary, check the
+signature of the checksums file, then check your download against the checksums
+file.
+
+Newer releases are signed automatically by the release workflow with the
+**ORAS Project Release Signing** key
+(`C6FC42F0DE84A345FAADB742F44418110791EF37`). Earlier releases were signed
+manually with the key of an individual maintainer. All of these keys are listed in
+the [`KEYS`](https://github.com/oras-project/oras/blob/main/KEYS) file.
+
+Starting with `v1.3.6`, you can also
+[verify the build provenance](#verifying-build-provenance) of a release file.
+
+The following steps use `v1.4.0` on `linux_amd64` as an example. Replace the
+version and platform with the ones you downloaded.
+
+### Step 1: Import the release keys
+
+```
+$ curl -sSL https://raw.githubusercontent.com/oras-project/oras/refs/heads/main/KEYS | gpg --import -
+```
+
+### Step 2: Check the imported keys
+
+```
+$ gpg --list-keys
+```
+
+The output lists every key in the `KEYS` file. Check that it includes the
+ORAS Project Release Signing key:
+
+```
+pub   ed25519 2026-07-13 [SC]
+      C6FC42F0DE84A345FAADB742F44418110791EF37
+uid           [ unknown] ORAS Project Release Signing <cncf-oras-maintainers@lists.cncf.io>
+```
+
+Some maintainer keys in the file have expired. See
+[Expired keys](#expired-keys) below.
+
+### Step 3: Verify the checksums file
+
+Download `oras_1.4.0_checksums.txt` and `oras_1.4.0_checksums.txt.asc` from the
+release, then run:
+
+```
+$ gpg --verify oras_1.4.0_checksums.txt.asc oras_1.4.0_checksums.txt
+gpg: Signature made Tue Nov 17 14:47:11 2026 UTC
+gpg:                using EDDSA key C6FC42F0DE84A345FAADB742F44418110791EF37
+gpg: Good signature from "ORAS Project Release Signing <cncf-oras-maintainers@lists.cncf.io>" [unknown]
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: C6FC 42F0 DE84 A345 FAAD  B742 F444 1811 0791 EF37
+```
+
+The `Good signature` line confirms the checksums file is authentic. The
+`WARNING` lines only mean that you have not marked the key as trusted in your
+local keyring; they do not mean that verification failed.
+
+### Step 4: Verify your download against the checksums file
+
+Put the archive you downloaded in the same directory and run:
+
+```
+$ sha256sum --ignore-missing -c oras_1.4.0_checksums.txt
+oras_1.4.0_linux_amd64.tar.gz: OK
+```
+
+On macOS, use `shasum -a 256 --ignore-missing -c oras_1.4.0_checksums.txt`.
+
+### Verifying a single artifact
+
+Each archive and each SBOM (`.sbom.json`) in a release also has its own `.asc`
+signature. You can verify one directly:
+
+```
+$ gpg --verify oras_1.4.0_linux_amd64.tar.gz.asc oras_1.4.0_linux_amd64.tar.gz
+```
+
+### Verifying build provenance
+
+Starting with `v1.3.6`, release archives and the checksums file also have
+[GitHub artifact attestations](https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations)
+(SLSA build provenance). They show that a file was built by the release
+workflow in the `oras-project/oras` repository. This check is in addition to
+the GPG signatures, not a replacement for them. Earlier releases do not have
+attestations.
+
+With the [GitHub CLI](https://cli.github.com/) installed and authenticated,
+run `gh attestation verify` on the file you downloaded:
+
+```
+$ gh attestation verify oras_1.4.0_linux_amd64.tar.gz --repo oras-project/oras
+Loaded digest sha256:d8e1dce2fd8ce996f1d901845b688eb0cf505a6082897606f053825bb47935d1 for file://oras_1.4.0_linux_amd64.tar.gz
+Loaded 1 attestation from GitHub API
+
+The following policy criteria will be enforced:
+- Predicate type must match:................ https://slsa.dev/provenance/v1
+- Source Repository Owner URI must match:... https://github.com/oras-project
+- Source Repository URI must match:......... https://github.com/oras-project/oras
+- Subject Alternative Name must match regex: (?i)^https://github\.com/oras-project/oras/
+- OIDC Issuer must match:................... https://token.actions.githubusercontent.com
+
+✓ Verification succeeded!
+
+The following 1 attestation matched the policy criteria
+
+- Attestation #1
+  - Build repo:..... oras-project/oras
+  - Build workflow:. .github/workflows/release-github.yml@refs/tags/v1.4.0
+  - Signer repo:.... oras-project/oras
+  - Signer workflow: .github/workflows/release-github.yml@refs/tags/v1.4.0
+```
+
+To also check that the file was built from the release tag you expect, add
+`--source-ref refs/tags/v1.4.0`. The command fails if the file was built from
+any other ref.
+
+### Expired keys
+
+A key that has since expired still validates signatures it made while it was
+valid. For example, `v1.3.0` was signed with a maintainer key that has now
+expired:
+
+```
+$ gpg --verify oras_1.3.0_checksums.txt.asc oras_1.3.0_checksums.txt
+gpg: Signature made Mon Sep  8 04:49:30 2025 UTC
+gpg:                using ECDSA key 3E94D52AFA465877CAEA79F1E8052EA17ECB9A6C
+gpg: Good signature from "Lixia (Sylvia) Lei <lixlei@microsoft.com>" [expired]
+gpg: Note: This key has expired!
+Primary key fingerprint: 3E94 D52A FA46 5877 CAEA  79F1 E805 2EA1 7ECB 9A6C
+```
+
+The `Good signature` line is what matters. The `Note: This key has expired!`
+line is not a verification failure.

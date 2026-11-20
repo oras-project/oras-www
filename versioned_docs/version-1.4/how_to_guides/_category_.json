@@ -1,0 +1,8 @@
+{
+    "label": "How-to Guides",
+    "position": 20,
+    "link": {
+        "type": "generated-index",
+        "description": "A guide to ORAS CLI"
+    }
+}
